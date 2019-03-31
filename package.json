@@ -1,0 +1,7 @@
+{
+  "name": "isomor-monorepo",
+  "private": true,
+  "devDependencies": {
+    "lerna": "^3.13.1"
+  }
+}

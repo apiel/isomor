@@ -1,0 +1,44 @@
+{
+  "name": "example",
+  "version": "0.0.1",
+  "private": true,
+  "proxy": "http://127.0.0.1:3005",
+  "dependencies": {
+    "@types/jest": "24.0.11",
+    "@types/node": "11.12.2",
+    "@types/react": "16.8.10",
+    "@types/react-dom": "16.8.3",
+    "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "fs-extra": "^7.0.1",
+    "isomor": "^0.0.1",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-scripts": "2.1.8",
+    "typescript": "^3.4.1"
+  },
+  "scripts": {
+    "server": "rimraf dist-server && tsc --project ./tsconfig.server.json && SERVER=true node dist-server/server/index.js",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/express": "^4.16.1",
+    "@types/fs-extra": "^5.0.5",
+    "rimraf": "^2.6.3",
+    "ts-node": "^8.0.3"
+  }
+}

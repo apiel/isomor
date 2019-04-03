@@ -26,7 +26,8 @@ function getFunctions(content: string) {
     while (true) {
         const findFunc = finFuncPattern.exec(content);
         if (findFunc) {
-            functions.push({ name: findFunc[2], code: findFunc[0] });
+            const code: string = findFunc[0].replace(/\(.*\)/gim, '(...args: any)');
+            functions.push({ name: findFunc[2], code });
         } else {
             break;
         }
@@ -45,7 +46,7 @@ async function transpile(options: Options, file: string) {
 
     const fileName = parse(file).name;
     const appFunctions = functions.map(
-        ({ code, name }) => `${code}\n  return remote('${fileName}', '${name}', arguments);\n}\n`,
+        ({ code, name }) => `${code}\n  return remote('${fileName}', '${name}', args);\n}\n`,
     );
     const appCode = `import { remote } from 'isomor';\n\n${appFunctions.join(`\n`)}`;
     const appFilePath = join(appFolder, file);

@@ -1,27 +1,39 @@
-import axios from 'axios';
+import { info, error as err } from 'fancy-log'; // fancy log not so fancy, i want colors :D
+import { readdir, pathExists, lstat, readFile } from 'fs-extra';
+import { join } from 'path';
 
-export async function magic<OUTPUT, INPUT>(
-    action: () => (input: INPUT) => Promise<OUTPUT>,
-    input: INPUT,
-): Promise<OUTPUT> {
-    const isServer = process.env.SERVER;
+// only support "function" not array func
+const finFuncPattern = /export(\s+async){0,1}\s+function\s+(.*)\(.*\).*\s*\{/gim;
 
-    if (isServer !== undefined) {
-        // instead we could require..
-        return await action()(input);
-    } else {
-        console.log('wasist', action.toString());
-        const regGetName = (/\)\.(.+);/gim).exec(action.toString());
-        if (!regGetName) {
-            throw(new Error('Could not get method name to query'));
+async function transpile(file: string) {
+    info('Transpile', file);
+    const content = (await readFile(file)).toString();
+
+    while (true) {
+        const findFunc = finFuncPattern.exec(content);
+        if (findFunc) {
+            console.log('findFunc', findFunc);
         } else {
-            const [none, name] = regGetName;
-
-            const { data } = await axios.post(
-                `http://127.0.0.1:3000/${name}`,
-                input,
-            );
-            return data;
+            break;
         }
     }
 }
+
+async function start(folder: string) {
+    info('Start transpiling');
+    if (!(await pathExists(folder))) {
+        err('Folder does not exist', folder);
+    } else {
+        const files = await readdir(folder);
+        files.forEach(async (file) => {
+            const filePath = join(folder, file);
+            const ls = await lstat(filePath);
+            if (ls.isFile()) {
+                transpile(filePath);
+            }
+        });
+    }
+
+}
+
+start(join(__dirname, '../example'));

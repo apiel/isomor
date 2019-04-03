@@ -1,6 +1,6 @@
 import { info, error as err } from 'fancy-log'; // fancy log not so fancy, i want colors :D
 import { readdir, pathExists, lstat, readFile, outputFile } from 'fs-extra';
-import { join } from 'path';
+import { join, parse } from 'path';
 
 interface Options {
     folder: string;
@@ -42,8 +42,9 @@ async function transpile(options: Options, file: string) {
     const functions = getFunctions(buffer.toString());
     // console.log('functions', functions);
 
+    const fileName = parse(file).name;
     const appFunctions = functions.map(
-        ({ code, name }) => `${code}\n  return remote('${name}', arguments);\n}\n`,
+        ({ code, name }) => `${code}\n  return remote('${fileName}', '${name}', arguments);\n}\n`,
     );
     const appCode = `import { remote } from 'isomor';\n\n${appFunctions.join(`\n`)}`;
     const appFilePath = join(appFolder, file);

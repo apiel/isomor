@@ -2,10 +2,11 @@ import { info, error as err } from 'fancy-log';
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import { readdir, pathExists, lstat } from 'fs-extra';
-import { join } from 'path';
+import { join, parse } from 'path';
 
 interface Options {
     folder: string;
+    port: number;
 }
 
 // should move this in core
@@ -36,7 +37,9 @@ async function start(options: Options) {
     files.forEach(file => {
         const functions = require(file);
         Object.keys(functions).forEach(name => {
-            app.use(`/isomor/${name}`, async (req: any, res: any) => {
+            const entrypoint = `/isomor/${parse(file).name}/${name}`;
+            info('Create entrypoint:', entrypoint)
+            app.use(entrypoint, async (req: any, res: any) => {
                 // console.log('call', name);
                 // console.log('fn', functions[name]);
                 // console.log('body', req.body);
@@ -48,10 +51,11 @@ async function start(options: Options) {
         });
     });
 
-    app.listen(port, () => info(`Server listening on port ${port}!`));
+    app.listen(options.port, () => info(`Server listening on port ${port}!`));
 }
 
 start({
-    folder: join(__dirname, '../../isomor-transpiler/example'),
+    folder: process.env.FOLDER || join(__dirname, '../../isomor-transpiler/example'),
+    port: process.env.PORT ? parseInt(process.env.PORT, 10) : 3005,
 });
 

@@ -1,5 +1,5 @@
 import { remote } from 'isomor';
 
-export async function getList(...args: any): Promise<string[]> {
+export function getList(...args: any) {
   return remote('data', 'getList', args);
 }

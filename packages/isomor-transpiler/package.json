@@ -1,10 +1,11 @@
 {
-    "name": "isomor",
-    "version": "0.0.2",
+    "name": "isomor-transpiler",
+    "version": "0.0.1",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "author": "Alexandre Piel <alexandre.piel@gmail.com>",
     "license": "MIT",
+    "bin": "dist/index.js",
     "scripts": {
         "start": "ts-node lib/index.ts",
         "prebuild": "rm -rf dist/",

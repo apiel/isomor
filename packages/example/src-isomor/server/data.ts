@@ -1,8 +1,9 @@
 import { readdir } from 'fs-extra';
 
-import { GetListInput } from '../interface/getList.input';
+// interface not yet possible
+// import { GetListInput } from '../interface/getList.input';
 
-export async function getList(input: GetListInput): Promise<string[]> {
+export async function getList(input: { foo: string }): Promise<string[]> {
     const files = await readdir('./');
     return files.map(file => `${file}-${input.foo}-${Math.random()}`);
 }

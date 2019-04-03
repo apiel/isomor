@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -8,26 +9,58 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const axios_1 = require("axios");
-function magic(action, input) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const isServer = process.env.SERVER;
-        if (isServer !== undefined) {
-            return yield action()(input);
+const fancy_log_1 = require("fancy-log");
+const fs_extra_1 = require("fs-extra");
+const path_1 = require("path");
+function getFunctions(content) {
+    const functions = [];
+    const finFuncPattern = /export(\s+async){0,1}\s+function\s+(.*)\(.*\).*\s*\{/gim;
+    while (true) {
+        const findFunc = finFuncPattern.exec(content);
+        if (findFunc) {
+            functions.push({ name: findFunc[2], code: findFunc[0] });
         }
         else {
-            console.log('wasist', action.toString());
-            const regGetName = (/\)\.(.+);/gim).exec(action.toString());
-            if (!regGetName) {
-                throw (new Error('Could not get method name to query'));
-            }
-            else {
-                const [none, name] = regGetName;
-                const { data } = yield axios_1.default.post(`http://127.0.0.1:3000/${name}`, input);
-                return data;
-            }
+            break;
+        }
+    }
+    return functions;
+}
+function transpile(options, file) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const { folder, appFolder } = options;
+        const filePath = path_1.join(folder, file);
+        fancy_log_1.info('Transpile', file);
+        const buffer = yield fs_extra_1.readFile(filePath);
+        const functions = getFunctions(buffer.toString());
+        const fileName = path_1.parse(file).name;
+        const appFunctions = functions.map(({ code, name }) => `${code}\n  return remote('${fileName}', '${name}', arguments);\n}\n`);
+        const appCode = `import { remote } from 'isomor';\n\n${appFunctions.join(`\n`)}`;
+        const appFilePath = path_1.join(appFolder, file);
+        yield fs_extra_1.outputFile(appFilePath, appCode);
+    });
+}
+function start(options) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const { folder } = options;
+        fancy_log_1.info('Start transpiling');
+        if (!(yield fs_extra_1.pathExists(folder))) {
+            fancy_log_1.error('Folder does not exist', folder);
+        }
+        else {
+            const files = yield fs_extra_1.readdir(folder);
+            files.forEach((file) => __awaiter(this, void 0, void 0, function* () {
+                const filePath = path_1.join(folder, file);
+                const ls = yield fs_extra_1.lstat(filePath);
+                if (ls.isFile()) {
+                    transpile(options, file);
+                }
+            }));
         }
     });
 }
-exports.magic = magic;
+start({
+    folder: process.env.FOLDER || path_1.join(__dirname, '../example'),
+    appFolder: process.env.APP_FOLDER || path_1.join(__dirname, '../dist-app'),
+});
 //# sourceMappingURL=index.js.map

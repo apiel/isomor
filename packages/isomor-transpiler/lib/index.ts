@@ -1,10 +1,11 @@
+#!/usr/bin/env node
+
 import { info, error as err } from 'fancy-log'; // fancy log not so fancy, i want colors :D
 import { readdir, pathExists, lstat, readFile, outputFile } from 'fs-extra';
 import { join, parse } from 'path';
 
 interface Options {
     folder: string;
-    serverFolder: string;
     appFolder: string;
 }
 
@@ -71,7 +72,6 @@ async function start(options: Options) {
 }
 
 start({
-    folder: join(__dirname, '../example'),
-    serverFolder: join(__dirname, '../dist-server'),
-    appFolder: join(__dirname, '../dist-app'),
+    folder: process.env.FOLDER || join(__dirname, '../example'),
+    appFolder: process.env.APP_FOLDER || join(__dirname, '../dist-app'),
 });

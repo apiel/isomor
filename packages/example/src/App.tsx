@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import { getList } from './data';
+import { getList } from './server/data';
 
 class App extends Component {
   state = {

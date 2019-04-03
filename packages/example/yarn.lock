@@ -4560,13 +4560,11 @@ isobject@^3.0.0, isobject@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/isobject/-/isobject-3.0.1.tgz#4e431e92b11a9731636aa1f9c8d1ccbcfdab78df"
 
-isomor@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/isomor/-/isomor-0.0.1.tgz#e895a1c971833fff2c0b72d11040e60f1d17c749"
+isomor@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/isomor/-/isomor-0.0.3.tgz#113f4b25ce2a1dc71b30d2730f0701654e36696a"
   dependencies:
     axios "^0.18.0"
-    body-parser "^1.18.3"
-    express "^4.16.4"
     typescript "^3.2.4"
 
 isstream@~0.1.2:

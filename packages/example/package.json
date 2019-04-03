@@ -12,14 +12,14 @@
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "fs-extra": "^7.0.1",
-    "isomor": "^0.0.1",
+    "isomor": "^0.0.3",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-scripts": "2.1.8",
     "typescript": "^3.4.1"
   },
   "scripts": {
-    "isomor:build": "rimraf src && cp -r src-isomor src",
+    "isomor:build": "rimraf src && cp -r src-isomor src && rimraf src/server && FOLDER=src-isomor/server APP_FOLDER=src/server isomor-transpiler",
     "server": "rimraf dist-server && tsc --project ./tsconfig.server.json && SERVER=true node dist-server/server/index.js",
     "start": "react-scripts start",
     "build": "react-scripts build",

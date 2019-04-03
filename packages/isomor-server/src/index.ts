@@ -40,9 +40,9 @@ async function start(options: Options) {
             const entrypoint = `/isomor/${parse(file).name}/${name}`;
             info('Create entrypoint:', entrypoint)
             app.use(entrypoint, async (req: any, res: any) => {
-                // console.log('call', name);
-                // console.log('fn', functions[name]);
-                // console.log('body', req.body);
+                console.log('call', name);
+                console.log('fn', functions[name]);
+                console.log('body', req.body);
                 const result = req.body && req.body.args
                     ? await functions[name](...req.body.args)
                     : await functions[name]();

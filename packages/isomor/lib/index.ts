@@ -1,27 +1,15 @@
 import axios from 'axios';
 
-export async function magic<OUTPUT, INPUT>(
-    action: () => (input: INPUT) => Promise<OUTPUT>,
-    input: INPUT,
-): Promise<OUTPUT> {
-    const isServer = process.env.SERVER;
+const urlPrefix = '/isomor'; // http://127.0.0.1:3000/
 
-    if (isServer !== undefined) {
-        // instead we could require..
-        return await action()(input);
-    } else {
-        console.log('wasist', action.toString());
-        const regGetName = (/\)\.(.+);/gim).exec(action.toString());
-        if (!regGetName) {
-            throw(new Error('Could not get method name to query'));
-        } else {
-            const [none, name] = regGetName;
-
-            const { data } = await axios.post(
-                `http://127.0.0.1:3000/${name}`,
-                input,
-            );
-            return data;
-        }
-    }
+export async function remote(
+    fileName: string,
+    funcName: string,
+    args: any,
+): Promise<any> {
+    const { data } = await axios.post(
+        `${urlPrefix}/${fileName}/${funcName}`,
+        { args },
+    );
+    return data;
 }

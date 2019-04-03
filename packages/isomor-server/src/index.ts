@@ -43,8 +43,8 @@ async function start(options: Options) {
                 // console.log('call', name);
                 // console.log('fn', functions[name]);
                 // console.log('body', req.body);
-                const result = req.body && req.body.arguments
-                    ? await functions[name](...req.body.arguments)
+                const result = req.body && req.body.args
+                    ? await functions[name](...req.body.args)
                     : await functions[name]();
                 return res.send(result);
             });

@@ -9,25 +9,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const axios_1 = require("axios");
-function magic(action, input) {
+const urlPrefix = '/isomor';
+function remote(fileName, funcName, args) {
     return __awaiter(this, void 0, void 0, function* () {
-        const isServer = process.env.SERVER;
-        if (isServer !== undefined) {
-            return yield action()(input);
-        }
-        else {
-            console.log('wasist', action.toString());
-            const regGetName = (/\)\.(.+);/gim).exec(action.toString());
-            if (!regGetName) {
-                throw (new Error('Could not get method name to query'));
-            }
-            else {
-                const [none, name] = regGetName;
-                const { data } = yield axios_1.default.post(`http://127.0.0.1:3000/${name}`, input);
-                return data;
-            }
-        }
+        const { data } = yield axios_1.default.post(`${urlPrefix}/${fileName}/${funcName}`, { args });
+        return data;
     });
 }
-exports.magic = magic;
+exports.remote = remote;
 //# sourceMappingURL=index.js.map

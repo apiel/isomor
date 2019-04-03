@@ -5,7 +5,7 @@
   "proxy": "http://127.0.0.1:3005",
   "dependencies": {
     "@types/jest": "24.0.11",
-    "@types/node": "11.12.2",
+    "@types/node": "^11.13.0",
     "@types/react": "16.8.10",
     "@types/react-dom": "16.8.3",
     "axios": "^0.18.0",
@@ -19,6 +19,7 @@
     "typescript": "^3.4.1"
   },
   "scripts": {
+    "isomor:build": "rimraf src && cp -r src-isomor src",
     "server": "rimraf dist-server && tsc --project ./tsconfig.server.json && SERVER=true node dist-server/server/index.js",
     "start": "react-scripts start",
     "build": "react-scripts build",

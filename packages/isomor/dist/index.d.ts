@@ -1,1 +1,1 @@
-export declare function magic<OUTPUT, INPUT>(action: () => (input: INPUT) => Promise<OUTPUT>, input: INPUT): Promise<OUTPUT>;
+export declare function remote(fileName: string, funcName: string, args: any): Promise<any>;

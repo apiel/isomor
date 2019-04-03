@@ -5,7 +5,6 @@ import { pathExists, readFile, outputFile } from 'fs-extra';
 import { join, parse as parseFile, basename } from 'path';
 import { getFiles } from 'isomor-core';
 import { parse } from '@typescript-eslint/typescript-estree';
-import { type } from 'os';
 
 interface Options {
     folder: string;
@@ -17,52 +16,33 @@ interface Func {
     code: string;
 }
 
-function getStuff(content: string) {
+function getCodes(fileName: string, content: string) {
+    const codes: string[] = [];
     const { body } = parse(content);
     body.forEach((element) => {
-        console.log('------');
         if (element.type === 'ExportNamedDeclaration') {
             if (element.declaration.type === 'TSInterfaceDeclaration') {
-                console.log('found export interface at', element.loc);
+                const code = content.substring(...element.range);
+                codes.push(code);
             } else if (element.declaration.type === 'FunctionDeclaration') {
-                console.log('found export function with name', element.declaration.id.name, 'at loc ', element.loc);
-                console.log('async', element.declaration.async);
-                console.log('params', element.declaration.params.map(({ loc }) => loc));
-                console.log('body start', element.declaration.body.loc.start);
+                const { name } = element.declaration.id;
+                const code = `export function ${name}(...args: any) {\n  return remote('${fileName}', '${name}', args);\n}\n`;
+                codes.push(code);
             } else if (element.declaration.type === 'VariableDeclaration') {
                 const { declarations } = element.declaration;
                 const declaration = declarations[0];
-                if (declaration.type === 'VariableDeclarator' && declaration.init.type === 'ArrowFunctionExpression') {
-                    console.log('export start at', element.loc);
-                    console.log('found arrow func', declaration.init.loc);
-                    console.log('body', declaration.init.body.loc.start);
-                    console.log('params', declaration.init.params.map(({ loc }) => loc));
+                if (declaration.type === 'VariableDeclarator'
+                    && declaration.init.type === 'ArrowFunctionExpression'
+                    && declaration.id.type === 'Identifier') {
+
+                    const { name } = declaration.id;
+                    const code = `export const ${name} = (...args: any) => {\n  return remote('${fileName}', '${name}', args);\n}\n`;
+                    codes.push(code);
                 }
             }
         }
     });
-}
-
-function getFunctions(content: string) {
-    const functions: Func[] = [];
-    // only support "function" not array func
-    const findFuncPattern = /export(\s+async){0,1}\s+function\s+(.*)\(.*\).*\s*\{/gim;
-    // const findInterfacePattern = /export(\s+async){0,1}\s+function\s+(.*)\(.*\).*\s*\{/gim;
-    // it's hardly possible to conver all poissibilty just with regex
-    // will need to create a more complex parser, maybe combine with prettier
-    // https://github.com/prettier/prettier/blob/master/src/language-js/parser-typescript.js
-    // or even better maybe just
-    // @typescript-eslint/typescript-estree
-    while (true) {
-        const findFunc = findFuncPattern.exec(content);
-        if (findFunc) {
-            const code: string = findFunc[0].replace(/\(.*\)/gim, '(...args: any)');
-            functions.push({ name: findFunc[2], code });
-        } else {
-            break;
-        }
-    }
-    return functions;
+    return codes;
 }
 
 async function transpile(options: Options, filePath: string) {
@@ -71,15 +51,11 @@ async function transpile(options: Options, filePath: string) {
 
     info('Transpile', file);
     const buffer = await readFile(filePath);
-    getStuff(buffer.toString());
-    const functions = getFunctions(buffer.toString());
-    // console.log('functions', functions);
 
     const fileName = parseFile(file).name;
-    const appFunctions = functions.map(
-        ({ code, name }) => `${code}\n  return remote('${fileName}', '${name}', args);\n}\n`,
-    );
-    const appCode = `import { remote } from 'isomor';\n\n${appFunctions.join(`\n`)}`;
+    const codes = getCodes(fileName, buffer.toString());
+
+    const appCode = `import { remote } from 'isomor';\n\n${codes.join(`\n`)}`;
     const appFilePath = join(appFolder, file);
     await outputFile(appFilePath, appCode);
 }

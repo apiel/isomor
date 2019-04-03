@@ -1,6 +1,6 @@
 import { readdir } from 'fs-extra';
 
-import { GetListInput } from '../interface/getList.input';
+import { GetListInput } from './getList.input';
 
 export async function getList(input: GetListInput): Promise<string[]> {
     const files = await readdir('./');

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { info, error as err } from 'fancy-log'; // fancy log not so fancy, i want colors :D
-import { readdir, pathExists, lstat, readFile, outputFile } from 'fs-extra';
+import { pathExists, readFile, outputFile } from 'fs-extra';
 import { join, parse, basename } from 'path';
 import { getFiles } from 'isomor-core';
 

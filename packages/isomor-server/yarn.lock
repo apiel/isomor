@@ -410,6 +410,13 @@ ipaddr.js@1.8.0:
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/ipaddr.js/-/ipaddr.js-1.8.0.tgz#eaa33d6ddd7ace8f7f6fe0c9ca0440e706738b1e"
 
+isomor-core@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/isomor-core/-/isomor-core-0.0.1.tgz#e5a6d58b18aa61ba651cd1a53362fe4be14b4d38"
+  dependencies:
+    fs-extra "^7.0.1"
+    typescript "^3.2.4"
+
 js-tokens@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-3.0.2.tgz#9866df395102130e38f7f996bceb65443209c25b"

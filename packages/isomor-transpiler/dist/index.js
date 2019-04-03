@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const fancy_log_1 = require("fancy-log");
 const fs_extra_1 = require("fs-extra");
 const path_1 = require("path");
+const isomor_core_1 = require("isomor-core");
 function getFunctions(content) {
     const functions = [];
     const finFuncPattern = /export(\s+async){0,1}\s+function\s+(.*)\(.*\).*\s*\{/gim;
@@ -27,10 +28,10 @@ function getFunctions(content) {
     }
     return functions;
 }
-function transpile(options, file) {
+function transpile(options, filePath) {
     return __awaiter(this, void 0, void 0, function* () {
-        const { folder, appFolder } = options;
-        const filePath = path_1.join(folder, file);
+        const { appFolder } = options;
+        const file = path_1.basename(filePath);
         fancy_log_1.info('Transpile', file);
         const buffer = yield fs_extra_1.readFile(filePath);
         const functions = getFunctions(buffer.toString());
@@ -49,14 +50,8 @@ function start(options) {
             fancy_log_1.error('Folder does not exist', folder);
         }
         else {
-            const files = yield fs_extra_1.readdir(folder);
-            files.forEach((file) => __awaiter(this, void 0, void 0, function* () {
-                const filePath = path_1.join(folder, file);
-                const ls = yield fs_extra_1.lstat(filePath);
-                if (ls.isFile()) {
-                    transpile(options, file);
-                }
-            }));
+            const files = yield isomor_core_1.getFiles(folder);
+            files.forEach(file => transpile(options, file));
         }
     });
 }

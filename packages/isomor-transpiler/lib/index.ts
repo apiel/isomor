@@ -51,6 +51,7 @@ async function transpile(options: Options, file: string) {
 }
 
 async function start(options: Options) {
+    // should move this in core
     const { folder } = options;
     info('Start transpiling');
     if (!(await pathExists(folder))) {

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 
 import { getList } from './server/data';
+// import { GetListInput } from './server/getList.input';
 
 class App extends Component {
   state = {
@@ -14,7 +15,8 @@ class App extends Component {
 
   onRemoteLoad = async () => {
     // this.setState({ list: [...this.state.list, 'locale'] });
-    const list = await getList({ foo: 'magic' });
+    const input/*: GetListInput*/ = { foo: 'magic' };
+    const list = await getList(input);
     this.setState({ list });
   }
 

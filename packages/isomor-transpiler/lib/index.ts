@@ -18,14 +18,15 @@ interface Func {
 function getFunctions(content: string) {
     const functions: Func[] = [];
     // only support "function" not array func
-    const finFuncPattern = /export(\s+async){0,1}\s+function\s+(.*)\(.*\).*\s*\{/gim;
+    const findFuncPattern = /export(\s+async){0,1}\s+function\s+(.*)\(.*\).*\s*\{/gim;
+    // const findInterfacePattern = /export(\s+async){0,1}\s+function\s+(.*)\(.*\).*\s*\{/gim;
     // it's hardly possible to conver all poissibilty just with regex
     // will need to create a more complex parser, maybe combine with prettier
     // https://github.com/prettier/prettier/blob/master/src/language-js/parser-typescript.js
     // or even better maybe just
     // @typescript-eslint/typescript-estree
     while (true) {
-        const findFunc = finFuncPattern.exec(content);
+        const findFunc = findFuncPattern.exec(content);
         if (findFunc) {
             const code: string = findFunc[0].replace(/\(.*\)/gim, '(...args: any)');
             functions.push({ name: findFunc[2], code });

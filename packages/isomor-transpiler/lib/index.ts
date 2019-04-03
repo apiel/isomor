@@ -2,8 +2,10 @@
 
 import { info, error as err } from 'fancy-log'; // fancy log not so fancy, i want colors :D
 import { pathExists, readFile, outputFile } from 'fs-extra';
-import { join, parse, basename } from 'path';
+import { join, parse as parseFile, basename } from 'path';
 import { getFiles } from 'isomor-core';
+import { parse } from '@typescript-eslint/typescript-estree';
+import { type } from 'os';
 
 interface Options {
     folder: string;
@@ -13,6 +15,32 @@ interface Options {
 interface Func {
     name: string;
     code: string;
+}
+
+function getStuff(content: string) {
+    const { body } = parse(content);
+    body.forEach((element) => {
+        console.log('------');
+        if (element.type === 'ExportNamedDeclaration') {
+            if (element.declaration.type === 'TSInterfaceDeclaration') {
+                console.log('found export interface at', element.loc);
+            } else if (element.declaration.type === 'FunctionDeclaration') {
+                console.log('found export function with name', element.declaration.id.name, 'at loc ', element.loc);
+                console.log('async', element.declaration.async);
+                console.log('params', element.declaration.params.map(({ loc }) => loc));
+                console.log('body start', element.declaration.body.loc.start);
+            } else if (element.declaration.type === 'VariableDeclaration') {
+                const { declarations } = element.declaration;
+                const declaration = declarations[0];
+                if (declaration.type === 'VariableDeclarator' && declaration.init.type === 'ArrowFunctionExpression') {
+                    console.log('export start at', element.loc);
+                    console.log('found arrow func', declaration.init.loc);
+                    console.log('body', declaration.init.body.loc.start);
+                    console.log('params', declaration.init.params.map(({ loc }) => loc));
+                }
+            }
+        }
+    });
 }
 
 function getFunctions(content: string) {
@@ -43,10 +71,11 @@ async function transpile(options: Options, filePath: string) {
 
     info('Transpile', file);
     const buffer = await readFile(filePath);
+    getStuff(buffer.toString());
     const functions = getFunctions(buffer.toString());
     // console.log('functions', functions);
 
-    const fileName = parse(file).name;
+    const fileName = parseFile(file).name;
     const appFunctions = functions.map(
         ({ code, name }) => `${code}\n  return remote('${fileName}', '${name}', args);\n}\n`,
     );

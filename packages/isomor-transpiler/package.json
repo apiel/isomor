@@ -13,6 +13,7 @@
         "lint": "tslint -p tsconfig.json -c tslint.json"
     },
     "dependencies": {
+        "@typescript-eslint/typescript-estree": "^1.6.0",
         "fancy-log": "^1.3.3",
         "fs-extra": "^7.0.1",
         "isomor-core": "^0.0.1",

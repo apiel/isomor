@@ -2,7 +2,8 @@
 
 import { info, error as err } from 'fancy-log'; // fancy log not so fancy, i want colors :D
 import { readdir, pathExists, lstat, readFile, outputFile } from 'fs-extra';
-import { join, parse } from 'path';
+import { join, parse, basename } from 'path';
+import { getFiles } from 'isomor-core';
 
 interface Options {
     folder: string;
@@ -35,9 +36,9 @@ function getFunctions(content: string) {
     return functions;
 }
 
-async function transpile(options: Options, file: string) {
-    const { folder, appFolder } = options;
-    const filePath = join(folder, file);
+async function transpile(options: Options, filePath: string) {
+    const { appFolder } = options;
+    const file = basename(filePath);
 
     info('Transpile', file);
     const buffer = await readFile(filePath);
@@ -60,14 +61,8 @@ async function start(options: Options) {
     if (!(await pathExists(folder))) {
         err('Folder does not exist', folder);
     } else {
-        const files = await readdir(folder);
-        files.forEach(async (file) => {
-            const filePath = join(folder, file);
-            const ls = await lstat(filePath);
-            if (ls.isFile()) {
-                transpile(options, file);
-            }
-        });
+        const files: string[] = await getFiles(folder);
+        files.forEach(file => transpile(options, file));
     }
 
 }

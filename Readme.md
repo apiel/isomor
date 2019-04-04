@@ -76,7 +76,7 @@ cp -r src src-isomor
 
 In `src-isomor` add a folder `server`. This folder will be all server side files. All this files will be transpilled to be usable from the client.
 
-> Note: the transpiler doesn't support subfolder for the moment.
+> Note: the transpiler only transpile file in root of `src-isomor/server`. `server` folder can contain subfolder, but they should not be directly linked to the app.
 
 ```
 cd src-isomor
@@ -249,10 +249,10 @@ const distServerFolder = './dist-server';
 
 ### ToDo
 
-- support sub folder for transpiler
 - create react hook to consume server files
     - hook should also be able to handle cache
 - Need to test JS and provide example
 - websocket version where server could call frontend functions
 - add config file using `cosmiconfig` lib
+- unit test
 - hot-reloading

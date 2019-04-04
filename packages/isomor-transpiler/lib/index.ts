@@ -5,7 +5,6 @@ import { pathExists, readFile, outputFile, emptyDir, copy, writeFile } from 'fs-
 import { join, parse as parseFile, basename } from 'path';
 import { getFiles } from 'isomor-core';
 import { parse } from '@typescript-eslint/typescript-estree';
-import rimraf from 'rimraf';
 
 interface Options {
     srcFolder: string;
@@ -68,7 +67,6 @@ async function prepare(options: Options) {
     const { srcFolder, appFolder, serverFolder } = options;
 
     info('Prepare folders');
-    // await rimraf.__promisify__(appFolder);
     await emptyDir(appFolder);
     await copy(srcFolder, appFolder);
     await emptyDir(join(appFolder, serverFolder));

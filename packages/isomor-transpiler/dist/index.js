@@ -45,20 +45,32 @@ function getCodes(fileName, content) {
 }
 function transpile(options, filePath) {
     return __awaiter(this, void 0, void 0, function* () {
-        const { appFolder } = options;
+        const { appFolder, serverFolder } = options;
         const file = path_1.basename(filePath);
         fancy_log_1.info('Transpile', file);
         const buffer = yield fs_extra_1.readFile(filePath);
         const fileName = path_1.parse(file).name;
         const codes = getCodes(fileName, buffer.toString());
         const appCode = `import { remote } from 'isomor';\n\n${codes.join(`\n`)}`;
-        const appFilePath = path_1.join(appFolder, file);
+        const appFilePath = path_1.join(appFolder, serverFolder, file);
+        fancy_log_1.info('Create isomor file', appFilePath);
         yield fs_extra_1.outputFile(appFilePath, appCode);
+    });
+}
+function prepare(options) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const { srcFolder, appFolder, serverFolder } = options;
+        fancy_log_1.info('Prepare folders');
+        yield fs_extra_1.emptyDir(appFolder);
+        yield fs_extra_1.copy(srcFolder, appFolder);
+        yield fs_extra_1.emptyDir(path_1.join(appFolder, serverFolder));
     });
 }
 function start(options) {
     return __awaiter(this, void 0, void 0, function* () {
-        const { folder } = options;
+        yield prepare(options);
+        const { srcFolder, serverFolder } = options;
+        const folder = path_1.join(srcFolder, serverFolder);
         fancy_log_1.info('Start transpiling');
         if (!(yield fs_extra_1.pathExists(folder))) {
             fancy_log_1.error('Folder does not exist', folder);
@@ -70,7 +82,8 @@ function start(options) {
     });
 }
 start({
-    folder: process.env.FOLDER || path_1.join(__dirname, '../example'),
-    appFolder: process.env.APP_FOLDER || path_1.join(__dirname, '../dist-app'),
+    srcFolder: process.env.SRC_FOLDER || './src-isomor',
+    appFolder: process.env.APP_FOLDER || './src',
+    serverFolder: process.env.SERVER_FOLDER || '/server',
 });
 //# sourceMappingURL=index.js.map

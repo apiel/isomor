@@ -19,7 +19,7 @@
     "typescript": "^3.4.1"
   },
   "scripts": {
-    "isomor:build": "rimraf src && cp -r src-isomor src && rimraf src/server && FOLDER=src-isomor/server APP_FOLDER=src/server isomor-transpiler",
+    "isomor:build": "isomor-transpiler",
     "server": "rimraf dist-server && tsc --project ./tsconfig.server.json && SERVER=true node dist-server/server/index.js",
     "start": "react-scripts start",
     "build": "react-scripts build",

@@ -1,14 +1,16 @@
 #!/usr/bin/env node
 
 import { info, error as err } from 'fancy-log'; // fancy log not so fancy, i want colors :D
-import { pathExists, readFile, outputFile } from 'fs-extra';
+import { pathExists, readFile, outputFile, emptyDir, copy, writeFile } from 'fs-extra';
 import { join, parse as parseFile, basename } from 'path';
 import { getFiles } from 'isomor-core';
 import { parse } from '@typescript-eslint/typescript-estree';
+import rimraf from 'rimraf';
 
 interface Options {
-    folder: string;
+    srcFolder: string;
     appFolder: string;
+    serverFolder: string;
 }
 
 interface Func {
@@ -46,7 +48,7 @@ function getCodes(fileName: string, content: string) {
 }
 
 async function transpile(options: Options, filePath: string) {
-    const { appFolder } = options;
+    const { appFolder, serverFolder } = options;
     const file = basename(filePath);
 
     info('Transpile', file);
@@ -56,13 +58,27 @@ async function transpile(options: Options, filePath: string) {
     const codes = getCodes(fileName, buffer.toString());
 
     const appCode = `import { remote } from 'isomor';\n\n${codes.join(`\n`)}`;
-    const appFilePath = join(appFolder, file);
+    const appFilePath = join(appFolder, serverFolder, file);
+    info('Create isomor file', appFilePath);
+    // await writeFile(appFilePath, appCode);
     await outputFile(appFilePath, appCode);
 }
 
+async function prepare(options: Options) {
+    const { srcFolder, appFolder, serverFolder } = options;
+
+    info('Prepare folders');
+    // await rimraf.__promisify__(appFolder);
+    await emptyDir(appFolder);
+    await copy(srcFolder, appFolder);
+    await emptyDir(join(appFolder, serverFolder));
+}
+
 async function start(options: Options) {
-    // should move this in core
-    const { folder } = options;
+    await prepare(options);
+
+    const { srcFolder, serverFolder } = options;
+    const folder = join(srcFolder, serverFolder);
     info('Start transpiling');
     if (!(await pathExists(folder))) {
         err('Folder does not exist', folder);
@@ -70,10 +86,10 @@ async function start(options: Options) {
         const files: string[] = await getFiles(folder);
         files.forEach(file => transpile(options, file));
     }
-
 }
 
 start({
-    folder: process.env.FOLDER || join(__dirname, '../example'),
-    appFolder: process.env.APP_FOLDER || join(__dirname, '../dist-app'),
+    srcFolder: process.env.SRC_FOLDER || './src-isomor',
+    appFolder: process.env.APP_FOLDER || './src',
+    serverFolder: process.env.SERVER_FOLDER || '/server',
 });

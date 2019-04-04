@@ -35,7 +35,7 @@ export async function getList(input: GetListInput): Promise<string[]> {
 
 As you can see, on `componentDidMount` the app is calling `getList` that is located on the server. But no, **I am not speaking about SSR**. Isomor, is transpiling `getList` to a magic function that will call the backend through an http request. Like this, we have very consistent code between backend and server, especially if you are using types.
 
-Right now I implemented this library for TypeScript, since types bring lot of value to this concept. I didn't tried but it might work as well with FlowType. Very soon, I will update the library to support JavaScript as well. Also, till now I did all my test on React, but it might work with Angular, VueJs and so on.
+Right now I implemented this library for TypeScript, since types bring lot of value to this concept. I didn't tried but it might work as well with FlowType and JavaScript as well. Also, till now I did all my test on React, but it might work with Angular, VueJs and so on.
 
 ### How to use it
 
@@ -62,7 +62,7 @@ In `my-app` folder create a copy of `src` called `src-isomor`, **this folder wil
 cp -r src src-isomor
 ```
 
-In `src-isomor` add a folder `server`. This folder will be all server side files. All this files will be transpilled to be usable from the client. 
+In `src-isomor` add a folder `server`. This folder will be all server side files. All this files will be transpilled to be usable from the client.
 
 > Note: the transpiler doesn't support subfolder for the moment.
 
@@ -84,6 +84,8 @@ Now, let's update `package.json` to add some script and a proxy:
     "serv": "yarn build:server && yarn isomor:serv",
     ....
 ```
+
+> Note: if you don't want to use type, you need to prefix `isomor-transpiler` with `WITH_TYPES=false`.
 
 As you can see, `build:server` need a custom tsconfig file. This is because, we need to transpile TypeScript in different way depending if it's running on backend or frontend. Create a new file `tsconfig.server.json` with the following content:
 
@@ -203,7 +205,7 @@ And that's all, open your browser and access the app with the url http://127.0.0
     - server can be exported by another express instance
     - server should also be able to serv static files from generated js file after `react-create-app build`
 - make transpiler work for single file
-- support JS (remove type from generated code)
+- Need to test JS and provide example
 - create react hook to consume server files
     - hook should also be able to handle cache
 - websocket version where server could call frontend functions

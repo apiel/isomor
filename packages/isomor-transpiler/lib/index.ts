@@ -10,6 +10,7 @@ interface Options {
     srcFolder: string;
     appFolder: string;
     serverFolder: string;
+    withTypes: boolean;
 }
 
 interface Func {
@@ -17,7 +18,9 @@ interface Func {
     code: string;
 }
 
-function getCodes(fileName: string, content: string) {
+function getCodes(options: Options, fileName: string, content: string) {
+    const { withTypes } = options;
+    const typing = withTypes ? ': any' : '';
     const codes: string[] = [];
     const { body } = parse(content);
     body.forEach((element) => {
@@ -27,7 +30,7 @@ function getCodes(fileName: string, content: string) {
                 codes.push(code);
             } else if (element.declaration.type === 'FunctionDeclaration') {
                 const { name } = element.declaration.id;
-                const code = `export function ${name}(...args: any) {\n  return remote('${fileName}', '${name}', args);\n}\n`;
+                const code = `export function ${name}(...args${typing}) {\n  return remote('${fileName}', '${name}', args);\n}\n`;
                 codes.push(code);
             } else if (element.declaration.type === 'VariableDeclaration') {
                 const { declarations } = element.declaration;
@@ -37,7 +40,7 @@ function getCodes(fileName: string, content: string) {
                     && declaration.id.type === 'Identifier') {
 
                     const { name } = declaration.id;
-                    const code = `export const ${name} = (...args: any) => {\n  return remote('${fileName}', '${name}', args);\n}\n`;
+                    const code = `export const ${name} = (...args${typing}) => {\n  return remote('${fileName}', '${name}', args);\n}\n`;
                     codes.push(code);
                 }
             }
@@ -54,7 +57,7 @@ async function transpile(options: Options, filePath: string) {
     const buffer = await readFile(filePath);
 
     const fileName = parseFile(file).name;
-    const codes = getCodes(fileName, buffer.toString());
+    const codes = getCodes(options, fileName, buffer.toString());
 
     const appCode = `import { remote } from 'isomor';\n\n${codes.join(`\n`)}`;
     const appFilePath = join(appFolder, serverFolder, file);
@@ -90,4 +93,5 @@ start({
     srcFolder: process.env.SRC_FOLDER || './src-isomor',
     appFolder: process.env.APP_FOLDER || './src',
     serverFolder: process.env.SERVER_FOLDER || '/server',
+    withTypes: process.env.WITH_TYPES === 'false' ? false : true,
 });

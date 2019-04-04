@@ -21,7 +21,7 @@ async function start(options: Options) {
     const { distServerFolder } = options;
     const files = await getFiles(distServerFolder);
     files.forEach(file => {
-        const functions = require(join(process.cwd(), file));
+        const functions = require(require.resolve(file, { paths: [process.cwd()] }));
         Object.keys(functions).forEach(name => {
             const entrypoint = `/isomor/${parse(file).name}/${name}`;
             info('Create entrypoint:', entrypoint);

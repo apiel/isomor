@@ -23,7 +23,7 @@ function start(options) {
         const { distServerFolder } = options;
         const files = yield isomor_core_1.getFiles(distServerFolder);
         files.forEach(file => {
-            const functions = require(path_1.join(process.cwd(), file));
+            const functions = require(require.resolve(file, { paths: [process.cwd()] }));
             Object.keys(functions).forEach(name => {
                 const entrypoint = `/isomor/${path_1.parse(file).name}/${name}`;
                 fancy_log_1.info('Create entrypoint:', entrypoint);

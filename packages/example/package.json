@@ -23,6 +23,7 @@
     "isomor:build": "isomor-transpiler",
     "isomor:serv": "isomor-server",
     "build:server": "rimraf ./dist-server && tsc -p tsconfig.server.json",
+    "serv": "build:server && isomor:serv",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

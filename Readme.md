@@ -37,6 +37,18 @@ As you can see, on `componentDidMount` the app is calling `getList` that is loca
 
 Right now I implemented this library for TypeScript, since types bring lot of value to this concept. I didn't tried but it might work as well with FlowType and JavaScript as well. Also, till now I did all my test on React, but it might work with Angular, VueJs and so on.
 
+### Checkout example
+
+```
+git clone https://github.com/apiel/isomor.git
+cd packages/examples/
+yarn
+yarn serv
+
+yarn isomor:build
+yarn start
+```
+
 ### How to use it
 
 The following instruction will explain you how to setup a working enviroment with React and TypeScript.

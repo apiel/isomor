@@ -14,7 +14,9 @@ const fs_extra_1 = require("fs-extra");
 const path_1 = require("path");
 const isomor_core_1 = require("isomor-core");
 const typescript_estree_1 = require("@typescript-eslint/typescript-estree");
-function getCodes(fileName, content) {
+function getCodes(options, fileName, content) {
+    const { withTypes } = options;
+    const typing = withTypes ? ': any' : '';
     const codes = [];
     const { body } = typescript_estree_1.parse(content);
     body.forEach((element) => {
@@ -25,7 +27,7 @@ function getCodes(fileName, content) {
             }
             else if (element.declaration.type === 'FunctionDeclaration') {
                 const { name } = element.declaration.id;
-                const code = `export function ${name}(...args: any) {\n  return remote('${fileName}', '${name}', args);\n}\n`;
+                const code = `export function ${name}(...args${typing}) {\n  return remote('${fileName}', '${name}', args);\n}\n`;
                 codes.push(code);
             }
             else if (element.declaration.type === 'VariableDeclaration') {
@@ -35,7 +37,7 @@ function getCodes(fileName, content) {
                     && declaration.init.type === 'ArrowFunctionExpression'
                     && declaration.id.type === 'Identifier') {
                     const { name } = declaration.id;
-                    const code = `export const ${name} = (...args: any) => {\n  return remote('${fileName}', '${name}', args);\n}\n`;
+                    const code = `export const ${name} = (...args${typing}) => {\n  return remote('${fileName}', '${name}', args);\n}\n`;
                     codes.push(code);
                 }
             }
@@ -50,7 +52,7 @@ function transpile(options, filePath) {
         fancy_log_1.info('Transpile', file);
         const buffer = yield fs_extra_1.readFile(filePath);
         const fileName = path_1.parse(file).name;
-        const codes = getCodes(fileName, buffer.toString());
+        const codes = getCodes(options, fileName, buffer.toString());
         const appCode = `import { remote } from 'isomor';\n\n${codes.join(`\n`)}`;
         const appFilePath = path_1.join(appFolder, serverFolder, file);
         fancy_log_1.info('Create isomor file', appFilePath);
@@ -63,7 +65,6 @@ function prepare(options) {
         fancy_log_1.info('Prepare folders');
         yield fs_extra_1.emptyDir(appFolder);
         yield fs_extra_1.copy(srcFolder, appFolder);
-        yield fs_extra_1.emptyDir(path_1.join(appFolder, serverFolder));
     });
 }
 function start(options) {
@@ -85,5 +86,6 @@ start({
     srcFolder: process.env.SRC_FOLDER || './src-isomor',
     appFolder: process.env.APP_FOLDER || './src',
     serverFolder: process.env.SERVER_FOLDER || '/server',
+    withTypes: process.env.WITH_TYPES === 'false' ? false : true,
 });
 //# sourceMappingURL=index.js.map

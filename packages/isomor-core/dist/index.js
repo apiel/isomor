@@ -14,11 +14,12 @@ function getFiles(folder) {
     return __awaiter(this, void 0, void 0, function* () {
         if (yield fs_extra_1.pathExists(folder)) {
             const files = yield fs_extra_1.readdir(folder);
-            return Promise.all(files.map((file) => path_1.join(folder, file))
-                .filter((filePath) => __awaiter(this, void 0, void 0, function* () {
+            const onlyFiles = yield Promise.all(files.map((file) => __awaiter(this, void 0, void 0, function* () {
+                const filePath = path_1.join(folder, file);
                 const ls = yield fs_extra_1.lstat(filePath);
-                return ls.isFile();
+                return ls.isFile() ? filePath : null;
             })));
+            return onlyFiles.filter(file => file);
         }
     });
 }

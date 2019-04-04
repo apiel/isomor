@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { info, error as err } from 'fancy-log'; // fancy log not so fancy, i want colors :D
-import { pathExists, readFile, outputFile, emptyDir, copy, writeFile } from 'fs-extra';
+import { pathExists, readFile, outputFile, emptyDir, copy, writeFile, unlink } from 'fs-extra';
 import { join, parse as parseFile, basename } from 'path';
 import { getFiles } from 'isomor-core';
 import { parse } from '@typescript-eslint/typescript-estree';
@@ -63,6 +63,7 @@ async function transpile(options: Options, filePath: string) {
     const appFilePath = join(appFolder, serverFolder, file);
     info('Create isomor file', appFilePath);
     // await writeFile(appFilePath, appCode);
+    // await unlink(appFilePath);
     await outputFile(appFilePath, appCode);
 }
 
@@ -72,7 +73,7 @@ async function prepare(options: Options) {
     info('Prepare folders');
     await emptyDir(appFolder);
     await copy(srcFolder, appFolder);
-    await emptyDir(join(appFolder, serverFolder));
+    // await emptyDir(join(appFolder, serverFolder));
 }
 
 async function start(options: Options) {

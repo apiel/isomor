@@ -4,10 +4,12 @@ import { join } from 'path';
 export async function getFiles(folder: string): Promise<string[]> {
     if (await pathExists(folder)) {
         const files = await readdir(folder);
-        return Promise.all(files.map((file) => join(folder, file))
-            .filter(async (filePath) => {
+        const onlyFiles = await Promise.all(
+            files.map(async (file) => {
+                const filePath = join(folder, file);
                 const ls = await lstat(filePath);
-                return ls.isFile();
+                return ls.isFile() ? filePath : null;
             }));
+        return onlyFiles.filter(file => file);
     }
 }

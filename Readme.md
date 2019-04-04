@@ -249,8 +249,7 @@ const distServerFolder = './dist-server';
 
 ### ToDo
 
-- server should also be able to serv static files from generated js file after `react-create-app build`
-- make transpiler work for single file
+- support sub folder for transpiler
 - create react hook to consume server files
     - hook should also be able to handle cache
 - Need to test JS and provide example

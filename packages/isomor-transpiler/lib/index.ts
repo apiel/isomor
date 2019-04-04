@@ -73,7 +73,7 @@ async function prepare(options: Options) {
     info('Prepare folders');
     await emptyDir(appFolder);
     await copy(srcFolder, appFolder);
-    // await emptyDir(join(appFolder, serverFolder));
+    await emptyDir(join(appFolder, serverFolder));
 }
 
 async function start(options: Options) {

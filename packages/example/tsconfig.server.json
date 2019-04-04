@@ -1,18 +1,24 @@
-
 {
-    "compilerOptions": {
-      "types": [
-        "node"
-      ],
-      "module": "commonjs",
-      "declaration": true,
-      "removeComments": true,
-      "emitDecoratorMetadata": true,
-      "experimentalDecorators": true,
-      "target": "es6",
-      "sourceMap": true,
-      "outDir": "./dist-server",
-      "baseUrl": "./"
-    },
-    "exclude": ["node_modules", "src"],
-  }
+  "compilerOptions": {
+    "types": [
+      "node"
+    ],
+    "module": "commonjs",
+    "declaration": false,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es6",
+    "sourceMap": false,
+    "outDir": "./dist-server",
+    "baseUrl": "./"
+  },
+  "exclude": [
+    "node_modules",
+    "src/!server",
+    "src-isomor"
+  ],
+  "include": [
+    "src/server"
+  ]
+}

@@ -13,6 +13,7 @@
     "express": "^4.16.4",
     "fs-extra": "^7.0.1",
     "isomor": "^0.0.3",
+    "isomor-server": "^0.0.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-scripts": "2.1.8",
@@ -20,7 +21,8 @@
   },
   "scripts": {
     "isomor:build": "isomor-transpiler",
-    "server": "rimraf dist-server && tsc --project ./tsconfig.server.json && SERVER=true node dist-server/server/index.js",
+    "isomor:serv": "isomor-server",
+    "build:server": "rimraf ./dist-server && tsc -p tsconfig.server.json",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

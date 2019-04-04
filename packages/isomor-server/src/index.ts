@@ -12,13 +12,12 @@ interface Options {
 }
 
 async function start(options: Options) {
+    const { distServerFolder, port } = options;
     info('Starting server.');
     const app = express();
-    const port = 3005;
 
     app.use(bodyParser.json());
 
-    const { distServerFolder } = options;
     const files = await getFiles(distServerFolder);
     files.forEach(file => {
         const functions = require(require.resolve(file, { paths: [process.cwd()] }));
@@ -32,12 +31,13 @@ async function start(options: Options) {
                 const result = req.body && req.body.args
                     ? await functions[name](...req.body.args)
                     : await functions[name]();
+                // console.log('result', result);
                 return res.send(result);
             });
         });
     });
 
-    app.listen(options.port, () => info(`Server listening on port ${port}!`));
+    app.listen(port, () => info(`Server listening on port ${port}!`));
 }
 
 start({

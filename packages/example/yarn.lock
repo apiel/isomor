@@ -980,6 +980,13 @@
     "@types/unist" "*"
     "@types/vfile-message" "*"
 
+"@typescript-eslint/typescript-estree@^1.6.0":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/typescript-estree/-/typescript-estree-1.6.0.tgz#6cf43a07fee08b8eb52e4513b428c8cdc9751ef0"
+  dependencies:
+    lodash.unescape "4.0.1"
+    semver "5.5.0"
+
 "@webassemblyjs/ast@1.7.11":
   version "1.7.11"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/ast/-/ast-1.7.11.tgz#b988582cafbb2b095e8b556526f30c90d057cace"
@@ -4601,11 +4608,35 @@ isomor-server@^0.0.2:
     isomor-core "^0.0.1"
     typescript "^3.2.4"
 
-isomor@^0.0.3:
+isomor-server@^0.0.3:
   version "0.0.3"
-  resolved "https://registry.yarnpkg.com/isomor/-/isomor-0.0.3.tgz#113f4b25ce2a1dc71b30d2730f0701654e36696a"
+  resolved "https://registry.yarnpkg.com/isomor-server/-/isomor-server-0.0.3.tgz#6f63fff0cd940f644ceb9bb4afff386cfdc0faf9"
+  dependencies:
+    body-parser "^1.18.3"
+    express "^4.16.4"
+    fancy-log "^1.3.3"
+    fs-extra "^7.0.1"
+    isomor-core "^0.0.1"
+    typescript "^3.2.4"
+
+isomor-transpiler@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/isomor-transpiler/-/isomor-transpiler-0.0.2.tgz#8df8b04df82f2c2f7c5cd1a482a9566d610d1327"
+  dependencies:
+    "@typescript-eslint/typescript-estree" "^1.6.0"
+    fancy-log "^1.3.3"
+    fs-extra "^7.0.1"
+    isomor-core "^0.0.1"
+    ts-node "^8.0.3"
+    typescript "^3.2.4"
+
+isomor@^0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/isomor/-/isomor-0.0.4.tgz#59e731a882502e63436a7fc2a2643a4dfd21a139"
   dependencies:
     axios "^0.18.0"
+    isomor-server "^0.0.3"
+    isomor-transpiler "^0.0.2"
     typescript "^3.2.4"
 
 isstream@~0.1.2:
@@ -5289,6 +5320,10 @@ lodash.templatesettings@^4.0.0:
   resolved "https://registry.yarnpkg.com/lodash.templatesettings/-/lodash.templatesettings-4.1.0.tgz#2b4d4e95ba440d915ff08bc899e4553666713316"
   dependencies:
     lodash._reinterpolate "~3.0.0"
+
+lodash.unescape@4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/lodash.unescape/-/lodash.unescape-4.0.1.tgz#bf2249886ce514cda112fae9218cdc065211fc9c"
 
 lodash.uniq@^4.5.0:
   version "4.5.0"
@@ -7540,6 +7575,10 @@ selfsigned@^1.9.1:
 "semver@2 || 3 || 4 || 5", semver@^5.3.0, semver@^5.4.1, semver@^5.5.0, semver@^5.5.1, semver@^5.6.0:
   version "5.6.0"
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.6.0.tgz#7e74256fbaa49c75aa7c7a205cc22799cac80004"
+
+semver@5.5.0:
+  version "5.5.0"
+  resolved "https://registry.yarnpkg.com/semver/-/semver-5.5.0.tgz#dc4bbc7a6ca9d916dee5d43516f0092b58f7b8ab"
 
 send@0.16.2:
   version "0.16.2"

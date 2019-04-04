@@ -15,10 +15,10 @@
   },
   "exclude": [
     "node_modules",
-    "src/!server",
-    "src-isomor"
+    "src",
+    "src-isomor/!server"
   ],
   "include": [
-    "src/server"
+    "src-isomor/server"
   ]
 }

@@ -16,11 +16,10 @@ const path_1 = require("path");
 const isomor_core_1 = require("isomor-core");
 function start(options) {
     return __awaiter(this, void 0, void 0, function* () {
+        const { distServerFolder, port } = options;
         fancy_log_1.info('Starting server.');
         const app = express();
-        const port = 3005;
         app.use(bodyParser.json());
-        const { distServerFolder } = options;
         const files = yield isomor_core_1.getFiles(distServerFolder);
         files.forEach(file => {
             const functions = require(require.resolve(file, { paths: [process.cwd()] }));
@@ -35,7 +34,7 @@ function start(options) {
                 }));
             });
         });
-        app.listen(options.port, () => fancy_log_1.info(`Server listening on port ${port}!`));
+        app.listen(port, () => fancy_log_1.info(`Server listening on port ${port}!`));
     });
 }
 start({

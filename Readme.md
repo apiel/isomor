@@ -183,9 +183,9 @@ yarn serv
 You should get something like:
 
 ```
-[16:51:00] Starting server.
-[16:51:00] Create entrypoint: /isomor/data/getList
-[16:51:00] Server listening on port 3005!
+[19:55:35] Starting server.
+[19:55:35] Created endpoints: [ '/isomor/data/getList' ]
+[19:55:35] Server listening on port 3005!
 ```
 
 The server is running on port `3005` and previously we setup a proxy in `package.json` to this port (for dev purpose only).
@@ -199,14 +199,37 @@ yarn start
 
 And that's all, open your browser and access the app with the url http://127.0.0.1:3000/
 
+### Custom server
+
+Since `isomor` is using expressJs, you could integrate it to your existing api. Just import `useIsomor` from `isomor-server`:
+
+```
+import * as express from 'express';
+import * as bodyParser from 'body-parser';
+import { useIsomor } from 'isomor-server';
+
+const distServerFolder = './dist-server';
+
+(async function() {
+    const app = express();
+
+    app.use(bodyParser.json());
+    const endpoints = await useIsomor(app, distServerFolder);
+    console.log('Created endpoints:', endpoints);
+
+    app.listen(3005, () => console.log(`Server listening on port 3005!`));
+})();
+```
+
+> Note: you need `bodyParser`
+
 ### ToDo
 
-- make server exportable
-    - server can be exported by another express instance
-    - server should also be able to serv static files from generated js file after `react-create-app build`
+- server should also be able to serv static files from generated js file after `react-create-app build`
 - make transpiler work for single file
-- Need to test JS and provide example
 - create react hook to consume server files
     - hook should also be able to handle cache
+- Need to test JS and provide example
 - websocket version where server could call frontend functions
 - add config file using `cosmiconfig` lib
+- hot-reloading

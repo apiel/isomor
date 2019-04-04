@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -9,36 +8,25 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const fancy_log_1 = require("fancy-log");
-const express = require("express");
-const bodyParser = require("body-parser");
 const path_1 = require("path");
 const isomor_core_1 = require("isomor-core");
-function start(options) {
+function useIsomor(app, distServerFolder) {
     return __awaiter(this, void 0, void 0, function* () {
-        const { distServerFolder, port } = options;
-        fancy_log_1.info('Starting server.');
-        const app = express();
-        app.use(bodyParser.json());
         const files = yield isomor_core_1.getFiles(distServerFolder);
-        files.forEach(file => {
+        return files.map(file => {
             const functions = require(require.resolve(file, { paths: [process.cwd()] }));
-            Object.keys(functions).forEach(name => {
+            return Object.keys(functions).map(name => {
                 const entrypoint = `/isomor/${path_1.parse(file).name}/${name}`;
-                fancy_log_1.info('Create entrypoint:', entrypoint);
                 app.use(entrypoint, (req, res) => __awaiter(this, void 0, void 0, function* () {
                     const result = req.body && req.body.args
                         ? yield functions[name](...req.body.args)
                         : yield functions[name]();
                     return res.send(result);
                 }));
+                return entrypoint;
             });
-        });
-        app.listen(port, () => fancy_log_1.info(`Server listening on port ${port}!`));
+        }).flat();
     });
 }
-start({
-    distServerFolder: process.env.DIST_SERVER_FOLDER || './dist-server',
-    port: process.env.PORT ? parseInt(process.env.PORT, 10) : 3005,
-});
+exports.useIsomor = useIsomor;
 //# sourceMappingURL=index.js.map

@@ -1,7 +1,7 @@
 
 # Isomor
 
-Isomor isa library to create an interface between your backend and your frontend with nodejs and javascript application. Today, fullstack developers often use monorepo to centralize all there architecture inside a single place. This library allow you to do even more. Instead to have different application for backend and frontend, you develop a single "isomorphic" application and `isomor` will take care to split the code and setup a communication protocole. See following example:
+`Isomor` is a library to create an interface between your backend and your frontend with nodejs and javascript application. Today, fullstack developers often use monorepo to centralize all their architecture inside a single place. This library allow you to do even more. Instead to have different application for backend and frontend, you develop a single "isomorphic" application and `isomor` will take care to split the code and setup a communication protocole. See following example:
 
 ```
 class App extends Component {
@@ -33,9 +33,9 @@ export async function getList(input: GetListInput): Promise<string[]> {
 }
 ```
 
-As you can see, on `componentDidMount` the app is calling `getList` that is located on the server. So, the first thing that might comme to your mind, might be "aaaah it's server side rendering". But no, **I am not speaking about SSR**. Isomor, is transpiling `getList` to a magic function that will call the backend through an http request. Like this, we have very consistent code between backend and server, especially if you are using types.
+As you can see, on `componentDidMount` the app is calling `getList` that is located on the server. But no, **I am not speaking about SSR**. Isomor, is transpiling `getList` to a magic function that will call the backend through an http request. Like this, we have very consistent code between backend and server, especially if you are using types.
 
-Right now I implemented this library for TypeScript, since types bring lot of value to this concept. I didn't tried but it might work as well with flowtype. Very soon, I will update the library to support JavaScript as well. Also, till now I did all my test on React, but it might work with Angular, VueJs and so on.
+Right now I implemented this library for TypeScript, since types bring lot of value to this concept. I didn't tried but it might work as well with FlowType. Very soon, I will update the library to support JavaScript as well. Also, till now I did all my test on React, but it might work with Angular, VueJs and so on.
 
 ### How to use it
 
@@ -53,14 +53,14 @@ Then add `isomor` library:
 yarn add isomor
 ```
 
-In `my-app` folder create a copy of `src` called `src-isomor`, this folder will be where you are coding.
+In `my-app` folder create a copy of `src` called `src-isomor`, **this folder will be where you are coding**.
 
 ```
 cd my-app
 cp -r src src-isomor
 ```
 
-In `src-isomor` add a folder `server`. This folder will be all server side files. All this files will be transpilled to be usable from the client. Note that the transpiler doesn't support subfolder for the moment for the server files.
+In `src-isomor` add a folder `server`. This folder will be all server side files. All this files will be transpilled to be usable from the client. Note that the transpiler doesn't support subfolder for the moment.
 
 ```
 cd src-isomor
@@ -81,7 +81,7 @@ Now, let's update `package.json` to add some script and a proxy:
     ....
 ```
 
-As you can see, `build:server` need a custom tsconfig file. This is because, we need to transpile TypeScript in different way depending if it's running on backend or frontend. So a new file `tsconfig.server.json` with the following content:
+As you can see, `build:server` need a custom tsconfig file. This is because, we need to transpile TypeScript in different way depending if it's running on backend or frontend. Create a new file `tsconfig.server.json` with the following content:
 
 ```
 {
@@ -132,7 +132,7 @@ yarn add fs-extra
 yarn add @types/fs-extra --dev
 ```
 
-So now let's call `getList` in the app. Open `src-isomor/App.tsx` and add the following code:
+Now let's call `getList` in the app. Open `src-isomor/App.tsx` and add the following code:
 
 ```
 import React from 'react';
@@ -182,7 +182,7 @@ You should get something like:
 [16:51:00] Server listening on port 3005!
 ```
 
-The server is running on port `3005` and previously we setup a proxy in package.json to this port (for dev purpose only).
+The server is running on port `3005` and previously we setup a proxy in `package.json` to this port (for dev purpose only).
 
 Now let's start the app:
 

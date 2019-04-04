@@ -41,10 +41,13 @@ Right now I implemented this library for TypeScript, since types bring lot of va
 
 The following instruction will explain you how to setup a working enviroment with React and TypeScript.
 
+Note: find an example in the repo  `packages/examples/src-isomor/App.tsx`
+
 So let's create an react app with `create-react-app`:
 
 ```
 npx create-react-app my-app --typescript
+cd my-app
 ```
 
 Then add `isomor` library:
@@ -56,7 +59,6 @@ yarn add isomor
 In `my-app` folder create a copy of `src` called `src-isomor`, **this folder will be where you are coding**.
 
 ```
-cd my-app
 cp -r src src-isomor
 ```
 
@@ -191,7 +193,7 @@ yarn isomor:build
 yarn start
 ```
 
-And that's all.
+And that's all, open your browser and access the app with the url http://127.0.0.1:3000/
 
 ### ToDo
 

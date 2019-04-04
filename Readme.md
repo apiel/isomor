@@ -211,6 +211,18 @@ yarn start
 
 And that's all, open your browser and access the app with the url http://127.0.0.1:3000/
 
+#### Run in production
+
+```
+yarn isomor:build
+yarn build
+STATIC_FOLDER=./build yarn serv
+```
+
+Open http://127.0.0.1:3005/
+
+> Note: it would be better to use nginx to serv static files
+
 ### Custom server
 
 Since `isomor` is using expressJs, you could integrate it to your existing api. Just import `useIsomor` from `isomor-server`:

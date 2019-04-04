@@ -15,17 +15,22 @@ const bodyParser = require("body-parser");
 const _1 = require(".");
 function start(options) {
     return __awaiter(this, void 0, void 0, function* () {
-        const { distServerFolder, port } = options;
+        const { distServerFolder, port, staticFolder } = options;
         fancy_log_1.info('Starting server.');
         const app = express();
         app.use(bodyParser.json());
         const endpoints = yield _1.useIsomor(app, distServerFolder);
         fancy_log_1.info('Created endpoints:', endpoints);
+        if (staticFolder) {
+            fancy_log_1.info('Add static folder', staticFolder);
+            app.use(express.static(staticFolder));
+        }
         app.listen(port, () => fancy_log_1.info(`Server listening on port ${port}!`));
     });
 }
 start({
     distServerFolder: process.env.DIST_SERVER_FOLDER || './dist-server',
     port: process.env.PORT ? parseInt(process.env.PORT, 10) : 3005,
+    staticFolder: process.env.STATIC_FOLDER || null,
 });
 //# sourceMappingURL=server.js.map

@@ -8,10 +8,11 @@ import { useIsomor } from '.';
 interface Options {
     distServerFolder: string;
     port: number;
+    staticFolder: string | null;
 }
 
 async function start(options: Options) {
-    const { distServerFolder, port } = options;
+    const { distServerFolder, port, staticFolder } = options;
     info('Starting server.');
     const app = express();
 
@@ -19,10 +20,16 @@ async function start(options: Options) {
     const endpoints = await useIsomor(app, distServerFolder);
     info('Created endpoints:', endpoints);
 
+    if (staticFolder) {
+        info('Add static folder', staticFolder);
+        app.use(express.static(staticFolder));
+    }
+
     app.listen(port, () => info(`Server listening on port ${port}!`));
 }
 
 start({
     distServerFolder: process.env.DIST_SERVER_FOLDER || './dist-server',
     port: process.env.PORT ? parseInt(process.env.PORT, 10) : 3005,
+    staticFolder: process.env.STATIC_FOLDER || null,
 });

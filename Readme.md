@@ -49,7 +49,7 @@ yarn isomor:build
 yarn start
 ```
 
-### How to use it
+### How to setup Isomor
 
 The following instruction will explain you how to setup a working enviroment with React and TypeScript.
 

@@ -41,7 +41,7 @@ Right now I implemented this library for TypeScript, since types bring lot of va
 
 The following instruction will explain you how to setup a working enviroment with React and TypeScript.
 
-Note: find an example in the repo  `packages/examples/src-isomor/App.tsx`
+> Note: find an example in the repo  `packages/examples/src-isomor/App.tsx`
 
 So let's create an react app with `create-react-app`:
 
@@ -62,7 +62,9 @@ In `my-app` folder create a copy of `src` called `src-isomor`, **this folder wil
 cp -r src src-isomor
 ```
 
-In `src-isomor` add a folder `server`. This folder will be all server side files. All this files will be transpilled to be usable from the client. Note that the transpiler doesn't support subfolder for the moment.
+In `src-isomor` add a folder `server`. This folder will be all server side files. All this files will be transpilled to be usable from the client. 
+
+> Note: the transpiler doesn't support subfolder for the moment.
 
 ```
 cd src-isomor
@@ -111,7 +113,7 @@ As you can see, `build:server` need a custom tsconfig file. This is because, we 
   ]
 }
 ```
-Note: it's important to keep `"sourceMap": false,` and `"declaration": false,`.
+> Note: it's important to keep `"sourceMap": false,` and `"declaration": false,`.
 
 Now we have our working environment. Let's try out with adding a file `data.ts` in the server folder `src-isomor/server`:
 

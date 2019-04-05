@@ -8,7 +8,8 @@ function myMacro({references, state, babel}) {
     // do whatever you like to the AST paths you find in `references`
     // read more below...
 
-    console.log('references', references);
-    console.log('state', state);
+    // console.log('references', references.default[0]);
+    // console.log('state', state);
     // console.log('babel', babel);
+    references.default[0].replaceWith(babel.types.stringLiteral('hi there'));
 }

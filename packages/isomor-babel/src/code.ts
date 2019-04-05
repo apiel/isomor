@@ -1,3 +1,27 @@
+export function getCodeImport(): any {
+    const name = 'remote';
+    return {
+        type: 'ImportDeclaration',
+        specifiers: [
+            {
+                type: 'ImportSpecifier',
+                imported: {
+                    type: 'Identifier',
+                    name,
+                },
+                local: {
+                    type: 'Identifier',
+                    name,
+                },
+            },
+        ],
+        source: {
+            type: 'StringLiteral',
+            value: 'isomor',
+        },
+    };
+}
+
 export function getCodeFunc(fileName: string, name: string, withTypes: boolean): any {
     return {
         type: 'ExportNamedDeclaration',

@@ -1,5 +1,29 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+function getCodeImport() {
+    const name = 'remote';
+    return {
+        type: 'ImportDeclaration',
+        specifiers: [
+            {
+                type: 'ImportSpecifier',
+                imported: {
+                    type: 'Identifier',
+                    name,
+                },
+                local: {
+                    type: 'Identifier',
+                    name,
+                },
+            },
+        ],
+        source: {
+            type: 'StringLiteral',
+            value: 'isomor',
+        },
+    };
+}
+exports.getCodeImport = getCodeImport;
 function getCodeFunc(fileName, name, withTypes) {
     return {
         type: 'ExportNamedDeclaration',

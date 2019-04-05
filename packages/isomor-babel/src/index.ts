@@ -1,7 +1,7 @@
 
 import { Visitor, parseSync } from '@babel/core';
 import { parse } from 'path';
-import { getCodeFunc, getCodeArrowFunc } from './code';
+import { getCodeFunc, getCodeArrowFunc, getCodeImport } from './code';
 
 // const newNode = (parseSync('some code') as any).program.body[0];
 // console.log('yoyoyo', JSON.stringify(newNode, null, 4));
@@ -12,6 +12,7 @@ export default function() {
     const visitor: Visitor = {
         Program(path, { filename }: any) {
             const fileName = parse(filename).name;
+
             path.node.body.forEach((node, index) => {
                 // if (isDeclaration(node, { type: 'ExportNamedDeclaration' })) { // doesnt work well with TS
                 if (node.type === 'ExportNamedDeclaration') {
@@ -42,6 +43,7 @@ export default function() {
                     delete path.node.body[index];
                 }
             });
+            path.node.body.unshift(getCodeImport());
         },
     };
 
@@ -50,5 +52,3 @@ export default function() {
         visitor,
     };
 }
-
-// todo: need to add import remote from isomor

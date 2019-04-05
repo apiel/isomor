@@ -25,23 +25,22 @@ function default_1() {
                             path.node.body[index] = code_1.getCodeArrowFunc(fileName, name, withTypes);
                         }
                         else {
-                            console.log('we should remove code', declaration);
                             delete path.node.body[index];
                         }
                     }
                     else {
-                        console.log('we should remove code', node.declaration.type);
                         delete path.node.body[index];
                     }
                 }
                 else {
-                    console.log('we should remove code', node.type);
                     delete path.node.body[index];
                 }
             });
+            path.node.body.unshift(code_1.getCodeImport());
         },
     };
     return {
+        name: 'isomor-babel',
         visitor,
     };
 }

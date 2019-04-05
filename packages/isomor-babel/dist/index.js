@@ -52,203 +52,45 @@ exports.default = default_1;
 function getFunc(fileName, name, withTypes) {
     return {
         type: 'ExportNamedDeclaration',
-        start: 0,
-        end: 87,
-        loc: {
-            start: {
-                line: 1,
-                column: 0,
-            },
-            end: {
-                line: 3,
-                column: 1,
-            },
-        },
-        specifiers: [],
-        source: null,
         declaration: {
             type: 'FunctionDeclaration',
-            start: 7,
-            end: 87,
-            loc: {
-                start: {
-                    line: 1,
-                    column: 7,
-                },
-                end: {
-                    line: 3,
-                    column: 1,
-                },
-            },
             id: {
                 type: 'Identifier',
-                start: 16,
-                end: 26,
-                loc: {
-                    start: {
-                        line: 1,
-                        column: 16,
-                    },
-                    end: {
-                        line: 1,
-                        column: 26,
-                    },
-                    identifierName: 'getListFoo',
-                },
-                name: 'getListFoo',
+                name,
             },
             generator: false,
             async: false,
             params: [
                 {
                     type: 'RestElement',
-                    start: 27,
-                    end: 34,
-                    loc: {
-                        start: {
-                            line: 1,
-                            column: 27,
-                        },
-                        end: {
-                            line: 1,
-                            column: 34,
-                        },
-                    },
                     argument: {
                         type: 'Identifier',
-                        start: 30,
-                        end: 34,
-                        loc: {
-                            start: {
-                                line: 1,
-                                column: 30,
-                            },
-                            end: {
-                                line: 1,
-                                column: 34,
-                            },
-                            identifierName: 'args',
-                        },
                         name: 'args',
                     },
                 },
             ],
             body: {
                 type: 'BlockStatement',
-                start: 36,
-                end: 87,
-                loc: {
-                    start: {
-                        line: 1,
-                        column: 36,
-                    },
-                    end: {
-                        line: 3,
-                        column: 1,
-                    },
-                },
                 body: [
                     {
                         type: 'ReturnStatement',
-                        start: 40,
-                        end: 85,
-                        loc: {
-                            start: {
-                                line: 2,
-                                column: 2,
-                            },
-                            end: {
-                                line: 2,
-                                column: 47,
-                            },
-                        },
                         argument: {
                             type: 'CallExpression',
-                            start: 47,
-                            end: 84,
-                            loc: {
-                                start: {
-                                    line: 2,
-                                    column: 9,
-                                },
-                                end: {
-                                    line: 2,
-                                    column: 46,
-                                },
-                            },
                             callee: {
                                 type: 'Identifier',
-                                start: 47,
-                                end: 53,
-                                loc: {
-                                    start: {
-                                        line: 2,
-                                        column: 9,
-                                    },
-                                    end: {
-                                        line: 2,
-                                        column: 15,
-                                    },
-                                    identifierName: 'remote',
-                                },
                                 name: 'remote',
                             },
                             arguments: [
                                 {
                                     type: 'StringLiteral',
-                                    start: 54,
-                                    end: 63,
-                                    loc: {
-                                        start: {
-                                            line: 2,
-                                            column: 16,
-                                        },
-                                        end: {
-                                            line: 2,
-                                            column: 25,
-                                        },
-                                    },
-                                    extra: {
-                                        rawValue: 'example',
-                                        raw: '\'example\'',
-                                    },
-                                    value: 'example',
+                                    value: fileName,
                                 },
                                 {
                                     type: 'StringLiteral',
-                                    start: 65,
-                                    end: 77,
-                                    loc: {
-                                        start: {
-                                            line: 2,
-                                            column: 27,
-                                        },
-                                        end: {
-                                            line: 2,
-                                            column: 39,
-                                        },
-                                    },
-                                    extra: {
-                                        rawValue: 'getListFoo',
-                                        raw: '\'getListFoo\'',
-                                    },
-                                    value: 'getListFoo',
+                                    value: name,
                                 },
                                 {
                                     type: 'Identifier',
-                                    start: 79,
-                                    end: 83,
-                                    loc: {
-                                        start: {
-                                            line: 2,
-                                            column: 41,
-                                        },
-                                        end: {
-                                            line: 2,
-                                            column: 45,
-                                        },
-                                        identifierName: 'args',
-                                    },
                                     name: 'args',
                                 },
                             ],

@@ -1,0 +1,25 @@
+{
+    "name": "isomor.macro",
+    "version": "0.0.1",
+    "main": "dist/macro.js",
+    "types": "dist/macro.d.ts",
+    "author": "Alexandre Piel <alexandre.piel@gmail.com>",
+    "license": "MIT",
+    "scripts": {
+        "prebuild": "rm -rf dist/",
+        "build": "tsc -p tsconfig.json",
+        "lint": "tslint -p tsconfig.json -c tslint.json"
+    },
+    "dependencies": {
+        "babel-plugin-macros": "^2.5.1",
+        "typescript": "^3.2.4"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.4.3",
+        "@babel/preset-typescript": "^7.3.3",
+        "@types/rimraf": "^2.0.2",
+        "babel-plugin-tester": "^6.0.1",
+        "rimraf": "^2.6.3",
+        "tslint": "^5.12.1"
+    }
+}

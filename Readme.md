@@ -53,7 +53,7 @@ yarn start
 
 The following instruction will explain you how to setup a working enviroment with React and TypeScript.
 
-> Note: find an example in the repo  `packages/examples/src-isomor/App.tsx`
+> **Note:** find an example in the repo  `packages/examples/src-isomor/App.tsx`
 
 So let's create an react app with `create-react-app`:
 
@@ -76,7 +76,7 @@ cp -r src src-isomor
 
 In `src-isomor` add a folder `server`. This folder will be all server side files. All this files will be transpilled to be usable from the client.
 
-> Note: the transpiler only transpile file in root of `src-isomor/server`. `server` folder can contain subfolder, but they should not be directly linked to the app.
+> **Note:** the transpiler only transpile file in root of `src-isomor/server`. `server` folder can contain subfolder, but they should not be directly linked to the app.
 
 ```
 cd src-isomor
@@ -97,7 +97,7 @@ Now, let's update `package.json` to add some script and a proxy:
     ....
 ```
 
-> Note: if you don't want to use type, you need to prefix `isomor-transpiler` with `WITH_TYPES=false`.
+> **Note:** if you don't want to use type, you need to prefix `isomor-transpiler` with `WITH_TYPES=false`.
 
 As you can see, `build:server` need a custom tsconfig file. This is because, we need to transpile TypeScript in different way depending if it's running on backend or frontend. Create a new file `tsconfig.server.json` with the following content:
 
@@ -127,7 +127,7 @@ As you can see, `build:server` need a custom tsconfig file. This is because, we 
   ]
 }
 ```
-> Note: it's important to keep `"sourceMap": false,` and `"declaration": false,`.
+> **Note:** it's important to keep `"sourceMap": false,` and `"declaration": false,`.
 
 Now we have our working environment. Let's try out with adding a file `data.ts` in the server folder `src-isomor/server`:
 
@@ -221,7 +221,7 @@ STATIC_FOLDER=./build yarn serv
 
 Open http://127.0.0.1:3005/
 
-> Note: it would be better to use nginx to serv static files
+> **Note:** it would be better to use nginx to serv static files
 
 ### Custom server
 
@@ -245,7 +245,7 @@ const distServerFolder = './dist-server';
 })();
 ```
 
-> Note: you need `bodyParser`
+> **Note:** you need `bodyParser`
 
 ### ToDo
 
@@ -253,6 +253,8 @@ const distServerFolder = './dist-server';
     - hook should also be able to handle cache
 - Need to test JS and provide example
 - websocket version where server could call frontend functions
-- add config file using `cosmiconfig` lib
+- add config file using `cosmiconfig` lib (isomor-core)
 - unit test
 - hot-reloading
+
+- https://medium.com/simply/state-management-with-react-hooks-and-context-api-at-10-lines-of-code-baf6be8302c

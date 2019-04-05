@@ -30,15 +30,15 @@ export default function() {
                             const { name } = declaration.id;
                             path.node.body[index] = getCodeArrowFunc(fileName, name, withTypes);
                         } else {
-                            console.log('we should remove code', declaration);
+                            // console.log('we should remove code', declaration);
                             delete path.node.body[index];
                         }
                     } else {
-                        console.log('we should remove code', node.declaration.type);
+                        // console.log('we should remove code', node.declaration.type);
                         delete path.node.body[index];
                     }
                 } else {
-                    console.log('we should remove code', node.type);
+                    // console.log('we should remove code', node.type);
                     delete path.node.body[index];
                 }
             });
@@ -46,6 +46,9 @@ export default function() {
     };
 
     return {
+        name: 'isomor-babel',
         visitor,
     };
 }
+
+// todo: need to add import remote from isomor

@@ -262,3 +262,7 @@ const distServerFolder = './dist-server';
 - make babel plugin
   - https://github.com/jamiebuilds/babel-handbook/blob/master/translations/en/plugin-handbook.md#stages-of-babel
   
+
+Notes:
+babel --presets @babel/preset-typescript --plugins isomor-babel src-isomor/server/data.ts -o yo.ts
+

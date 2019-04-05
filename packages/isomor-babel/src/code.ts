@@ -95,5 +95,5 @@ function getBody(fileName: string, name: string) {
                 },
             },
         ],
-    }
+    };
 }

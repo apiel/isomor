@@ -38,7 +38,6 @@ function default_1() {
                     console.log('we should remove code', node.type);
                     delete path.node.body[index];
                 }
-                console.log('----');
             });
         },
     };

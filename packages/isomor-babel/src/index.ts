@@ -3,12 +3,11 @@ import { Visitor, parseSync } from '@babel/core';
 import { parse } from 'path';
 import { getCodeFunc, getCodeArrowFunc } from './code';
 
-// const newNode = (parseSync(code) as any).program.body[0];
+// const newNode = (parseSync('some code') as any).program.body[0];
 // console.log('yoyoyo', JSON.stringify(newNode, null, 4));
 
 export default function() {
     const withTypes = true; // should find out if it is js or ts
-    // const typing = withTypes ? ': any' : '';
 
     const visitor: Visitor = {
         Program(path, { filename }: any) {
@@ -42,7 +41,6 @@ export default function() {
                     console.log('we should remove code', node.type);
                     delete path.node.body[index];
                 }
-                console.log('----');
             });
         },
     };

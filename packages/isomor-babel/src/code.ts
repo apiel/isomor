@@ -1,5 +1,3 @@
-import { DeclareExportDeclaration } from '@babel/types';
-
 export function getCodeFunc(fileName: string, name: string, withTypes: boolean): any {
     return {
         type: 'ExportNamedDeclaration',
@@ -9,45 +7,8 @@ export function getCodeFunc(fileName: string, name: string, withTypes: boolean):
                 type: 'Identifier',
                 name,
             },
-            params: [
-                {
-                    type: 'RestElement',
-                    argument: {
-                        type: 'Identifier',
-                        name: 'args',
-                    },
-                },
-            ],
-            body: {
-                type: 'BlockStatement',
-                body: [
-                    {
-                        type: 'ReturnStatement',
-                        argument: {
-                            type: 'CallExpression',
-                            callee: {
-                                type: 'Identifier',
-                                name: 'remote',
-                            },
-                            arguments: [
-                                {
-                                    type: 'StringLiteral',
-                                    value: fileName,
-                                },
-                                {
-                                    type: 'StringLiteral',
-                                    value: name,
-                                },
-                                {
-                                    type: 'Identifier',
-                                    name: 'args',
-                                },
-                            ],
-                        },
-                    },
-                ],
-                directives: [],
-            },
+            params: getParams(withTypes),
+            body: getBody(fileName, name),
         },
     };
 }
@@ -55,8 +16,6 @@ export function getCodeFunc(fileName: string, name: string, withTypes: boolean):
 export function getCodeArrowFunc(fileName: string, name: string, withTypes: boolean): any {
     return {
         type: 'ExportNamedDeclaration',
-        specifiers: [],
-        source: null,
         declaration: {
             type: 'VariableDeclaration',
             declarations: [
@@ -68,52 +27,73 @@ export function getCodeArrowFunc(fileName: string, name: string, withTypes: bool
                     },
                     init: {
                         type: 'ArrowFunctionExpression',
-                        id: null,
-                        generator: false,
-                        async: false,
-                        params: [
-                            {
-                                type: 'RestElement',
-                                argument: {
-                                    type: 'Identifier',
-                                    name: 'args',
-                                },
-                            },
-                        ],
-                        body: {
-                            type: 'BlockStatement',
-                            body: [
-                                {
-                                    type: 'ReturnStatement',
-                                    argument: {
-                                        type: 'CallExpression',
-                                        callee: {
-                                            type: 'Identifier',
-                                            name: 'remote',
-                                        },
-                                        arguments: [
-                                            {
-                                                type: 'StringLiteral',
-                                                value: fileName,
-                                            },
-                                            {
-                                                type: 'StringLiteral',
-                                                value: name,
-                                            },
-                                            {
-                                                type: 'Identifier',
-                                                name: 'args',
-                                            },
-                                        ],
-                                    },
-                                },
-                            ],
-                            directives: [],
-                        },
+                        params: getParams(withTypes),
+                        body: getBody(fileName, name),
                     },
                 },
             ],
             kind: 'const',
         },
     };
+}
+
+// arguments => (...args)
+function getParams(withTypes: boolean) {
+    return [
+        {
+            type: 'RestElement',
+            argument: {
+                type: 'Identifier',
+                name: 'args',
+            },
+            ...getTypeAny(withTypes),
+        },
+    ];
+}
+
+// type => ': any'
+function getTypeAny(withTypes: boolean) {
+    return withTypes ? {
+        typeAnnotation: {
+            type: 'TSTypeAnnotation',
+            typeAnnotation: {
+                type: 'TSAnyKeyword',
+            },
+        },
+    } : {};
+}
+
+// {
+//     return remote("example", "getList2", args);
+// }
+function getBody(fileName: string, name: string) {
+    return {
+        type: 'BlockStatement',
+        body: [
+            {
+                type: 'ReturnStatement',
+                argument: {
+                    type: 'CallExpression',
+                    callee: {
+                        type: 'Identifier',
+                        name: 'remote',
+                    },
+                    arguments: [
+                        {
+                            type: 'StringLiteral',
+                            value: fileName,
+                        },
+                        {
+                            type: 'StringLiteral',
+                            value: name,
+                        },
+                        {
+                            type: 'Identifier',
+                            name: 'args',
+                        },
+                    ],
+                },
+            },
+        ],
+    }
 }

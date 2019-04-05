@@ -9,45 +9,8 @@ function getCodeFunc(fileName, name, withTypes) {
                 type: 'Identifier',
                 name,
             },
-            params: [
-                {
-                    type: 'RestElement',
-                    argument: {
-                        type: 'Identifier',
-                        name: 'args',
-                    },
-                },
-            ],
-            body: {
-                type: 'BlockStatement',
-                body: [
-                    {
-                        type: 'ReturnStatement',
-                        argument: {
-                            type: 'CallExpression',
-                            callee: {
-                                type: 'Identifier',
-                                name: 'remote',
-                            },
-                            arguments: [
-                                {
-                                    type: 'StringLiteral',
-                                    value: fileName,
-                                },
-                                {
-                                    type: 'StringLiteral',
-                                    value: name,
-                                },
-                                {
-                                    type: 'Identifier',
-                                    name: 'args',
-                                },
-                            ],
-                        },
-                    },
-                ],
-                directives: [],
-            },
+            params: getParams(withTypes),
+            body: getBody(fileName, name),
         },
     };
 }
@@ -55,8 +18,6 @@ exports.getCodeFunc = getCodeFunc;
 function getCodeArrowFunc(fileName, name, withTypes) {
     return {
         type: 'ExportNamedDeclaration',
-        specifiers: [],
-        source: null,
         declaration: {
             type: 'VariableDeclaration',
             declarations: [
@@ -68,48 +29,8 @@ function getCodeArrowFunc(fileName, name, withTypes) {
                     },
                     init: {
                         type: 'ArrowFunctionExpression',
-                        id: null,
-                        generator: false,
-                        async: false,
-                        params: [
-                            {
-                                type: 'RestElement',
-                                argument: {
-                                    type: 'Identifier',
-                                    name: 'args',
-                                },
-                            },
-                        ],
-                        body: {
-                            type: 'BlockStatement',
-                            body: [
-                                {
-                                    type: 'ReturnStatement',
-                                    argument: {
-                                        type: 'CallExpression',
-                                        callee: {
-                                            type: 'Identifier',
-                                            name: 'remote',
-                                        },
-                                        arguments: [
-                                            {
-                                                type: 'StringLiteral',
-                                                value: fileName,
-                                            },
-                                            {
-                                                type: 'StringLiteral',
-                                                value: name,
-                                            },
-                                            {
-                                                type: 'Identifier',
-                                                name: 'args',
-                                            },
-                                        ],
-                                    },
-                                },
-                            ],
-                            directives: [],
-                        },
+                        params: getParams(withTypes),
+                        body: getBody(fileName, name),
                     },
                 },
             ],
@@ -118,4 +39,53 @@ function getCodeArrowFunc(fileName, name, withTypes) {
     };
 }
 exports.getCodeArrowFunc = getCodeArrowFunc;
+function getParams(withTypes) {
+    return [
+        Object.assign({ type: 'RestElement', argument: {
+                type: 'Identifier',
+                name: 'args',
+            } }, getTypeAny(withTypes)),
+    ];
+}
+function getTypeAny(withTypes) {
+    return withTypes ? {
+        typeAnnotation: {
+            type: 'TSTypeAnnotation',
+            typeAnnotation: {
+                type: 'TSAnyKeyword',
+            },
+        },
+    } : {};
+}
+function getBody(fileName, name) {
+    return {
+        type: 'BlockStatement',
+        body: [
+            {
+                type: 'ReturnStatement',
+                argument: {
+                    type: 'CallExpression',
+                    callee: {
+                        type: 'Identifier',
+                        name: 'remote',
+                    },
+                    arguments: [
+                        {
+                            type: 'StringLiteral',
+                            value: fileName,
+                        },
+                        {
+                            type: 'StringLiteral',
+                            value: name,
+                        },
+                        {
+                            type: 'Identifier',
+                            name: 'args',
+                        },
+                    ],
+                },
+            },
+        ],
+    };
+}
 //# sourceMappingURL=code.js.map

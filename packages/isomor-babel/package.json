@@ -1,0 +1,23 @@
+{
+    "name": "isomor-babel",
+    "version": "0.0.1",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "author": "Alexandre Piel <alexandre.piel@gmail.com>",
+    "license": "MIT",
+    "scripts": {
+        "prebuild": "rm -rf dist/",
+        "build": "tsc -p tsconfig.json",
+        "lint": "tslint -p tsconfig.json -c tslint.json"
+    },
+    "dependencies": {
+        "typescript": "^3.2.4"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.4.3",
+        "@babel/preset-typescript": "^7.3.3",
+        "@types/rimraf": "^2.0.2",
+        "rimraf": "^2.6.3",
+        "tslint": "^5.12.1"
+    }
+}

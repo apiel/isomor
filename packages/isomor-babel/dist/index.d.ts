@@ -1,5 +1,4 @@
-export default function ({ types: t }: {
-    types: any;
-}): {
-    visitor: {};
+import { Visitor } from '@babel/core';
+export default function (): {
+    visitor: Visitor<{}>;
 };

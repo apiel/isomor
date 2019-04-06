@@ -68,7 +68,7 @@ async function start(options: Options) {
 
 start({
     srcFolder: process.env.SRC_FOLDER || './src-isomor',
-    distFolder: process.env.DIST_FOLDER || './src',
+    distFolder: process.env.DIST_APP_FOLDER || './src',
     serverFolder: process.env.SERVER_FOLDER || '/server',
     withTypes: process.env.WITH_TYPES === 'false' ? false : true,
 });

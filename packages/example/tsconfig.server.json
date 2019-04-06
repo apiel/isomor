@@ -16,9 +16,9 @@
   "exclude": [
     "node_modules",
     "src",
-    "src-isomor/!server"
+    "src-isomor/!**/server"
   ],
   "include": [
-    "src-isomor/server"
+    "src-isomor/**/server"
   ]
 }

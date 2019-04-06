@@ -5,7 +5,7 @@ import { pathExists, readFile, outputFile, emptyDir, copy, writeFile, unlink } f
 import { join, parse as parseFile, basename } from 'path';
 import { getFiles } from 'isomor-core';
 import { parse } from '@typescript-eslint/typescript-estree';
-import { generate, baseGenerator } from 'astring';
+import generate from '@babel/generator';
 import transform from './transform';
 
 interface Options {
@@ -20,58 +20,16 @@ interface Func {
     code: string;
 }
 
-function getCodes(options: Options, fileName: string, content: string) {
+function getCode(options: Options, fileName: string, content: string) {
     const { withTypes } = options;
-    const typing = withTypes ? ': any' : '';
-    const codes: string[] = [];
     const program = parse(content);
     const { body } = program;
 
-    const newBody = transform(body, fileName, true); // withTypes
+    const newBody = transform(body, fileName, withTypes); // withTypes
     program.body = newBody;
-    const output = generate(program as any, {
-        generator: {
-            ...baseGenerator,
-            TSInterfaceDeclaration: (node: any, state: any) => {
-                console.log('Need to implement custom TSInterfaceDeclaration', node);
-            },
-            StringLiteral: (node: any, state: any) => {
-                state.write(`'${node.value}'`);
-            },
-            RestElement: (node: any, state: any) => {
-                baseGenerator.RestElement(node, state);
-                if (node.typeAnnotation) {
-                    state.write(': any');
-                }
-            },
-        },
-    });
-    console.log('output', output);
+    const { code } = generate(program as any);
 
-    body.forEach((element) => {
-        if (element.type === 'ExportNamedDeclaration') {
-            if (element.declaration.type === 'TSInterfaceDeclaration') {
-                const code = content.substring(...element.range);
-                codes.push(code);
-            } else if (element.declaration.type === 'FunctionDeclaration') {
-                const { name } = element.declaration.id;
-                const code = `export function ${name}(...args${typing}) {\n  return remote('${fileName}', '${name}', args);\n}\n`;
-                codes.push(code);
-            } else if (element.declaration.type === 'VariableDeclaration') {
-                const { declarations } = element.declaration;
-                const declaration = declarations[0];
-                if (declaration.type === 'VariableDeclarator'
-                    && declaration.init.type === 'ArrowFunctionExpression'
-                    && declaration.id.type === 'Identifier') {
-
-                    const { name } = declaration.id;
-                    const code = `export const ${name} = (...args${typing}) => {\n  return remote('${fileName}', '${name}', args);\n}\n`;
-                    codes.push(code);
-                }
-            }
-        }
-    });
-    return codes;
+    return code;
 }
 
 async function transpile(options: Options, filePath: string) {
@@ -82,14 +40,13 @@ async function transpile(options: Options, filePath: string) {
     const buffer = await readFile(filePath);
 
     const fileName = parseFile(file).name;
-    const codes = getCodes(options, fileName, buffer.toString());
+    const code = getCode(options, fileName, buffer.toString());
 
-    const appCode = `import { remote } from 'isomor';\n\n${codes.join(`\n`)}`;
     const appFilePath = join(appFolder, serverFolder, file);
     info('Create isomor file', appFilePath);
     // await writeFile(appFilePath, appCode);
     // await unlink(appFilePath);
-    await outputFile(appFilePath, appCode);
+    await outputFile(appFilePath, code);
 }
 
 async function prepare(options: Options) {

@@ -5,6 +5,7 @@ import { getList } from './server/data';
 import { GetListInput } from './server/getList.input';
 import { Stats } from './status/stats';
 import { Time } from './status/time';
+import { TimeUTC } from './status/timeUTC';
 
 const App = () => {
   const [list, setList] = React.useState<string[]>([]);
@@ -18,9 +19,11 @@ const App = () => {
       <header className="App-header">
         Isomor
         <Time />
+        <TimeUTC />
     </header>
       <Stats />
       <Time />
+      <TimeUTC />
       <hr />
       <ul>
         {

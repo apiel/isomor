@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import md5 from 'md5';
 
+// use something else than JSON.stringify
+
 interface Res {
     name: string,
     args: any,
@@ -56,7 +58,6 @@ export class IsomorProvider extends React.Component<Props> {
         const id = getId(fn, ...args);
         responses[id] = { name, args, response };
         this.setState({ responses });
-        console.log('responses', responses);
     }
 
     render() {

@@ -4,5 +4,5 @@ export interface ServerTime {
 }
 
 export async function getTime(): Promise<ServerTime> {
-    return { time: Date().toString() };
+    return { time: (new Date()).toLocaleString() };
 }

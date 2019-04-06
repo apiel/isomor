@@ -8,9 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-function getTime() {
+function getTimeUTC() {
     return __awaiter(this, void 0, void 0, function* () {
         return { time: (new Date()).toLocaleString() };
     });
 }
-exports.getTime = getTime;
+exports.getTimeUTC = getTimeUTC;

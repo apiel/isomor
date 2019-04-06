@@ -1,2 +1,3 @@
 #!/usr/bin/env node
-export {};
+import transform from './transform';
+export { transform };

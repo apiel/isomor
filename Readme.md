@@ -247,6 +247,10 @@ const distServerFolder = './dist-server';
 
 > **Note:** you need `bodyParser`
 
+### Babel
+
+`isomor-transpiler` is using [@babel/generator](https://babeljs.io/docs/en/next/babel-generator.html) to transform the code. Therefor, I created as well a babel plugin in order to use directly babel instead of the transpiler. But I still didn't had time to find the right setting, since only some files should be transpiled... Also create-react-app does not support babel plugin but only macro. Unfortunately macro seem to have too limited feature to achieve transpiling for `isomor`. Of course, it is always possible to eject create-react-app. When babel is fully working, I might provide a custom version of create-react-app for `isomor`.
+
 ### ToDo
 
 - create react hook to consume server files
@@ -264,16 +268,4 @@ const distServerFolder = './dist-server';
   
 
 Notes:
-babel --presets @babel/preset-typescript --plugins isomor-babel src-isomor/server/data.ts -o yo.ts
-
-astring
-    if (generator[nodes[0].type] !== undefined) {
-      generator[nodes[0].type]
-
-    if (this[node.declaration.type] !== undefined)
-      this[node.declaration.type](node.declaration, state);
-    else
-      console.log('unsupported declaration', node.declaration.type);
-
-    also maybe should not write to state if missing...
-
+babel --presets @babel/preset-typescript --plugins isomor-babel src-isomor/server/data.ts -o output.ts

@@ -1,4 +1,6 @@
-export function getCodeImport(): any {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+function getCodeImport() {
     const name = 'remote';
     return {
         type: 'ImportDeclaration',
@@ -21,8 +23,8 @@ export function getCodeImport(): any {
         },
     };
 }
-
-export function getCodeFunc(fileName: string, name: string, withTypes: boolean): any {
+exports.getCodeImport = getCodeImport;
+function getCodeFunc(fileName, name, withTypes) {
     return {
         type: 'ExportNamedDeclaration',
         declaration: {
@@ -36,8 +38,8 @@ export function getCodeFunc(fileName: string, name: string, withTypes: boolean):
         },
     };
 }
-
-export function getCodeArrowFunc(fileName: string, name: string, withTypes: boolean): any {
+exports.getCodeFunc = getCodeFunc;
+function getCodeArrowFunc(fileName, name, withTypes) {
     return {
         type: 'ExportNamedDeclaration',
         declaration: {
@@ -60,23 +62,16 @@ export function getCodeArrowFunc(fileName: string, name: string, withTypes: bool
         },
     };
 }
-
-// arguments => (...args)
-function getParams(withTypes: boolean) {
+exports.getCodeArrowFunc = getCodeArrowFunc;
+function getParams(withTypes) {
     return [
-        {
-            type: 'RestElement',
-            argument: {
+        Object.assign({ type: 'RestElement', argument: {
                 type: 'Identifier',
                 name: 'args',
-            },
-            ...getTypeAny(withTypes),
-        },
+            } }, getTypeAny(withTypes)),
     ];
 }
-
-// type => ': any'
-function getTypeAny(withTypes: boolean) {
+function getTypeAny(withTypes) {
     return withTypes ? {
         typeAnnotation: {
             type: 'TSTypeAnnotation',
@@ -86,11 +81,7 @@ function getTypeAny(withTypes: boolean) {
         },
     } : {};
 }
-
-// {
-//     return remote("example", "getList2", args);
-// }
-function getBody(fileName: string, name: string) {
+function getBody(fileName, name) {
     return {
         type: 'BlockStatement',
         body: [
@@ -121,3 +112,4 @@ function getBody(fileName: string, name: string) {
         ],
     };
 }
+//# sourceMappingURL=code.js.map

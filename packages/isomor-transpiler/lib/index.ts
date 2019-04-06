@@ -8,6 +8,8 @@ import { parse } from '@typescript-eslint/typescript-estree';
 import generate from '@babel/generator';
 import transform from './transform';
 
+export { transform };
+
 interface Options {
     srcFolder: string;
     appFolder: string;
@@ -23,10 +25,7 @@ interface Func {
 function getCode(options: Options, fileName: string, content: string) {
     const { withTypes } = options;
     const program = parse(content);
-    const { body } = program;
-
-    const newBody = transform(body, fileName, withTypes); // withTypes
-    program.body = newBody;
+    program.body = transform(program.body, fileName, withTypes);
     const { code } = generate(program as any);
 
     return code;

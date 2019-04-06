@@ -53,7 +53,7 @@ yarn start
 
 The following instruction will explain you how to setup a working enviroment with React and TypeScript.
 
-> **Note:** find an example in the repo  `packages/examples/src-isomor/App.tsx`
+> **Note:** find an example in the repo  `packages/examples/src-isomor/App.tsx`. It might be possible that some information was not correctly updated in the doc. Please, refer to the example if it happen and open an issue to report.
 
 So let's create a react app with `create-react-app`:
 
@@ -76,7 +76,7 @@ cp -r src src-isomor
 
 In `src-isomor` add a folder `server`. This folder will be all server side files. All this files will be transpiled to be usable from the client.
 
-> **Note:** the transpiler only transpile file in root of `src-isomor/server`. `server` folder can contain subfolder, but they should not be directly linked to the app.
+> **Note:** you can have multiple `server` folder in your project. The transpiler will transpile each of them but only their root. `server` folder can contain subfolder, but they should not be directly linked to the app. The files imported by the app should always be files from the root of `server` folder. Other subfolder, will be ignored and only used on server side.
 
 ```
 cd src-isomor
@@ -120,10 +120,10 @@ As you can see, `build:server` need a custom tsconfig file. This is because, we 
   "exclude": [
     "node_modules",
     "src",
-    "src-isomor/!server"
+    "src-isomor/!**/server"
   ],
   "include": [
-    "src-isomor/server"
+    "src-isomor/**/server"
   ]
 }
 ```
@@ -196,7 +196,7 @@ You should get something like:
 
 ```
 [19:55:35] Starting server.
-[19:55:35] Created endpoints: [ '/isomor/data/getList' ]
+[19:55:35] Created endpoints: [ '/isomor/server-data/getList' ]
 [19:55:35] Server listening on port 3005!
 ```
 
@@ -233,12 +233,13 @@ import * as bodyParser from 'body-parser';
 import { useIsomor } from 'isomor-server';
 
 const distServerFolder = './dist-server';
+const serverFolder = '/server';
 
 (async function() {
     const app = express();
 
     app.use(bodyParser.json());
-    const endpoints = await useIsomor(app, distServerFolder);
+    const endpoints = await useIsomor(app, distServerFolder, serverFolder);
     console.log('Created endpoints:', endpoints);
 
     app.listen(3005, () => console.log(`Server listening on port 3005!`));
@@ -253,9 +254,10 @@ const distServerFolder = './dist-server';
 
 `isomor-transpiler` is using [@babel/generator](https://babeljs.io/docs/en/next/babel-generator.html) to transform the code. Therefor, I created as well a babel plugin [isomor-babel](https://www.npmjs.com/package/isomor-babel) in order to use directly babel instead of the transpiler. But I still didn't had time to find the right setting, since only some files should be transpiled... Also create-react-app does not support babel plugin but only macro. Unfortunately macro seem to have too limited feature to achieve transpiling for `isomor`. Of course, it is always possible to eject create-react-app. When babel is fully working, I might provide a custom version of create-react-app for `isomor`.
 
-### ToDo
+---
 
-- make server folder available in different places
+#### ToDo
+
 - create react hook to consume server files
     - hook should also be able to handle cache
 - create a custom create-react-app including isomor

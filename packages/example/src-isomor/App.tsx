@@ -4,6 +4,7 @@ import './App.css';
 import { getList } from './server/data';
 import { GetListInput } from './server/getList.input';
 import { Stats } from './status/stats';
+import { Time } from './status/time';
 
 class App extends Component {
   state = {
@@ -25,14 +26,17 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           Isomor
+          <Time />
         </header>
+        <Stats />
+        <Time />
+        <hr />
         <ul>
           {
             this.state.list.map((item, index) => <li key={index}>{item}</li>)
           }
         </ul>
         <button onClick={this.onRemoteLoad}>load again</button>
-        <Stats />
       </div>
     );
   }

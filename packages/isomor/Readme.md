@@ -260,6 +260,7 @@ const serverFolder = '/server';
 
 - create react hook to consume server files
     - hook should also be able to handle cache
+    - hook should be able to batch queries
 - create a custom create-react-app including isomor
 - Need to test JS and provide example
 - websocket version where server could call frontend functions

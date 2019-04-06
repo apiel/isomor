@@ -1,7 +1,7 @@
 
-import { Visitor, parseSync } from '@babel/core';
+import { Visitor } from '@babel/core';
 import { parse } from 'path';
-import { transpiler } from 'isomor-transpiler';
+import transpiler from 'isomor-transpiler';
 
 export default function() {
     const withTypes = true; // should find out if it is js or ts
@@ -9,7 +9,7 @@ export default function() {
     const visitor: Visitor = {
         Program(path, { filename }: any) {
             const fileName = parse(filename).name;
-            path.node.body = transpiler(path.node.body, fileName, withTypes);
+            path.node.body = transpiler(path.node.body as any, fileName, withTypes) as any;
         },
     };
 

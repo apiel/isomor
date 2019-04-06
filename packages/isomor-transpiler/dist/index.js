@@ -16,7 +16,7 @@ const isomor_core_1 = require("isomor-core");
 const typescript_estree_1 = require("@typescript-eslint/typescript-estree");
 const generator_1 = require("@babel/generator");
 const transform_1 = require("./transform");
-exports.transform = transform_1.default;
+exports.default = transform_1.default;
 function getCode(options, path, content) {
     const { withTypes } = options;
     const program = typescript_estree_1.parse(content);

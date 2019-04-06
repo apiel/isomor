@@ -8,7 +8,7 @@ import { parse } from '@typescript-eslint/typescript-estree';
 import generate from '@babel/generator';
 import transform from './transform';
 
-export { transform };
+export default transform;
 
 interface Options {
     srcFolder: string;

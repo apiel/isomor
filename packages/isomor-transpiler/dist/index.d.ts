@@ -1,3 +1,3 @@
 #!/usr/bin/env node
 import transform from './transform';
-export { transform };
+export default transform;

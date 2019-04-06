@@ -1,18 +1,19 @@
 {
     "name": "isomor-babel",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "author": "Alexandre Piel <alexandre.piel@gmail.com>",
     "license": "MIT",
     "scripts": {
+        "prepublish": "yarn build",
         "test": "node test/test.js",
         "prebuild": "rm -rf dist/",
         "build": "tsc -p tsconfig.json",
         "lint": "tslint -p tsconfig.json -c tslint.json"
     },
     "dependencies": {
-        "isomor-transpiler": "^0.0.8",
+        "isomor-transpiler": "^0.0.9",
         "typescript": "^3.2.4"
     },
     "devDependencies": {

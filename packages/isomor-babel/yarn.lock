@@ -391,9 +391,9 @@ isomor-core@^0.0.3:
     fs-extra "^7.0.1"
     typescript "^3.2.4"
 
-isomor-transpiler@^0.0.7:
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/isomor-transpiler/-/isomor-transpiler-0.0.7.tgz#923b0b0d928a1a67ff3c6be67d841550745316f3"
+isomor-transpiler@^0.0.8:
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/isomor-transpiler/-/isomor-transpiler-0.0.8.tgz#d4cee5a908cbc25d03c0d26909f64d94d6d3bd01"
   dependencies:
     "@babel/generator" "^7.4.0"
     "@typescript-eslint/typescript-estree" "^1.6.0"

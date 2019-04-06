@@ -1,1 +1,1 @@
-export declare function remote(fileName: string, funcName: string, args: any): Promise<any>;
+export declare function remote(path: string, funcName: string, args: any): Promise<any>;

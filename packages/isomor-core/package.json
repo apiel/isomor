@@ -1,11 +1,12 @@
 {
     "name": "isomor-core",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "author": "Alexandre Piel <alexandre.piel@gmail.com>",
     "license": "MIT",
     "scripts": {
+        "prepublish": "yarn build",
         "prebuild": "rm -rf dist/",
         "build": "tsc -p tsconfig.json",
         "lint": "tslint -p tsconfig.json -c tslint.json"

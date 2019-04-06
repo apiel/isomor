@@ -1,19 +1,20 @@
 {
     "name": "isomor",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "author": "Alexandre Piel <alexandre.piel@gmail.com>",
     "license": "MIT",
     "scripts": {
+        "prepublish": "cp ../../Readme.md . && yarn build",
         "prebuild": "rm -rf dist/",
         "build": "tsc -p tsconfig.json",
         "lint": "tslint -p tsconfig.json -c tslint.json"
     },
     "dependencies": {
         "axios": "^0.18.0",
-        "isomor-server": "^0.0.3",
-        "isomor-transpiler": "^0.0.2",
+        "isomor-server": "^0.0.6",
+        "isomor-transpiler": "^0.0.8",
         "typescript": "^3.2.4"
     },
     "devDependencies": {

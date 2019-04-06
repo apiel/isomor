@@ -8,9 +8,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-function getUptime() {
+const getCpuAndMem_1 = require("./os/getCpuAndMem");
+function getStatus() {
     return __awaiter(this, void 0, void 0, function* () {
-        return process.uptime();
+        return Object.assign({ uptime: process.uptime() }, getCpuAndMem_1.getCpuAndMem());
     });
 }
-exports.getUptime = getUptime;
+exports.getStatus = getStatus;

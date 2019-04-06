@@ -8,14 +8,11 @@ const glob = promisify(Glob);
 export async function getFiles(
     rootFolder: string,
     folderToSearch: string,
-    removeRootFolder: boolean = true,
 ): Promise<string[]> {
     if (await pathExists(rootFolder)) {
         const files = await glob(join(rootFolder, '**', folderToSearch, '*'), { nodir: true });
         const start = rootFolder.length - 1;
-        return removeRootFolder
-            ? files.map(file => file.substring(start))
-            : files;
+        return files.map(file => file.substring(start));
     }
     return [];
 }

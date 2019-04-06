@@ -12,7 +12,7 @@ export { transform };
 
 interface Options {
     srcFolder: string;
-    distFolder: string;
+    distAppFolder: string;
     serverFolder: string;
     withTypes: boolean;
 }
@@ -32,27 +32,27 @@ function getCode(options: Options, path: string, content: string) {
 }
 
 async function transpile(options: Options, filePath: string) {
-    const { distFolder, srcFolder } = options;
+    const { distAppFolder, srcFolder } = options;
 
     info('Transpile', filePath);
     const buffer = await readFile(join(srcFolder, filePath));
 
     const code = getCode(options, getPathForUrl(filePath), buffer.toString());
 
-    const appFilePath = join(distFolder, filePath);
+    const appFilePath = join(distAppFolder, filePath);
     info('Create isomor file', appFilePath);
     await outputFile(appFilePath, code);
 }
 
 async function prepare(options: Options) {
-    const { srcFolder, distFolder, serverFolder } = options;
+    const { srcFolder, distAppFolder, serverFolder } = options;
 
     info('Prepare folders');
-    await emptyDir(distFolder);
-    await copy(srcFolder, distFolder);
+    await emptyDir(distAppFolder);
+    await copy(srcFolder, distAppFolder);
 
     const folders = await getFolders(srcFolder, serverFolder);
-    await Promise.all(folders.map(folder => emptyDir(join(distFolder, folder))));
+    await Promise.all(folders.map(folder => emptyDir(join(distAppFolder, folder))));
 }
 
 async function start(options: Options) {
@@ -68,7 +68,7 @@ async function start(options: Options) {
 
 start({
     srcFolder: process.env.SRC_FOLDER || './src-isomor',
-    distFolder: process.env.DIST_APP_FOLDER || './src',
+    distAppFolder: process.env.DIST_APP_FOLDER || './src',
     serverFolder: process.env.SERVER_FOLDER || '/server',
     withTypes: process.env.WITH_TYPES === 'false' ? false : true,
 });

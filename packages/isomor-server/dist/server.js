@@ -15,11 +15,11 @@ const bodyParser = require("body-parser");
 const _1 = require(".");
 function start(options) {
     return __awaiter(this, void 0, void 0, function* () {
-        const { distServerFolder, port, staticFolder } = options;
+        const { distServerFolder, port, staticFolder, serverFolder } = options;
         fancy_log_1.info('Starting server.');
         const app = express();
         app.use(bodyParser.json());
-        const endpoints = yield _1.useIsomor(app, distServerFolder);
+        const endpoints = yield _1.useIsomor(app, distServerFolder, serverFolder);
         fancy_log_1.info('Created endpoints:', endpoints);
         if (staticFolder) {
             fancy_log_1.info('Add static folder', staticFolder);
@@ -32,5 +32,6 @@ start({
     distServerFolder: process.env.DIST_SERVER_FOLDER || './dist-server',
     port: process.env.PORT ? parseInt(process.env.PORT, 10) : 3005,
     staticFolder: process.env.STATIC_FOLDER || null,
+    serverFolder: process.env.SERVER_FOLDER || '/server',
 });
 //# sourceMappingURL=server.js.map

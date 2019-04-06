@@ -13,14 +13,12 @@ const path_1 = require("path");
 const Glob = require("glob");
 const util_1 = require("util");
 const glob = util_1.promisify(Glob);
-function getFiles(rootFolder, folderToSearch, removeRootFolder = true) {
+function getFiles(rootFolder, folderToSearch) {
     return __awaiter(this, void 0, void 0, function* () {
         if (yield fs_extra_1.pathExists(rootFolder)) {
             const files = yield glob(path_1.join(rootFolder, '**', folderToSearch, '*'), { nodir: true });
             const start = rootFolder.length - 1;
-            return removeRootFolder
-                ? files.map(file => file.substring(start))
-                : files;
+            return files.map(file => file.substring(start));
         }
         return [];
     });

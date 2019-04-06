@@ -8,15 +8,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const path_1 = require("path");
 const isomor_core_1 = require("isomor-core");
-function useIsomor(app, distServerFolder) {
+const path_1 = require("path");
+function useIsomor(app, distServerFolder, serverFolder) {
     return __awaiter(this, void 0, void 0, function* () {
-        const files = yield isomor_core_1.getFiles(distServerFolder);
+        const files = yield isomor_core_1.getFiles(distServerFolder, serverFolder);
         return files.map(file => {
-            const functions = require(require.resolve(file, { paths: [process.cwd()] }));
+            const functions = require(require.resolve(path_1.join(distServerFolder, file), { paths: [process.cwd()] }));
             return Object.keys(functions).map(name => {
-                const entrypoint = `/isomor/${path_1.parse(file).name}/${name}`;
+                const entrypoint = `/isomor/${isomor_core_1.getPathForUrl(file)}/${name}`;
                 app.use(entrypoint, (req, res) => __awaiter(this, void 0, void 0, function* () {
                     const result = req.body && req.body.args
                         ? yield functions[name](...req.body.args)

@@ -17,53 +17,47 @@ const typescript_estree_1 = require("@typescript-eslint/typescript-estree");
 const generator_1 = require("@babel/generator");
 const transform_1 = require("./transform");
 exports.transform = transform_1.default;
-function getCode(options, fileName, content) {
+function getCode(options, path, content) {
     const { withTypes } = options;
     const program = typescript_estree_1.parse(content);
-    program.body = transform_1.default(program.body, fileName, withTypes);
+    program.body = transform_1.default(program.body, path, withTypes);
     const { code } = generator_1.default(program);
     return code;
 }
 function transpile(options, filePath) {
     return __awaiter(this, void 0, void 0, function* () {
-        const { appFolder, serverFolder } = options;
-        const file = path_1.basename(filePath);
-        fancy_log_1.info('Transpile', file);
-        const buffer = yield fs_extra_1.readFile(filePath);
-        const fileName = path_1.parse(file).name;
-        const code = getCode(options, fileName, buffer.toString());
-        const appFilePath = path_1.join(appFolder, serverFolder, file);
+        const { distAppFolder, srcFolder } = options;
+        fancy_log_1.info('Transpile', filePath);
+        const buffer = yield fs_extra_1.readFile(path_1.join(srcFolder, filePath));
+        const code = getCode(options, isomor_core_1.getPathForUrl(filePath), buffer.toString());
+        const appFilePath = path_1.join(distAppFolder, filePath);
         fancy_log_1.info('Create isomor file', appFilePath);
         yield fs_extra_1.outputFile(appFilePath, code);
     });
 }
 function prepare(options) {
     return __awaiter(this, void 0, void 0, function* () {
-        const { srcFolder, appFolder, serverFolder } = options;
+        const { srcFolder, distAppFolder, serverFolder } = options;
         fancy_log_1.info('Prepare folders');
-        yield fs_extra_1.emptyDir(appFolder);
-        yield fs_extra_1.copy(srcFolder, appFolder);
-        yield fs_extra_1.emptyDir(path_1.join(appFolder, serverFolder));
+        yield fs_extra_1.emptyDir(distAppFolder);
+        yield fs_extra_1.copy(srcFolder, distAppFolder);
+        const folders = yield isomor_core_1.getFolders(srcFolder, serverFolder);
+        yield Promise.all(folders.map(folder => fs_extra_1.emptyDir(path_1.join(distAppFolder, folder))));
     });
 }
 function start(options) {
     return __awaiter(this, void 0, void 0, function* () {
         yield prepare(options);
-        const { srcFolder, serverFolder } = options;
-        const folder = path_1.join(srcFolder, serverFolder);
         fancy_log_1.info('Start transpiling');
-        if (!(yield fs_extra_1.pathExists(folder))) {
-            fancy_log_1.error('Folder does not exist', folder);
-        }
-        else {
-            const files = yield isomor_core_1.getFiles(folder);
-            files.forEach(file => transpile(options, file));
-        }
+        const { srcFolder, serverFolder } = options;
+        const files = yield isomor_core_1.getFiles(srcFolder, serverFolder);
+        fancy_log_1.info(`Found ${files.length} file(s).`);
+        files.forEach(file => transpile(options, file));
     });
 }
 start({
     srcFolder: process.env.SRC_FOLDER || './src-isomor',
-    appFolder: process.env.APP_FOLDER || './src',
+    distAppFolder: process.env.DIST_APP_FOLDER || './src',
     serverFolder: process.env.SERVER_FOLDER || '/server',
     withTypes: process.env.WITH_TYPES === 'false' ? false : true,
 });

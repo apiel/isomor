@@ -7,17 +7,18 @@ import { useIsomor } from '.';
 
 interface Options {
     distServerFolder: string;
+    serverFolder: string;
     port: number;
     staticFolder: string | null;
 }
 
 async function start(options: Options) {
-    const { distServerFolder, port, staticFolder } = options;
+    const { distServerFolder, port, staticFolder, serverFolder } = options;
     info('Starting server.');
     const app = express();
 
     app.use(bodyParser.json());
-    const endpoints = await useIsomor(app, distServerFolder);
+    const endpoints = await useIsomor(app, distServerFolder, serverFolder);
     info('Created endpoints:', endpoints);
 
     if (staticFolder) {
@@ -32,4 +33,5 @@ start({
     distServerFolder: process.env.DIST_SERVER_FOLDER || './dist-server',
     port: process.env.PORT ? parseInt(process.env.PORT, 10) : 3005,
     staticFolder: process.env.STATIC_FOLDER || null,
+    serverFolder: process.env.SERVER_FOLDER || '/server',
 });

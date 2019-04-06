@@ -3,7 +3,7 @@ import './App.css';
 
 import { getList } from './server/data';
 import { GetListInput } from './server/getList.input';
-import { Uptime } from './status/uptime';
+import { Stats } from './status/stats';
 
 class App extends Component {
   state = {
@@ -32,7 +32,7 @@ class App extends Component {
           }
         </ul>
         <button onClick={this.onRemoteLoad}>load again</button>
-        <Uptime />
+        <Stats />
       </div>
     );
   }
@@ -57,7 +57,7 @@ class App extends Component {
 //         }
 //       </ul>
 //       <button onClick={load}>load again</button>
-//       <Uptime />
+//       <Stats />
 //     </div>
 //   );
 // }

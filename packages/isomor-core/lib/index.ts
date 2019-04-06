@@ -1,15 +1,38 @@
-import { readdir, pathExists, lstat } from 'fs-extra';
-import { join } from 'path';
+import { pathExists } from 'fs-extra';
+import { join, extname } from 'path';
+import * as Glob from 'glob';
+import { promisify } from 'util';
 
-export async function getFiles(folder: string): Promise<string[]> {
-    if (await pathExists(folder)) {
-        const files = await readdir(folder);
-        const onlyFiles = await Promise.all(
-            files.map(async (file) => {
-                const filePath = join(folder, file);
-                const ls = await lstat(filePath);
-                return ls.isFile() ? filePath : null;
-            }));
-        return onlyFiles.filter(file => file);
+const glob = promisify(Glob);
+
+export async function getFiles(
+    rootFolder: string,
+    folderToSearch: string,
+    removeRootFolder: boolean = true,
+): Promise<string[]> {
+    if (await pathExists(rootFolder)) {
+        const files = await glob(join(rootFolder, '**', folderToSearch, '*'), { nodir: true });
+        const start = rootFolder.length - 1;
+        return removeRootFolder
+            ? files.map(file => file.substring(start))
+            : files;
     }
+    return [];
+}
+
+export async function getFolders(
+    rootFolder: string,
+    folderToSearch: string,
+): Promise<string[]> {
+    if (await pathExists(rootFolder)) {
+        const files = await glob(join(rootFolder, '**', folderToSearch));
+        const start = rootFolder.length - 1;
+        return files.map(file => file.substring(start));
+    }
+    return [];
+}
+
+export function getPathForUrl(filePath: string) {
+    const extensionLen = extname(filePath).length;
+    return filePath.replace(/\//g, '-').slice(0, -extensionLen);
 }

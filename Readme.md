@@ -255,8 +255,10 @@ const distServerFolder = './dist-server';
 
 ### ToDo
 
+- make server folder available in different places
 - create react hook to consume server files
     - hook should also be able to handle cache
+- create a custom create-react-app including isomor
 - Need to test JS and provide example
 - websocket version where server could call frontend functions
 - add config file using `cosmiconfig` lib (isomor-core)

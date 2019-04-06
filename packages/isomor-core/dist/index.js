@@ -10,18 +10,36 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs_extra_1 = require("fs-extra");
 const path_1 = require("path");
-function getFiles(folder) {
+const Glob = require("glob");
+const util_1 = require("util");
+const glob = util_1.promisify(Glob);
+function getFiles(rootFolder, folderToSearch, removeRootFolder = true) {
     return __awaiter(this, void 0, void 0, function* () {
-        if (yield fs_extra_1.pathExists(folder)) {
-            const files = yield fs_extra_1.readdir(folder);
-            const onlyFiles = yield Promise.all(files.map((file) => __awaiter(this, void 0, void 0, function* () {
-                const filePath = path_1.join(folder, file);
-                const ls = yield fs_extra_1.lstat(filePath);
-                return ls.isFile() ? filePath : null;
-            })));
-            return onlyFiles.filter(file => file);
+        if (yield fs_extra_1.pathExists(rootFolder)) {
+            const files = yield glob(path_1.join(rootFolder, '**', folderToSearch, '*'), { nodir: true });
+            const start = rootFolder.length - 1;
+            return removeRootFolder
+                ? files.map(file => file.substring(start))
+                : files;
         }
+        return [];
     });
 }
 exports.getFiles = getFiles;
+function getFolders(rootFolder, folderToSearch) {
+    return __awaiter(this, void 0, void 0, function* () {
+        if (yield fs_extra_1.pathExists(rootFolder)) {
+            const files = yield glob(path_1.join(rootFolder, '**', folderToSearch));
+            const start = rootFolder.length - 1;
+            return files.map(file => file.substring(start));
+        }
+        return [];
+    });
+}
+exports.getFolders = getFolders;
+function getPathForUrl(filePath) {
+    const extensionLen = path_1.extname(filePath).length;
+    return filePath.replace(/\//g, '-').slice(0, -extensionLen);
+}
+exports.getPathForUrl = getPathForUrl;
 //# sourceMappingURL=index.js.map

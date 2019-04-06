@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
-import { info, error as err } from 'fancy-log'; // fancy log not so fancy, i want colors :D
-import { pathExists, readFile, outputFile, emptyDir, copy, writeFile, unlink } from 'fs-extra';
+import { info } from 'fancy-log'; // fancy log not so fancy, i want colors :D
+import { readFile, outputFile, emptyDir, copy } from 'fs-extra';
 import { join, parse as parseFile, basename } from 'path';
-import { getFiles } from 'isomor-core';
+import { getFiles, getFolders, getPathForUrl } from 'isomor-core';
 import { parse } from '@typescript-eslint/typescript-estree';
 import generate from '@babel/generator';
 import transform from './transform';
@@ -12,7 +12,7 @@ export { transform };
 
 interface Options {
     srcFolder: string;
-    appFolder: string;
+    distFolder: string;
     serverFolder: string;
     withTypes: boolean;
 }
@@ -22,58 +22,53 @@ interface Func {
     code: string;
 }
 
-function getCode(options: Options, fileName: string, content: string) {
+function getCode(options: Options, path: string, content: string) {
     const { withTypes } = options;
     const program = parse(content);
-    program.body = transform(program.body, fileName, withTypes);
+    program.body = transform(program.body, path, withTypes);
     const { code } = generate(program as any);
 
     return code;
 }
 
 async function transpile(options: Options, filePath: string) {
-    const { appFolder, serverFolder } = options;
-    const file = basename(filePath);
+    const { distFolder, srcFolder } = options;
 
-    info('Transpile', file);
-    const buffer = await readFile(filePath);
+    info('Transpile', filePath);
+    const buffer = await readFile(join(srcFolder, filePath));
 
-    const fileName = parseFile(file).name;
-    const code = getCode(options, fileName, buffer.toString());
+    const code = getCode(options, getPathForUrl(filePath), buffer.toString());
 
-    const appFilePath = join(appFolder, serverFolder, file);
+    const appFilePath = join(distFolder, filePath);
     info('Create isomor file', appFilePath);
-    // await writeFile(appFilePath, appCode);
-    // await unlink(appFilePath);
     await outputFile(appFilePath, code);
 }
 
 async function prepare(options: Options) {
-    const { srcFolder, appFolder, serverFolder } = options;
+    const { srcFolder, distFolder, serverFolder } = options;
 
     info('Prepare folders');
-    await emptyDir(appFolder);
-    await copy(srcFolder, appFolder);
-    await emptyDir(join(appFolder, serverFolder));
+    await emptyDir(distFolder);
+    await copy(srcFolder, distFolder);
+
+    const folders = await getFolders(srcFolder, serverFolder);
+    await Promise.all(folders.map(folder => emptyDir(join(distFolder, folder))));
 }
 
 async function start(options: Options) {
     await prepare(options);
 
-    const { srcFolder, serverFolder } = options;
-    const folder = join(srcFolder, serverFolder);
     info('Start transpiling');
-    if (!(await pathExists(folder))) {
-        err('Folder does not exist', folder);
-    } else {
-        const files: string[] = await getFiles(folder);
-        files.forEach(file => transpile(options, file));
-    }
+
+    const { srcFolder, serverFolder } = options;
+    const files = await getFiles(srcFolder, serverFolder);
+    info(`Found ${files.length} file(s).`);
+    files.forEach(file => transpile(options, file));
 }
 
 start({
     srcFolder: process.env.SRC_FOLDER || './src-isomor',
-    appFolder: process.env.APP_FOLDER || './src',
+    distFolder: process.env.DIST_FOLDER || './src',
     serverFolder: process.env.SERVER_FOLDER || '/server',
     withTypes: process.env.WITH_TYPES === 'false' ? false : true,
 });

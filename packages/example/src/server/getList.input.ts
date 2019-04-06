@@ -1,5 +1,4 @@
-import { remote } from 'isomor';
-
+import { remote } from "isomor";
 export interface GetListInput {
-    foo: string;
+  foo: string;
 }

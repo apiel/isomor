@@ -1,14 +1,16 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import md5 from 'md5';
 
-interface Reponse {
+interface Res {
     name: string,
     args: any,
     response: any,
 }
 
+type Responses = { [id: string]: Res };
+
 const initialState = {
-    responses: {} as { [id: string]: Reponse },
+    responses: {} as Responses,
 };
 
 export const IsomorContext = createContext({
@@ -29,10 +31,10 @@ export const useIsomor = () => {
         call(fn, ...args);
     };
     useEffect(() => {
-        console.log('response in effect', id, responses);
-        const storeResponse = responses[id];
-        if (JSON.stringify(response) !== JSON.stringify(storeResponse)) {
-            setResponse(storeResponse);
+        const storeResponse: Res = responses[id];
+        if (storeResponse && storeResponse.response &&
+            (!response || JSON.stringify(response) !== JSON.stringify(storeResponse.response))) {
+            setResponse(storeResponse.response);
         }
     }); // , [responses]
     return { call: myCall, response };

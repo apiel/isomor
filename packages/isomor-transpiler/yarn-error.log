@@ -1,5 +1,5 @@
 Arguments: 
-  /home/alex/.nvm/versions/node/v11.10.1/bin/node /usr/local/bin/yarn
+  /home/alex/.nvm/versions/node/v11.10.1/bin/node /usr/local/bin/yarn add @types/ts-estree --dev
 
 PATH: 
   /home/alex/.nvm/versions/node/v11.10.1/bin:/home/alex/.cargo/bin:/home/alex/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/alex/dev/esp/esp-open-sdk/xtensa-lx106-elf/bin:/home/alex/dev/esp/esp-open-sdk/esptool:/home/alex/dev/esp/esp-open-sdk/xtensa-lx106-elf/bin:/home/alex/dev/esp/esp-open-sdk/esptool:/home/alex/dev/nrf5/gcc-arm-none-eabi-7-2017-q4-major/bin:/home/alex/dev/nrf5/nRF5x-Command-Line-Tools_9_7_2_Linux-x86_64/nrfjprog
@@ -16,7 +16,7 @@ Platform:
 npm manifest: 
   {
       "name": "isomor-transpiler",
-      "version": "0.0.1",
+      "version": "0.0.6",
       "main": "dist/index.js",
       "types": "dist/index.d.ts",
       "author": "Alexandre Piel <alexandre.piel@gmail.com>",
@@ -25,13 +25,14 @@ npm manifest:
       "scripts": {
           "start": "ts-node lib/index.ts",
           "prebuild": "rm -rf dist/",
-          "build": "tsc -p tsconfig.json",
+          "build": "tsc -p tsconfig.json && chmod +x dist/index.js",
           "lint": "tslint -p tsconfig.json -c tslint.json"
       },
       "dependencies": {
+          "@typescript-eslint/typescript-estree": "^1.6.0",
           "fancy-log": "^1.3.3",
           "fs-extra": "^7.0.1",
-          "isomore-core": "^0.0.1",
+          "isomor-core": "^0.0.1",
           "ts-node": "^8.0.3",
           "typescript": "^3.2.4"
       },
@@ -93,6 +94,13 @@ Lockfile:
     dependencies:
       "@types/glob" "*"
       "@types/node" "*"
+  
+  "@typescript-eslint/typescript-estree@^1.6.0":
+    version "1.6.0"
+    resolved "https://registry.yarnpkg.com/@typescript-eslint/typescript-estree/-/typescript-estree-1.6.0.tgz#6cf43a07fee08b8eb52e4513b428c8cdc9751ef0"
+    dependencies:
+      lodash.unescape "4.0.1"
+      semver "5.5.0"
   
   ansi-gray@^0.1.1:
     version "0.1.1"
@@ -268,6 +276,13 @@ Lockfile:
     version "2.0.3"
     resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.3.tgz#633c2c83e3da42a502f52466022480f4208261de"
   
+  isomor-core@^0.0.1:
+    version "0.0.1"
+    resolved "https://registry.yarnpkg.com/isomor-core/-/isomor-core-0.0.1.tgz#e5a6d58b18aa61ba651cd1a53362fe4be14b4d38"
+    dependencies:
+      fs-extra "^7.0.1"
+      typescript "^3.2.4"
+  
   js-tokens@^3.0.2:
     version "3.0.2"
     resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-3.0.2.tgz#9866df395102130e38f7f996bceb65443209c25b"
@@ -284,6 +299,10 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/jsonfile/-/jsonfile-4.0.0.tgz#8771aae0799b64076b76640fca058f9c10e33ecb"
     optionalDependencies:
       graceful-fs "^4.1.6"
+  
+  lodash.unescape@4.0.1:
+    version "4.0.1"
+    resolved "https://registry.yarnpkg.com/lodash.unescape/-/lodash.unescape-4.0.1.tgz#bf2249886ce514cda112fae9218cdc065211fc9c"
   
   make-error@^1.1.1:
     version "1.3.5"
@@ -334,6 +353,10 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.6.3.tgz#b2d104fe0d8fb27cf9e0a1cda8262dd3833c6cab"
     dependencies:
       glob "^7.1.3"
+  
+  semver@5.5.0:
+    version "5.5.0"
+    resolved "https://registry.yarnpkg.com/semver/-/semver-5.5.0.tgz#dc4bbc7a6ca9d916dee5d43516f0092b58f7b8ab"
   
   semver@^5.3.0:
     version "5.6.0"
@@ -429,7 +452,7 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/yn/-/yn-3.0.0.tgz#0073c6b56e92aed652fbdfd62431f2d6b9a7a091"
 
 Trace: 
-  Error: https://registry.yarnpkg.com/isomore-core: Not found
+  Error: https://registry.yarnpkg.com/@types%2fts-estree: Not found
       at Request.params.callback [as _callback] (/usr/local/lib/node_modules/yarn/lib/cli.js:62027:18)
       at Request.self.callback (/usr/local/lib/node_modules/yarn/lib/cli.js:123011:22)
       at Request.emit (events.js:197:13)

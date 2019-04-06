@@ -5,6 +5,8 @@ import { pathExists, readFile, outputFile, emptyDir, copy, writeFile, unlink } f
 import { join, parse as parseFile, basename } from 'path';
 import { getFiles } from 'isomor-core';
 import { parse } from '@typescript-eslint/typescript-estree';
+import { generate, baseGenerator } from 'astring';
+import transform from './transform';
 
 interface Options {
     srcFolder: string;
@@ -22,7 +24,30 @@ function getCodes(options: Options, fileName: string, content: string) {
     const { withTypes } = options;
     const typing = withTypes ? ': any' : '';
     const codes: string[] = [];
-    const { body } = parse(content);
+    const program = parse(content);
+    const { body } = program;
+
+    const newBody = transform(body, fileName, true); // withTypes
+    program.body = newBody;
+    const output = generate(program as any, {
+        generator: {
+            ...baseGenerator,
+            TSInterfaceDeclaration: (node: any, state: any) => {
+                console.log('Need to implement custom TSInterfaceDeclaration', node);
+            },
+            StringLiteral: (node: any, state: any) => {
+                state.write(`'${node.value}'`);
+            },
+            RestElement: (node: any, state: any) => {
+                baseGenerator.RestElement(node, state);
+                if (node.typeAnnotation) {
+                    state.write(': any');
+                }
+            },
+        },
+    });
+    console.log('output', output);
+
     body.forEach((element) => {
         if (element.type === 'ExportNamedDeclaration') {
             if (element.declaration.type === 'TSInterfaceDeclaration') {

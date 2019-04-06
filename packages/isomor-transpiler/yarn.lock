@@ -2,6 +2,21 @@
 # yarn lockfile v1
 
 
+"@types/astring@^1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@types/astring/-/astring-1.3.0.tgz#c576a8eba50592d707e78dccd2aa50513f0c1866"
+  dependencies:
+    "@types/estree" "*"
+    "@types/node" "*"
+
+"@types/debug@^4.1.3":
+  version "4.1.3"
+  resolved "https://registry.yarnpkg.com/@types/debug/-/debug-4.1.3.tgz#4965a87531d7c6863f5b097b2c518b825e926cc7"
+
+"@types/estree@*":
+  version "0.0.39"
+  resolved "https://registry.yarnpkg.com/@types/estree/-/estree-0.0.39.tgz#e177e699ee1b8c22d23174caaa7422644389509f"
+
 "@types/events@*":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@types/events/-/events-3.0.0.tgz#2862f3f58a9a7f7c3e78d79f130dd4d71c25c2a7"
@@ -84,6 +99,10 @@ argparse@^1.0.7:
   dependencies:
     sprintf-js "~1.0.2"
 
+astring@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/astring/-/astring-1.4.0.tgz#bbcc544bd8578b44cf74e5b10ed4e61433681087"
+
 babel-code-frame@^6.22.0:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-code-frame/-/babel-code-frame-6.26.0.tgz#63fd43f7dc1e3bb7ce35947db8fe369a3f58c74b"
@@ -150,6 +169,12 @@ commander@^2.12.1:
 concat-map@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
+
+debug@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-4.1.1.tgz#3b72260255109c6b589cee050f1d516139664791"
+  dependencies:
+    ms "^2.1.1"
 
 diff@^3.1.0, diff@^3.2.0:
   version "3.5.0"
@@ -224,9 +249,9 @@ inherits@2:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.3.tgz#633c2c83e3da42a502f52466022480f4208261de"
 
-isomor-core@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/isomor-core/-/isomor-core-0.0.1.tgz#e5a6d58b18aa61ba651cd1a53362fe4be14b4d38"
+isomor-core@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/isomor-core/-/isomor-core-0.0.3.tgz#db2e9e21315b6a62f42eb410c3d2d691de4bca12"
   dependencies:
     fs-extra "^7.0.1"
     typescript "^3.2.4"
@@ -271,6 +296,10 @@ mkdirp@^0.5.1:
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-0.5.1.tgz#30057438eac6cf7f8c4767f38648d6697d75c903"
   dependencies:
     minimist "0.0.8"
+
+ms@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.1.tgz#30a5864eb3ebb0a66f2ebe6d727af06a09d86e0a"
 
 once@^1.3.0:
   version "1.4.0"

@@ -44,6 +44,7 @@ export default function() {
                 }
             });
             path.node.body.unshift(getCodeImport());
+            // path.node.body = path.node.body.filter(statement => statement);
         },
     };
 

@@ -266,3 +266,14 @@ const distServerFolder = './dist-server';
 Notes:
 babel --presets @babel/preset-typescript --plugins isomor-babel src-isomor/server/data.ts -o yo.ts
 
+astring
+    if (generator[nodes[0].type] !== undefined) {
+      generator[nodes[0].type]
+
+    if (this[node.declaration.type] !== undefined)
+      this[node.declaration.type](node.declaration, state);
+    else
+      console.log('unsupported declaration', node.declaration.type);
+
+    also maybe should not write to state if missing...
+

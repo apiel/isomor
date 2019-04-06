@@ -1,5 +1,5 @@
 {
-  "name": "example",
+  "name": "isomor-example",
   "version": "0.0.1",
   "private": true,
   "proxy": "http://127.0.0.1:3005",

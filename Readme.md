@@ -33,9 +33,9 @@ export async function getList(input: GetListInput): Promise<string[]> {
 }
 ```
 
-As you can see, on `componentDidMount` the app is calling `getList` that is located on the server. But no, **I am not speaking about SSR**. Isomor, is transpiling `getList` to a magic function that will call the backend through an http request. Like this, we have very consistent code between backend and server, especially if you are using types.
+As you can see, on `componentDidMount` the app is calling `getList` located on the server. But no, **I am not speaking about SSR**. Isomor transpile `getList` to a magic function that will call the backend through an http request. Like this, we have very consistent code between backend and server, especially if you are using types.
 
-Right now I implemented this library for TypeScript, since types bring lot of value to this concept. I didn't tried but it might work as well with FlowType and JavaScript as well. Also, till now I did all my test on React, but it might work with Angular, VueJs and so on.
+Right now, this library has been implemented for TypeScript, since types bring lot of value to this concept. It might work with FlowType and JavaScript as well. Also, till now all test has been done on React, but it should work as well with Angular, VueJs and so on.
 
 ### Checkout example
 
@@ -55,7 +55,7 @@ The following instruction will explain you how to setup a working enviroment wit
 
 > **Note:** find an example in the repo  `packages/examples/src-isomor/App.tsx`
 
-So let's create an react app with `create-react-app`:
+So let's create a react app with `create-react-app`:
 
 ```
 npx create-react-app my-app --typescript
@@ -74,7 +74,7 @@ In `my-app` folder create a copy of `src` called `src-isomor`, **this folder wil
 cp -r src src-isomor
 ```
 
-In `src-isomor` add a folder `server`. This folder will be all server side files. All this files will be transpilled to be usable from the client.
+In `src-isomor` add a folder `server`. This folder will be all server side files. All this files will be transpiled to be usable from the client.
 
 > **Note:** the transpiler only transpile file in root of `src-isomor/server`. `server` folder can contain subfolder, but they should not be directly linked to the app.
 

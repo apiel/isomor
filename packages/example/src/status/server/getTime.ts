@@ -1,7 +1,8 @@
-import { remote } from "isomor";
+
 export interface ServerTime {
-  time: string;
+    time: string,
 }
-export function getTime(...args: any) {
-  return remote("status-server-getTime", "getTime", args);
+
+export async function getTime(): Promise<ServerTime> {
+    return { time: Date().toString() };
 }

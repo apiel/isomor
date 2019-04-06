@@ -1,13 +1,16 @@
-import { remote } from "isomor";
+import { getCpuAndMem, } from './os/getCpuAndMem';
+
+// import { CpuInfo } from 'os'; // this is deleted so cant use it in interface. Need to fix
+// export { CpuInfo } from 'os'; // this is deleted so cant use it in interface. Need to fix
+
 export interface Status {
-  uptime: number;
-  cpus: {
-    model: string;
-    speed: number;
-  }[];
-  totalmem: number;
-  freemem: number;
+    uptime: number,
+    cpus: { model: string, speed: number }[],
+    // cpus: CpuInfo[], // need to fix
+    totalmem: number,
+    freemem: number,
 }
-export function getStatus(...args: any) {
-  return remote("status-server-getStatus", "getStatus", args);
+
+export async function getStatus(): Promise<Status> {
+    return { uptime: process.uptime(), ...getCpuAndMem() };
 }

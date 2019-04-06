@@ -3,8 +3,13 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { IsomorProvider } from './Isomor';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render((
+    <IsomorProvider>
+        <App />
+    </IsomorProvider>
+), document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

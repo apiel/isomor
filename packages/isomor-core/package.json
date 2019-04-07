@@ -5,8 +5,12 @@
     "types": "dist/index.d.ts",
     "author": "Alexandre Piel <alexandre.piel@gmail.com>",
     "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/apiel/isomor"
+    },
     "scripts": {
-        "prepublish": "yarn build",
+        "prepublish": "cp ../../Readme.sub.md ./Readme.md && yarn build",
         "prebuild": "rm -rf dist/",
         "build": "tsc -p tsconfig.json",
         "lint": "tslint -p tsconfig.json -c tslint.json"

@@ -6,8 +6,12 @@
     "author": "Alexandre Piel <alexandre.piel@gmail.com>",
     "license": "MIT",
     "bin": "dist/server.js",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/apiel/isomor"
+    },
     "scripts": {
-        "prepublish": "yarn build",
+        "prepublish": "cp ../../Readme.sub.md ./Readme.md && yarn build",
         "start": "ts-node src/server.ts",
         "prebuild": "rm -rf dist/",
         "build": "tsc -p tsconfig.json && chmod +x dist/server.js",

@@ -2,6 +2,10 @@
   "name": "isomor-example",
   "version": "0.1.0",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/apiel/isomor"
+  },
   "proxy": "http://127.0.0.1:3005",
   "eslintConfig": {
     "extends": "react-app"

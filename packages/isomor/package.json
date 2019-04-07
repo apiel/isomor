@@ -5,6 +5,10 @@
     "types": "dist/index.d.ts",
     "author": "Alexandre Piel <alexandre.piel@gmail.com>",
     "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/apiel/isomor"
+    },
     "scripts": {
         "prepublish": "cp ../../Readme.md . && yarn build",
         "prebuild": "rm -rf dist/",

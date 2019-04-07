@@ -3,7 +3,7 @@
 
 `Isomor` is a library to create an interface between your backend and your frontend with nodejs and javascript application. Today, fullstack developers often use monorepo to centralize all their architecture inside a single place. This library allow you to do even more. Instead to have different application for backend and frontend, you develop a single "isomorphic" application and `isomor` will take care to split the code and setup a communication protocole. See following example:
 
-```
+```tsx
 class App extends Component {
   state = { list: [] };
 
@@ -23,7 +23,7 @@ class App extends Component {
 }
 ```
 
-```
+```typescript
 import { readdir } from 'fs-extra';
 import { GetListInput } from './getList.input';
 
@@ -39,7 +39,7 @@ Right now, this library has been implemented for TypeScript, since types bring l
 
 ### Checkout example
 
-```
+```bash
 git clone https://github.com/apiel/isomor.git
 cd packages/examples/
 yarn
@@ -57,20 +57,20 @@ The following instruction will explain you how to setup a working enviroment wit
 
 So let's create a react app with `create-react-app`:
 
-```
+```bash
 npx create-react-app my-app --typescript
 cd my-app
 ```
 
 Then add `isomor` library:
 
-```
+```bash
 yarn add isomor
 ```
 
 In `my-app` folder create a copy of `src` called `src-isomor`, **this folder will be where you are coding**.
 
-```
+```bash
 cp -r src src-isomor
 ```
 
@@ -78,14 +78,14 @@ In `src-isomor` add a folder `server`. This folder will be all server side files
 
 > **Note:** you can have multiple `server` folder in your project. The transpiler will transpile each of them but only their root. `server` folder can contain subfolder, but they should not be directly linked to the app. The files imported by the app should always be files from the root of `server` folder. Other subfolder, will be ignored and only used on server side.
 
-```
+```bash
 cd src-isomor
 mkdir server
 ```
 
 Now, let's update `package.json` to add some script and a proxy:
 
-```
+```json
   ....
   "proxy": "http://127.0.0.1:3005",
   ....
@@ -101,7 +101,7 @@ Now, let's update `package.json` to add some script and a proxy:
 
 As you can see, `build:server` need a custom tsconfig file. This is because, we need to transpile TypeScript in different way depending if it's running on backend or frontend. Create a new file `tsconfig.server.json` with the following content:
 
-```
+```json
 {
   "compilerOptions": {
     "types": [
@@ -131,7 +131,7 @@ As you can see, `build:server` need a custom tsconfig file. This is because, we 
 
 Now we have our working environment. Let's try out with adding a file `data.ts` in the server folder `src-isomor/server`:
 
-```
+```typescript
 import { readdir } from 'fs-extra';
 
 export interface GetListInput {
@@ -145,14 +145,14 @@ export async function getList(input: GetListInput): Promise<string[]> {
 ```
 Don't forget to add the library `fs-extra` to your `node_modules`:
 
-```
+```bash
 yarn add fs-extra
 yarn add @types/fs-extra --dev
 ```
 
 Now let's call `getList` in the app. Open `src-isomor/App.tsx` and add the following code:
 
-```
+```tsx
 import React from 'react';
 import './App.css';
 
@@ -188,13 +188,13 @@ Ok, now we have everything, normally we should now be able to transpile and star
 
 First let's run the server:
 
-```
+```bash
 yarn serv
 ```
 
 You should get something like:
 
-```
+```bash
 [19:55:35] Starting server.
 [19:55:35] Created endpoints: [ '/isomor/server-data/getList' ]
 [19:55:35] Server listening on port 3005!
@@ -204,7 +204,7 @@ The server is running on port `3005` and previously we setup a proxy in `package
 
 Now let's start the app:
 
-```
+```bash
 yarn isomor:build
 yarn start
 ```
@@ -213,7 +213,7 @@ And that's all, open your browser and access the app with the url http://127.0.0
 
 #### Run in production
 
-```
+```bash
 yarn isomor:build
 yarn build
 STATIC_FOLDER=./build yarn serv
@@ -227,7 +227,7 @@ Open http://127.0.0.1:3005/
 
 Since `isomor` is using expressJs, you could integrate it to your existing api. Just import `useIsomor` from `isomor-server`:
 
-```
+```typescript
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import { useIsomor } from 'isomor-server';

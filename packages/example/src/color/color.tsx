@@ -3,7 +3,7 @@ import { useIsomor } from '../Isomor';
 import { getColor, setColor } from './server/color';
 
 export const Color = () => {
-    const { call, response: color } = useIsomor();
+    const { call, response: color, update } = useIsomor();
     const load = () => {
       call(getColor);
     }
@@ -11,6 +11,7 @@ export const Color = () => {
     const onClickColor = (newColor: string) => async () => {
         console.log('click color', newColor);
         await setColor(newColor);
+        update(newColor, getColor);
     }
     return (
         <div style={{ color }}>

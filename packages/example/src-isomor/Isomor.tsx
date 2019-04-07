@@ -19,6 +19,7 @@ const initialState = {
 
 export const IsomorContext = createContext({
     call: async (...args: any) => { },
+    update: async (response: any, ...args: any) => { },
     ...initialState,
 });
 
@@ -27,7 +28,7 @@ interface Props {
 }
 
 export const useIsomor = () => {
-    const { call, responses } = useContext(IsomorContext);
+    const { call, responses, ...rest } = useContext(IsomorContext);
     const [id, setId] = useState();
     const [response, setResponse] = useState();
     const myCall = async (fn: (...args: any) => Promise<any>, ...args: any) => {
@@ -41,7 +42,7 @@ export const useIsomor = () => {
             setResponse(storeResponse.response);
         }
     }); // , [responses]
-    return { call: myCall, response };
+    return { call: myCall, response, ...rest };
 }
 
 function getId(fn: (...args: any) => Promise<any>, args: any): string {
@@ -94,11 +95,17 @@ export class IsomorProvider extends React.Component<Props> {
         }
     }
 
+    update = async (response: any, fn: (...args: any) => Promise<any>, ...args: any) => {
+        const id = getId(fn, args);
+        await this.setResponse(id, fn, args, Date.now(), response);
+    }
+
     render() {
         return (
             <IsomorContext.Provider value={{
                 call: this.call,
                 responses: this.state.responses,
+                update: this.update,
             }}>
                 {this.props.children}
             </IsomorContext.Provider>

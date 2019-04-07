@@ -1,15 +1,14 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import md5 from 'md5';
 
-// use something else than JSON.stringify
-// if time of last query with same id is less than 200ms use cache
+// use something else than JSON.stringify (should we use immutable instead? After request are as frequent than rendering component, so JSON might be fine as well)
 // need to be able to update cache (like mutation)
 
 interface Res {
     name: string,
     args: any,
     response: any,
-    requestTime: Date,
+    requestTime: number,
 }
 
 type Responses = { [id: string]: Res };
@@ -32,7 +31,7 @@ export const useIsomor = () => {
     const [id, setId] = useState();
     const [response, setResponse] = useState();
     const myCall = async (fn: (...args: any) => Promise<any>, ...args: any) => {
-        setId(getId(fn, ...args));
+        setId(getId(fn, args));
         call(fn, ...args);
     };
     useEffect(() => {
@@ -45,7 +44,7 @@ export const useIsomor = () => {
     return { call: myCall, response };
 }
 
-function getId(fn: (...args: any) => Promise<any>, ...args: any): string {
+function getId(fn: (...args: any) => Promise<any>, args: any): string {
     return md5(`${fn.name}::${JSON.stringify(args)}`);
 }
 
@@ -54,22 +53,45 @@ export class IsomorProvider extends React.Component<Props> {
         ...initialState,
     };
 
-    setRequestTime = (id: string) => {
-        const requestTime = new Date();
-        const { responses } = this.state;
-        responses[id].requestTime = requestTime;
-        this.setState({ responses });
+    setResponse = (
+        id: string,
+        fn: (...args: any) => Promise<any>,
+        args: any,
+        requestTime: number,
+        response: any,
+    ) => {
+        return new Promise((resolve) => {
+            const { name } = fn;
+            const { responses } = this.state;
+            responses[id] = { name, args, response, requestTime };
+            this.setState({ responses }, resolve);
+        });
+    }
+
+    setRequestTime = async(
+        id: string,
+        fn: (...args: any) => Promise<any>,
+        args: any,
+    ) => {
+        const requestTime = Date.now();
+        const data = this.state.responses[id];
+        const response = data ? data.response : null;
+        await this.setResponse(id, fn, args, requestTime, response);
         return requestTime;
     }
 
+    isAlreadyRequesting = (id: string): boolean => {
+        const data = this.state.responses[id];
+        return data && (Date.now() - data.requestTime) < 200;
+    }
+
     call = async (fn: (...args: any) => Promise<any>, ...args: any) => {
-        const id = getId(fn, ...args);
-        const requestTime = this.setRequestTime(id);
-        const { name } = fn;
-        const response = await fn(...args);
-        const { responses } = this.state;
-        responses[id] = { name, args, response, requestTime };
-        this.setState({ responses });
+        const id = getId(fn, args);
+        if (!this.isAlreadyRequesting(id)) {
+            const requestTime = await this.setRequestTime(id, fn, args);
+            const response = await fn(...args);
+            await this.setResponse(id, fn, args, requestTime, response);
+        }
     }
 
     render() {

@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import md5 from 'md5';
 
-// use something else than JSON.stringify
+// use something else than JSON.stringify (should we use immutable instead? After request are as frequent than rendering component, so JSON might be fine as well)
 // need to be able to update cache (like mutation)
 
 interface Res {

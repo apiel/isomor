@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Time } from './status/time';
 import { TimeUTC } from './status/timeUTC';
+import { Color } from './color/color';
 
 const styleRow = {
     display: 'flex',
@@ -17,6 +18,7 @@ const Column = () => (
     <div style={styleCol}>
         <Time />
         <TimeUTC />
+        <Color />
     </div>
 );
 

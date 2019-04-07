@@ -2,6 +2,8 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import md5 from 'md5';
 
 // use something else than JSON.stringify
+// if time of last query with same id is less than 200ms use cache
+// need to be able to update cache (like mutation)
 
 interface Res {
     name: string,

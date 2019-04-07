@@ -4,35 +4,30 @@ import './App.css';
 import { getList } from './server/data';
 import { GetListInput } from './server/getList.input';
 import { Stats } from './status/stats';
-import { Time } from './status/time';
-import { TimeUTC } from './status/timeUTC';
+import { TwoColumn } from './TwoColumn';
 
 const App = () => {
-  const [list, setList] = React.useState<string[]>([]);
-  const load = async () => {
-    const input: GetListInput = { foo: 'magic' };
-    setList(await getList(input));
-  }
-  React.useEffect(() => { load(); }, []);
-  return (
-    <div className="App">
-      <header className="App-header">
-        Isomor
-        <Time />
-        <TimeUTC />
-    </header>
-      <Stats />
-      <Time />
-      <TimeUTC />
-      <hr />
-      <ul>
-        {
-          list.map((item, index) => <li key={index}>{item}</li>)
-        }
-      </ul>
-      <button onClick={load}>load again</button>
-    </div>
-  );
+    const [list, setList] = React.useState<string[]>([]);
+    const load = async () => {
+        const input: GetListInput = { foo: 'magic' };
+        setList(await getList(input));
+    }
+    React.useEffect(() => { load(); }, []);
+    return (
+        <div className="App">
+            <header className="App-header">
+                Isomor
+            </header>
+            <div className="App-content">
+                <ul>
+                    {list.map((item, index) => <li key={index}>{item}</li>)}
+                </ul>
+                <button onClick={load}>load again</button>
+                <TwoColumn />
+                <Stats />
+            </div>
+        </div>
+    );
 }
 
 export default App;

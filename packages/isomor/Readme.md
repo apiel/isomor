@@ -14,9 +14,10 @@ class App extends Component {
   }
 
   render() {
+    const { list } = this.state;
     return (
       <ul>
-        { this.state.list.map((item, index) => <li key={index}>{item}</li>) }
+        { list.map((item, index) => <li key={index}>{item}</li>) }
       </ul>
     );
   }
@@ -48,6 +49,8 @@ yarn serv
 yarn isomor:build
 yarn start
 ```
+
+> **Note:** there some more commands, like `yarn serv:dev` and `yarn isomor:build:dev` for dev purpose. It will allow you to do hot-reload of your changes. **BUT** `yarn serv:dev` is super slow and `yarn isomor:build:dev` is not always working well with react hot-reloading. Hopefully, soon there will better tooling...
 
 ### How to setup Isomor
 
@@ -86,15 +89,15 @@ mkdir server
 Now, let's update `package.json` to add some script and a proxy:
 
 ```json
-  ....
+  ...
   "proxy": "http://127.0.0.1:3005",
-  ....
+  ...
   "scripts": {
     "isomor:build": "isomor-transpiler",
     "isomor:serv": "isomor-server",
     "build:server": "rimraf ./dist-server && tsc -p tsconfig.server.json",
     "serv": "yarn build:server && yarn isomor:serv",
-    ....
+    ...
 ```
 
 > **Note:** if you don't want to use type, you need to prefix `isomor-transpiler` with `WITH_TYPES=false`.
@@ -312,11 +315,13 @@ const serverFolder = '/server';
 
 #### ToDo
 
+- need e2e test before publish
+- unit test
+
 - create a custom create-react-app including isomor
 - Need to test JS and provide example
 - websocket version where server could call frontend functions
 - add config file using `cosmiconfig` lib (isomor-core)
-- unit test
 - hot-reloading
 
 - make babel plugin

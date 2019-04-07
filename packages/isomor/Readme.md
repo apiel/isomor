@@ -223,6 +223,60 @@ Open http://127.0.0.1:3005/
 
 > **Note:** it would be better to use nginx to serv static files
 
+### Isomor-react
+
+[Isomor-react](https://github.com/apiel/isomor-react) is a library that will help you to use `isomore` with react. When you are using `isomor` wihtout this library each call to server functions will generate a request. `Isomor-react` will create a cache and distinct duplicated request. It will also allow you to share the response to a server function between multiple components.
+
+Without cache you would do:
+
+```jsx
+import { getTime } from './server/getTime';
+
+export const Time = () => {
+  const [time, setTime] = React.useState<string>();
+  const load = async () => {
+      setTime(await getTime());
+  }
+  React.useEffect(() => { load(); }, []);
+  return (
+    <div>
+      {!time ? <p>Loading...</p> : (
+        <p><b>Server time:</b> {time} <button onClick={load}>reload</button></p>
+      )}
+    </div>
+  );
+}
+```
+
+Using the cache:
+
+```jsx
+import React from 'react';
+import { useIsomor } from 'isomor-react';
+
+import { getTime } from './server/getTime';
+
+export const Time = () => {
+  const { call, response } = useIsomor();
+  const load = () => {
+    call(getTime);
+  }
+  React.useEffect(() => { load(); }, []);
+  return (
+    <div>
+      {!response ? <p>Loading...</p> : (
+        <p><b>Server time:</b> {response.time} <button onClick={load}>reload</button></p>
+      )}
+    </div>
+  );
+}
+```
+
+**Without cache**, if you would have this component 2 times in your app, it would make 2 requests when the components mount. When you click the `load` button, only the component where the button is located would be refreshed.
+**With the cache**, only 1 request would be sent instead of 2. When you click the `load` button, both component would be refresh.
+
+Other feature are available like updating the cache... See full [documentation](https://github.com/apiel/isomor-react)
+
 ### Custom server
 
 Since `isomor` is using expressJs, you could integrate it to your existing api. Just import `useIsomor` from `isomor-server`:
@@ -258,17 +312,12 @@ const serverFolder = '/server';
 
 #### ToDo
 
-- create react hook to consume server files
-    - hook should also be able to handle cache
-    - hook should be able to batch queries
 - create a custom create-react-app including isomor
 - Need to test JS and provide example
 - websocket version where server could call frontend functions
 - add config file using `cosmiconfig` lib (isomor-core)
 - unit test
 - hot-reloading
-
-- https://medium.com/simply/state-management-with-react-hooks-and-context-api-at-10-lines-of-code-baf6be8302c
 
 - make babel plugin
   - https://github.com/jamiebuilds/babel-handbook/blob/master/translations/en/plugin-handbook.md#stages-of-babel
@@ -278,8 +327,6 @@ need to Fix:
 
 - watch mode:
  https://www.npmjs.com/package/chokidar
-
-
 
 Notes:
 babel --presets @babel/preset-typescript --plugins isomor-babel src-isomor/server/data.ts -o output.ts

@@ -1,6 +1,7 @@
 import React from 'react';
+import { useIsomor } from 'isomor-react';
+
 import { getTimeUTC } from './server/getTimeUTC';
-import { useIsomor } from '../Isomor';
 
 export const TimeUTC = () => {
   const { call, response } = useIsomor();

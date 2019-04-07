@@ -1,6 +1,7 @@
 import React from 'react';
+import { useIsomor } from 'isomor-react';
+
 import { getTime } from './server/getTime';
-import { useIsomor } from '../Isomor';
 
 export const Time = () => {
   const { call, response } = useIsomor();

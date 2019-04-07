@@ -272,7 +272,14 @@ const serverFolder = '/server';
 
 - make babel plugin
   - https://github.com/jamiebuilds/babel-handbook/blob/master/translations/en/plugin-handbook.md#stages-of-babel
-  
+
+need to Fix:
+// export { CpuInfo } from 'os'; // this is deleted so cant use it in interface. Need to fix
+
+- watch mode:
+ https://www.npmjs.com/package/chokidar
+
+
 
 Notes:
 babel --presets @babel/preset-typescript --plugins isomor-babel src-isomor/server/data.ts -o output.ts

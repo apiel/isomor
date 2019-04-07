@@ -1,5 +1,5 @@
 import React from 'react';
-import { useIsomor } from '../Isomor';
+import { useIsomor } from 'isomor-react';
 import { getColor, setColor } from './server/color';
 
 export const Color = () => {

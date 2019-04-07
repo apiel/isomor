@@ -61,13 +61,15 @@ export class IsomorProvider extends React.Component<Props> {
         requestTime: Date,
         response: any,
     ) => {
-        const { name } = fn;
-        const { responses } = this.state;
-        responses[id] = { name, args, response, requestTime };
-        this.setState({ responses });
+        return new Promise((resolve) => {
+            const { name } = fn;
+            const { responses } = this.state;
+            responses[id] = { name, args, response, requestTime };
+            this.setState({ responses }, resolve);
+        });
     }
 
-    setRequestTime = (
+    setRequestTime = async(
         id: string,
         fn: (...args: any) => Promise<any>,
         args: any,
@@ -75,18 +77,15 @@ export class IsomorProvider extends React.Component<Props> {
         const requestTime = new Date();
         const data = this.state.responses[id];
         const response = data ? data.response : null;
-        this.setResponse(id, fn, args, response, requestTime);
+        await this.setResponse(id, fn, args, requestTime, response);
         return requestTime;
     }
 
     call = async (fn: (...args: any) => Promise<any>, ...args: any) => {
         const id = getId(fn, args);
-        const requestTime = this.setRequestTime(id, fn, args);
-        const { name } = fn;
+        const requestTime = await this.setRequestTime(id, fn, args);
         const response = await fn(...args);
-        const { responses } = this.state;
-        responses[id] = { name, args, response, requestTime };
-        this.setState({ responses });
+        await this.setResponse(id, fn, args, requestTime, response);
     }
 
     render() {

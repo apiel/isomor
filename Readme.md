@@ -14,10 +14,10 @@ class App extends Component {
   }
 
   render() {
+    const { list } = this.state;
     return (
       <ul>
-        { this.state.list.map(
-              (item, index) => <li key={index}>{item}</li>) }
+        { list.map((item, index) => <li key={index}>{item}</li>) }
       </ul>
     );
   }

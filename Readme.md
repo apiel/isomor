@@ -16,7 +16,8 @@ class App extends Component {
   render() {
     return (
       <ul>
-        { this.state.list.map((item, index) => <li key={index}>{item}</li>) }
+        { this.state.list.map(
+              (item, index) => <li key={index}>{item}</li>) }
       </ul>
     );
   }

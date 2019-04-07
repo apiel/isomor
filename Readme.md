@@ -315,11 +315,13 @@ const serverFolder = '/server';
 
 #### ToDo
 
+- need e2e test before publish
+- unit test
+
 - create a custom create-react-app including isomor
 - Need to test JS and provide example
 - websocket version where server could call frontend functions
 - add config file using `cosmiconfig` lib (isomor-core)
-- unit test
 - hot-reloading
 
 - make babel plugin

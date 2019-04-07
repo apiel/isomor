@@ -50,6 +50,8 @@ yarn isomor:build
 yarn start
 ```
 
+> **Note:** there some more commands, like `yarn serv:dev` and `yarn isomor:build:dev` for dev purpose. It will allow you to do hot-reload of your changes. **BUT** `yarn serv:dev` is super slow and `yarn isomor:build:dev` is not always working well with react hot-reloading. Hopefully, soon there will better tooling...
+
 ### How to setup Isomor
 
 The following instruction will explain you how to setup a working enviroment with React and TypeScript.

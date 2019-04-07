@@ -9,12 +9,12 @@ export async function useIsomor(
 ): Promise<string[]> {
     const files = await getFiles(distServerFolder, serverFolder);
     return (files.map(file => {
-        const functions = require(
-            require.resolve(
-                join(distServerFolder, file),
-                { paths: [process.cwd()] },
-            ),
+        const filepath = require.resolve(
+            join(distServerFolder, file),
+            { paths: [process.cwd()] },
         );
+        delete require.cache[filepath];
+        const functions = require(filepath);
         return Object.keys(functions).map(name => {
             const entrypoint = `/isomor/${getPathForUrl(file)}/${name}`;
             app.use(entrypoint, async (req: any, res: any) => {

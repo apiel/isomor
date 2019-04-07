@@ -9,6 +9,7 @@ interface Res {
     name: string,
     args: any,
     response: any,
+    requestTime: Date,
 }
 
 type Responses = { [id: string]: Res };
@@ -31,7 +32,7 @@ export const useIsomor = () => {
     const [id, setId] = useState();
     const [response, setResponse] = useState();
     const myCall = async (fn: (...args: any) => Promise<any>, ...args: any) => {
-        setId(getId(fn, ...args));
+        setId(getId(fn, args));
         call(fn, ...args);
     };
     useEffect(() => {
@@ -44,7 +45,7 @@ export const useIsomor = () => {
     return { call: myCall, response };
 }
 
-function getId(fn: (...args: any) => Promise<any>, ...args: any): string {
+function getId(fn: (...args: any) => Promise<any>, args: any): string {
     return md5(`${fn.name}::${JSON.stringify(args)}`);
 }
 
@@ -53,12 +54,38 @@ export class IsomorProvider extends React.Component<Props> {
         ...initialState,
     };
 
+    setResponse = (
+        id: string,
+        fn: (...args: any) => Promise<any>,
+        args: any,
+        requestTime: Date,
+        response: any,
+    ) => {
+        const { name } = fn;
+        const { responses } = this.state;
+        responses[id] = { name, args, response, requestTime };
+        this.setState({ responses });
+    }
+
+    setRequestTime = (
+        id: string,
+        fn: (...args: any) => Promise<any>,
+        args: any,
+    ) => {
+        const requestTime = new Date();
+        const data = this.state.responses[id];
+        const response = data ? data.response : null;
+        this.setResponse(id, fn, args, response, requestTime);
+        return requestTime;
+    }
+
     call = async (fn: (...args: any) => Promise<any>, ...args: any) => {
+        const id = getId(fn, args);
+        const requestTime = this.setRequestTime(id, fn, args);
         const { name } = fn;
         const response = await fn(...args);
         const { responses } = this.state;
-        const id = getId(fn, ...args);
-        responses[id] = { name, args, response };
+        responses[id] = { name, args, response, requestTime };
         this.setState({ responses });
     }
 

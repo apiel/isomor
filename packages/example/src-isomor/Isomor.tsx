@@ -9,6 +9,7 @@ interface Res {
     name: string,
     args: any,
     response: any,
+    requestTime: Date,
 }
 
 type Responses = { [id: string]: Res };
@@ -53,12 +54,21 @@ export class IsomorProvider extends React.Component<Props> {
         ...initialState,
     };
 
+    setRequestTime = (id: string) => {
+        const requestTime = new Date();
+        const { responses } = this.state;
+        responses[id].requestTime = requestTime;
+        this.setState({ responses });
+        return requestTime;
+    }
+
     call = async (fn: (...args: any) => Promise<any>, ...args: any) => {
+        const id = getId(fn, ...args);
+        const requestTime = this.setRequestTime(id);
         const { name } = fn;
         const response = await fn(...args);
         const { responses } = this.state;
-        const id = getId(fn, ...args);
-        responses[id] = { name, args, response };
+        responses[id] = { name, args, response, requestTime };
         this.setState({ responses });
     }
 

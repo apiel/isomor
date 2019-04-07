@@ -2,14 +2,13 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import md5 from 'md5';
 
 // use something else than JSON.stringify
-// if time of last query with same id is less than 200ms use cache
 // need to be able to update cache (like mutation)
 
 interface Res {
     name: string,
     args: any,
     response: any,
-    requestTime: Date,
+    requestTime: number,
 }
 
 type Responses = { [id: string]: Res };
@@ -58,7 +57,7 @@ export class IsomorProvider extends React.Component<Props> {
         id: string,
         fn: (...args: any) => Promise<any>,
         args: any,
-        requestTime: Date,
+        requestTime: number,
         response: any,
     ) => {
         return new Promise((resolve) => {
@@ -74,18 +73,25 @@ export class IsomorProvider extends React.Component<Props> {
         fn: (...args: any) => Promise<any>,
         args: any,
     ) => {
-        const requestTime = new Date();
+        const requestTime = Date.now();
         const data = this.state.responses[id];
         const response = data ? data.response : null;
         await this.setResponse(id, fn, args, requestTime, response);
         return requestTime;
     }
 
+    isAlreadyRequesting = (id: string): boolean => {
+        const data = this.state.responses[id];
+        return data && (Date.now() - data.requestTime) < 200;
+    }
+
     call = async (fn: (...args: any) => Promise<any>, ...args: any) => {
         const id = getId(fn, args);
-        const requestTime = await this.setRequestTime(id, fn, args);
-        const response = await fn(...args);
-        await this.setResponse(id, fn, args, requestTime, response);
+        if (!this.isAlreadyRequesting(id)) {
+            const requestTime = await this.setRequestTime(id, fn, args);
+            const response = await fn(...args);
+            await this.setResponse(id, fn, args, requestTime, response);
+        }
     }
 
     render() {

@@ -13,13 +13,12 @@ const fancy_log_1 = require("fancy-log");
 const express = require("express");
 const bodyParser = require("body-parser");
 const chokidar_1 = require("chokidar");
+const isomor_core_1 = require("isomor-core");
 const _1 = require(".");
 let server;
+let timer;
 function start(options) {
     return __awaiter(this, void 0, void 0, function* () {
-        if (server) {
-            server.close();
-        }
         const { distServerFolder, port, staticFolder, serverFolder } = options;
         fancy_log_1.info('Starting server.');
         const app = express();
@@ -31,13 +30,36 @@ function start(options) {
             app.use(express.static(staticFolder));
         }
         server = app.listen(port, () => fancy_log_1.info(`Server listening on port ${port}!`));
+        watcher(options);
     });
 }
-function run(options) {
-    chokidar_1.watch('file, dir, glob, or array')
-        .on('add', path => console.log(`File ${path} has been added`))
-        .on('change', path => console.log(`File ${path} has been changed`));
-    start(options);
+function watcher(options) {
+    if (options.watch) {
+        fancy_log_1.info('wait for file changes...');
+        const { distServerFolder, serverFolder } = options;
+        chokidar_1.watch(isomor_core_1.getFilesPattern(distServerFolder, serverFolder), {
+            ignoreInitial: true,
+        }).on('raw', () => {
+            clearTimeout(timer);
+            timer = setTimeout(() => {
+                fancy_log_1.info('Detect changes: need to reload...', server.listening);
+                if (server.listening) {
+                    server.close((err) => {
+                        if (err) {
+                            fancy_log_1.error('Something went wrong while closing server', err);
+                        }
+                        else {
+                            fancy_log_1.info('Server closed');
+                            start(options);
+                        }
+                    });
+                }
+                else {
+                    start(options);
+                }
+            }, 500);
+        });
+    }
 }
 start({
     distServerFolder: process.env.DIST_SERVER_FOLDER || './dist-server',

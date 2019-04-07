@@ -5,6 +5,7 @@ import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import { watch } from 'chokidar';
 import { Server } from 'http';
+import { getFilesPattern } from 'isomor-core';
 
 import { useIsomor } from '.';
 import { join } from 'path';
@@ -42,7 +43,7 @@ function watcher(options: Options) {
     if (options.watch) {
         info('wait for file changes...');
         const { distServerFolder, serverFolder } = options;
-        watch(join(distServerFolder, '**', serverFolder, '*'), {
+        watch(getFilesPattern(distServerFolder, serverFolder), {
             ignoreInitial: true,
         }).on('raw', () => {
             clearTimeout(timer);

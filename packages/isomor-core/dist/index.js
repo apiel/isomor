@@ -17,12 +17,17 @@ function getFilesPattern(rootFolder, folderToSearch) {
     return path_1.join(rootFolder, '**', folderToSearch, '*');
 }
 exports.getFilesPattern = getFilesPattern;
+function trimRootFolder(rootFolder) {
+    const start = rootFolder.length - 1;
+    return (file) => file.substring(start);
+}
+exports.trimRootFolder = trimRootFolder;
 function getFiles(rootFolder, folderToSearch) {
     return __awaiter(this, void 0, void 0, function* () {
         if (yield fs_extra_1.pathExists(rootFolder)) {
             const files = yield glob(getFilesPattern(rootFolder, folderToSearch), { nodir: true });
-            const start = rootFolder.length - 1;
-            return files.map(file => file.substring(start));
+            const trim = trimRootFolder(rootFolder);
+            return files.map(file => trim(file));
         }
         return [];
     });
@@ -32,8 +37,8 @@ function getFolders(rootFolder, folderToSearch) {
     return __awaiter(this, void 0, void 0, function* () {
         if (yield fs_extra_1.pathExists(rootFolder)) {
             const files = yield glob(path_1.join(rootFolder, '**', folderToSearch));
-            const start = rootFolder.length - 1;
-            return files.map(file => file.substring(start));
+            const trim = trimRootFolder(rootFolder);
+            return files.map(file => trim(file));
         }
         return [];
     });

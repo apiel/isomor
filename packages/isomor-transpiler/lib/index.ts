@@ -1,11 +1,21 @@
 #!/usr/bin/env node
 
 import { info } from 'fancy-log'; // fancy log not so fancy, i want colors :D
-import { readFile, outputFile, emptyDir, copy } from 'fs-extra';
-import { join, parse as parseFile, basename } from 'path';
-import { getFiles, getFolders, getPathForUrl } from 'isomor-core';
+import { readFile, outputFile, emptyDir, copy, unlink } from 'fs-extra';
+import { join } from 'path';
+import {
+    getFiles,
+    getFolders,
+    getPathForUrl,
+    getFilesPattern,
+    trimRootFolder,
+} from 'isomor-core';
+import { watch } from 'chokidar';
+import * as anymatch from 'anymatch';
+// we most likely don't need this 2 guys by using ts.createSourceFile...
 import { parse } from '@typescript-eslint/typescript-estree';
 import generate from '@babel/generator';
+
 import transform from './transform';
 
 export default transform;
@@ -40,7 +50,7 @@ async function transpile(options: Options, filePath: string) {
     const code = getCode(options, getPathForUrl(filePath), buffer.toString());
 
     const appFilePath = join(distAppFolder, filePath);
-    info('Create isomor file', appFilePath);
+    info('Save isomor file', appFilePath);
     await outputFile(appFilePath, code);
 }
 
@@ -63,7 +73,41 @@ async function start(options: Options) {
     const { srcFolder, serverFolder } = options;
     const files = await getFiles(srcFolder, serverFolder);
     info(`Found ${files.length} file(s).`);
-    files.forEach(file => transpile(options, file));
+    await Promise.all(files.map(file => transpile(options, file)));
+
+    watcher(options);
+}
+
+function watcher(options: Options) {
+    // here need to check if WATCH=true
+    info('Starting watch mode.');
+    const { srcFolder, serverFolder, distAppFolder } = options;
+    const trim = trimRootFolder(srcFolder);
+    const serverFolderPattern = getFilesPattern(srcFolder, serverFolder);
+    watch(srcFolder, {
+        ignoreInitial: true,
+        ignored: join(serverFolderPattern, '**', '*'),
+    }).on('ready', () => info('Initial scan complete. Ready for changes...'))
+        .on('add', path => {
+            info(`File ${path} has been added`);
+            watcherUpdate(path);
+        }).on('change', path => {
+            info(`File ${path} has been changed`);
+            watcherUpdate(path);
+        }).on('unlink', path => {
+            info(`File ${path} has been removed`);
+            unlink(join(distAppFolder, trim(path)));
+        });
+
+    function watcherUpdate(path: string) {
+        const file = trim(path);
+        if (anymatch([serverFolderPattern], path)) {
+            transpile(options, file);
+        } else {
+            info(`Copy ${path} to folder`);
+            copy(path, join(distAppFolder, file));
+        }
+    }
 }
 
 start({

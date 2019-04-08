@@ -342,24 +342,14 @@ const serverFolder = '/server';
 
 - make babel plugin
   - https://github.com/jamiebuilds/babel-handbook/blob/master/translations/en/plugin-handbook.md#stages-of-babel
+  - babel --presets @babel/preset-typescript --plugins module:isomor-babel src-isomor/server/data.ts -o output.ts
 
-need to Fix:
+NEED FIX:
 // export { CpuInfo } from 'os'; // this is deleted so cant use it in interface. Need to fix
 
-- watch mode:
- https://www.npmjs.com/package/chokidar
-
-Notes:
-babel --presets @babel/preset-typescript --plugins isomor-babel src-isomor/server/data.ts -o output.ts
-
-TSC:
+tsc:
 - https://github.com/mohd-akram/tisk/blob/master/bin.js
 
-Might use `ts.createSourceFile` in transpiler and as well server.
+Might use `ts.createSourceFile` in transpiler
   - in transpiler for traversing the tree and updating it
       - think as well about a watch mode that would work with create-react-app
-  - server for watch mode, instead of using `tsc --watch`, could transpile only the files that change and only update the necessary endpoint.
-
-REMOVE watch mode from server, in dev mode use isomor-server with ts-node or nodemon "rimraf ./dist-server && tsc -p tsconfig.server.json && isomor-server"
-
-https://www.npmjs.com/package/ts-node#watching-and-restarting

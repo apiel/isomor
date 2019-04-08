@@ -1,0 +1,5 @@
+# https://pmarsceill.github.io/just-the-docs/docs/configuration/
+
+remote_theme: pmarsceill/just-the-docs
+search_enabled: true
+exclude: ['packages/isomor/Readme.md']

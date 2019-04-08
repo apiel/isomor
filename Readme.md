@@ -61,8 +61,8 @@ yarn start
 Or in watch mode:
 
 ```bash
-yarn serv
-yarn isomor:build
+yarn serv:dev
+yarn isomor:build:dev
 yarn start
 ```
 

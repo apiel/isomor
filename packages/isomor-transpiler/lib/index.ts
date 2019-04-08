@@ -25,6 +25,7 @@ interface Options {
     distAppFolder: string;
     serverFolder: string;
     withTypes: boolean;
+    watchMode: boolean;
 }
 
 interface Func {
@@ -79,33 +80,34 @@ async function start(options: Options) {
 }
 
 function watcher(options: Options) {
-    // here need to check if WATCH=true
-    info('Starting watch mode.');
-    const { srcFolder, serverFolder, distAppFolder } = options;
-    const trim = trimRootFolder(srcFolder);
-    const serverFolderPattern = getFilesPattern(srcFolder, serverFolder);
-    watch(srcFolder, {
-        ignoreInitial: true,
-        ignored: join(serverFolderPattern, '**', '*'),
-    }).on('ready', () => info('Initial scan complete. Ready for changes...'))
-        .on('add', path => {
-            info(`File ${path} has been added`);
-            watcherUpdate(path);
-        }).on('change', path => {
-            info(`File ${path} has been changed`);
-            watcherUpdate(path);
-        }).on('unlink', path => {
-            info(`File ${path} has been removed`);
-            unlink(join(distAppFolder, trim(path)));
-        });
+    const { srcFolder, serverFolder, distAppFolder, watchMode } = options;
+    if (watchMode) {
+        info('Starting watch mode.');
+        const trim = trimRootFolder(srcFolder);
+        const serverFolderPattern = getFilesPattern(srcFolder, serverFolder);
+        watch(srcFolder, {
+            ignoreInitial: true,
+            ignored: join(serverFolderPattern, '**', '*'),
+        }).on('ready', () => info('Initial scan complete. Ready for changes...'))
+            .on('add', path => {
+                info(`File ${path} has been added`);
+                watcherUpdate(path);
+            }).on('change', path => {
+                info(`File ${path} has been changed`);
+                watcherUpdate(path);
+            }).on('unlink', path => {
+                info(`File ${path} has been removed`);
+                unlink(join(distAppFolder, trim(path)));
+            });
 
-    function watcherUpdate(path: string) {
-        const file = trim(path);
-        if (anymatch([serverFolderPattern], path)) {
-            transpile(options, file);
-        } else {
-            info(`Copy ${path} to folder`);
-            copy(path, join(distAppFolder, file));
+        function watcherUpdate(path: string) {
+            const file = trim(path);
+            if (anymatch([serverFolderPattern], path)) {
+                transpile(options, file);
+            } else {
+                info(`Copy ${path} to folder`);
+                copy(path, join(distAppFolder, file));
+            }
         }
     }
 }
@@ -114,5 +116,6 @@ start({
     srcFolder: process.env.SRC_FOLDER || './src-isomor',
     distAppFolder: process.env.DIST_APP_FOLDER || './src',
     serverFolder: process.env.SERVER_FOLDER || '/server',
-    withTypes: process.env.WITH_TYPES === 'false' ? false : true,
+    withTypes: process.env.NO_TYPES === 'true',
+    watchMode: process.env.WATCH === 'true',
 });

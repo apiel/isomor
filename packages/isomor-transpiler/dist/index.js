@@ -14,6 +14,7 @@ const fs_extra_1 = require("fs-extra");
 const path_1 = require("path");
 const isomor_core_1 = require("isomor-core");
 const chokidar_1 = require("chokidar");
+const anymatch = require("anymatch");
 const typescript_estree_1 = require("@typescript-eslint/typescript-estree");
 const generator_1 = require("@babel/generator");
 const transform_1 = require("./transform");
@@ -32,7 +33,7 @@ function transpile(options, filePath) {
         const buffer = yield fs_extra_1.readFile(path_1.join(srcFolder, filePath));
         const code = getCode(options, isomor_core_1.getPathForUrl(filePath), buffer.toString());
         const appFilePath = path_1.join(distAppFolder, filePath);
-        fancy_log_1.info('Create isomor file', appFilePath);
+        fancy_log_1.info('Save isomor file', appFilePath);
         yield fs_extra_1.outputFile(appFilePath, code);
     });
 }
@@ -53,26 +54,47 @@ function start(options) {
         const { srcFolder, serverFolder } = options;
         const files = yield isomor_core_1.getFiles(srcFolder, serverFolder);
         fancy_log_1.info(`Found ${files.length} file(s).`);
-        files.forEach(file => transpile(options, file));
+        yield Promise.all(files.map(file => transpile(options, file)));
         watcher(options);
     });
 }
 function watcher(options) {
-    const { srcFolder, serverFolder } = options;
-    const { log } = console;
-    const serverFolderPattern = isomor_core_1.getFilesPattern(srcFolder, serverFolder);
-    chokidar_1.watch(srcFolder, {
-        ignoreInitial: true,
-        ignored: path_1.join(serverFolderPattern, '**', '*'),
-    }).on('ready', () => log('Initial scan complete. Ready for changes'))
-        .on('add', path => log(`File ${path} has been added`))
-        .on('change', path => log(`File ${path} has been changed`))
-        .on('unlink', path => log(`File ${path} has been removed`));
+    const { srcFolder, serverFolder, distAppFolder, watchMode } = options;
+    if (watchMode) {
+        fancy_log_1.info('Starting watch mode.');
+        const trim = isomor_core_1.trimRootFolder(srcFolder);
+        const serverFolderPattern = isomor_core_1.getFilesPattern(srcFolder, serverFolder);
+        chokidar_1.watch(srcFolder, {
+            ignoreInitial: true,
+            ignored: path_1.join(serverFolderPattern, '**', '*'),
+        }).on('ready', () => fancy_log_1.info('Initial scan complete. Ready for changes...'))
+            .on('add', path => {
+            fancy_log_1.info(`File ${path} has been added`);
+            watcherUpdate(path);
+        }).on('change', path => {
+            fancy_log_1.info(`File ${path} has been changed`);
+            watcherUpdate(path);
+        }).on('unlink', path => {
+            fancy_log_1.info(`File ${path} has been removed`);
+            fs_extra_1.unlink(path_1.join(distAppFolder, trim(path)));
+        });
+        function watcherUpdate(path) {
+            const file = trim(path);
+            if (anymatch([serverFolderPattern], path)) {
+                transpile(options, file);
+            }
+            else {
+                fancy_log_1.info(`Copy ${path} to folder`);
+                fs_extra_1.copy(path, path_1.join(distAppFolder, file));
+            }
+        }
+    }
 }
 start({
     srcFolder: process.env.SRC_FOLDER || './src-isomor',
     distAppFolder: process.env.DIST_APP_FOLDER || './src',
     serverFolder: process.env.SERVER_FOLDER || '/server',
-    withTypes: process.env.WITH_TYPES === 'false' ? false : true,
+    withTypes: process.env.NO_TYPES === 'true',
+    watchMode: process.env.WATCH === 'true',
 });
 //# sourceMappingURL=index.js.map

@@ -116,7 +116,7 @@ Now, let's update `package.json` to add some script and a proxy:
     ...
 ```
 
-> **Note:** if you don't want to use type, you need to prefix `isomor-transpiler` with `WITH_TYPES=false`.
+> **Note:** if you don't want to use type, you need to prefix `isomor-transpiler` with `NO_TYPES=true`.
 
 As you can see, `build:server` need a custom tsconfig file. This is because, we need to transpile TypeScript in different way depending if it's running on backend or frontend. Create a new file `tsconfig.server.json` with the following content:
 

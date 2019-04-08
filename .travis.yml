@@ -2,7 +2,6 @@ language: node_js
 
 node_js:
   - 'node'
-  - '10'
 
 branches:
   only:
@@ -19,7 +18,7 @@ script:
   - yarn serv:build
   - yarn build
   - yarn prod > /dev/null &
-  - sleep 20
+  - sleep 30
   - curl http://127.0.0.1:3005/
   - curl http://127.0.0.1:3005/isomor/status-server-getStatus/getStatus
 

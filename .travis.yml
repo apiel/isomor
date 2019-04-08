@@ -18,6 +18,10 @@ script:
   - yarn isomor:build
   - yarn serv:build
   - yarn build
+  - yarn prod > /dev/null &
+  - sleep 20
+  - curl http://127.0.0.1:3005/
+  - curl http://127.0.0.1:3005/isomor/status-server-getStatus/getStatus
 
 cache:
   directories:

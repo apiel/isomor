@@ -13,6 +13,8 @@ branches:
 install:
   - cd packages/example
   - yarn
+
+script:
   - yarn isomor:build
   - yarn serv:build
   - yarn build

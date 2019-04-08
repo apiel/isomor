@@ -44,13 +44,12 @@ Right now, this library has been implemented for TypeScript, since types bring l
 git clone https://github.com/apiel/isomor.git
 cd packages/examples/
 yarn
-yarn example
+yarn dev
 ```
-Access the example at http://127.0.0.1:3005/
 
-> **Note:** it might take some time to initialize because create-react-app as to build the static folder.
+> **Notes:** `yarn dev` will run multiple processes in parallel and it will shallow most of the console output. For debugging you might need to run each process manually.
 
-You can also run the project in dev mode with the following commands:
+You can also run the project manually and start each process with the following commands:
 
 ```bash
 yarn serv

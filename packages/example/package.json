@@ -30,12 +30,13 @@
     "typescript": "^3.4.1"
   },
   "scripts": {
-    "example": "yarn isomor:build && yarn build && STATIC_FOLDER=./build yarn serv",
     "isomor:build": "isomor-transpiler",
     "isomor:build:dev": "WATCH=true isomor-transpiler",
     "serv:build": "rimraf ./dist-server && tsc -p tsconfig.server.json",
     "serv": "rimraf ./dist-server && tsc -p tsconfig.server.json && isomor-server",
     "serv:dev": "nodemon --watch 'src-isomor/**/server/**/*' -e ts,tsx --exec 'yarn serv'",
+    "prod": "yarn isomor:build && yarn build && STATIC_FOLDER=./build yarn serv",
+    "dev": "run-p isomor:build:dev serv:dev start",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "echo skip travis",

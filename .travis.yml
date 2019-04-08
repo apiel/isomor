@@ -13,7 +13,9 @@ branches:
 install:
   - cd packages/example
   - yarn
-  - yarn example
+  - yarn isomor:build
+  - yarn serv:build
+  - yarn build
 
 cache:
   directories:

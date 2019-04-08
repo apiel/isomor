@@ -44,13 +44,28 @@ Right now, this library has been implemented for TypeScript, since types bring l
 git clone https://github.com/apiel/isomor.git
 cd packages/examples/
 yarn
-yarn serv
+yarn example
+```
 
+> **Note:** it might take some time to initialize because create-react-app as to build the static folder.
+
+You can also run the project in dev mode with the following commands:
+
+```bash
+yarn serv
 yarn isomor:build
 yarn start
 ```
 
-> **Note:** there some more commands, like `yarn serv:dev` and `yarn isomor:build:dev` for dev purpose. It will allow you to do hot-reload of your changes. **BUT** `yarn serv:dev` is super slow and `yarn isomor:build:dev` is not always working well with react hot-reloading. Hopefully, soon there will better tooling...
+Or in watch mode:
+
+```bash
+yarn serv
+yarn isomor:build
+yarn start
+```
+
+> **Note:** there is still some issue in watch mode because create-react-app don't always detect changes made by the transpiler.
 
 ### How to setup Isomor
 
@@ -94,9 +109,9 @@ Now, let's update `package.json` to add some script and a proxy:
   ...
   "scripts": {
     "isomor:build": "isomor-transpiler",
-    "isomor:serv": "isomor-server",
-    "build:server": "rimraf ./dist-server && tsc -p tsconfig.server.json",
-    "serv": "yarn build:server && yarn isomor:serv",
+    "isomor:build:dev": "nodemon --watch 'src-isomor/**/*' -e ts,tsx --exec 'isomor-transpiler'",
+    "serv": "rimraf ./dist-server && tsc -p tsconfig.server.json && isomor-server",
+    "serv:dev": "nodemon --watch 'src-isomor/**/server/**/*' -e ts,tsx --exec 'yarn serv'",
     ...
 ```
 
@@ -335,3 +350,15 @@ need to Fix:
 
 Notes:
 babel --presets @babel/preset-typescript --plugins isomor-babel src-isomor/server/data.ts -o output.ts
+
+TSC:
+- https://github.com/mohd-akram/tisk/blob/master/bin.js
+
+Might use `ts.createSourceFile` in transpiler and as well server.
+  - in transpiler for traversing the tree and updating it
+      - think as well about a watch mode that would work with create-react-app
+  - server for watch mode, instead of using `tsc --watch`, could transpile only the files that change and only update the necessary endpoint.
+
+REMOVE watch mode from server, in dev mode use isomor-server with ts-node or nodemon "rimraf ./dist-server && tsc -p tsconfig.server.json && isomor-server"
+
+https://www.npmjs.com/package/ts-node#watching-and-restarting

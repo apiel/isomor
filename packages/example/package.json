@@ -30,14 +30,11 @@
     "typescript": "^3.4.1"
   },
   "scripts": {
+    "example": "yarn isomor:build && yarn build && STATIC_FOLDER=./build yarn serv",
     "isomor:build": "isomor-transpiler",
-    "isomor:build:dev": "onchange 'src-isomor/**/*' -- isomor-transpiler",
-    "isomor:serv": "isomor-server",
-    "isomor:serv:dev": "WATCH=true isomor-server",
-    "build:server": "rimraf ./dist-server && tsc -p tsconfig.server.json",
-    "build:server:dev": "yarn build:server --watch",
-    "serv": "run-s build:server isomor:serv",
-    "serv:dev": "run-p build:server:dev isomor:serv:dev",
+    "isomor:build:dev": "nodemon --watch 'src-isomor/**/*' -e ts,tsx --exec 'isomor-transpiler'",
+    "serv": "rimraf ./dist-server && tsc -p tsconfig.server.json && isomor-server",
+    "serv:dev": "nodemon --watch 'src-isomor/**/server/**/*' -e ts,tsx --exec 'yarn serv'",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -50,8 +47,7 @@
     "@types/md5": "^2.1.33",
     "isomor-server": "^0.1.2",
     "isomor-transpiler": "^0.1.2",
-    "npm-run-all": "^4.1.5",
-    "onchange": "^5.2.0",
+    "nodemon": "^1.18.10",
     "rimraf": "^2.6.3",
     "ts-node": "^8.0.3"
   }

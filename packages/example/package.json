@@ -39,8 +39,7 @@
     "dev": "run-p isomor:build:dev serv:dev start",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "echo skip travis",
-    "test2": "react-scripts test",
+    "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
   "devDependencies": {

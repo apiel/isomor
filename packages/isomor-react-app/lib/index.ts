@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { info, error } from 'fancy-log'; // fancy log not so fancy, i want colors :D
+import { info } from 'fancy-log'; // fancy log not so fancy, i want colors :D
 import { copySync, readJSONSync, writeJSONSync } from 'fs-extra';
 import { join } from 'path';
 import { spawn, execSync } from 'child_process';
@@ -47,6 +47,7 @@ function start(options: Options) {
         info(output.toString());
 
         // need to setup isomor-react in <App />
+        // update doc
     });
 }
 

@@ -46,6 +46,7 @@ cd packages/examples/
 yarn
 yarn example
 ```
+Access the example at http://127.0.0.1:3005/
 
 > **Note:** it might take some time to initialize because create-react-app as to build the static folder.
 

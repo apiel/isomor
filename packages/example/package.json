@@ -38,7 +38,7 @@
     "serv:dev": "nodemon --watch 'src-isomor/**/server/**/*' -e ts,tsx --exec 'yarn serv'",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test-skip": "react-scripts test",
     "eject": "react-scripts eject"
   },
   "devDependencies": {

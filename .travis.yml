@@ -1,0 +1,20 @@
+language: node_js
+
+node_js:
+  - 'node'
+  - '10'
+
+branches:
+  only:
+  - master
+  - develop
+  - /^release-.*/
+
+install:
+  - cd packages/example
+  - yarn
+  - yarn example
+
+cache:
+  directories:
+    - node_modules

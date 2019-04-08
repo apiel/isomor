@@ -94,7 +94,7 @@ start({
     srcFolder: process.env.SRC_FOLDER || './src-isomor',
     distAppFolder: process.env.DIST_APP_FOLDER || './src',
     serverFolder: process.env.SERVER_FOLDER || '/server',
-    withTypes: process.env.NO_TYPES === 'true',
+    withTypes: process.env.NO_TYPES !== 'true',
     watchMode: process.env.WATCH === 'true',
 });
 //# sourceMappingURL=index.js.map

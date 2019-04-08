@@ -44,13 +44,29 @@ Right now, this library has been implemented for TypeScript, since types bring l
 git clone https://github.com/apiel/isomor.git
 cd packages/examples/
 yarn
-yarn serv
+yarn example
+```
+Access the example at http://127.0.0.1:3005/
 
+> **Note:** it might take some time to initialize because create-react-app as to build the static folder.
+
+You can also run the project in dev mode with the following commands:
+
+```bash
+yarn serv
 yarn isomor:build
 yarn start
 ```
 
-> **Note:** there some more commands, like `yarn serv:dev` and `yarn isomor:build:dev` for dev purpose. It will allow you to do hot-reload of your changes. **BUT** `yarn serv:dev` is super slow and `yarn isomor:build:dev` is not always working well with react hot-reloading. Hopefully, soon there will better tooling...
+Or in watch mode:
+
+```bash
+yarn serv:dev
+yarn isomor:build:dev
+yarn start
+```
+
+> **Note:** there is still some issue in watch mode because create-react-app don't always detect changes made by the transpiler.
 
 ### How to setup Isomor
 
@@ -94,13 +110,13 @@ Now, let's update `package.json` to add some script and a proxy:
   ...
   "scripts": {
     "isomor:build": "isomor-transpiler",
-    "isomor:serv": "isomor-server",
-    "build:server": "rimraf ./dist-server && tsc -p tsconfig.server.json",
-    "serv": "yarn build:server && yarn isomor:serv",
+    "isomor:build:dev": "nodemon --watch 'src-isomor/**/*' -e ts,tsx --exec 'isomor-transpiler'",
+    "serv": "rimraf ./dist-server && tsc -p tsconfig.server.json && isomor-server",
+    "serv:dev": "nodemon --watch 'src-isomor/**/server/**/*' -e ts,tsx --exec 'yarn serv'",
     ...
 ```
 
-> **Note:** if you don't want to use type, you need to prefix `isomor-transpiler` with `WITH_TYPES=false`.
+> **Note:** if you don't want to use type, you need to prefix `isomor-transpiler` with `NO_TYPES=true`.
 
 As you can see, `build:server` need a custom tsconfig file. This is because, we need to transpile TypeScript in different way depending if it's running on backend or frontend. Create a new file `tsconfig.server.json` with the following content:
 
@@ -326,12 +342,14 @@ const serverFolder = '/server';
 
 - make babel plugin
   - https://github.com/jamiebuilds/babel-handbook/blob/master/translations/en/plugin-handbook.md#stages-of-babel
+  - babel --presets @babel/preset-typescript --plugins module:isomor-babel src-isomor/server/data.ts -o output.ts
 
-need to Fix:
+NEED FIX:
 // export { CpuInfo } from 'os'; // this is deleted so cant use it in interface. Need to fix
 
-- watch mode:
- https://www.npmjs.com/package/chokidar
+tsc:
+- https://github.com/mohd-akram/tisk/blob/master/bin.js
 
-Notes:
-babel --presets @babel/preset-typescript --plugins isomor-babel src-isomor/server/data.ts -o output.ts
+Might use `ts.createSourceFile` in transpiler
+  - in transpiler for traversing the tree and updating it
+      - think as well about a watch mode that would work with create-react-app

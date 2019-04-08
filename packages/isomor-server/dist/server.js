@@ -12,11 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const fancy_log_1 = require("fancy-log");
 const express = require("express");
 const bodyParser = require("body-parser");
-const chokidar_1 = require("chokidar");
-const isomor_core_1 = require("isomor-core");
 const _1 = require(".");
-let server;
-let timer;
 function start(options) {
     return __awaiter(this, void 0, void 0, function* () {
         const { distServerFolder, port, staticFolder, serverFolder } = options;
@@ -29,43 +25,13 @@ function start(options) {
             fancy_log_1.info('Add static folder', staticFolder);
             app.use(express.static(staticFolder));
         }
-        server = app.listen(port, () => fancy_log_1.info(`Server listening on port ${port}!`));
-        watcher(options);
+        app.listen(port, () => fancy_log_1.info(`Server listening on port ${port}!`));
     });
-}
-function watcher(options) {
-    if (options.watch) {
-        fancy_log_1.info('wait for file changes...');
-        const { distServerFolder, serverFolder } = options;
-        chokidar_1.watch(isomor_core_1.getFilesPattern(distServerFolder, serverFolder), {
-            ignoreInitial: true,
-        }).on('raw', () => {
-            clearTimeout(timer);
-            timer = setTimeout(() => {
-                fancy_log_1.info('Detect changes: need to reload...', server.listening);
-                if (server.listening) {
-                    server.close((err) => {
-                        if (err) {
-                            fancy_log_1.error('Something went wrong while closing server', err);
-                        }
-                        else {
-                            fancy_log_1.info('Server closed');
-                            start(options);
-                        }
-                    });
-                }
-                else {
-                    start(options);
-                }
-            }, 500);
-        });
-    }
 }
 start({
     distServerFolder: process.env.DIST_SERVER_FOLDER || './dist-server',
     port: process.env.PORT ? parseInt(process.env.PORT, 10) : 3005,
     staticFolder: process.env.STATIC_FOLDER || null,
     serverFolder: process.env.SERVER_FOLDER || '/server',
-    watch: process.env.WATCH === 'true',
 });
 //# sourceMappingURL=server.js.map

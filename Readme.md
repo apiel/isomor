@@ -66,8 +66,6 @@ yarn isomor:build:dev
 yarn start
 ```
 
-> **Note:** there is still some issue in watch mode because create-react-app don't always detect changes made by the transpiler.
-
 ### How to setup Isomor
 
 The following instruction will explain you how to setup a working enviroment with React and TypeScript.

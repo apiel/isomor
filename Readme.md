@@ -44,6 +44,8 @@ As you can see, on `componentDidMount` the app is calling `getList` located on t
 
 Right now, this library has been implemented for TypeScript, since types bring lot of value to this concept. It might work with FlowType and JavaScript as well. Also, till now all test has been done on React, but it should work as well with Angular, VueJs and so on.
 
+**[>>> Online documentation <<<](https://apiel.github.io/isomor/Readme.html)**
+
 ## Checkout example
 
 ```bash

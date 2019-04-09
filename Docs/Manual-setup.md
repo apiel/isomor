@@ -1,8 +1,3 @@
----
-title: Manual setup
-nav_order: 20
----
-
 [◄ Go back to home page](../Readme.md)
 
 
@@ -87,3 +82,8 @@ As you can see, `build:server` need a custom tsconfig file. This is because, we 
 > **Note:** it's important to keep `"sourceMap": false,` and `"declaration": false,`.
 
 Now we have our working environment, let's try out: [find some instructions here](../Readme.md#start-coding)
+
+---
+title: Manual setup
+nav_order: 20
+---

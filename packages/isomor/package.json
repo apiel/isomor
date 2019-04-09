@@ -4,6 +4,7 @@
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "author": "Alexandre Piel <alexandre.piel@gmail.com>",
+    "description": "Isomor is a library to create an interface between your backend and your frontend with nodejs and javascript application",
     "license": "MIT",
     "repository": {
         "type": "git",

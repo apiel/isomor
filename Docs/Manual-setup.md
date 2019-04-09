@@ -1,6 +1,6 @@
 ---
 title: Manual setup
-nav_order: 2
+nav_order: 20
 ---
 
 [◄ Go back to home page](../Readme.md)

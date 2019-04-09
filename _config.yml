@@ -3,3 +3,7 @@
 remote_theme: pmarsceill/just-the-docs
 search_enabled: true
 exclude: ['packages/isomor/Readme.md']
+
+aux_links:
+  "Just the Docs on GitHub":
+    - "//github.com/pmarsceill/just-the-docs"

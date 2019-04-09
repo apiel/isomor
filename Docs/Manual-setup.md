@@ -8,7 +8,7 @@ nav_order: 2
 
 ### How to setup Isomor manually
 
-The following instruction will explain you how to setup a working enviroment with React and TypeScript.
+The following instruction will explain how to setup a working enviroment with React and TypeScript.
 
 > **Note:** find an example in the repo  `packages/examples/src-isomor/App.tsx`. It might be possible that some information was not correctly updated in the doc. Please, refer to the example if it happen and open an issue to report.
 

@@ -7,7 +7,7 @@ nav_order: 1
 
 ### Custom server
 
-Since `isomor` is using expressJs, you could integrate it to your existing api. Just import `useIsomor` from `isomor-server`:
+Since `isomor` is using expressJs, it is possible to integrate it to an existing api. Just import `useIsomor` from `isomor-server`:
 
 ```typescript
 import * as express from 'express';
@@ -28,4 +28,4 @@ const serverFolder = '/server';
 })();
 ```
 
-> **Note:** you need `bodyParser`
+> **Note:** don't forget to install `bodyParser` to express

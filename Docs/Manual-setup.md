@@ -1,9 +1,6 @@
 ---
-layout: default
 title: Manual setup
 nav_order: 2
-has_children: false
-has_toc: false
 ---
 
 [◄ Go back to home page](../Readme.md)

@@ -1,3 +1,8 @@
+---
+title: Babel
+nav_order: 2
+---
+
 [◄ Go back to home page](../Readme.md)
 
 ### Babel

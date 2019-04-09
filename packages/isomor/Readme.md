@@ -1,9 +1,8 @@
 ---
 layout: default
-title: Home
+title: Getting started
 nav_order: 1
 has_children: true
-permalink: /Docs
 ---
 
 # Isomor
@@ -44,6 +43,8 @@ export async function getList(input: GetListInput): Promise<string[]> {
 As you can see, on `componentDidMount` the app is calling `getList` located on the server. But no, **I am not speaking about SSR**. Isomor transpile `getList` to a magic function that will call the backend through an http request. Like this, we have very consistent code between backend and server, especially if you are using types.
 
 Right now, this library has been implemented for TypeScript, since types bring lot of value to this concept. It might work with FlowType and JavaScript as well. Also, till now all test has been done on React, but it should work as well with Angular, VueJs and so on.
+
+**[>> Online documentation <<](https://apiel.github.io/isomor/Readme.html)**
 
 ## Checkout example
 

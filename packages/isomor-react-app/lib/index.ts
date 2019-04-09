@@ -17,7 +17,7 @@ async function start(options: Options) {
     info('Setup create-react-app with isomor');
     info('Install create-react-app');
     let { _: [projectDirectory] } = minimist(process.argv.slice(2));
-    projectDirectory = process.cwd() + projectDirectory;
+    projectDirectory = join(process.cwd(), projectDirectory);
     if (!projectDirectory) {
         warn(`${chalk.yellow('Please provide the project directory')} e.g: npx isomor-react-app my-app`);
         return;

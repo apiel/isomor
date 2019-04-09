@@ -21,7 +21,7 @@ function start(options) {
         fancy_log_1.info('Setup create-react-app with isomor');
         fancy_log_1.info('Install create-react-app');
         let { _: [projectDirectory] } = minimist(process.argv.slice(2));
-        projectDirectory = process.cwd() + projectDirectory;
+        projectDirectory = path_1.join(process.cwd(), projectDirectory);
         if (!projectDirectory) {
             fancy_log_1.warn(`${chalk_1.default.yellow('Please provide the project directory')} e.g: npx isomor-react-app my-app`);
             return;

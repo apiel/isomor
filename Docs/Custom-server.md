@@ -1,5 +1,6 @@
 ---
 title: Custom server
+nav_order: 1
 ---
 
 [◄ Go back to home page](../Readme.md)

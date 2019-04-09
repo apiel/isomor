@@ -2,8 +2,14 @@
 
 remote_theme: pmarsceill/just-the-docs
 search_enabled: true
-#exclude:
-#  - 'packages/isomor/Readme.md'
+exclude:
+  - 'packages/isomor/Readme.md'
+  - 'packages/isomor-babel/Readme.md'
+  - 'packages/isomor-core/Readme.md'
+  - 'packages/isomor-react-app/Readme.md'
+  - 'packages/isomor-server/Readme.md'
+  - 'packages/isomor-transpiler/Readme.md'
+
 
 aux_links:
   "See on GitHub":

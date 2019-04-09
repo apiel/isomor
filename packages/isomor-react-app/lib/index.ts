@@ -12,57 +12,60 @@ interface Options {
     distAppFolder: string;
 }
 
-function start(options: Options) {
+async function start(options: Options) {
     const { srcFolder, distAppFolder } = options;
     info('Setup create-react-app with isomor');
     info('Install create-react-app');
     const { _: [projectDirectory] } = minimist(process.argv.slice(2));
-    shell('npx', ['create-react-app', projectDirectory, '--typescript'], () => {
-        info('Copy tsconfig.server.json');
-        copySync(
-            join(__dirname, '..', 'tsconfig.server.json'),
-            join(projectDirectory, 'tsconfig.server.json'),
-        );
-        info(`Copy ${distAppFolder} to ${srcFolder}`);
-        copySync(
-            join(projectDirectory, distAppFolder),
-            join(projectDirectory, srcFolder),
-        );
-        info('Edit package.json');
-        const pkg = readJSONSync(join(projectDirectory, 'package.json'));
-        pkg.proxy = 'http://127.0.0.1:3005';
-        const pkgExample = readJSONSync(join(__dirname, '..', '..', 'example', 'package.json'));
-        pkg.scripts = pkgExample.scripts; // should make diff
-        writeJSONSync(join(projectDirectory, 'package.json'), pkg);
+    await shell('npx', ['create-react-app', projectDirectory, '--typescript']);
 
-        info('Install isomor-react');
-        writeFileSync('cmd', `cd ${projectDirectory} && yarn add isomor isomor-react`);
-        shell('bash', ['cmd'], () => {
-            unlinkSync('cmd');
-            info('Setup isomor-react in <App />');
-            const index = `import { IsomorProvider } from 'isomor-react';\n`
-                + readFileSync(join(projectDirectory, srcFolder, 'index.tsx')).toString();
-            const newIndex = index.replace(/\<App \/\>/g, '(<IsomorProvider><App /></IsomorProvider>)');
-            writeFileSync(join(projectDirectory, srcFolder, 'index.tsx'), newIndex);
-        });
-        // update doc
-    });
+    info('Copy tsconfig.server.json');
+    copySync(
+        join(__dirname, '..', 'tsconfig.server.json'),
+        join(projectDirectory, 'tsconfig.server.json'),
+    );
+
+    info(`Copy ${distAppFolder} to ${srcFolder}`);
+    copySync(
+        join(projectDirectory, distAppFolder),
+        join(projectDirectory, srcFolder),
+    );
+
+    info('Edit package.json');
+    const pkg = readJSONSync(join(projectDirectory, 'package.json'));
+    pkg.proxy = 'http://127.0.0.1:3005';
+    const pkgExample = readJSONSync(join(__dirname, '..', '..', 'example', 'package.json'));
+    pkg.scripts = pkgExample.scripts; // should make diff
+    writeJSONSync(join(projectDirectory, 'package.json'), pkg);
+
+    info('Install isomor-react');
+    writeFileSync('cmd', `cd ${projectDirectory} && yarn add isomor isomor-react`);
+    await shell('bash', ['cmd']);
+    unlinkSync('cmd');
+
+    info('Setup isomor-react in <App />');
+    const index = `import { IsomorProvider } from 'isomor-react';\n`
+        + readFileSync(join(projectDirectory, srcFolder, 'index.tsx')).toString();
+    const newIndex = index.replace(/\<App \/\>/g, '(<IsomorProvider><App /></IsomorProvider>)');
+    writeFileSync(join(projectDirectory, srcFolder, 'index.tsx'), newIndex);
 }
 
-function shell(command: string, args: ReadonlyArray<string>, onClose: () => void) {
-    const cmd = spawn(command, args);
-    cmd.stdout.on('data', data => {
-        process.stdout.write(chalk.gray(data.toString()));
+function shell(command: string, args?: ReadonlyArray<string>) {
+    return new Promise((resolve) => {
+        const cmd = spawn(command, args);
+        cmd.stdout.on('data', data => {
+            process.stdout.write(chalk.gray(data.toString()));
+        });
+        cmd.stderr.on('data', data => {
+            const dataStr = data.toString();
+            if (dataStr.indexOf('warning') === 0) {
+                process.stdout.write(chalk.yellow('warming') + dataStr.substring(7));
+            } else {
+                process.stdout.write(chalk.red(data.toString()));
+            }
+        });
+        cmd.on('close', resolve);
     });
-    cmd.stderr.on('data', data => {
-        const dataStr = data.toString();
-        if (dataStr.indexOf('warning') === 0) {
-            process.stdout.write(chalk.yellow('warming') + dataStr.substring(7));
-        } else {
-            process.stdout.write(chalk.red(data.toString()));
-        }
-    });
-    cmd.on('close', onClose);
 }
 
 start({

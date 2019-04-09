@@ -44,7 +44,7 @@ async function start(options: Options) {
     writeJSONSync(join(projectDirectory, 'package.json'), pkg);
 
     info('Install isomor-react');
-    writeFileSync('cmd', `cd ${projectDirectory} && yarn add isomor isomor-react`);
+    writeFileSync('cmd', `cd ${projectDirectory} && yarn add isomor isomor-react && yarn add npm-run-all --dev`);
     await shell('bash', ['cmd']);
     unlinkSync('cmd');
 

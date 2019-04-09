@@ -96,6 +96,7 @@ Run the following command:
 ```bash
 npx isomor-react-app my-app
 cd my-app
+yarn dev
 ```
 
 Finish, you are ready to code :-)

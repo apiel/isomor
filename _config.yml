@@ -2,8 +2,8 @@
 
 remote_theme: pmarsceill/just-the-docs
 search_enabled: true
-exclude:
-  - 'packages/**/*'
+#exclude:
+#  - 'packages/isomor/Readme.md'
 
 aux_links:
   "See on GitHub":

@@ -5,15 +5,5 @@ search_enabled: true
 exclude: ['packages/isomor/Readme.md']
 
 aux_links:
-  "Just the Docs on GitHub":
-    - "//github.com/pmarsceill/just-the-docs"
-
-
----
-layout: default
-title: UI Components
-nav_order: 2
-has_children: true
-has_toc: false
-permalink: /docs/ui-components
----
+  "See on GitHub":
+    - "//github.com/apiel/isomor"

@@ -1,7 +1,15 @@
+---
+layout: default
+title: Manual setup
+nav_order: 2
+has_children: false
+has_toc: false
+---
+
 [◄ Go back to home page](../Readme.md)
 
 
-### How to setup Isomor
+### How to setup Isomor manually
 
 The following instruction will explain you how to setup a working enviroment with React and TypeScript.
 

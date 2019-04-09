@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { info } from 'fancy-log'; // fancy log not so fancy, i want colors :D
+import { info, warn } from 'fancy-log'; // fancy log not so fancy, i want colors :D
 import { copySync, readJSONSync, writeJSONSync, readFileSync, writeFileSync, unlinkSync } from 'fs-extra';
 import { join } from 'path';
 import { spawn, execSync } from 'child_process';
@@ -17,6 +17,10 @@ async function start(options: Options) {
     info('Setup create-react-app with isomor');
     info('Install create-react-app');
     const { _: [projectDirectory] } = minimist(process.argv.slice(2));
+    if (!projectDirectory) {
+        warn(`${chalk.yellow('Please provide the project directory')} e.g: npx isomor-react-app my-app`);
+        return;
+    }
     await shell('npx', ['create-react-app', projectDirectory, '--typescript']);
 
     info('Copy tsconfig.server.json');
@@ -48,6 +52,8 @@ async function start(options: Options) {
         + readFileSync(join(projectDirectory, srcFolder, 'index.tsx')).toString();
     const newIndex = index.replace(/\<App \/\>/g, '(<IsomorProvider><App /></IsomorProvider>)');
     writeFileSync(join(projectDirectory, srcFolder, 'index.tsx'), newIndex);
+
+    info(`Ready to code :-) ${chalk.bold(chalk.red('Important: ') + chalk.blue(`edit you code in ${srcFolder}`))} instead of ${distAppFolder}`);
 }
 
 function shell(command: string, args?: ReadonlyArray<string>) {

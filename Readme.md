@@ -65,87 +65,38 @@ yarn isomor:build:dev
 yarn start
 ```
 
-### How to setup Isomor
-
-The following instruction will explain you how to setup a working enviroment with React and TypeScript.
-
-> **Note:** find an example in the repo  `packages/examples/src-isomor/App.tsx`. It might be possible that some information was not correctly updated in the doc. Please, refer to the example if it happen and open an issue to report.
-
-So let's create a react app with `create-react-app`:
+Run in production:
 
 ```bash
-npx create-react-app my-app --typescript
+yarn isomor:build
+yarn build
+STATIC_FOLDER=./build yarn serv
+```
+
+Open http://127.0.0.1:3005/
+
+> **Note:** it would be better to use nginx to serv static files
+
+### Setup with create-react-app using isomor-react-app
+
+`isomor-react-app` is a tool to create a react application using `create-react-app`, with all additional setup requiered for isomor.
+
+> **Note:** for the moment, only TypeScript is supported.
+
+Run the following command:
+
+```bash
+npx isomor-react-app my-app
 cd my-app
 ```
 
-Then add `isomor` library:
+Finish, you are ready to code :-)
 
-```bash
-yarn add isomor
-```
+> **Note: `src-isomor` folder is where you will be coding** instead of `src`.
 
-In `my-app` folder create a copy of `src` called `src-isomor`, **this folder will be where you are coding**.
+#### Start coding
 
-```bash
-cp -r src src-isomor
-```
-
-In `src-isomor` add a folder `server`. This folder will be all server side files. All this files will be transpiled to be usable from the client.
-
-> **Note:** you can have multiple `server` folder in your project. The transpiler will transpile each of them but only their root. `server` folder can contain subfolder, but they should not be directly linked to the app. The files imported by the app should always be files from the root of `server` folder. Other subfolder, will be ignored and only used on server side.
-
-```bash
-cd src-isomor
-mkdir server
-```
-
-Now, let's update `package.json` to add some script and a proxy:
-
-```json
-  ...
-  "proxy": "http://127.0.0.1:3005",
-  ...
-  "scripts": {
-    "isomor:build": "isomor-transpiler",
-    "isomor:build:dev": "nodemon --watch 'src-isomor/**/*' -e ts,tsx --exec 'isomor-transpiler'",
-    "serv": "rimraf ./dist-server && tsc -p tsconfig.server.json && isomor-server",
-    "serv:dev": "nodemon --watch 'src-isomor/**/server/**/*' -e ts,tsx --exec 'yarn serv'",
-    ...
-```
-
-> **Note:** if you don't want to use type, you need to prefix `isomor-transpiler` with `NO_TYPES=true`.
-
-As you can see, `build:server` need a custom tsconfig file. This is because, we need to transpile TypeScript in different way depending if it's running on backend or frontend. Create a new file `tsconfig.server.json` with the following content:
-
-```json
-{
-  "compilerOptions": {
-    "types": [
-      "node"
-    ],
-    "module": "commonjs",
-    "declaration": false,
-    "removeComments": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "target": "es6",
-    "sourceMap": false,
-    "outDir": "./dist-server",
-    "baseUrl": "./"
-  },
-  "exclude": [
-    "node_modules",
-    "src",
-    "src-isomor/!**/server"
-  ],
-  "include": [
-    "src-isomor/**/server"
-  ]
-}
-```
-> **Note:** it's important to keep `"sourceMap": false,` and `"declaration": false,`.
-
-Now we have our working environment. Let's try out with adding a file `data.ts` in the server folder `src-isomor/server`:
+Now we have our working environment, let's try out with adding a file `data.ts` in the server folder `src-isomor/server`:
 
 ```typescript
 import { readdir } from 'fs-extra';
@@ -225,20 +176,6 @@ yarn isomor:build
 yarn start
 ```
 
-And that's all, open your browser and access the app with the url http://127.0.0.1:3000/
-
-#### Run in production
-
-```bash
-yarn isomor:build
-yarn build
-STATIC_FOLDER=./build yarn serv
-```
-
-Open http://127.0.0.1:3005/
-
-> **Note:** it would be better to use nginx to serv static files
-
 ### Isomor-react
 
 [Isomor-react](https://github.com/apiel/isomor-react) is a library that will help you to use `isomore` with react. When you are using `isomor` wihtout this library each call to server functions will generate a request. `Isomor-react` will create a cache and distinct duplicated request. It will also allow you to share the response to a server function between multiple components.
@@ -293,59 +230,8 @@ export const Time = () => {
 
 Other feature are available like updating the cache... See full [documentation](https://github.com/apiel/isomor-react)
 
-### Custom server
+### More
 
-Since `isomor` is using expressJs, you could integrate it to your existing api. Just import `useIsomor` from `isomor-server`:
-
-```typescript
-import * as express from 'express';
-import * as bodyParser from 'body-parser';
-import { useIsomor } from 'isomor-server';
-
-const distServerFolder = './dist-server';
-const serverFolder = '/server';
-
-(async function() {
-    const app = express();
-
-    app.use(bodyParser.json());
-    const endpoints = await useIsomor(app, distServerFolder, serverFolder);
-    console.log('Created endpoints:', endpoints);
-
-    app.listen(3005, () => console.log(`Server listening on port 3005!`));
-})();
-```
-
-> **Note:** you need `bodyParser`
-
-### Babel
-
-> WIP
-
-`isomor-transpiler` is using [@babel/generator](https://babeljs.io/docs/en/next/babel-generator.html) to transform the code. Therefor, I created as well a babel plugin [isomor-babel](https://www.npmjs.com/package/isomor-babel) in order to use directly babel instead of the transpiler. But I still didn't had time to find the right setting, since only some files should be transpiled... Also create-react-app does not support babel plugin but only macro. Unfortunately macro seem to have too limited feature to achieve transpiling for `isomor`. Of course, it is always possible to eject create-react-app. When babel is fully working, I might provide a custom version of create-react-app for `isomor`.
-
----
-
-#### ToDo
-
-- unit test
-- NEED FIX: // export { CpuInfo } from 'os'; // this is deleted so cant use it in interface. Need to fix
-- ~~create a custom create-react-app including isomor~~ but need a script to setup environment
-- in transpiler use ts.createSourceFile
-
-- need e2e test before publish
-
-- Need to test JS and provide example
-- websocket version where server could call frontend functions
-- add config file using `cosmiconfig` lib (isomor-core)
-
-- make babel plugin
-  - https://github.com/jamiebuilds/babel-handbook/blob/master/translations/en/plugin-handbook.md#stages-of-babel
-  - babel --presets @babel/preset-typescript --plugins module:isomor-babel src-isomor/server/data.ts -o output.ts
-
-tsc:
-- https://github.com/mohd-akram/tisk/blob/master/bin.js
-
-Might use `ts.createSourceFile` in transpiler
-  - in transpiler for traversing the tree and updating it
-      - think as well about a watch mode that would work with create-react-app
+- [Custom server](./Docs/Custom-server.md)
+- [Manual setup](./Docs/Manual-setup.md)
+- [Babel](./Docs/Babel.md)

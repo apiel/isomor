@@ -18,8 +18,8 @@
     },
     "dependencies": {
         "axios": "^0.18.0",
-        "isomor-server": "^0.0.6",
-        "isomor-transpiler": "^0.0.8",
+        "isomor-server": "^0.1.7",
+        "isomor-transpiler": "^0.1.7",
         "typescript": "^3.2.4"
     },
     "devDependencies": {

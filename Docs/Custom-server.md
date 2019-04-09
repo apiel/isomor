@@ -1,3 +1,8 @@
+---
+title: Custom server
+nav_order: 10
+---
+
 [◄ Go back to home page](../Readme.md)
 
 ### Custom server
@@ -24,8 +29,3 @@ const serverFolder = '/server';
 ```
 
 > **Note:** don't forget to install `bodyParser` to express
-
----
-title: Custom server
-nav_order: 10
----

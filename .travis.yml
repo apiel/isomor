@@ -22,6 +22,7 @@ script:
   - curl http://127.0.0.1:3005/
   - curl http://127.0.0.1:3005/isomor/status-server-getStatus/getStatus
   - cd ../isomor-transpiler
+  - yarn
   - yarn test
   - pwd
   - cd ~ && mkdir npxisomorreactapp && cd npxisomorreactapp

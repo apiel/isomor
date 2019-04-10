@@ -2,9 +2,9 @@
 
 ### ToDo
 
-- unit test
 - NEED FIX: // export { CpuInfo } from 'os'; // this is deleted so cant use it in interface. Need to fix
 - in transpiler use ts.createSourceFile
+- integration test? transpiler
 
 - need e2e test before publish
 

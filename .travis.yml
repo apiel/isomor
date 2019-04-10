@@ -22,7 +22,7 @@ script:
   - curl http://127.0.0.1:3005/
   - curl http://127.0.0.1:3005/isomor/status-server-getStatus/getStatus
   - pwd
-  - cd ../.. && mkdir npxisomorreactapp && cd npxisomorreactapp
+  - cd ~ && mkdir npxisomorreactapp && cd npxisomorreactapp
   - npx isomor-react-app my-app
 
 cache:

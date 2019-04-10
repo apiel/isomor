@@ -87,6 +87,8 @@ Open http://127.0.0.1:3005/
 
 ## Setup with create-react-app using isomor-react-app
 
+> **Note:** `isomor` has been developed with latest version of node and might not work with old version.
+
 `isomor-react-app` is a tool to create a react application using `create-react-app`, with all additional setup requiered for isomor.
 
 > **Note:** for the moment, only TypeScript is supported.

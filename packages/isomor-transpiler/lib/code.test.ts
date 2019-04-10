@@ -3,71 +3,74 @@ import { parse } from '@typescript-eslint/typescript-estree';
 
 import { getCodeImport, getCodeFunc, getCodeArrowFunc } from './code';
 
-const trim = (str: string) => str.replace(/^ +/gm, '');
+export const isomorImport = `import { remote } from "isomor";`;
+
+export const codeTranspiledFunc =
+`export function getTime(...args: any) {
+  return remote("path/to/file", "getTime", args);
+}`;
+
+export const codeTranspiledFuncNoType =
+`export function getTime(...args) {
+  return remote("path/to/file", "getTime", args);
+}`;
+
+export const codeTranspiledArrowFunc =
+`export const getTime = (...args: any) => {
+  return remote("path/to/file", "getTime", args);
+};`;
+
+export const codeTranspiledArrowFuncNoType =
+`export const getTime = (...args) => {
+  return remote("path/to/file", "getTime", args);
+};`;
 
 describe('code', () => {
+    const path = 'path/to/file';
+    const name = 'getTime';
+
     describe('code/getCodeImport()', () => {
         it('should generate inport for isomor', () => {
             const program = parse('');
             program.body = [getCodeImport()];
             const { code } = generate(program as any);
-            expect(code).toEqual(`import { remote } from "isomor";`);
+            expect(code).toEqual(isomorImport);
         });
     });
 
     describe('code/getCodeFunc()', () => {
         it('should generate function for isomor', () => {
-            const filename = 'test';
-            const name = 'getTime';
             const withType = true;
             const program = parse('');
-            program.body = [getCodeFunc(filename, name, withType)];
+            program.body = [getCodeFunc(path, name, withType)];
             const { code } = generate(program as any);
-            expect(trim(code)).toEqual(
-                trim(`export function ${name}(...args: any) {
-                    return remote("${filename}", "${name}", args);
-                }`));
+            expect(code).toEqual(codeTranspiledFunc);
         });
 
         it('should generate function for isomor without type', () => {
-            const filename = 'test';
-            const name = 'getTime';
             const withType = false;
             const program = parse('');
-            program.body = [getCodeFunc(filename, name, withType)];
+            program.body = [getCodeFunc(path, name, withType)];
             const { code } = generate(program as any);
-            expect(trim(code)).toEqual(
-                trim(`export function ${name}(...args) {
-                    return remote("${filename}", "${name}", args);
-                }`));
+            expect(code).toEqual(codeTranspiledFuncNoType);
         });
     });
 
     describe('code/getCodeArrowFunc()', () => {
         it('should generate function for isomor', () => {
-            const filename = 'test';
-            const name = 'getTime';
             const withType = true;
             const program = parse('');
-            program.body = [getCodeArrowFunc(filename, name, withType)];
+            program.body = [getCodeArrowFunc(path, name, withType)];
             const { code } = generate(program as any);
-            expect(trim(code)).toEqual(
-                trim(`export const ${name} = (...args: any) => {
-                    return remote("${filename}", "${name}", args);
-                };`));
+            expect(code).toEqual(codeTranspiledArrowFunc);
         });
 
         it('should generate function for isomor without type', () => {
-            const filename = 'test';
-            const name = 'getTime';
             const withType = false;
             const program = parse('');
-            program.body = [getCodeArrowFunc(filename, name, withType)];
+            program.body = [getCodeArrowFunc(path, name, withType)];
             const { code } = generate(program as any);
-            expect(trim(code)).toEqual(
-                trim(`export const ${name} = (...args) => {
-                    return remote("${filename}", "${name}", args);
-                };`));
+            expect(code).toEqual(codeTranspiledArrowFuncNoType);
         });
     });
 });

@@ -1,7 +1,7 @@
 import generate from '@babel/generator';
 import { parse } from '@typescript-eslint/typescript-estree';
 
-import { getCodeImport, getCodeFunc } from './code';
+import { getCodeImport, getCodeFunc, getCodeArrowFunc } from './code';
 
 describe('code', () => {
     describe('code/getCodeImport()', () => {
@@ -22,7 +22,7 @@ describe('code', () => {
             program.body = [getCodeFunc(filename, name, withType)];
             const { code } = generate(program as any);
             expect(code).toEqual(
-`export function getTime(...args: any) {
+`export function ${name}(...args: any) {
   return remote("${filename}", "${name}", args);
 }` // tslint:disable-line
             );
@@ -36,9 +36,39 @@ describe('code', () => {
             program.body = [getCodeFunc(filename, name, withType)];
             const { code } = generate(program as any);
             expect(code).toEqual(
-`export function getTime(...args) {
+`export function ${name}(...args) {
   return remote("${filename}", "${name}", args);
 }` // tslint:disable-line
+            );
+        });
+    });
+
+    describe('code/getCodeArrowFunc()', () => {
+        it('should generate function for isomor', () => {
+            const filename = 'test';
+            const name = 'getTime';
+            const withType = true;
+            const program = parse('');
+            program.body = [getCodeArrowFunc(filename, name, withType)];
+            const { code } = generate(program as any);
+            expect(code).toEqual(
+`export const ${name} = (...args: any) => {
+  return remote("${filename}", "${name}", args);
+};` // tslint:disable-line
+            );
+        });
+
+        it('should generate function for isomor without type', () => {
+            const filename = 'test';
+            const name = 'getTime';
+            const withType = false;
+            const program = parse('');
+            program.body = [getCodeArrowFunc(filename, name, withType)];
+            const { code } = generate(program as any);
+            expect(code).toEqual(
+`export const ${name} = (...args) => {
+  return remote("${filename}", "${name}", args);
+};` // tslint:disable-line
             );
         });
     });

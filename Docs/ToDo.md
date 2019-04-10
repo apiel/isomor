@@ -4,7 +4,6 @@
 
 - unit test
 - NEED FIX: // export { CpuInfo } from 'os'; // this is deleted so cant use it in interface. Need to fix
-- ~~create a custom create-react-app including isomor~~ but need a script to setup environment
 - in transpiler use ts.createSourceFile
 
 - need e2e test before publish

@@ -4,7 +4,7 @@
 
 - NEED FIX: // export { CpuInfo } from 'os'; // this is deleted so cant use it in interface. Need to fix
 - in transpiler use ts.createSourceFile
-- integration test? transpiler
+- integration test? for file structure after transpiling
 - need to fix tsconfig to dont have test file in project
 
 - need e2e test before publish

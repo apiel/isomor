@@ -28,17 +28,38 @@ function shouldNotBeTranspiled() {
 }
 `;
 
+const codeTranspiled =
+`const ImportIsomor;
+export interface GetListInput {
+  foo: string;
+}
+const Func;
+const Func;
+const ArrowFunc;`;
+
 jest.mock('./code', () => ({
-    getCodeImport: jest.fn(),
-    getCodeFunc: jest.fn(),
-    getCodeArrowFunc: jest.fn(),
+    getCodeImport: jest.fn().mockReturnValue(getMock('ImportIsomor')),
+    getCodeFunc: jest.fn().mockReturnValue(getMock('Func')),
+    getCodeArrowFunc: jest.fn().mockReturnValue(getMock('ArrowFunc')),
 }));
 
-// ./code is mocked most of the code is removed
-const codeTranspiled =
-`export interface GetListInput {
-  foo: string;
-}`;
+// getMock('abc') return ast for `const abc;`
+function getMock(name: string) {
+    return {
+        type: 'VariableDeclaration',
+        declarations: [
+            {
+                type: 'VariableDeclarator',
+                id: {
+                    type: 'Identifier',
+                    name,
+                },
+                init: null,
+            },
+        ],
+        kind: 'const',
+    };
+}
 
 describe('transform', () => {
     const path = 'path/to/file';

@@ -11,6 +11,7 @@
         "url": "https://github.com/apiel/isomor"
     },
     "scripts": {
+        "test-in-docker": "docker build . -t test-create-react-app && docker rmi test-create-react-app",
         "prepublish": "cp ../../Readme.sub.md ./Readme.md && cp ../example/tsconfig.server.json . && cp ../example/package.json ./package-copy.json && yarn build",
         "start": "ts-node lib/index.ts",
         "prebuild": "rm -rf dist/",

@@ -77,5 +77,29 @@ describe('transform', () => {
             expect(getCodeArrowFunc).toHaveBeenCalledWith(path, 'getTime3', true);
             expect(getCodeImport).toHaveBeenCalledTimes(1);
         });
+
+        // we should transform every type to any in interface
+        it.skip('should transform interface types to any', () => {
+            const codeSource2 = `
+                import { CpuInfo } from 'os';
+
+                export interface MyInterface {
+                    foo: CpuInfo;
+                    bar: {
+                        child: CpuInfo;
+                    };
+                }`;
+
+            const codeTranspiled2 =
+`const ImportIsomor;
+export interface MyInterface {
+  foo: any;
+  bar: any;
+}`;
+            const program = parse(codeSource2);
+            program.body = transform(program.body, path, withTypes);
+            const { code } = generate(program as any);
+            expect(code).toEqual(codeTranspiled2);
+        });
     });
 });

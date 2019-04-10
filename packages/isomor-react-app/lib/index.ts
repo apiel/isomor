@@ -40,7 +40,7 @@ async function start(options: Options) {
         info('Edit package.json');
         const pkg = readJSONSync(join(projectDirectory, 'package.json'));
         pkg.proxy = 'http://127.0.0.1:3005';
-        const pkgExample = readJSONSync(join(__dirname, '..', '..', 'example', 'package.json'));
+        const pkgExample = readJSONSync(join(__dirname, '..', 'package-copy.json'));
         pkg.scripts = pkgExample.scripts; // should make diff
         writeJSONSync(join(projectDirectory, 'package.json'), pkg);
 

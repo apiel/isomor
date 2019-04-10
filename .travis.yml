@@ -10,6 +10,7 @@ branches:
   - /^release-.*/
 
 install:
+  - cp -r packages/isomor-transpiler ../isomor-transpiler # copy transpiler in isolated folder outside of lerna
   - cd packages/example
   - yarn
 
@@ -21,7 +22,7 @@ script:
   - sleep 30
   - curl http://127.0.0.1:3005/
   - curl http://127.0.0.1:3005/isomor/status-server-getStatus/getStatus
-  - cd ../isomor-transpiler
+  - cd ../../../isomor-transpiler
   - yarn
   - yarn test
   - pwd

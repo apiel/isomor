@@ -38,7 +38,7 @@ function start(options) {
         pkg.scripts = pkgExample.scripts;
         fs_extra_1.writeJSONSync(path_1.join(projectDirectory, 'package.json'), pkg);
         fancy_log_1.info('Install isomor-react');
-        fs_extra_1.writeFileSync('cmd', `cd ${projectDirectory} && yarn add isomor isomor-react && yarn add npm-run-all --dev`);
+        fs_extra_1.writeFileSync('cmd', `cd ${projectDirectory} && yarn add isomor isomor-react && yarn add npm-run-all nodemon --dev`);
         yield shell('bash', ['cmd']);
         fs_extra_1.unlinkSync('cmd');
         fancy_log_1.info('Setup isomor-react in <App />');

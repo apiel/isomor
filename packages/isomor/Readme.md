@@ -85,7 +85,9 @@ Open http://127.0.0.1:3005/
 
 > **Note:** it would be better to use nginx to serv static files
 
-## Setup with create-react-app using isomor-react-app
+## Getting started with React
+
+> **Note:** `isomor` has been developed with latest version of node and might not work with old version.
 
 `isomor-react-app` is a tool to create a react application using `create-react-app`, with all additional setup requiered for isomor.
 

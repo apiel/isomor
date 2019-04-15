@@ -4,6 +4,9 @@
 
 - **fix** server should read root of dist-server as well > use rootDir in tsconfig
 
+- get access to request
+  - permission -> cookie, JWT
+
 - in transpiler use ts.createSourceFile
   - https://medium.com/@urish/diving-into-the-internals-of-typescript-how-i-built-typewiz-d273bbef3565
 - integration test? for file structure after transpiling

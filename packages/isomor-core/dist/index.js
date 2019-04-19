@@ -18,8 +18,8 @@ function getFilesPattern(rootFolder, folderToSearch) {
 }
 exports.getFilesPattern = getFilesPattern;
 function trimRootFolder(rootFolder) {
-    const start = rootFolder.length - 1;
-    return (file) => file.substring(start);
+    const start = path_1.resolve(rootFolder).length;
+    return (file) => file.substring(start).replace(/^\/|\/$/g, '');
 }
 exports.trimRootFolder = trimRootFolder;
 function getFiles(rootFolder, folderToSearch) {

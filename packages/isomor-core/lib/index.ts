@@ -1,5 +1,5 @@
 import { pathExists } from 'fs-extra';
-import { join, extname } from 'path';
+import { join, extname, resolve } from 'path';
 import * as Glob from 'glob';
 import { promisify } from 'util';
 
@@ -13,8 +13,8 @@ export function getFilesPattern(
 }
 
 export function trimRootFolder(rootFolder: string) {
-    const start = rootFolder.length - 1;
-    return (file: string) => file.substring(start);
+    const start = resolve(rootFolder).length;
+    return (file: string) => file.substring(start).replace(/^\/|\/$/g, '');
 }
 
 export async function getFiles(

@@ -2,23 +2,27 @@
 
 ### ToDo
 
-- **fix** server should read root of dist-server as well > use rootDir in tsconfig
-
+- use .npmignore for test files and so on
 - get access to request
   - permission -> cookie, JWT
 
-- in transpiler use ts.createSourceFile
-  - https://medium.com/@urish/diving-into-the-internals-of-typescript-how-i-built-typewiz-d273bbef3565
+- need e2e test before publish
 - integration test? for file structure after transpiling
-- need to fix tsconfig to dont have test file in project
+
+- isomor-react -> error handling
+- vuejs example
+- angular example
+
+
+
+
+
 - base on params types of server function generate validation on endpoint
   - https://stackoverflow.com/questions/33800497/check-if-an-object-implements-an-interface-at-runtime-with-typescript
   - https://github.com/pcan/reflec-ts-examples/tree/master/simple-validator
 
-- need e2e test before publish
-
-- vuejs example
-- angular example
+- in transpiler use ts.createSourceFile
+  - https://medium.com/@urish/diving-into-the-internals-of-typescript-how-i-built-typewiz-d273bbef3565
 
 - Need to test JS and provide example
 - websocket version where server could call frontend functions

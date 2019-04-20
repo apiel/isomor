@@ -5,7 +5,8 @@
 - use .npmignore for test files and so on
 - get access to request
   - permission -> cookie, JWT
-- need to fix server router (react router refresh kaput)
+- FIX: need to fix server router (react router refresh kaput)
+- FIX: transpiler file does not always get copy
 
 - need e2e test before publish
 - integration test? for file structure after transpiling

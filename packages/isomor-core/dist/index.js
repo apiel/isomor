@@ -17,9 +17,12 @@ function getFilesPattern(rootFolder, folderToSearch) {
     return path_1.join(rootFolder, '**', folderToSearch, '*');
 }
 exports.getFilesPattern = getFilesPattern;
+function trimSlash(path) {
+    return path.replace(/^\/|\/$/g, '');
+}
 function trimRootFolder(rootFolder) {
-    const start = path_1.resolve(rootFolder).length;
-    return (file) => file.substring(start).replace(/^\/|\/$/g, '');
+    const start = trimSlash(rootFolder).length - 1;
+    return (file) => trimSlash(file.substring(start));
 }
 exports.trimRootFolder = trimRootFolder;
 function getFiles(rootFolder, folderToSearch) {
@@ -27,7 +30,7 @@ function getFiles(rootFolder, folderToSearch) {
         if (yield fs_extra_1.pathExists(rootFolder)) {
             const files = yield glob(getFilesPattern(rootFolder, folderToSearch), { nodir: true });
             const trim = trimRootFolder(rootFolder);
-            return files.map(file => trim(file));
+            return files.map(file => trim(file)).filter(f => f);
         }
         return [];
     });
@@ -38,7 +41,7 @@ function getFolders(rootFolder, folderToSearch) {
         if (yield fs_extra_1.pathExists(rootFolder)) {
             const files = yield glob(path_1.join(rootFolder, '**', folderToSearch));
             const trim = trimRootFolder(rootFolder);
-            return files.map(file => trim(file));
+            return files.map(file => trim(file)).filter(f => f);
         }
         return [];
     });

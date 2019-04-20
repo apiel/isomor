@@ -75,8 +75,7 @@ function watcher(options) {
             fancy_log_1.info(`File ${path} has been changed`);
             watcherUpdate(path);
         }).on('unlink', path => {
-            fancy_log_1.info(`File ${path} has been removed`);
-            fs_extra_1.unlink(path_1.join(distAppFolder, trim(path)));
+            fancy_log_1.info(`File ${path} has been removed`, '(do nothing)');
         });
         function watcherUpdate(path) {
             const file = trim(path);

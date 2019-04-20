@@ -96,8 +96,8 @@ function watcher(options: Options) {
                 info(`File ${path} has been changed`);
                 watcherUpdate(path);
             }).on('unlink', path => {
-                info(`File ${path} has been removed`);
-                unlink(join(distAppFolder, trim(path)));
+                info(`File ${path} has been removed`, '(do nothing)');
+                // unlink(join(distAppFolder, trim(path)));
             });
 
         function watcherUpdate(path: string) {

@@ -36,7 +36,7 @@
     "serv": "rimraf ./dist-server && tsc -p tsconfig.server.json && isomor-server",
     "serv:dev": "nodemon --watch 'src-isomor/**/server/**/*' -e ts,tsx --exec 'yarn serv'",
     "prod": "yarn isomor:build && yarn build && STATIC_FOLDER=./build yarn serv",
-    "dev": "run-p isomor:build:dev serv:dev start",
+    "dev": "run-screen 'yarn isomor:build:dev' 'yarn serv:dev' 'yarn start'",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -50,7 +50,7 @@
     "isomor-server": "^0.1.14",
     "isomor-transpiler": "^0.1.14",
     "nodemon": "^1.18.10",
-    "npm-run-all": "^4.1.5",
+    "run-screen": "^0.1.0",
     "rimraf": "^2.6.3",
     "ts-node": "^8.0.3"
   }

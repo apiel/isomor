@@ -1,5 +1,3 @@
-[◄ Go back to home page](../README.md)
-
 ### Babel
 
 > WIP

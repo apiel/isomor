@@ -1,5 +1,3 @@
-[◄ Go back to home page](../README.md)
-
 ### Custom server
 
 Since `isomor` is using expressJs, it is possible to integrate it to an existing api. Just import `useIsomor` from `isomor-server`:

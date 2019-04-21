@@ -1,6 +1,3 @@
-[◄ Go back to home page](../README.md)
-
-
 ### How to setup Isomor manually
 
 The following instruction will explain how to setup a working enviroment with React and TypeScript.

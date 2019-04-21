@@ -13,22 +13,14 @@ const path_1 = require("path");
 const Glob = require("glob");
 const util_1 = require("util");
 const glob = util_1.promisify(Glob);
-function getFilesPattern(rootFolder, folderToSearch) {
-    return path_1.join(rootFolder, '**', folderToSearch, '*');
+function getFilesPattern(folderToSearch) {
+    return path_1.join('**', folderToSearch, '*');
 }
 exports.getFilesPattern = getFilesPattern;
-function trimSlash(path) {
-    return path.replace(/^\/|\/$/g, '');
-}
-function trimRootFolder(rootFolder) {
-    const start = trimSlash(rootFolder).length - 1;
-    return (file) => trimSlash(file.substring(start));
-}
-exports.trimRootFolder = trimRootFolder;
 function getFiles(rootFolder, folderToSearch) {
     return __awaiter(this, void 0, void 0, function* () {
         if (yield fs_extra_1.pathExists(rootFolder)) {
-            const files = yield glob(getFilesPattern('', folderToSearch), {
+            const files = yield glob(getFilesPattern(folderToSearch), {
                 nodir: true,
                 cwd: rootFolder,
             });

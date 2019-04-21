@@ -62,23 +62,23 @@ function watcher(options) {
     const { srcFolder, serverFolder, distAppFolder, watchMode } = options;
     if (watchMode) {
         fancy_log_1.info('Starting watch mode.');
-        const trim = isomor_core_1.trimRootFolder(srcFolder);
-        const serverFolderPattern = isomor_core_1.getFilesPattern(srcFolder, serverFolder);
-        chokidar_1.watch(srcFolder, {
+        const serverFolderPattern = isomor_core_1.getFilesPattern(serverFolder);
+        chokidar_1.watch('.', {
             ignoreInitial: true,
             ignored: path_1.join(serverFolderPattern, '**', '*'),
+            cwd: srcFolder,
         }).on('ready', () => fancy_log_1.info('Initial scan complete. Ready for changes...'))
-            .on('add', path => {
-            fancy_log_1.info(`File ${path} has been added`);
-            watcherUpdate(path);
-        }).on('change', path => {
-            fancy_log_1.info(`File ${path} has been changed`);
-            watcherUpdate(path);
-        }).on('unlink', path => {
-            fancy_log_1.info(`File ${path} has been removed`, '(do nothing)');
+            .on('add', file => {
+            fancy_log_1.info(`File ${file} has been added`);
+            watcherUpdate(file);
+        }).on('change', file => {
+            fancy_log_1.info(`File ${file} has been changed`);
+            watcherUpdate(file);
+        }).on('unlink', file => {
+            fancy_log_1.info(`File ${file} has been removed`, '(do nothing)');
         });
-        function watcherUpdate(path) {
-            const file = trim(path);
+        function watcherUpdate(file) {
+            const path = path_1.join(srcFolder, file);
             if (anymatch([serverFolderPattern], path)) {
                 transpile(options, file);
             }

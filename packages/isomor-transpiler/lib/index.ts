@@ -8,7 +8,6 @@ import {
     getFolders,
     getPathForUrl,
     getFilesPattern,
-    trimRootFolder,
 } from 'isomor-core';
 import { watch } from 'chokidar';
 import * as anymatch from 'anymatch';
@@ -83,25 +82,25 @@ function watcher(options: Options) {
     const { srcFolder, serverFolder, distAppFolder, watchMode } = options;
     if (watchMode) {
         info('Starting watch mode.');
-        const trim = trimRootFolder(srcFolder);
-        const serverFolderPattern = getFilesPattern(srcFolder, serverFolder);
-        watch(srcFolder, {
+        const serverFolderPattern = getFilesPattern(serverFolder);
+        watch('.', {
             ignoreInitial: true,
             ignored: join(serverFolderPattern, '**', '*'),
+            cwd: srcFolder,
         }).on('ready', () => info('Initial scan complete. Ready for changes...'))
-            .on('add', path => {
-                info(`File ${path} has been added`);
-                watcherUpdate(path);
-            }).on('change', path => {
-                info(`File ${path} has been changed`);
-                watcherUpdate(path);
-            }).on('unlink', path => {
-                info(`File ${path} has been removed`, '(do nothing)');
-                // unlink(join(distAppFolder, trim(path)));
+            .on('add', file => {
+                info(`File ${file} has been added`);
+                watcherUpdate(file);
+            }).on('change', file => {
+                info(`File ${file} has been changed`);
+                watcherUpdate(file);
+            }).on('unlink', file => {
+                info(`File ${file} has been removed`, '(do nothing)');
+                // unlink(join(distAppFolder, file));
             });
 
-        function watcherUpdate(path: string) {
-            const file = trim(path);
+        function watcherUpdate(file: string) {
+            const path = join(srcFolder, file);
             if (anymatch([serverFolderPattern], path)) {
                 transpile(options, file);
             } else {

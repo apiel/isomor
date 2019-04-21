@@ -6,20 +6,9 @@ import { promisify } from 'util';
 const glob = promisify(Glob);
 
 export function getFilesPattern(
-    rootFolder: string,
     folderToSearch: string,
 ): string {
-    return join(rootFolder, '**', folderToSearch, '*');
-}
-
-function trimSlash(path: string) {
-    return path.replace(/^\/|\/$/g, '');
-}
-
-export function trimRootFolder(rootFolder: string) {
-    // const start = resolve(rootFolder).length;
-    const start = trimSlash(rootFolder).length - 1;
-    return (file: string) => trimSlash(file.substring(start));
+    return join('**', folderToSearch, '*');
 }
 
 export async function getFiles(
@@ -27,7 +16,7 @@ export async function getFiles(
     folderToSearch: string,
 ): Promise<string[]> {
     if (await pathExists(rootFolder)) {
-        const files = await glob(getFilesPattern('', folderToSearch), {
+        const files = await glob(getFilesPattern(folderToSearch), {
             nodir: true,
             cwd: rootFolder,
         });

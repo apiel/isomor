@@ -2,6 +2,7 @@
 
 ### ToDo
 
+- use run-server
 - fix trimRootFolder
 
 - use .npmignore for test files and so on

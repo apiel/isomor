@@ -11,7 +11,7 @@
         "url": "https://github.com/apiel/isomor"
     },
     "scripts": {
-        "prepublishOnly": "cp ../../Readme.md . && yarn build",
+        "prepublishOnly": "cp ../../README.md . && yarn build",
         "prebuild": "rm -rf dist/",
         "build": "tsc -p tsconfig.json",
         "lint": "tslint -p tsconfig.json -c tslint.json"

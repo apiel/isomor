@@ -1,9 +1,4 @@
----
-title: Babel
-nav_order: 30
----
-
-[◄ Go back to home page](../Readme.md)
+[◄ Go back to home page](../README.md)
 
 ### Babel
 

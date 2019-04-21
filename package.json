@@ -1,7 +1,11 @@
 {
   "name": "isomor-monorepo",
   "private": true,
+  "scripts": {
+    "doc": "docsify serve ."
+  },
   "devDependencies": {
+    "docsify-cli": "^4.3.0",
     "lerna": "^3.13.1"
   }
 }

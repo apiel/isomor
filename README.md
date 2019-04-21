@@ -1,10 +1,3 @@
----
-layout: default
-title: Getting started
-nav_order: 1
-has_children: true
----
-
 # Isomor
 
 `Isomor` is a library to create an interface between your backend and your frontend with nodejs and javascript application. Today, fullstack developers often use monorepo to centralize all their architecture inside a single place. This library allow you to do even more. Instead to have different application for backend and frontend, you develop a single "isomorphic" application and `isomor` will take care to split the code and setup a communication protocole. See following example:
@@ -46,7 +39,7 @@ Right now, this library has been implemented for TypeScript, since types bring l
 
 **[>> Online documentation <<](https://apiel.github.io/isomor/Readme.html)**
 
-## Checkout example
+## Example
 
 ```bash
 git clone https://github.com/apiel/isomor.git

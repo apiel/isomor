@@ -27,9 +27,11 @@ export async function getFiles(
     folderToSearch: string,
 ): Promise<string[]> {
     if (await pathExists(rootFolder)) {
-        const files = await glob(getFilesPattern(rootFolder, folderToSearch), { nodir: true });
-        const trim = trimRootFolder(rootFolder);
-        return files.map(file => trim(file)).filter(f => f);
+        const files = await glob(getFilesPattern('', folderToSearch), {
+            nodir: true,
+            cwd: rootFolder,
+        });
+        return files;
     }
     return [];
 }
@@ -39,9 +41,10 @@ export async function getFolders(
     folderToSearch: string,
 ): Promise<string[]> {
     if (await pathExists(rootFolder)) {
-        const files = await glob(join(rootFolder, '**', folderToSearch));
-        const trim = trimRootFolder(rootFolder);
-        return files.map(file => trim(file)).filter(f => f);
+        const files = await glob(join('**', folderToSearch), {
+            cwd: rootFolder,
+        });
+        return files;
     }
     return [];
 }

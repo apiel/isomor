@@ -2,6 +2,8 @@
 
 ### ToDo
 
+- fix trimRootFolder
+
 - use .npmignore for test files and so on
 - get access to request
   - permission -> cookie, JWT

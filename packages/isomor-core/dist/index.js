@@ -28,9 +28,11 @@ exports.trimRootFolder = trimRootFolder;
 function getFiles(rootFolder, folderToSearch) {
     return __awaiter(this, void 0, void 0, function* () {
         if (yield fs_extra_1.pathExists(rootFolder)) {
-            const files = yield glob(getFilesPattern(rootFolder, folderToSearch), { nodir: true });
-            const trim = trimRootFolder(rootFolder);
-            return files.map(file => trim(file)).filter(f => f);
+            const files = yield glob(getFilesPattern('', folderToSearch), {
+                nodir: true,
+                cwd: rootFolder,
+            });
+            return files;
         }
         return [];
     });
@@ -39,9 +41,10 @@ exports.getFiles = getFiles;
 function getFolders(rootFolder, folderToSearch) {
     return __awaiter(this, void 0, void 0, function* () {
         if (yield fs_extra_1.pathExists(rootFolder)) {
-            const files = yield glob(path_1.join(rootFolder, '**', folderToSearch));
-            const trim = trimRootFolder(rootFolder);
-            return files.map(file => trim(file)).filter(f => f);
+            const files = yield glob(path_1.join('**', folderToSearch), {
+                cwd: rootFolder,
+            });
+            return files;
         }
         return [];
     });

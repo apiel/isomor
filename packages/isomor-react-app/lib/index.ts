@@ -1,20 +1,28 @@
 #!/usr/bin/env node
 
 import { info, warn, error } from 'fancy-log'; // fancy log not so fancy, i want colors :D
-import { copySync, readJSONSync, writeJSONSync, readFileSync, writeFileSync, unlinkSync } from 'fs-extra';
+import {
+    copySync,
+    readJSONSync,
+    writeJSONSync,
+    readFileSync,
+    writeFileSync,
+    outputFileSync,
+    unlinkSync,
+} from 'fs-extra';
 import { join } from 'path';
-import { spawn, execSync } from 'child_process';
+import { spawn } from 'child_process';
 import chalk from 'chalk';
 import * as minimist from 'minimist';
 
 interface Options {
     srcFolder: string;
     distAppFolder: string;
+    serverFolder: string;
 }
 
-async function start(options: Options) {
+async function start({ srcFolder, distAppFolder, serverFolder }: Options) {
     try {
-        const { srcFolder, distAppFolder } = options;
         info('Setup create-react-app with isomor');
         let { _: [projectDirectory] } = minimist(process.argv.slice(2));
         projectDirectory = join(process.cwd(), projectDirectory);
@@ -55,6 +63,9 @@ async function start(options: Options) {
         const newIndex = index.replace(/\<App \/\>/g, '(<IsomorProvider><App /></IsomorProvider>)');
         writeFileSync(join(projectDirectory, srcFolder, 'index.tsx'), newIndex);
 
+        info('Create empty server/data.ts');
+        outputFileSync(join(projectDirectory, srcFolder, serverFolder, 'data.ts'), '');
+
         info(`Ready to code :-) ${chalk.bold(chalk.red('Important: ') + chalk.blue(`edit you code in ${srcFolder}`))} instead of ${distAppFolder}`);
     } catch (err) {
         error(err);
@@ -83,4 +94,5 @@ function shell(command: string, args?: ReadonlyArray<string>) {
 start({
     srcFolder: process.env.SRC_FOLDER || './src-isomor',
     distAppFolder: process.env.DIST_APP_FOLDER || './src',
+    serverFolder: process.env.SERVER_FOLDER || '/server',
 });

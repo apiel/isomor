@@ -1,10 +1,5 @@
 ### ToDo
 
-- isomor-react-app
-  - use run-server
-  - use README.md
-- update doc to use run-server?
-
 - use .npmignore for test files and so on
 - **get access to request**
   - permission -> cookie, JWT
@@ -20,6 +15,13 @@
 - angular example
 
 
+- stop using fancy-log not so fancy -> implement own log lib
+  - extend console.log to have default colors
+
+- in isomor-react-app include example
+        info('Create empty server/data.ts');
+        outputFileSync('server/data.ts'), 'something here');
+        // as well in App.tsx
 
 
 

@@ -64,7 +64,7 @@ async function start({ srcFolder, distAppFolder, serverFolder }: Options) {
         writeFileSync(join(projectDirectory, srcFolder, 'index.tsx'), newIndex);
 
         info('Create empty server/data.ts');
-        outputFileSync(join(projectDirectory, srcFolder, serverFolder, 'data.ts'), '');
+        outputFileSync(join(projectDirectory, srcFolder, serverFolder, 'data.ts'), ''); // we could have an example
 
         info(`Ready to code :-) ${chalk.bold(chalk.red('Important: ') + chalk.blue(`edit you code in ${srcFolder}`))} instead of ${distAppFolder}`);
     } catch (err) {

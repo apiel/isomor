@@ -1,5 +1,3 @@
-pages/.*
-!pages/base
-!pages/crawl
-pages/base/.*
-pages/crawl/.*
+*.test.*
+src/
+src-isomor/

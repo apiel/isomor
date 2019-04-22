@@ -1,8 +1,5 @@
 ### ToDo
 
-- **get access to request**
-  - permission -> cookie, JWT
-
 - TEST: isomor-core
 - FIX: need to fix server router (react router refresh kaput)
 - FIX: transpiler file does not always get copy

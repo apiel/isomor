@@ -6,6 +6,7 @@ import * as bodyParser from 'body-parser';
 import * as cookieParser from 'cookie-parser';
 
 import { useIsomor } from '.';
+import { join } from 'path';
 
 interface Options {
     distServerFolder: string;
@@ -28,6 +29,9 @@ async function start(options: Options) {
     if (staticFolder) {
         info('Add static folder', staticFolder);
         app.use(express.static(staticFolder));
+        app.get('*', (req, res) =>
+            res.sendFile(join(staticFolder, 'index.html')),
+        );
     }
 
     app.listen(port, () => info(`Server listening on port ${port}!`));

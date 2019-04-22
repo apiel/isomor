@@ -14,6 +14,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const _1 = require(".");
+const path_1 = require("path");
 function start(options) {
     return __awaiter(this, void 0, void 0, function* () {
         const { distServerFolder, port, staticFolder, serverFolder } = options;
@@ -26,6 +27,7 @@ function start(options) {
         if (staticFolder) {
             fancy_log_1.info('Add static folder', staticFolder);
             app.use(express.static(staticFolder));
+            app.get('*', (req, res) => res.sendFile(path_1.join(staticFolder, 'index.html')));
         }
         app.listen(port, () => fancy_log_1.info(`Server listening on port ${port}!`));
     });

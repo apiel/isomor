@@ -1,6 +1,5 @@
 ### ToDo
 
-- transpiler: we should transform every type to any in interface > see test
 - FIX: transpiler file does not always get copy
 
 - need e2e test before publish

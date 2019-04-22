@@ -5,6 +5,7 @@ import { getList } from './server/data';
 import { GetListInput } from './server/getList.input';
 import { Stats } from './status/stats';
 import { TwoColumn } from './TwoColumn';
+import { Auth } from './auth/auth';
 
 const App = () => {
   const [list, setList] = React.useState<string[]>([]);
@@ -16,7 +17,7 @@ const App = () => {
   return (
       <div className="App">
           <header className="App-header">
-            Isomor
+            Isomor <Auth />
           </header>
           <div className="App-content">
             <ul>

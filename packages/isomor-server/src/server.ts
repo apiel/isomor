@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 
-import { info, error } from 'fancy-log';
+import { info } from 'fancy-log';
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
+import * as cookieParser from 'cookie-parser';
 
 import { useIsomor } from '.';
 
@@ -19,6 +20,8 @@ async function start(options: Options) {
     const app = express();
 
     app.use(bodyParser.json());
+    app.use(cookieParser());
+
     const endpoints = await useIsomor(app, distServerFolder, serverFolder);
     info('Created endpoints:', endpoints);
 

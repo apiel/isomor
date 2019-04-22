@@ -18,9 +18,13 @@ export async function useIsomor(
         return Object.keys(functions).map(name => {
             const entrypoint = `/isomor/${getPathForUrl(file)}/${name}`;
             app.use(entrypoint, async (req: any, res: any) => {
-                const result = req.body && req.body.args
-                    ? await functions[name](...req.body.args)
-                    : await functions[name]();
+                const context = {
+                    req,
+                    res,
+                    fn: functions[name],
+                };
+                const args = (req.body && req.body.args) || [];
+                const result = await context.fn(...args);
                 return res.send(result);
             });
             return entrypoint;

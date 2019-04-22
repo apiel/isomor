@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const fancy_log_1 = require("fancy-log");
 const express = require("express");
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 const _1 = require(".");
 function start(options) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -19,6 +20,7 @@ function start(options) {
         fancy_log_1.info('Starting server.');
         const app = express();
         app.use(bodyParser.json());
+        app.use(cookieParser());
         const endpoints = yield _1.useIsomor(app, distServerFolder, serverFolder);
         fancy_log_1.info('Created endpoints:', endpoints);
         if (staticFolder) {

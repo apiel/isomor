@@ -20,9 +20,13 @@ function useIsomor(app, distServerFolder, serverFolder) {
             return Object.keys(functions).map(name => {
                 const entrypoint = `/isomor/${isomor_core_1.getPathForUrl(file)}/${name}`;
                 app.use(entrypoint, (req, res) => __awaiter(this, void 0, void 0, function* () {
-                    const result = req.body && req.body.args
-                        ? yield functions[name](...req.body.args)
-                        : yield functions[name]();
+                    const context = {
+                        req,
+                        res,
+                        fn: functions[name],
+                    };
+                    const args = (req.body && req.body.args) || [];
+                    const result = yield context.fn(...args);
                     return res.send(result);
                 }));
                 return entrypoint;

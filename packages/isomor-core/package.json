@@ -10,6 +10,7 @@
         "url": "https://github.com/apiel/isomor"
     },
     "scripts": {
+        "test": "jest",
         "prepublishOnly": "cp ../../Readme.sub.md ./README.md && yarn build",
         "prebuild": "rm -rf dist/",
         "build": "tsc -p tsconfig.json",
@@ -23,8 +24,11 @@
     "devDependencies": {
         "@types/fs-extra": "^5.0.5",
         "@types/glob": "^7.1.1",
+        "@types/jest": "^24.0.11",
         "@types/rimraf": "^2.0.2",
+        "jest": "^24.7.1",
         "rimraf": "^2.6.3",
+        "ts-jest": "^24.0.2",
         "tslint": "^5.12.1"
     }
 }

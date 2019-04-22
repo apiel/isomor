@@ -38,7 +38,7 @@ export async function getFolders(
     return [];
 }
 
-export function getPathForUrl(filePath: string) {
-    const extensionLen = extname(filePath).length;
-    return filePath.replace(/\//g, '-').slice(0, -extensionLen);
+export function getPathForUrl(path: string) {
+    const len = path.length - extname(path).length;
+    return path.replace(/\//g, '-').slice(0, len).replace(/^-|-$/g, '');
 }

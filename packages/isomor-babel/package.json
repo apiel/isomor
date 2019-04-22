@@ -10,7 +10,7 @@
         "url": "https://github.com/apiel/isomor"
     },
     "scripts": {
-        "prepublishOnly": "cp ../../Readme.sub.md ./Readme.md && yarn build",
+        "prepublishOnly": "cp ../../Readme.sub.md ./README.md && yarn build",
         "test": "node test/test.js",
         "prebuild": "rm -rf dist/",
         "build": "tsc -p tsconfig.json",

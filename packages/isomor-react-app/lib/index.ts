@@ -41,11 +41,11 @@ async function start(options: Options) {
         const pkg = readJSONSync(join(projectDirectory, 'package.json'));
         pkg.proxy = 'http://127.0.0.1:3005';
         const pkgExample = readJSONSync(join(__dirname, '..', 'package-copy.json'));
-        pkg.scripts = pkgExample.scripts; // should make diff
+        pkg.scripts = { ...pkgExample.scripts, ...pkg.scripts };
         writeJSONSync(join(projectDirectory, 'package.json'), pkg);
 
         info('Install isomor-react');
-        writeFileSync('cmd', `cd ${projectDirectory} && yarn add isomor isomor-react && yarn add npm-run-all nodemon --dev`);
+        writeFileSync('cmd', `cd ${projectDirectory} && yarn add isomor isomor-react && yarn add run-server nodemon --dev`);
         await shell('bash', ['cmd']);
         unlinkSync('cmd');
 

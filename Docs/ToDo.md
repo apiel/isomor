@@ -1,11 +1,14 @@
 ### ToDo
 
-- use run-server
-- fix trimRootFolder
+- isomor-react-app
+  - use run-server
+  - use README.md
+- update doc to use run-server?
 
 - use .npmignore for test files and so on
-- get access to request
+- **get access to request**
   - permission -> cookie, JWT
+- FIX: travis
 - FIX: need to fix server router (react router refresh kaput)
 - FIX: transpiler file does not always get copy
 

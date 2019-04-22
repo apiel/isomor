@@ -10,14 +10,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 function getAuth() {
     return __awaiter(this, void 0, void 0, function* () {
-        return this.req.cookies.username;
+        const { req } = this;
+        return req.cookies.username;
     });
 }
 exports.getAuth = getAuth;
 function setAuth() {
     return __awaiter(this, void 0, void 0, function* () {
         const username = `user-${Math.floor(Math.random() * 1000)}`;
-        this.res.cookie('username', username, {
+        const { res } = this;
+        res.cookie('username', username, {
             expires: new Date(Date.now() + 5 * 60 * 1000),
             httpOnly: true,
         });

@@ -2,6 +2,12 @@ import * as express from 'express';
 import { getFiles, getPathForUrl } from 'isomor-core';
 import { join } from 'path';
 
+export interface Context {
+    req: express.Request;
+    res: express.Response;
+    fn: any;
+}
+
 export async function useIsomor(
     app: express.Express,
     distServerFolder: string,
@@ -18,7 +24,7 @@ export async function useIsomor(
         return Object.keys(functions).map(name => {
             const entrypoint = `/isomor/${getPathForUrl(file)}/${name}`;
             app.use(entrypoint, async (req: any, res: any) => {
-                const context = {
+                const context: Context = {
                     req,
                     res,
                     fn: functions[name],

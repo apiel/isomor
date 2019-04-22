@@ -1,15 +1,16 @@
 import { TSESTree } from '@typescript-eslint/typescript-estree';
 import Debug from 'debug';
 
-import { getCodeFunc, getCodeArrowFunc, getCodeImport } from './code';
+import { getCodeFunc, getCodeArrowFunc, getCodeImport, getCodeType } from './code';
 
 const debug = Debug('isomor-transpiler:transform');
 
 export default function transform(body: TSESTree.Statement[], path: string, withTypes: boolean = true) {
     body.forEach((node, index) => {
         if (node.type === 'ExportNamedDeclaration') {
-            if (node.declaration.type === 'TSInterfaceDeclaration') {
-                // console.log('interface, keep it');
+            if (node.declaration.type === 'TSTypeAliasDeclaration'
+                || node.declaration.type === 'TSInterfaceDeclaration') {
+                body[index] = getCodeType(node.declaration.id.name);
             } else if (node.declaration.type === 'FunctionDeclaration') {
                 const { name } = node.declaration.id;
                 body[index] = getCodeFunc(path, name, withTypes);
@@ -27,6 +28,7 @@ export default function transform(body: TSESTree.Statement[], path: string, with
                     delete body[index];
                 }
             } else {
+                console.log('remove code', node.declaration.type);
                 debug('remove code', node.declaration.type);
                 delete body[index];
             }

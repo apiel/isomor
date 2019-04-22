@@ -1,9 +1,11 @@
 import generate from '@babel/generator';
 import { parse } from '@typescript-eslint/typescript-estree';
 
-import { getCodeImport, getCodeFunc, getCodeArrowFunc } from './code';
+import { getCodeImport, getCodeFunc, getCodeArrowFunc, getCodeType } from './code';
 
 export const isomorImport = `import { remote } from "isomor";`;
+
+export const codeTranspiledType = `export type MyType = any;`;
 
 export const codeTranspiledFunc =
 `export function getTime(...args: any) {
@@ -27,7 +29,8 @@ export const codeTranspiledArrowFuncNoType =
 
 describe('code', () => {
     const path = 'path/to/file';
-    const name = 'getTime';
+    const fnName = 'getTime';
+    const typeName = 'MyType';
 
     describe('code/getCodeImport()', () => {
         it('should generate inport for isomor', () => {
@@ -38,11 +41,20 @@ describe('code', () => {
         });
     });
 
+    describe('code/getCodeType()', () => {
+        it('should generate type for isomor', () => {
+            const program = parse('');
+            program.body = [getCodeType(typeName)];
+            const { code } = generate(program as any);
+            expect(code).toEqual(codeTranspiledType);
+        });
+    });
+
     describe('code/getCodeFunc()', () => {
         it('should generate function for isomor', () => {
             const withType = true;
             const program = parse('');
-            program.body = [getCodeFunc(path, name, withType)];
+            program.body = [getCodeFunc(path, fnName, withType)];
             const { code } = generate(program as any);
             expect(code).toEqual(codeTranspiledFunc);
         });
@@ -50,7 +62,7 @@ describe('code', () => {
         it('should generate function for isomor without type', () => {
             const withType = false;
             const program = parse('');
-            program.body = [getCodeFunc(path, name, withType)];
+            program.body = [getCodeFunc(path, fnName, withType)];
             const { code } = generate(program as any);
             expect(code).toEqual(codeTranspiledFuncNoType);
         });
@@ -60,7 +72,7 @@ describe('code', () => {
         it('should generate function for isomor', () => {
             const withType = true;
             const program = parse('');
-            program.body = [getCodeArrowFunc(path, name, withType)];
+            program.body = [getCodeArrowFunc(path, fnName, withType)];
             const { code } = generate(program as any);
             expect(code).toEqual(codeTranspiledArrowFunc);
         });
@@ -68,7 +80,7 @@ describe('code', () => {
         it('should generate function for isomor without type', () => {
             const withType = false;
             const program = parse('');
-            program.body = [getCodeArrowFunc(path, name, withType)];
+            program.body = [getCodeArrowFunc(path, fnName, withType)];
             const { code } = generate(program as any);
             expect(code).toEqual(codeTranspiledArrowFuncNoType);
         });

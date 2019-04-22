@@ -1,8 +1,7 @@
 ### ToDo
 
-- FIX: need to fix server router (react router refresh kaput)
-- FIX: transpiler file does not always get copy
 - transpiler: we should transform every type to any in interface > see test
+- FIX: transpiler file does not always get copy
 
 - need e2e test before publish
 - integration test? for file structure after transpiling

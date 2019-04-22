@@ -1,3 +1,20 @@
+export function getCodeType(name: string): any {
+    return {
+        type: 'ExportNamedDeclaration',
+        declaration: {
+            type: 'TSTypeAliasDeclaration',
+            id: {
+                type: 'Identifier',
+                name,
+            },
+            typeAnnotation: {
+                type: 'TSAnyKeyword',
+            },
+        },
+        specifiers: [],
+    };
+}
+
 export function getCodeImport(): any {
     const name = 'remote';
     return {

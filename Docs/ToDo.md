@@ -1,11 +1,11 @@
 ### ToDo
 
-- use .npmignore for test files and so on
 - **get access to request**
   - permission -> cookie, JWT
 - FIX: travis
 - FIX: need to fix server router (react router refresh kaput)
 - FIX: transpiler file does not always get copy
+- transpiler: we should transform every type to any in interface > see test
 
 - need e2e test before publish
 - integration test? for file structure after transpiling

@@ -1,29 +1,30 @@
-import { getFilesPattern, getPathForUrl, getFiles } from '.';
-import { outputFile, rmdir } from 'fs-extra';
+import { getFilesPattern, getPathForUrl, getFiles, getFolders } from '.';
+import { outputFile, remove } from 'fs-extra';
 import { join } from 'path';
 
-const folderToSearch = '/server';
-const rootFolder = './test';
+const folderToSearch = 'server';
+const rootFolder = '../test';
 
-const filesServer = [
-    join(rootFolder, folderToSearch, 'data.ts'),
-    join(rootFolder, 'foo', folderToSearch, 'data.ts'),
+const foldersServer = [
+    join('foo', folderToSearch),
+    folderToSearch,
 ];
+const filesServer = foldersServer.map(folder => join(folder, 'data.ts'));
 const filesApp = [
-    join(rootFolder, 'page.tsx'),
-    join(rootFolder, 'foo', 'page.tsx'),
+    'page1.tsx',
+    join('foo', 'page2.tsx'),
 ];
 
 function generateTests() {
-    // return Promise.all(
-    //     [...filesServer, ...filesApp].map(
-    //         file => outputFile(file, '// test'),
-    //     ),
-    // );
+    return Promise.all(
+        [...filesServer, ...filesApp].map(
+            file => outputFile(join(rootFolder, file), '// test'),
+        ),
+    );
 }
 
 function destroyTests() {
-    // return rmdir(rootFolder);
+    return remove(rootFolder);
 }
 
 describe('index', () => {
@@ -34,7 +35,7 @@ describe('index', () => {
     describe('getFilesPattern()', () => {
         it('should return search pattern', () => {
             expect(getFilesPattern(folderToSearch))
-                .toEqual(`**${folderToSearch}/*`);
+                .toEqual(`**/${folderToSearch}/*`);
         });
     });
 
@@ -48,7 +49,7 @@ describe('index', () => {
     });
 
     describe('getFiles()', () => {
-        it('should return an empty string if folder does not exist', async () => {
+        it('should return an empty array if files does not exist', async () => {
             const files = await getFiles(rootFolder, folderToSearch);
             expect(files).toEqual([]);
         });
@@ -56,6 +57,24 @@ describe('index', () => {
             await generateTests();
             const files = await getFiles(rootFolder, folderToSearch);
             expect(files).toEqual(filesServer);
+
+            const files2 = await getFiles(join(process.cwd(), rootFolder), folderToSearch);
+            expect(files2).toEqual(filesServer);
+        });
+    });
+
+    describe('getFolders()', () => {
+        it('should return an empty array if folder does not exist', async () => {
+            const folders = await getFolders(rootFolder, folderToSearch);
+            expect(folders).toEqual([]);
+        });
+        it('should return server folders', async () => {
+            await generateTests();
+            const folders = await getFolders(rootFolder, folderToSearch);
+            expect(folders).toEqual(foldersServer);
+
+            const folders2 = await getFolders(join(process.cwd(), rootFolder), folderToSearch);
+            expect(folders2).toEqual(foldersServer);
         });
     });
 });

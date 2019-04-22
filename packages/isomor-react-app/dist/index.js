@@ -36,10 +36,10 @@ function start(options) {
             const pkg = fs_extra_1.readJSONSync(path_1.join(projectDirectory, 'package.json'));
             pkg.proxy = 'http://127.0.0.1:3005';
             const pkgExample = fs_extra_1.readJSONSync(path_1.join(__dirname, '..', 'package-copy.json'));
-            pkg.scripts = pkgExample.scripts;
+            pkg.scripts = Object.assign({}, pkgExample.scripts, pkg.scripts);
             fs_extra_1.writeJSONSync(path_1.join(projectDirectory, 'package.json'), pkg);
             fancy_log_1.info('Install isomor-react');
-            fs_extra_1.writeFileSync('cmd', `cd ${projectDirectory} && yarn add isomor isomor-react && yarn add npm-run-all nodemon --dev`);
+            fs_extra_1.writeFileSync('cmd', `cd ${projectDirectory} && yarn add isomor isomor-react && yarn add run-server nodemon --dev`);
             yield shell('bash', ['cmd']);
             fs_extra_1.unlinkSync('cmd');
             fancy_log_1.info('Setup isomor-react in <App />');

@@ -1,6 +1,6 @@
 {
     "name": "isomor-babel",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "author": "Alexandre Piel <alexandre.piel@gmail.com>",
@@ -17,7 +17,7 @@
         "lint": "tslint -p tsconfig.json -c tslint.json"
     },
     "dependencies": {
-        "isomor-transpiler": "^0.2.0",
+        "isomor-transpiler": "^0.2.1",
         "typescript": "^3.2.4"
     },
     "devDependencies": {

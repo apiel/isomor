@@ -1,6 +1,5 @@
 ### ToDo
 
-- TEST: isomor-core
 - FIX: need to fix server router (react router refresh kaput)
 - FIX: transpiler file does not always get copy
 - transpiler: we should transform every type to any in interface > see test

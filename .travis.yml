@@ -28,6 +28,10 @@ script:
   - pwd
   - cd ~ && mkdir npxisomorreactapp && cd npxisomorreactapp
   - npx isomor-react-app my-app
+  - cd my-app
+  - yarn isomor:build
+  - yarn serv:build
+  - yarn build
 
 cache:
   directories:

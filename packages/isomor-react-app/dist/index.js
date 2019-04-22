@@ -15,10 +15,9 @@ const path_1 = require("path");
 const child_process_1 = require("child_process");
 const chalk_1 = require("chalk");
 const minimist = require("minimist");
-function start(options) {
+function start({ srcFolder, distAppFolder, serverFolder }) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const { srcFolder, distAppFolder } = options;
             fancy_log_1.info('Setup create-react-app with isomor');
             let { _: [projectDirectory] } = minimist(process.argv.slice(2));
             projectDirectory = path_1.join(process.cwd(), projectDirectory);
@@ -47,6 +46,8 @@ function start(options) {
                 + fs_extra_1.readFileSync(path_1.join(projectDirectory, srcFolder, 'index.tsx')).toString();
             const newIndex = index.replace(/\<App \/\>/g, '(<IsomorProvider><App /></IsomorProvider>)');
             fs_extra_1.writeFileSync(path_1.join(projectDirectory, srcFolder, 'index.tsx'), newIndex);
+            fancy_log_1.info('Create empty server/data.ts');
+            fs_extra_1.outputFileSync(path_1.join(projectDirectory, srcFolder, serverFolder, 'data.ts'), '');
             fancy_log_1.info(`Ready to code :-) ${chalk_1.default.bold(chalk_1.default.red('Important: ') + chalk_1.default.blue(`edit you code in ${srcFolder}`))} instead of ${distAppFolder}`);
         }
         catch (err) {
@@ -76,5 +77,6 @@ function shell(command, args) {
 start({
     srcFolder: process.env.SRC_FOLDER || './src-isomor',
     distAppFolder: process.env.DIST_APP_FOLDER || './src',
+    serverFolder: process.env.SERVER_FOLDER || '/server',
 });
 //# sourceMappingURL=index.js.map

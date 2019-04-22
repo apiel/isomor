@@ -27,7 +27,9 @@ function start(options) {
         if (staticFolder) {
             fancy_log_1.info('Add static folder', staticFolder);
             app.use(express.static(staticFolder));
-            app.get('*', (req, res) => res.sendFile(path_1.join(staticFolder, 'index.html')));
+            app.get('*', (req, res) => res.sendFile(path_1.join(staticFolder, 'index.html'), {
+                root: process.cwd(),
+            }));
         }
         app.listen(port, () => fancy_log_1.info(`Server listening on port ${port}!`));
     });

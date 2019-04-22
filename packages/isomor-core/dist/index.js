@@ -42,9 +42,9 @@ function getFolders(rootFolder, folderToSearch) {
     });
 }
 exports.getFolders = getFolders;
-function getPathForUrl(filePath) {
-    const extensionLen = path_1.extname(filePath).length;
-    return filePath.replace(/\//g, '-').slice(0, -extensionLen);
+function getPathForUrl(path) {
+    const len = path.length - path_1.extname(path).length;
+    return path.replace(/\//g, '-').slice(0, len).replace(/^-|-$/g, '');
 }
 exports.getPathForUrl = getPathForUrl;
 //# sourceMappingURL=index.js.map

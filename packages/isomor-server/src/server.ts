@@ -30,7 +30,9 @@ async function start(options: Options) {
         info('Add static folder', staticFolder);
         app.use(express.static(staticFolder));
         app.get('*', (req, res) =>
-            res.sendFile(join(staticFolder, 'index.html')),
+            res.sendFile(join(staticFolder, 'index.html'), {
+                root: process.cwd(),
+            }),
         );
     }
 

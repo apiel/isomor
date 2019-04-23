@@ -1,9 +1,12 @@
 const fs = require('fs-extra');
+const { server } = require('../jest-puppeteer.config');
+
+const PORT = server.port || 3000;
 
 describe('app', () => {
     beforeAll(async () => {
         await fs.remove('./data');
-        await page.goto('http://localhost:3005/', { waitUntil: 'networkidle2' });
+        await page.goto(`http://localhost:${PORT}/`, { waitUntil: 'networkidle2' });
     });
 
     it('should load "hello world" from server', async () => {

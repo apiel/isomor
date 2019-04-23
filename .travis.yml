@@ -26,14 +26,14 @@ script:
   - cd ${BASE}/isomor-core
   - yarn test
 
-  - cd ${BASE}/example
-  - yarn isomor:build
-  - yarn serv:build
-  - yarn build
-  - yarn serv:prod > /dev/null &
-  - sleep 30
-  - curl http://127.0.0.1:3005/
-  - curl http://127.0.0.1:3005/isomor/status-server-getStatus/getStatus
+  # - cd ${BASE}/example
+  # - yarn isomor:build
+  # - yarn serv:build
+  # - yarn build
+  # - yarn serv:prod > /dev/null &
+  # - sleep 30
+  # - curl http://127.0.0.1:3005/
+  # - curl http://127.0.0.1:3005/isomor/status-server-getStatus/getStatus
 
   - cd ${BASE}/../../isomor-transpiler
   - yarn

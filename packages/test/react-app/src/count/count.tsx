@@ -1,8 +1,9 @@
 import React from 'react';
 import { styleCard } from '../styleCard';
 import { getCount, increment } from './server/count';
+import { Props } from '../props';
 
-export const Count: React.FC = () => {
+export const Count = ({ e2eId }: Props) => {
     const [count, setCount] = React.useState<string>('loading...');
     const load = async () => {
         setCount(await getCount());
@@ -13,7 +14,7 @@ export const Count: React.FC = () => {
         setCount(newValue);
     }
     return (
-        <div style={styleCard}>
+        <div style={styleCard} data-id={e2eId}>
             <button onClick={onClick}> + </button> { count }
         </div>
     );

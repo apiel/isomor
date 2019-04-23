@@ -10,11 +10,11 @@ const App: React.FC = () => {
       <header className="App-header">
         Isomor test
       </header>
-      <Count />
-      <Count />
-      <Color />
-      <Color />
-      <Hello />
+      <Count e2eId="count-1" />
+      <Count e2eId="count-2" />
+      <Color e2eId="color-1" />
+      <Color e2eId="color-2" />
+      <Hello e2eId="hello-1" />
     </div>
   );
 }

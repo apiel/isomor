@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@types/jest": "24.0.11",
+    "@types/jest": "^24.0.11",
     "@types/node": "11.13.7",
     "@types/react": "16.8.14",
     "@types/react-dom": "16.8.4",
@@ -21,11 +21,12 @@
     "serv:build": "rimraf ./dist-server && tsc -p tsconfig.server.json",
     "serv": "rimraf ./dist-server && tsc -p tsconfig.server.json && isomor-server",
     "serv:dev": "nodemon --watch 'src-isomor/**/server/**/*' -e ts,tsx --exec 'yarn serv'",
-    "prod": "yarn isomor:build && yarn build && STATIC_FOLDER=./build yarn serv",
+    "serv:prod": "yarn isomor:build && STATIC_FOLDER=./build yarn serv",
+    "prod": "yarn build && yarn serv:prod",
     "dev": "run-screen 'yarn isomor:build:dev' 'yarn serv:dev' 'yarn start'",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest -c jest-e2e.config.js",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -46,7 +47,9 @@
   "proxy": "http://127.0.0.1:3005",
   "devDependencies": {
     "@types/fs-extra": "^5.0.5",
+    "jest-puppeteer": "^4.1.1",
     "nodemon": "^1.18.11",
+    "puppeteer": "^1.14.0",
     "run-server": "^1.0.6"
   }
 }

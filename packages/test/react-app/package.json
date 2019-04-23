@@ -7,6 +7,7 @@
     "@types/node": "11.13.7",
     "@types/react": "16.8.14",
     "@types/react-dom": "16.8.4",
+    "fs-extra": "^7.0.1",
     "isomor": "^0.2.2",
     "isomor-react": "^0.0.8",
     "react": "^16.8.6",
@@ -44,6 +45,7 @@
   },
   "proxy": "http://127.0.0.1:3005",
   "devDependencies": {
+    "@types/fs-extra": "^5.0.5",
     "nodemon": "^1.18.11",
     "run-server": "^1.0.6"
   }

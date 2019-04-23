@@ -9,8 +9,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs_extra_1 = require("fs-extra");
-exports.getHello = () => __awaiter(this, void 0, void 0, function* () {
-    const file = './data/hello.txt';
-    yield fs_extra_1.outputFile(file, 'hello world');
+const file = './data/count.txt';
+exports.getCount = () => __awaiter(this, void 0, void 0, function* () {
+    if (!(fs_extra_1.pathExists(file))) {
+        return '0';
+    }
     return (yield fs_extra_1.readFile(file)).toString();
+});
+exports.increment = () => __awaiter(this, void 0, void 0, function* () {
+    const value = parseInt(yield exports.getCount(), 10);
+    const newValue = value + 1;
+    yield fs_extra_1.outputFile(file, newValue);
+    console.log('newValue', newValue);
+    return newValue.toString();
 });

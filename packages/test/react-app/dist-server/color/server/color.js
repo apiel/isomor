@@ -12,7 +12,7 @@ const fs_extra_1 = require("fs-extra");
 const file = './data/color.txt';
 function getColor() {
     return __awaiter(this, void 0, void 0, function* () {
-        if (!(fs_extra_1.pathExists(file))) {
+        if (!(yield fs_extra_1.pathExists(file))) {
             return 'red';
         }
         return (yield fs_extra_1.readFile(file)).toString();

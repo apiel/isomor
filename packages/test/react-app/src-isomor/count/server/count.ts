@@ -3,7 +3,7 @@ import { outputFile, readFile, pathExists } from 'fs-extra';
 const file = './data/count.txt';
 
 export const getCount = async (): Promise<string> => {
-    if (!(pathExists(file))) {
+    if (!(await pathExists(file))) {
         return '0';
     }
     return (await readFile(file)).toString();

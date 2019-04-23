@@ -1,4 +1,4 @@
 module.exports = {
     preset: 'jest-puppeteer',
-    testRegex: '\\.e2e-test\\.ts$',
+    testRegex: '\\.e2e-test\\.js$',
   }

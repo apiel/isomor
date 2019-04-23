@@ -11,7 +11,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const fs_extra_1 = require("fs-extra");
 const file = './data/count.txt';
 exports.getCount = () => __awaiter(this, void 0, void 0, function* () {
-    if (!(fs_extra_1.pathExists(file))) {
+    if (!(yield fs_extra_1.pathExists(file))) {
         return '0';
     }
     return (yield fs_extra_1.readFile(file)).toString();

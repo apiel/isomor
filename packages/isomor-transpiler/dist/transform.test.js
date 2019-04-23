@@ -4,6 +4,7 @@ const generator_1 = require("@babel/generator");
 const typescript_estree_1 = require("@typescript-eslint/typescript-estree");
 const transform_1 = require("./transform");
 const code_1 = require("./code");
+const transformer_1 = require("./transformer");
 const codeSource = `
 import { readdir } from 'fs-extra';
 import { CpuInfo } from 'os';
@@ -34,7 +35,7 @@ function shouldNotBeTranspiled() {
 `;
 const codeTranspiled = `const ImportIsomor;
 const TypeAny;
-const TypeAny;
+const TransformInterface;
 const Func;
 const Func;
 const ArrowFunc;`;
@@ -43,6 +44,9 @@ jest.mock('./code', () => ({
     getCodeFunc: jest.fn().mockReturnValue(getMock('Func')),
     getCodeArrowFunc: jest.fn().mockReturnValue(getMock('ArrowFunc')),
     getCodeType: jest.fn().mockReturnValue(getMock('TypeAny')),
+}));
+jest.mock('./transformer', () => ({
+    transformInterface: jest.fn().mockReturnValue(getMock('TransformInterface')),
 }));
 function getMock(name) {
     return {
@@ -69,9 +73,9 @@ describe('transform', () => {
             program.body = transform_1.default(program.body, path, withTypes);
             const { code } = generator_1.default(program);
             expect(code).toEqual(codeTranspiled);
-            expect(code_1.getCodeType).toHaveBeenCalledTimes(2);
+            expect(code_1.getCodeType).toHaveBeenCalledTimes(1);
             expect(code_1.getCodeType).toHaveBeenCalledWith('MyType');
-            expect(code_1.getCodeType).toHaveBeenCalledWith('MyInterface');
+            expect(transformer_1.transformInterface).toHaveBeenCalledTimes(1);
             expect(code_1.getCodeFunc).toHaveBeenCalledTimes(2);
             expect(code_1.getCodeFunc).toHaveBeenCalledWith(path, 'getTime1', true);
             expect(code_1.getCodeFunc).toHaveBeenCalledWith(path, 'getTime2', true);

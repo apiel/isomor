@@ -2,13 +2,16 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const debug_1 = require("debug");
 const code_1 = require("./code");
+const transformer_1 = require("./transformer");
 const debug = debug_1.default('isomor-transpiler:transform');
 function transform(body, path, withTypes = true) {
     body.forEach((node, index) => {
         if (node.type === 'ExportNamedDeclaration') {
-            if (node.declaration.type === 'TSTypeAliasDeclaration'
-                || node.declaration.type === 'TSInterfaceDeclaration') {
+            if (node.declaration.type === 'TSTypeAliasDeclaration') {
                 body[index] = code_1.getCodeType(node.declaration.id.name);
+            }
+            else if (node.declaration.type === 'TSInterfaceDeclaration') {
+                body[index] = transformer_1.transformInterface(node.declaration);
             }
             else if (node.declaration.type === 'FunctionDeclaration') {
                 const { name } = node.declaration.id;
@@ -29,7 +32,6 @@ function transform(body, path, withTypes = true) {
                 }
             }
             else {
-                console.log('remove code', node.declaration.type);
                 debug('remove code', node.declaration.type);
                 delete body[index];
             }

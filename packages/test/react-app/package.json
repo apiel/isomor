@@ -1,0 +1,50 @@
+{
+  "name": "react-app",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@types/jest": "24.0.11",
+    "@types/node": "11.13.7",
+    "@types/react": "16.8.14",
+    "@types/react-dom": "16.8.4",
+    "isomor": "^0.2.2",
+    "isomor-react": "^0.0.8",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-scripts": "3.0.0",
+    "typescript": "3.4.4"
+  },
+  "scripts": {
+    "isomor:build": "isomor-transpiler",
+    "isomor:build:dev": "WATCH=true isomor-transpiler",
+    "serv:build": "rimraf ./dist-server && tsc -p tsconfig.server.json",
+    "serv": "rimraf ./dist-server && tsc -p tsconfig.server.json && isomor-server",
+    "serv:dev": "nodemon --watch 'src-isomor/**/server/**/*' -e ts,tsx --exec 'yarn serv'",
+    "prod": "yarn isomor:build && yarn build && STATIC_FOLDER=./build yarn serv",
+    "dev": "run-screen 'yarn isomor:build:dev' 'yarn serv:dev' 'yarn start'",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "proxy": "http://127.0.0.1:3005",
+  "devDependencies": {
+    "nodemon": "^1.18.11",
+    "run-server": "^1.0.6"
+  }
+}

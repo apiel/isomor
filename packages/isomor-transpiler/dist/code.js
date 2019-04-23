@@ -1,5 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+function getCodeType(name) {
+    return {
+        type: 'ExportNamedDeclaration',
+        declaration: {
+            type: 'TSTypeAliasDeclaration',
+            id: {
+                type: 'Identifier',
+                name,
+            },
+            typeAnnotation: {
+                type: 'TSAnyKeyword',
+            },
+        },
+        specifiers: [],
+    };
+}
+exports.getCodeType = getCodeType;
 function getCodeImport() {
     const name = 'remote';
     return {

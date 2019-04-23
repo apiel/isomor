@@ -99,13 +99,15 @@ function watcher(options: Options) {
                 unlink(join(distAppFolder, file));
             });
 
-        function watcherUpdate(file: string) {
+        async function watcherUpdate(file: string) {
             const path = join(srcFolder, file);
             if (anymatch([serverFolderPattern], path)) {
                 transpile(options, file);
             } else {
                 info(`Copy ${path} to folder`);
-                copy(path, join(distAppFolder, file));
+                // copy(path, join(distAppFolder, file));
+                const content = await readFile(path);
+                await outputFile(join(distAppFolder, file), content);
             }
         }
     }

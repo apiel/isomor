@@ -76,16 +76,20 @@ function watcher(options) {
             watcherUpdate(file);
         }).on('unlink', file => {
             fancy_log_1.info(`File ${file} has been removed`, '(do nothing)');
+            fs_extra_1.unlink(path_1.join(distAppFolder, file));
         });
         function watcherUpdate(file) {
-            const path = path_1.join(srcFolder, file);
-            if (anymatch([serverFolderPattern], path)) {
-                transpile(options, file);
-            }
-            else {
-                fancy_log_1.info(`Copy ${path} to folder`);
-                fs_extra_1.copy(path, path_1.join(distAppFolder, file));
-            }
+            return __awaiter(this, void 0, void 0, function* () {
+                const path = path_1.join(srcFolder, file);
+                if (anymatch([serverFolderPattern], path)) {
+                    transpile(options, file);
+                }
+                else {
+                    fancy_log_1.info(`Copy ${path} to folder`);
+                    const content = yield fs_extra_1.readFile(path);
+                    yield fs_extra_1.outputFile(path_1.join(distAppFolder, file), content);
+                }
+            });
         }
     }
 }

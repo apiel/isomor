@@ -6,7 +6,9 @@ const debug = debug_1.default('isomor-transpiler:transform');
 function transform(body, path, withTypes = true) {
     body.forEach((node, index) => {
         if (node.type === 'ExportNamedDeclaration') {
-            if (node.declaration.type === 'TSInterfaceDeclaration') {
+            if (node.declaration.type === 'TSTypeAliasDeclaration'
+                || node.declaration.type === 'TSInterfaceDeclaration') {
+                body[index] = code_1.getCodeType(node.declaration.id.name);
             }
             else if (node.declaration.type === 'FunctionDeclaration') {
                 const { name } = node.declaration.id;
@@ -27,6 +29,7 @@ function transform(body, path, withTypes = true) {
                 }
             }
             else {
+                console.log('remove code', node.declaration.type);
                 debug('remove code', node.declaration.type);
                 delete body[index];
             }

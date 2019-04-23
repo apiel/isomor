@@ -6,9 +6,14 @@ const transform_1 = require("./transform");
 const code_1 = require("./code");
 const codeSource = `
 import { readdir } from 'fs-extra';
+import { CpuInfo } from 'os';
 
-export interface GetListInput {
-    foo: string;
+export type MyType = string;
+export interface MyInterface {
+    foo: CpuInfo;
+    bar: {
+        child: CpuInfo;
+    };
 }
 
 export function getTime1(): Promise<string[]> {
@@ -28,9 +33,8 @@ function shouldNotBeTranspiled() {
 }
 `;
 const codeTranspiled = `const ImportIsomor;
-export interface GetListInput {
-  foo: string;
-}
+const TypeAny;
+const TypeAny;
 const Func;
 const Func;
 const ArrowFunc;`;
@@ -38,6 +42,7 @@ jest.mock('./code', () => ({
     getCodeImport: jest.fn().mockReturnValue(getMock('ImportIsomor')),
     getCodeFunc: jest.fn().mockReturnValue(getMock('Func')),
     getCodeArrowFunc: jest.fn().mockReturnValue(getMock('ArrowFunc')),
+    getCodeType: jest.fn().mockReturnValue(getMock('TypeAny')),
 }));
 function getMock(name) {
     return {
@@ -64,32 +69,15 @@ describe('transform', () => {
             program.body = transform_1.default(program.body, path, withTypes);
             const { code } = generator_1.default(program);
             expect(code).toEqual(codeTranspiled);
+            expect(code_1.getCodeType).toHaveBeenCalledTimes(2);
+            expect(code_1.getCodeType).toHaveBeenCalledWith('MyType');
+            expect(code_1.getCodeType).toHaveBeenCalledWith('MyInterface');
             expect(code_1.getCodeFunc).toHaveBeenCalledTimes(2);
             expect(code_1.getCodeFunc).toHaveBeenCalledWith(path, 'getTime1', true);
             expect(code_1.getCodeFunc).toHaveBeenCalledWith(path, 'getTime2', true);
             expect(code_1.getCodeArrowFunc).toHaveBeenCalledTimes(1);
             expect(code_1.getCodeArrowFunc).toHaveBeenCalledWith(path, 'getTime3', true);
             expect(code_1.getCodeImport).toHaveBeenCalledTimes(1);
-        });
-        it.skip('should transform interface types to any', () => {
-            const codeSource2 = `
-                import { CpuInfo } from 'os';
-
-                export interface MyInterface {
-                    foo: CpuInfo;
-                    bar: {
-                        child: CpuInfo;
-                    };
-                }`;
-            const codeTranspiled2 = `const ImportIsomor;
-export interface MyInterface {
-  foo: any;
-  bar: any;
-}`;
-            const program = typescript_estree_1.parse(codeSource2);
-            program.body = transform_1.default(program.body, path, withTypes);
-            const { code } = generator_1.default(program);
-            expect(code).toEqual(codeTranspiled2);
         });
     });
 });

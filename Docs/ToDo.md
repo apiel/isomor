@@ -1,5 +1,10 @@
 ### ToDo
 
+- FIX: transpiler file does not always get copy
+  -> after copy, look if the two files are the same, if not copy again
+  -> or maybe use outputWrite?
+
+
 - need e2e test before publish
   - create similar project as example but with static values
   - then make snapshot with puppeteer
@@ -9,8 +14,6 @@
     - multiple update
     - ...
 - integration test? for file structure after transpiling
-
-- FIX: transpiler file does not always get copy
 
 - isomor-react -> error handling
 - vuejs example

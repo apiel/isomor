@@ -1,12 +1,13 @@
 import { getCpuAndMem, } from './os/getCpuAndMem';
 
-// import { CpuInfo } from 'os'; // this is deleted so cant use it in interface. Need to fix
-// export { CpuInfo } from 'os'; // this is deleted so cant use it in interface. Need to fix
+// import { CpuInfo } from 'os';
+// export { CpuInfo } from 'os';
+
+export type CpuInfo = any;
 
 export interface Status {
     uptime: number,
-    cpus: { model: string, speed: number }[],
-    // cpus: CpuInfo[], // need to fix
+    cpus: CpuInfo[],
     totalmem: number,
     freemem: number,
 }

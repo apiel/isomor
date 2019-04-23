@@ -1,4 +1,2 @@
 import { remote } from "isomor";
-export interface GetListInput {
-  foo: string;
-}
+export type GetListInput = any;

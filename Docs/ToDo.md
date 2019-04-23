@@ -1,5 +1,9 @@
 ### ToDo
 
+- FIX interface transpiling, dont convert to type any but go against the full interface and convert to any
+  - fix packages/example/src-isomor/status/server/getStatus.ts
+  - in packages/example/src-isomor/status/stats.tsx remove types `(cpu: CpuInfo, index: number)` and should work
+
 - FIX: transpiler file does not always get copy
   -> after copy, look if the two files are the same, if not copy again
   -> or maybe use outputWrite?

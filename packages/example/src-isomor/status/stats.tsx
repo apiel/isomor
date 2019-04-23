@@ -1,5 +1,5 @@
 import React from 'react';
-import { getStatus, Status } from './server/getStatus';
+import { getStatus, Status, CpuInfo } from './server/getStatus';
 
 export const Stats = () => {
   const [status, setStatus] = React.useState<Status>();
@@ -15,7 +15,7 @@ export const Stats = () => {
           <p><b>Memory:</b> {status.freemem} available of {status.totalmem}</p>
           <p><b>Cpus:</b></p>
           <ul>
-            {status.cpus && status.cpus.map((cpu, index) => <li key={index}>{cpu.model} {cpu.speed}</li>)}
+            {status.cpus && status.cpus.map((cpu: CpuInfo, index: number) => <li key={index}>{cpu.model} {cpu.speed}</li>)}
           </ul>
         </>
       )}

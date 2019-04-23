@@ -1,7 +1,5 @@
 import { remote } from "isomor";
-export interface ServerTime {
-  time: string;
-}
+export type ServerTime = any;
 export function getTime(...args: any) {
   return remote("status-server-getTime", "getTime", args);
 }

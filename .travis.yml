@@ -10,19 +10,32 @@ branches:
   - /^release-.*/
 
 install:
-  - cp -r packages/isomor-transpiler ../isomor-transpiler # copy transpiler in isolated folder outside of lerna
-  - cd packages/example
+  - BASE=$(pwd)
+  - cp -r ${BASE}/packages/isomor-transpiler ${BASE}/../isomor-transpiler # copy transpiler in isolated folder outside of lerna
+  - cd ${BASE}/packages/example
+  - yarn
+  - cd ${BASE}/isomor-core
+  - yarn
+  - cd ${BASE}/test/react-app
   - yarn
 
 script:
-  - yarn isomor:build
-  - yarn serv:build
-  - yarn build
-  - yarn prod > /dev/null &
-  - sleep 30
-  - curl http://127.0.0.1:3005/
-  - curl http://127.0.0.1:3005/isomor/status-server-getStatus/getStatus
-  - cd ../../../isomor-transpiler
+  - cd ${BASE}/test/react-app
+  - yarn test
+
+  # - cd ${BASE}/packages/example
+  # - yarn isomor:build
+  # - yarn serv:build
+  # - yarn build
+  # - yarn prod > /dev/null &
+  # - sleep 30
+  # - curl http://127.0.0.1:3005/
+  # - curl http://127.0.0.1:3005/isomor/status-server-getStatus/getStatus
+
+  - cd ${BASE}/isomor-core
+  - yarn test
+
+  - cd ${BASE}/../isomor-transpiler
   - yarn
   - yarn test
   - pwd

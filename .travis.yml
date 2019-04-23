@@ -31,11 +31,11 @@ script:
   - cd ${BASE}/../../isomor-transpiler
   - yarn test
 
-  # - cd ${BASE}/example
-  # - yarn dev > /dev/null &
-  # - sleep 30
-  # - curl http://127.0.0.1:3005/
-  # - curl http://127.0.0.1:3005/isomor/status-server-getStatus/getStatus
+  - cd ${BASE}/example
+  - yarn dev > /dev/null &
+  - sleep 30
+  - curl http://127.0.0.1:3005/
+  - curl http://127.0.0.1:3005/isomor/status-server-getStatus/getStatus
 
   - cd ~ && mkdir npxisomorreactapp && cd npxisomorreactapp
   - npx isomor-react-app my-app

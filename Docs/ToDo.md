@@ -1,5 +1,7 @@
 ### ToDo
 
+- integration test for transform.js
+
 - FIX interface transpiling, dont convert to type any but go against the full interface and convert to any
   - fix packages/example/src-isomor/status/server/getStatus.ts
   - in packages/example/src-isomor/status/stats.tsx remove types `(cpu: CpuInfo, index: number)` and should work

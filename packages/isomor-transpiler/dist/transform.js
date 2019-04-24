@@ -11,7 +11,7 @@ function transform(body, path, withTypes = true) {
                 body[index] = code_1.getCodeType(node.declaration.id.name);
             }
             else if (node.declaration.type === 'TSInterfaceDeclaration') {
-                body[index] = transformer_1.transformInterface(node.declaration);
+                transformer_1.transformInterface(node.declaration);
             }
             else if (node.declaration.type === 'FunctionDeclaration') {
                 const { name } = node.declaration.id;

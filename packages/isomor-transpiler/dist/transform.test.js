@@ -45,9 +45,6 @@ jest.mock('./code', () => ({
     getCodeArrowFunc: jest.fn().mockReturnValue(getMock('ArrowFunc')),
     getCodeType: jest.fn().mockReturnValue(getMock('TypeAny')),
 }));
-jest.mock('./transformer', () => ({
-    transformInterface: jest.fn().mockReturnValue(getMock('TransformInterface')),
-}));
 function getMock(name) {
     return {
         type: 'VariableDeclaration',

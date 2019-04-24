@@ -37,7 +37,7 @@ function shouldNotBeTranspiled() {
 const codeTranspiled =
     `const ImportIsomor;
 const TypeAny;
-export const TransformInterface;
+const TransformInterface;
 const Func;
 const Func;
 const ArrowFunc;`;

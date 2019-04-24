@@ -1,5 +1,7 @@
 ### ToDo
 
+- FIX travis with trying to run locally
+
 - FIX in packages/example/src-isomor/status/stats.tsx remove types `(cpu: CpuInfo, index: number)` and should work
 
 - FIX: transpiler file does not always get copy

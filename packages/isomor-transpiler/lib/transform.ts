@@ -12,7 +12,7 @@ export default function transform(body: TSESTree.Statement[], path: string, with
             if (node.declaration.type === 'TSTypeAliasDeclaration') {
                 body[index] = getCodeType(node.declaration.id.name);
             } else if (node.declaration.type === 'TSInterfaceDeclaration') {
-                (body[index] as any).declaration = transformInterface(node.declaration);
+                body[index] = transformInterface(node);
             } else if (node.declaration.type === 'FunctionDeclaration') {
                 const { name } = node.declaration.id;
                 body[index] = getCodeFunc(path, name, withTypes);

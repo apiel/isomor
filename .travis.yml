@@ -31,18 +31,14 @@ script:
   - cd ${BASE}/../../isomor-transpiler
   - yarn test
 
-  - cd ${BASE}/example
+  # - cd ${BASE}/example
   # - yarn prod 2> yarn.prod.log &
-  - yarn isomor:build
-  - yarn build
-  - cat dist-server/auth/server/auth.js
-  - yarn serv:prod 2> yarn.prod.log &
-  - sleep 30
-  - cat yarn.prod.log
-  - curl http://127.0.0.1:3005/
-  - curl http://127.0.0.1:3005/isomor/status-server-getStatus/getStatus
+  # - sleep 30
+  # - cat yarn.prod.log
+  # - curl http://127.0.0.1:3005/
+  # - curl http://127.0.0.1:3005/isomor/status-server-getStatus/getStatus
 
-  - kill $(lsof -t -i:3005 -sTCP:LISTEN)
+  # - kill $(lsof -t -i:3005 -sTCP:LISTEN)
 
   - cd ~ && mkdir npxisomorreactapp && cd npxisomorreactapp
   - npx isomor-react-app my-app

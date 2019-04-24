@@ -32,12 +32,12 @@ script:
   - yarn test
 
   - cd ${BASE}/example
-  - yarn dev > /dev/null &
+  - yarn prod > /dev/null &
   - sleep 30
   - curl http://127.0.0.1:3005/
   - curl http://127.0.0.1:3005/isomor/status-server-getStatus/getStatus
 
-  - kill $(lsof -t -i:3005)
+  - kill $(lsof -t -i:3005 -sTCP:LISTEN)
 
   - cd ~ && mkdir npxisomorreactapp && cd npxisomorreactapp
   - npx isomor-react-app my-app

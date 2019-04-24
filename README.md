@@ -45,38 +45,17 @@ Right now, this library has been implemented for TypeScript, since types bring l
 git clone https://github.com/apiel/isomor.git
 cd packages/examples/
 yarn
+yarn prod
+```
+Open http://127.0.0.1:3005/
+
+or in dev mode:
+
+```bash
 yarn dev
 ```
 
-> **Notes:** `yarn dev` will run multiple processes in parallel and it will shallow most of the console output. For debugging you might need to run each process manually.
-
-You can also run the project manually and start each process with the following commands:
-
-```bash
-yarn serv
-yarn isomor:build
-yarn start
-```
-
-Or in watch mode:
-
-```bash
-yarn serv:dev
-yarn isomor:build:dev
-yarn start
-```
-
-Run in production:
-
-```bash
-yarn isomor:build
-yarn build
-STATIC_FOLDER=./build yarn serv
-```
-
-Open http://127.0.0.1:3005/
-
-> **Note:** it would be better to use nginx to serv static files
+> **Note:** `yarn dev` is using the npm library [run-screen](https://www.npmjs.com/package/run-screen) to start processes in parallel
 
 ## Getting started with React
 

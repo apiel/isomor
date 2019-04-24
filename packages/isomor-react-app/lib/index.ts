@@ -49,6 +49,7 @@ async function start({ srcFolder, distAppFolder, serverFolder }: Options) {
         const pkg = readJSONSync(join(projectDirectory, 'package.json'));
         pkg.proxy = 'http://127.0.0.1:3005';
         const pkgExample = readJSONSync(join(__dirname, '..', 'package-copy.json'));
+        if (pkgExample.scripts['run-in-docker']) { delete pkgExample.scripts['run-in-docker']; }
         pkg.scripts = { ...pkgExample.scripts, ...pkg.scripts };
         writeJSONSync(join(projectDirectory, 'package.json'), pkg);
 

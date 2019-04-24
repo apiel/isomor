@@ -32,7 +32,11 @@ script:
   - yarn test
 
   - cd ${BASE}/example
-  - yarn prod 2> yarn.prod.log &
+  # - yarn prod 2> yarn.prod.log &
+  - yarn isomor:build
+  - yarn build
+  - cat dist-server/auth/server/auth.js
+  - yarn serv:prod 2> yarn.prod.log &
   - sleep 30
   - cat yarn.prod.log
   - curl http://127.0.0.1:3005/

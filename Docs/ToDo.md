@@ -11,8 +11,6 @@
 - vuejs example
 - angular example
 
-- remove run-in-docker from isomor-react-app
-
 
 - stop using fancy-log not so fancy -> implement own log lib
   - extend console.log to have default colors

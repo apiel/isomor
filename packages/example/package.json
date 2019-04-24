@@ -34,7 +34,7 @@
     "isomor:build": "isomor-transpiler",
     "isomor:build:dev": "WATCH=true isomor-transpiler",
     "serv:build": "rimraf ./dist-server && tsc -p tsconfig.server.json",
-    "serv": "rimraf ./dist-server && tsc -p tsconfig.server.json && cat dist-server/auth/server/auth.js && isomor-server",
+    "serv": "rimraf ./dist-server && tsc -p tsconfig.server.json && isomor-server",
     "serv:dev": "nodemon --watch 'src-isomor/**/server/**/*' -e ts,tsx --exec 'yarn serv'",
     "serv:prod": "STATIC_FOLDER=./build yarn serv",
     "prod": "yarn isomor:build && yarn build && yarn serv:prod",

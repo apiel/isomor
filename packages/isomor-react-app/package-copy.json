@@ -1,6 +1,6 @@
 {
   "name": "isomor-example",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "repository": {
     "type": "git",
     "url": "https://github.com/apiel/isomor"
@@ -21,7 +21,7 @@
     "@types/react": "16.8.10",
     "@types/react-dom": "16.8.3",
     "fs-extra": "^7.0.1",
-    "isomor": "^0.2.5",
+    "isomor": "^0.2.6",
     "isomor-react": "^0.0.3",
     "md5": "^2.2.1",
     "react": "^16.8.6",
@@ -49,11 +49,11 @@
     "@types/fs-extra": "^5.0.5",
     "@types/md5": "^2.1.33",
     "isomor-server": "^0.2.2",
-    "isomor-transpiler": "^0.2.5",
+    "isomor-transpiler": "^0.2.6",
     "nodemon": "^1.18.10",
     "rimraf": "^2.6.3",
     "run-screen": "^0.1.0",
     "ts-node": "^8.0.3"
   },
-  "gitHead": "c95775b4128bee528872ce38909d336b7c0b1bdc"
+  "gitHead": "bf1b9123a70dd08cca5b1aa5f918e1a599a2c677"
 }

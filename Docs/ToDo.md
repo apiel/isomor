@@ -1,6 +1,7 @@
 ### ToDo
 
 - integration test for transform.js
+- fix cpus: CpuInfo[];
 
 - FIX interface transpiling, dont convert to type any but go against the full interface and convert to any
   - fix packages/example/src-isomor/status/server/getStatus.ts

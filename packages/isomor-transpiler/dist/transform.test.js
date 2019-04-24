@@ -35,7 +35,7 @@ function shouldNotBeTranspiled() {
 `;
 const codeTranspiled = `const ImportIsomor;
 const TypeAny;
-const TransformInterface;
+export const TransformInterface;
 const Func;
 const Func;
 const ArrowFunc;`;
@@ -44,6 +44,9 @@ jest.mock('./code', () => ({
     getCodeFunc: jest.fn().mockReturnValue(getMock('Func')),
     getCodeArrowFunc: jest.fn().mockReturnValue(getMock('ArrowFunc')),
     getCodeType: jest.fn().mockReturnValue(getMock('TypeAny')),
+}));
+jest.mock('./transformer', () => ({
+    transformInterface: jest.fn().mockReturnValue(getMock('TransformInterface')),
 }));
 function getMock(name) {
     return {

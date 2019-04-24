@@ -6,17 +6,7 @@
 
 - FIX: transpiler file does not always get copy
   -> after copy, look if the two files are the same, if not copy again
-  -> or maybe use outputWrite?
 
-
-- need e2e test before publish
-  - create similar project as example but with static values
-  - then make snapshot with puppeteer
-    - read file
-    - write file
-    - click btn
-    - multiple update
-    - ...
 - integration test? for file structure after transpiling
 
 - isomor-react -> error handling

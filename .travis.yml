@@ -35,6 +35,11 @@ script:
   - yarn prod 2> yarn.prod.log &
   - sleep 30
   - cat yarn.prod.log
+  - ls src
+  - ls dist-server/
+  - ls dist-server/auth/
+  - ls dist-server/auth/server/
+  - cat dist-server/auth/server/auth.js
   - curl http://127.0.0.1:3005/
   - curl http://127.0.0.1:3005/isomor/status-server-getStatus/getStatus
 

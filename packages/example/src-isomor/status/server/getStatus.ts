@@ -1,11 +1,6 @@
 import { getCpuAndMem, } from './os/getCpuAndMem';
 
-// import { CpuInfo } from 'os';
-
-export interface CpuInfo { // need to fix just import should be enough
-    model: string;
-    speed: number;
-}
+import { CpuInfo } from 'os';
 
 export interface Status {
     uptime: number,

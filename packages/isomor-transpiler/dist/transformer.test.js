@@ -10,6 +10,7 @@ export interface MyInterface {
     bar: {
         child: CpuInfo;
     };
+    world: CpuInfo[];
 }`;
 const codeTranspiled = `export interface MyInterface {
   hello: string;
@@ -17,6 +18,7 @@ const codeTranspiled = `export interface MyInterface {
   bar: {
     child: any;
   };
+  world: any;
 }`;
 describe('transformer', () => {
     describe('transformInterface()', () => {

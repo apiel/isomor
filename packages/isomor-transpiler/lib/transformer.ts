@@ -4,11 +4,20 @@ import * as traverse from 'traverse';
 
 export function transformInterface(root: TSESTree.Statement) {
     traverse(root).forEach(function(node: any) {
-        if (node && node.type === 'TSTypeAnnotation' && node.typeAnnotation.type === 'TSTypeReference') {
-            node.typeAnnotation = {
-                type: 'TSAnyKeyword',
-            };
-            this.update(node);
+        if (node) {
+            if (
+                (node.type === 'TSTypeAnnotation' && node.typeAnnotation.type === 'TSTypeReference')
+                || (
+                    node.type === 'TSTypeAnnotation'
+                    && node.typeAnnotation.type === 'TSArrayType'
+                    && node.typeAnnotation.elementType.type === 'TSTypeReference'
+                )
+            ) {
+                node.typeAnnotation = {
+                    type: 'TSAnyKeyword',
+                };
+                this.update(node);
+            }
         }
     });
     return root;

@@ -37,6 +37,8 @@ script:
   - curl http://127.0.0.1:3005/
   - curl http://127.0.0.1:3005/isomor/status-server-getStatus/getStatus
 
+  - kill $(lsof -t -i:3005)
+
   - cd ~ && mkdir npxisomorreactapp && cd npxisomorreactapp
   - npx isomor-react-app my-app
   - cd my-app

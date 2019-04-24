@@ -1,11 +1,7 @@
 import { remote } from "isomor";
-export interface CpuInfo {
-  model: string;
-  speed: number;
-}
 export interface Status {
   uptime: number;
-  cpus: CpuInfo[];
+  cpus: any;
   totalmem: number;
   freemem: number;
 }

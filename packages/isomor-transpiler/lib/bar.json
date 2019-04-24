@@ -1,0 +1,38 @@
+{
+    "type": "ExportNamedDeclaration",
+    "declaration": {
+        "type": "TSInterfaceDeclaration",
+        "body": {
+            "type": "TSInterfaceBody",
+            "body": [
+                {
+                    "type": "TSPropertySignature",
+                    "computed": false,
+                    "key": {
+                        "type": "Identifier",
+                        "name": "world"
+                    },
+                    "typeAnnotation": {
+                        "type": "TSTypeAnnotation",
+                        "typeAnnotation": {
+                            "type": "TSArrayType",
+                            "elementType": {
+                                "type": "TSTypeReference",
+                                "typeName": {
+                                    "type": "Identifier",
+                                    "name": "CpuInfo"
+                                }
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        "id": {
+            "type": "Identifier",
+            "name": "MyInterface",
+        }
+    },
+    "specifiers": [],
+    "source": null,
+}

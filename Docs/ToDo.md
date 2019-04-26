@@ -4,12 +4,16 @@
 
 - FIX in packages/example/src-isomor/status/stats.tsx remove types `(cpu: CpuInfo, index: number)` and should work
 
+- integration test:
+  - isomor-server
+  - for file structure after transpiling?
+
+- isomor-react -> error handling
+
 - FIX: transpiler file does not always get copy
   -> after copy, look if the two files are the same, if not copy again
 
-- integration test? for file structure after transpiling
 
-- isomor-react -> error handling
 - vuejs example
 - angular example
 
@@ -18,7 +22,6 @@
   - extend console.log to have default colors
 
 - in isomor-react-app include example
-        info('Create empty server/data.ts');
         outputFileSync('server/data.ts'), 'something here');
         // as well in App.tsx
 

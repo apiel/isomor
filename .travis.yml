@@ -33,7 +33,7 @@ script:
 
   # - cd ${BASE}/example
   # - yarn prod 2> yarn.prod.log &
-  # - sleep 30
+  # - sleep 30 # should use wait-on lib instead to sleep
   # - cat yarn.prod.log
   # - curl http://127.0.0.1:3005/
   # - curl http://127.0.0.1:3005/isomor/status-server-getStatus/getStatus
@@ -46,6 +46,9 @@ script:
   - yarn isomor:build
   - yarn serv:build
   - yarn build
+  # maybe instead use `yarn dev` and then wait-on, and curl 3000 and 3005
+  # then add a new component and server file
+  # and update App.tsx
 
 cache:
   directories:

@@ -42,7 +42,7 @@ function start({ srcFolder, distAppFolder, serverFolder }) {
             yield shell('bash', ['cmd']);
             fs_extra_1.unlinkSync('cmd');
             fancy_log_1.info('Setup isomor-react in <App />');
-            const index = `import { IsomorProvider } from 'isomor-react';\n`
+            const index = `import { IsomorProvider } from 'react-async-cache';\n`
                 + fs_extra_1.readFileSync(path_1.join(projectDirectory, srcFolder, 'index.tsx')).toString();
             const newIndex = index.replace(/\<App \/\>/g, '(<IsomorProvider><App /></IsomorProvider>)');
             fs_extra_1.writeFileSync(path_1.join(projectDirectory, srcFolder, 'index.tsx'), newIndex);

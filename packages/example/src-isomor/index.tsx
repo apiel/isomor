@@ -1,15 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { IsomorProvider } from 'isomor-react';
+import { AsyncCacheProvider } from 'react-async-cache';
 
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render((
-    <IsomorProvider>
+    <AsyncCacheProvider>
         <App />
-    </IsomorProvider>
+    </AsyncCacheProvider>
 ), document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

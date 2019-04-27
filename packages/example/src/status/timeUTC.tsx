@@ -1,10 +1,10 @@
 import React from 'react';
-import { useIsomor } from 'isomor-react';
+import { useAsyncCache } from 'react-async-cache';
 
 import { getTimeUTC } from './server/getTimeUTC';
 
 export const TimeUTC = () => {
-  const { call, response } = useIsomor();
+  const { call, response } = useAsyncCache();
   const load = () => {
     call(getTimeUTC);
   }

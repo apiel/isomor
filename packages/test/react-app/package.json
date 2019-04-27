@@ -9,10 +9,11 @@
     "@types/react-dom": "16.8.4",
     "fs-extra": "^7.0.1",
     "isomor": "^0.2.2",
-    "isomor-react": "^0.0.8",
     "react": "^16.8.6",
+    "react-async-cache": "^0.1.0",
     "react-dom": "^16.8.6",
     "react-scripts": "3.0.0",
+    "run-screen": "^0.5.0",
     "typescript": "3.4.4"
   },
   "scripts": {

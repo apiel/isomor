@@ -53,15 +53,15 @@ async function start({ srcFolder, distAppFolder, serverFolder }: Options) {
         pkg.scripts = { ...pkgExample.scripts, ...pkg.scripts };
         writeJSONSync(join(projectDirectory, 'package.json'), pkg);
 
-        info('Install isomor-react');
-        writeFileSync('cmd', `cd ${projectDirectory} && yarn add isomor isomor-react && yarn add run-server nodemon --dev`);
+        info('Install react-async-cache');
+        writeFileSync('cmd', `cd ${projectDirectory} && yarn add isomor react-async-cache && yarn add run-server nodemon --dev`);
         await shell('bash', ['cmd']);
         unlinkSync('cmd');
 
-        info('Setup isomor-react in <App />');
-        const index = `import { IsomorProvider } from 'isomor-react';\n`
+        info('Setup react-async-cache in <App />');
+        const index = `import { AsyncCacheProvider } from 'react-async-cache';\n`
             + readFileSync(join(projectDirectory, srcFolder, 'index.tsx')).toString();
-        const newIndex = index.replace(/\<App \/\>/g, '(<IsomorProvider><App /></IsomorProvider>)');
+        const newIndex = index.replace(/\<App \/\>/g, '(<AsyncCacheProvider><App /></AsyncCacheProvider>)');
         writeFileSync(join(projectDirectory, srcFolder, 'index.tsx'), newIndex);
 
         info('Create empty server/data.ts');

@@ -775,10 +775,6 @@
     lodash "^4.17.11"
     to-fast-properties "^2.0.0"
 
-"@blakeembrey/deque@^1.0.3":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@blakeembrey/deque/-/deque-1.0.5.tgz#f4fa17fc5ee18317ec01a763d355782c7b395eaf"
-
 "@csstools/convert-colors@^1.4.0":
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/@csstools/convert-colors/-/convert-colors-1.4.0.tgz#ad495dc41b12e75d588c6db8b9834f08fa131eb7"
@@ -897,6 +893,12 @@
   dependencies:
     "@types/connect" "*"
     "@types/node" "*"
+
+"@types/chokidar@^2.1.3":
+  version "2.1.3"
+  resolved "https://registry.yarnpkg.com/@types/chokidar/-/chokidar-2.1.3.tgz#123ab795dba6d89be04bf076e6aecaf8620db674"
+  dependencies:
+    chokidar "*"
 
 "@types/connect@*":
   version "3.4.32"
@@ -2089,6 +2091,24 @@ check-types@^7.3.0:
   version "7.4.0"
   resolved "https://registry.yarnpkg.com/check-types/-/check-types-7.4.0.tgz#0378ec1b9616ec71f774931a3c6516fad8c152f4"
 
+chokidar@*, chokidar@^2.0.4, chokidar@^2.1.0, chokidar@^2.1.5:
+  version "2.1.5"
+  resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-2.1.5.tgz#0ae8434d962281a5f56c72869e79cb6d9d86ad4d"
+  dependencies:
+    anymatch "^2.0.0"
+    async-each "^1.0.1"
+    braces "^2.3.2"
+    glob-parent "^3.1.0"
+    inherits "^2.0.3"
+    is-binary-path "^1.0.0"
+    is-glob "^4.0.0"
+    normalize-path "^3.0.0"
+    path-is-absolute "^1.0.0"
+    readdirp "^2.2.1"
+    upath "^1.1.1"
+  optionalDependencies:
+    fsevents "^1.2.7"
+
 chokidar@^2.0.0, chokidar@^2.0.2:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-2.1.2.tgz#9c23ea40b01638439e0513864d362aeacc5ad058"
@@ -2104,24 +2124,6 @@ chokidar@^2.0.0, chokidar@^2.0.2:
     path-is-absolute "^1.0.0"
     readdirp "^2.2.1"
     upath "^1.1.0"
-  optionalDependencies:
-    fsevents "^1.2.7"
-
-chokidar@^2.0.4, chokidar@^2.1.0, chokidar@^2.1.5:
-  version "2.1.5"
-  resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-2.1.5.tgz#0ae8434d962281a5f56c72869e79cb6d9d86ad4d"
-  dependencies:
-    anymatch "^2.0.0"
-    async-each "^1.0.1"
-    braces "^2.3.2"
-    glob-parent "^3.1.0"
-    inherits "^2.0.3"
-    is-binary-path "^1.0.0"
-    is-glob "^4.0.0"
-    normalize-path "^3.0.0"
-    path-is-absolute "^1.0.0"
-    readdirp "^2.2.1"
-    upath "^1.1.1"
   optionalDependencies:
     fsevents "^1.2.7"
 
@@ -2374,6 +2376,13 @@ convert-source-map@^1.1.0, convert-source-map@^1.4.0, convert-source-map@^1.5.1:
   resolved "https://registry.yarnpkg.com/convert-source-map/-/convert-source-map-1.6.0.tgz#51b537a8c43e0f04dec1993bffcdd504e758ac20"
   dependencies:
     safe-buffer "~5.1.1"
+
+cookie-parser@^1.4.4:
+  version "1.4.4"
+  resolved "https://registry.yarnpkg.com/cookie-parser/-/cookie-parser-1.4.4.tgz#e6363de4ea98c3def9697b93421c09f30cf5d188"
+  dependencies:
+    cookie "0.3.1"
+    cookie-signature "1.0.6"
 
 cookie-signature@1.0.6:
   version "1.0.6"
@@ -3069,7 +3078,7 @@ error-ex@^1.2.0, error-ex@^1.3.1:
   dependencies:
     is-arrayish "^0.2.1"
 
-es-abstract@^1.11.0, es-abstract@^1.12.0, es-abstract@^1.4.3, es-abstract@^1.5.1, es-abstract@^1.7.0:
+es-abstract@^1.11.0, es-abstract@^1.12.0, es-abstract@^1.5.1, es-abstract@^1.7.0:
   version "1.13.0"
   resolved "https://registry.yarnpkg.com/es-abstract/-/es-abstract-1.13.0.tgz#ac86145fdd5099d8dd49558ccba2eaf9b88e24e9"
   dependencies:
@@ -3775,7 +3784,7 @@ fsevents@^1.2.3, fsevents@^1.2.7:
     nan "^2.9.2"
     node-pre-gyp "^0.10.0"
 
-function-bind@^1.0.2, function-bind@^1.1.1:
+function-bind@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/function-bind/-/function-bind-1.1.1.tgz#a56899d3ea3c9bab874bb9773b7c5ede92f4895d"
 
@@ -4726,99 +4735,50 @@ isobject@^3.0.0, isobject@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/isobject/-/isobject-3.0.1.tgz#4e431e92b11a9731636aa1f9c8d1ccbcfdab78df"
 
-isomor-core@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/isomor-core/-/isomor-core-0.0.1.tgz#e5a6d58b18aa61ba651cd1a53362fe4be14b4d38"
-  dependencies:
-    fs-extra "^7.0.1"
-    typescript "^3.2.4"
-
-isomor-core@^0.0.3:
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/isomor-core/-/isomor-core-0.0.3.tgz#db2e9e21315b6a62f42eb410c3d2d691de4bca12"
-  dependencies:
-    fs-extra "^7.0.1"
-    typescript "^3.2.4"
-
-isomor-core@^0.0.4:
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/isomor-core/-/isomor-core-0.0.4.tgz#62d18eaa70a2a0510f195e3d8818f93a8f2d9c1f"
+isomor-core@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/isomor-core/-/isomor-core-0.2.2.tgz#d37cc3ca36bd24e0d19b8aaf3497dafeec429a32"
   dependencies:
     fs-extra "^7.0.1"
     glob "^7.1.3"
     typescript "^3.2.4"
 
-isomor-core@^0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/isomor-core/-/isomor-core-0.1.2.tgz#ab4383955ba340d6b0488b2ec424c08404503781"
-  dependencies:
-    fs-extra "^7.0.1"
-    glob "^7.1.3"
-    typescript "^3.2.4"
-
-isomor-react@^0.0.3:
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/isomor-react/-/isomor-react-0.0.3.tgz#c28a72a80814c63ab5334a4778d4579bb89d657c"
-  dependencies:
-    md5 "^2.2.1"
-    typescript "^3.4.1"
-
-isomor-server@^0.0.6:
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/isomor-server/-/isomor-server-0.0.6.tgz#5dcb592687535c6a5abfb964378aa08d13530617"
+isomor-server@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/isomor-server/-/isomor-server-0.2.2.tgz#18900a9461ed4c1933f2c158a64e06e9b43243a6"
   dependencies:
     body-parser "^1.18.3"
+    cookie-parser "^1.4.4"
     express "^4.16.4"
     fancy-log "^1.3.3"
     fs-extra "^7.0.1"
-    isomor-core "^0.0.1"
+    isomor-core "^0.2.2"
     typescript "^3.2.4"
 
-isomor-server@^0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/isomor-server/-/isomor-server-0.1.2.tgz#f285a7ddee2a3b9e2654463a6d8fece9a5618660"
+isomor-transpiler@^0.2.6:
+  version "0.2.6"
+  resolved "https://registry.yarnpkg.com/isomor-transpiler/-/isomor-transpiler-0.2.6.tgz#8a07d2a4db14de3db59851bc3636d8177ed522ad"
   dependencies:
-    body-parser "^1.18.3"
+    "@babel/generator" "^7.4.0"
+    "@types/chokidar" "^2.1.3"
+    "@typescript-eslint/typescript-estree" "^1.6.0"
+    anymatch "^2.0.0"
     chokidar "^2.1.5"
-    express "^4.16.4"
-    fancy-log "^1.3.3"
-    fs-extra "^7.0.1"
-    isomor-core "^0.0.4"
-    typescript "^3.2.4"
-
-isomor-transpiler@^0.0.8:
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/isomor-transpiler/-/isomor-transpiler-0.0.8.tgz#d4cee5a908cbc25d03c0d26909f64d94d6d3bd01"
-  dependencies:
-    "@babel/generator" "^7.4.0"
-    "@typescript-eslint/typescript-estree" "^1.6.0"
     debug "^4.1.1"
     fancy-log "^1.3.3"
     fs-extra "^7.0.1"
-    isomor-core "^0.0.3"
+    isomor-core "^0.2.2"
+    traverse "^0.6.6"
     ts-node "^8.0.3"
-    typescript "^3.2.4"
+    typescript "^3.4.3"
 
-isomor-transpiler@^0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/isomor-transpiler/-/isomor-transpiler-0.1.2.tgz#12848c36d1133e1ceae6e31968c036e78996c4e3"
-  dependencies:
-    "@babel/generator" "^7.4.0"
-    "@typescript-eslint/typescript-estree" "^1.6.0"
-    debug "^4.1.1"
-    fancy-log "^1.3.3"
-    fs-extra "^7.0.1"
-    isomor-core "^0.1.2"
-    ts-node "^8.0.3"
-    typescript "^3.2.4"
-
-isomor@^0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/isomor/-/isomor-0.1.2.tgz#fb866bd33251abc4f26e43d90ac4185b31950037"
+isomor@^0.2.6:
+  version "0.2.6"
+  resolved "https://registry.yarnpkg.com/isomor/-/isomor-0.2.6.tgz#776f938f5ef9336eed297c8b754c0010622d6bf9"
   dependencies:
     axios "^0.18.0"
-    isomor-server "^0.0.6"
-    isomor-transpiler "^0.0.8"
+    isomor-server "^0.2.2"
+    isomor-transpiler "^0.2.6"
     typescript "^3.2.4"
 
 isstream@~0.1.2:
@@ -5439,15 +5399,6 @@ load-json-file@^2.0.0:
     pify "^2.0.0"
     strip-bom "^3.0.0"
 
-load-json-file@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/load-json-file/-/load-json-file-4.0.0.tgz#2f5f45ab91e33216234fd53adab668eb4ec0993b"
-  dependencies:
-    graceful-fs "^4.1.2"
-    parse-json "^4.0.0"
-    pify "^3.0.0"
-    strip-bom "^3.0.0"
-
 loader-fs-cache@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/loader-fs-cache/-/loader-fs-cache-1.0.1.tgz#56e0bf08bd9708b26a765b68509840c8dec9fdbc"
@@ -5641,10 +5592,6 @@ memory-fs@^0.4.0, memory-fs@~0.4.1:
   dependencies:
     errno "^0.1.3"
     readable-stream "^2.0.1"
-
-memorystream@^0.3.1:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/memorystream/-/memorystream-0.3.1.tgz#86d7090b30ce455d63fbae12dda51a47ddcaf9b2"
 
 merge-deep@^3.0.2:
   version "3.0.2"
@@ -6040,20 +5987,6 @@ npm-packlist@^1.1.6:
     ignore-walk "^3.0.1"
     npm-bundled "^1.0.1"
 
-npm-run-all@^4.1.5:
-  version "4.1.5"
-  resolved "https://registry.yarnpkg.com/npm-run-all/-/npm-run-all-4.1.5.tgz#04476202a15ee0e2e214080861bff12a51d98fba"
-  dependencies:
-    ansi-styles "^3.2.1"
-    chalk "^2.4.1"
-    cross-spawn "^6.0.5"
-    memorystream "^0.3.1"
-    minimatch "^3.0.4"
-    pidtree "^0.3.0"
-    read-pkg "^3.0.0"
-    shell-quote "^1.6.1"
-    string.prototype.padend "^3.0.0"
-
 npm-run-path@^2.0.0:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/npm-run-path/-/npm-run-path-2.0.2.tgz#35a9232dfa35d7067b4cb2ddf2357b1871536c5f"
@@ -6183,18 +6116,6 @@ once@^1.3.0, once@^1.3.1, once@^1.4.0:
   resolved "https://registry.yarnpkg.com/once/-/once-1.4.0.tgz#583b1aa775961d4b113ac17d9c50baef9dd76bd1"
   dependencies:
     wrappy "1"
-
-onchange@^5.2.0:
-  version "5.2.0"
-  resolved "https://registry.yarnpkg.com/onchange/-/onchange-5.2.0.tgz#85c1b502ce8538ddb64eb0557fdb1afa33396f51"
-  dependencies:
-    "@blakeembrey/deque" "^1.0.3"
-    arrify "^1.0.1"
-    chokidar "^2.0.0"
-    cross-spawn "^6.0.0"
-    minimist "^1.2.0"
-    supports-color "^5.5.0"
-    tree-kill "^1.2.0"
 
 onetime@^2.0.0:
   version "2.0.1"
@@ -7333,6 +7254,13 @@ react-app-polyfill@^0.2.2:
     raf "3.4.1"
     whatwg-fetch "3.0.0"
 
+react-async-cache@^0.1.0:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/react-async-cache/-/react-async-cache-0.1.2.tgz#c06f07d54533b09f265b044bbdce236ecae61708"
+  dependencies:
+    md5 "^2.2.1"
+    typescript "^3.4.1"
+
 react-dev-utils@^8.0.0:
   version "8.0.0"
   resolved "https://registry.yarnpkg.com/react-dev-utils/-/react-dev-utils-8.0.0.tgz#7c5b227a45a32ea8ff7fbc318f336cf9e2c6e34c"
@@ -7471,14 +7399,6 @@ read-pkg@^2.0.0:
     load-json-file "^2.0.0"
     normalize-package-data "^2.3.2"
     path-type "^2.0.0"
-
-read-pkg@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/read-pkg/-/read-pkg-3.0.0.tgz#9cbc686978fee65d16c00e2b19c237fcf6e38389"
-  dependencies:
-    load-json-file "^4.0.0"
-    normalize-package-data "^2.3.2"
-    path-type "^3.0.0"
 
 "readable-stream@1 || 2", readable-stream@^2.0.0, readable-stream@^2.0.1, readable-stream@^2.0.2, readable-stream@^2.0.6, readable-stream@^2.1.5, readable-stream@^2.2.2, readable-stream@^2.3.3, readable-stream@^2.3.6, readable-stream@~2.3.6:
   version "2.3.6"
@@ -7791,6 +7711,15 @@ run-queue@^1.0.0, run-queue@^1.0.3:
   resolved "https://registry.yarnpkg.com/run-queue/-/run-queue-1.0.3.tgz#e848396f057d223f24386924618e25694161ec47"
   dependencies:
     aproba "^1.1.1"
+
+run-screen@^0.1.0:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/run-screen/-/run-screen-0.1.1.tgz#1aac047e7fff1d73c0f2782afd1b83281f08480f"
+  dependencies:
+    cross-spawn "^6.0.5"
+    pidtree "^0.3.0"
+    shell-quote "^1.6.1"
+    typescript "^3.2.4"
 
 rxjs@^6.1.0, rxjs@^6.4.0:
   version "6.4.0"
@@ -8290,14 +8219,6 @@ string-width@^3.0.0:
     is-fullwidth-code-point "^2.0.0"
     strip-ansi "^5.0.0"
 
-string.prototype.padend@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/string.prototype.padend/-/string.prototype.padend-3.0.0.tgz#f3aaef7c1719f170c5eab1c32bf780d96e21f2f0"
-  dependencies:
-    define-properties "^1.1.2"
-    es-abstract "^1.4.3"
-    function-bind "^1.0.2"
-
 string_decoder@^1.0.0, string_decoder@^1.1.1:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/string_decoder/-/string_decoder-1.2.0.tgz#fe86e738b19544afe70469243b2a1ee9240eae8d"
@@ -8386,7 +8307,7 @@ supports-color@^3.1.2:
   dependencies:
     has-flag "^1.0.0"
 
-supports-color@^5.1.0, supports-color@^5.2.0, supports-color@^5.3.0, supports-color@^5.4.0, supports-color@^5.5.0:
+supports-color@^5.1.0, supports-color@^5.2.0, supports-color@^5.3.0, supports-color@^5.4.0:
   version "5.5.0"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-5.5.0.tgz#e2e69a44ac8772f78a1ec0b35b689df6530efc8f"
   dependencies:
@@ -8613,9 +8534,9 @@ tr46@^1.0.1:
   dependencies:
     punycode "^2.1.0"
 
-tree-kill@^1.2.0:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/tree-kill/-/tree-kill-1.2.1.tgz#5398f374e2f292b9dcc7b2e71e30a5c3bb6c743a"
+traverse@^0.6.6:
+  version "0.6.6"
+  resolved "https://registry.yarnpkg.com/traverse/-/traverse-0.6.6.tgz#cbdf560fd7b9af632502fed40f918c157ea97137"
 
 trim-right@^1.0.1:
   version "1.0.1"
@@ -8685,6 +8606,10 @@ typedarray@^0.0.6:
 typescript@^3.2.4, typescript@^3.4.1:
   version "3.4.1"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.4.1.tgz#b6691be11a881ffa9a05765a205cb7383f3b63c6"
+
+typescript@^3.4.3:
+  version "3.4.5"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.4.5.tgz#2d2618d10bb566572b8d7aad5180d84257d70a99"
 
 uglify-js@3.4.x, uglify-js@^3.1.4:
   version "3.4.9"

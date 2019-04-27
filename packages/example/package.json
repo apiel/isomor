@@ -22,7 +22,7 @@
     "@types/react-dom": "16.8.3",
     "fs-extra": "^7.0.1",
     "isomor": "^0.2.6",
-    "isomor-react": "^0.0.3",
+    "react-async-cache": "^0.1.0",
     "md5": "^2.2.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",

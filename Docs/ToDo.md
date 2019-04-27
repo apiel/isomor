@@ -3,12 +3,11 @@
 - FIX travis with trying to run locally
 
 - FIX in packages/example/src-isomor/status/stats.tsx remove types `(cpu: CpuInfo, index: number)` and should work
+  - instead to transofrm TSTypeReference to any, get name of each Type and keep import for those types
 
 - integration test:
   - isomor-server
   - for file structure after transpiling?
-
-- isomor-react -> error handling
 
 - FIX: transpiler file does not always get copy
   -> after copy, look if the two files are the same, if not copy again

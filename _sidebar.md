@@ -2,7 +2,7 @@
 * [Example](/?id=example)
 * [Getting started - React](/?id=getting-started-with-react)
     * [Start coding](/?id=start-coding)
-    * [Isomor react](/?id=isomor-react)
+    * [React async cache](/?id=react-async-cache)
 * [Request / Response](/?id=request-response-context)
 * Advance
     * [Custom server](Docs/Custom-server.md)

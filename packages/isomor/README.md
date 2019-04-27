@@ -188,7 +188,7 @@ Using the cache:
 
 ```jsx
 import React from 'react';
-import { useIsomor } from 'isomor-react';
+import { useIsomor } from 'react-async-cache';
 
 import { getTime } from './server/getTime';
 

@@ -1,11 +1,11 @@
 import React from 'react';
-import { useIsomor } from 'isomor-react';
+import { useAsyncCache } from 'react-async-cache';
 import { getColor, setColor } from './server/color';
 import { styleCard } from '../styleCard';
 import { Props } from '../props';
 
 export const Color = ({ e2eId }: Props) => {
-    const { call, response: color, update } = useIsomor();
+    const { call, response: color, update } = useAsyncCache();
     const load = () => {
         call(getColor);
     }

@@ -6,6 +6,7 @@ import { GetListInput } from './server/getList.input';
 import { Stats } from './status/stats';
 import { TwoColumn } from './TwoColumn';
 import { Auth } from './auth/auth';
+import { ErrorExample } from './error/ErrorExample';
 
 const App = () => {
   const [list, setList] = React.useState<string[]>([]);
@@ -28,6 +29,7 @@ const App = () => {
             <button onClick={load}>load again</button>
             <TwoColumn />
             <Stats />
+            <ErrorExample />
           </div>
       </div>
   );

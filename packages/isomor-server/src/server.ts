@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { info } from 'fancy-log';
+import { info, error } from 'fancy-log';
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import * as cookieParser from 'cookie-parser';
@@ -35,6 +35,16 @@ async function start(options: Options) {
             }),
         );
     }
+
+    app.use((
+        err: Error,
+        req: express.Request,
+        res: express.Response,
+        next: express.NextFunction,
+    ) => {
+        error('ERROR', err);
+        res.status(500).send(err.message);
+    });
 
     app.listen(port, () => info(`Server listening on port ${port}!`));
 }

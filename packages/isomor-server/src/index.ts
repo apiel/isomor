@@ -23,15 +23,23 @@ export async function useIsomor(
         const functions = require(filepath);
         return Object.keys(functions).map(name => {
             const entrypoint = `/isomor/${getPathForUrl(file)}/${name}`;
-            app.use(entrypoint, async (req: any, res: any) => {
-                const context: Context = {
-                    req,
-                    res,
-                    fn: functions[name],
-                };
-                const args = (req.body && req.body.args) || [];
-                const result = await context.fn(...args);
-                return res.send(result);
+            app.use(entrypoint, async (
+                req: express.Request,
+                res: express.Response,
+                next: express.NextFunction,
+            ) => {
+                try {
+                    const context: Context = {
+                        req,
+                        res,
+                        fn: functions[name],
+                    };
+                    const args = (req.body && req.body.args) || [];
+                    const result = await context.fn(...args);
+                    return res.send(result);
+                } catch (error) {
+                    next(error);
+                }
             });
             return entrypoint;
         });

@@ -31,6 +31,10 @@ function start(options) {
                 root: process.cwd(),
             }));
         }
+        app.use((err, req, res, next) => {
+            fancy_log_1.error('ERROR', err);
+            res.status(500).send(err.message);
+        });
         app.listen(port, () => fancy_log_1.info(`Server listening on port ${port}!`));
     });
 }

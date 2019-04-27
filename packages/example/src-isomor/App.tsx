@@ -7,6 +7,7 @@ import { Stats } from './status/stats';
 import { TwoColumn } from './TwoColumn';
 import { Auth } from './auth/auth';
 import { ErrorExample } from './error/ErrorExample';
+import { ErrorExample2 } from './error/ErrorExample2';
 
 const App = () => {
   const [list, setList] = React.useState<string[]>([]);
@@ -30,6 +31,7 @@ const App = () => {
             <TwoColumn />
             <Stats />
             <ErrorExample />
+            <ErrorExample2 />
           </div>
       </div>
   );

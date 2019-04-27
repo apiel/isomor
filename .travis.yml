@@ -3,9 +3,6 @@ language: node_js
 node_js:
   - 'node'
 
-services:
-  - docker
-
 branches:
   only:
   - master
@@ -35,15 +32,13 @@ script:
   - yarn test
 
   - cd ${BASE}/example
-  - yarn run-in-docker
-  # - cd ${BASE}/example
-  # - yarn prod 2> yarn.prod.log &
-  # - sleep 30 # should use wait-on lib instead to sleep
-  # - cat yarn.prod.log
-  # - curl http://127.0.0.1:3005/
-  # - curl http://127.0.0.1:3005/isomor/status-server-getStatus/getStatus
+  - DIST_SERVER_FOLDER=${BASE}/example/dist-server yarn prod 2> yarn.prod.log &
+  - sleep 30 # should use wait-on lib instead to sleep
+  - cat yarn.prod.log
+  - curl http://127.0.0.1:3005/
+  - curl http://127.0.0.1:3005/isomor/status-server-getStatus/getStatus
 
-  # - kill $(lsof -t -i:3005 -sTCP:LISTEN)
+  - kill $(lsof -t -i:3005 -sTCP:LISTEN)
 
   - cd ~ && mkdir npxisomorreactapp && cd npxisomorreactapp
   - npx isomor-react-app my-app

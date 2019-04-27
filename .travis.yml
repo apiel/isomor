@@ -31,6 +31,8 @@ script:
   - cd ${BASE}/../../isomor-transpiler
   - yarn test
 
+  - cd ${BASE}/example
+  - yarn run-in-docker
   # - cd ${BASE}/example
   # - yarn prod 2> yarn.prod.log &
   # - sleep 30 # should use wait-on lib instead to sleep

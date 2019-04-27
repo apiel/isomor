@@ -35,16 +35,19 @@ function start({ srcFolder, distAppFolder, serverFolder }) {
             const pkg = fs_extra_1.readJSONSync(path_1.join(projectDirectory, 'package.json'));
             pkg.proxy = 'http://127.0.0.1:3005';
             const pkgExample = fs_extra_1.readJSONSync(path_1.join(__dirname, '..', 'package-copy.json'));
+            if (pkgExample.scripts['run-in-docker']) {
+                delete pkgExample.scripts['run-in-docker'];
+            }
             pkg.scripts = Object.assign({}, pkgExample.scripts, pkg.scripts);
             fs_extra_1.writeJSONSync(path_1.join(projectDirectory, 'package.json'), pkg);
-            fancy_log_1.info('Install isomor-react');
-            fs_extra_1.writeFileSync('cmd', `cd ${projectDirectory} && yarn add isomor isomor-react && yarn add run-server nodemon --dev`);
+            fancy_log_1.info('Install react-async-cache');
+            fs_extra_1.writeFileSync('cmd', `cd ${projectDirectory} && yarn add isomor react-async-cache && yarn add run-server nodemon --dev`);
             yield shell('bash', ['cmd']);
             fs_extra_1.unlinkSync('cmd');
-            fancy_log_1.info('Setup isomor-react in <App />');
-            const index = `import { IsomorProvider } from 'react-async-cache';\n`
+            fancy_log_1.info('Setup react-async-cache in <App />');
+            const index = `import { AsyncCacheProvider } from 'react-async-cache';\n`
                 + fs_extra_1.readFileSync(path_1.join(projectDirectory, srcFolder, 'index.tsx')).toString();
-            const newIndex = index.replace(/\<App \/\>/g, '(<IsomorProvider><App /></IsomorProvider>)');
+            const newIndex = index.replace(/\<App \/\>/g, '(<AsyncCacheProvider><App /></AsyncCacheProvider>)');
             fs_extra_1.writeFileSync(path_1.join(projectDirectory, srcFolder, 'index.tsx'), newIndex);
             fancy_log_1.info('Create empty server/data.ts');
             fs_extra_1.outputFileSync(path_1.join(projectDirectory, srcFolder, serverFolder, 'data.ts'), '');

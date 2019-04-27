@@ -30,4 +30,10 @@ describe('transformer', () => {
         });
     });
 });
+function JsonAst(node) {
+    const skip = ['loc', 'range'];
+    const replacer = (key, value) => skip.includes(key) ? undefined : value;
+    return JSON.stringify(node, replacer, 4);
+}
+exports.JsonAst = JsonAst;
 //# sourceMappingURL=transformer.test.js.map

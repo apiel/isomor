@@ -159,9 +159,9 @@ yarn isomor:build
 yarn start
 ```
 
-### Isomor-react
+### React async cache
 
-[Isomor-react](https://github.com/apiel/isomor-react) is a library that will help you to use `isomore` with react. When you are using `isomor` wihtout this library each call to server functions will generate a request. `Isomor-react` will create a cache and distinct duplicated request. It will also allow you to share the response to a server function between multiple components.
+[react-async-cache](https://github.com/apiel/react-async-cache) is a library that will help you to use `isomore` with react. When you are using `isomor` wihtout this library each call to server functions will generate a request. `react-async-cache` will create a cache and distinct duplicated request. It will also allow you to share the response to a server function between multiple components.
 
 Without cache you would do:
 
@@ -188,12 +188,12 @@ Using the cache:
 
 ```jsx
 import React from 'react';
-import { useIsomor } from 'react-async-cache';
+import { useAsyncCache } from 'react-async-cache';
 
 import { getTime } from './server/getTime';
 
 export const Time = () => {
-  const { call, response } = useIsomor();
+  const { call, response } = useAsyncCache();
   const load = () => {
     call(getTime);
   }
@@ -211,7 +211,7 @@ export const Time = () => {
 **Without cache**, if you would have this component 2 times in your app, it would make 2 requests when the components mount. When you click the `load` button, only the component where the button is located would be refreshed.
 **With the cache**, only 1 request would be sent instead of 2. When you click the `load` button, both component would be refresh.
 
-Other feature are available like updating the cache... See full [documentation](https://github.com/apiel/isomor-react)
+Other feature are available like updating the cache... See full [documentation](https://github.com/apiel/react-async-cache)
 
 ## Request / Response context
 

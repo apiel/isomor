@@ -1,8 +1,5 @@
 ### ToDo
 
-- FIX in packages/example/src-isomor/status/stats.tsx remove types `(cpu: CpuInfo, index: number)` and should work
-  - instead to transofrm TSTypeReference to any, get name of each Type and keep import for those types
-
 - integration test:
   - isomor-server
   - for file structure after transpiling?

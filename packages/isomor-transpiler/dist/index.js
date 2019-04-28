@@ -86,8 +86,16 @@ function watcher(options) {
                 }
                 else {
                     fancy_log_1.info(`Copy ${path} to folder`);
+                    const dest = path_1.join(distAppFolder, file);
                     const content = yield fs_extra_1.readFile(path);
-                    yield fs_extra_1.outputFile(path_1.join(distAppFolder, file), content);
+                    yield fs_extra_1.outputFile(dest, content);
+                    setTimeout(() => __awaiter(this, void 0, void 0, function* () {
+                        const contentA = yield fs_extra_1.readFile(path);
+                        const contentB = yield fs_extra_1.readFile(dest);
+                        if (contentA.toString() !== contentB.toString()) {
+                            yield fs_extra_1.outputFile(dest, contentA);
+                        }
+                    }), 500);
                 }
             });
         }

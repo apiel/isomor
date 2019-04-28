@@ -107,8 +107,18 @@ function watcher(options: Options) {
             } else {
                 info(`Copy ${path} to folder`);
                 // copy(path, join(distAppFolder, file));
+                const dest = join(distAppFolder, file);
                 const content = await readFile(path);
-                await outputFile(join(distAppFolder, file), content);
+                await outputFile(dest, content);
+
+                // try to fix file that does not get copy correctly
+                setTimeout(async () => {
+                    const contentA = await readFile(path);
+                    const contentB = await readFile(dest);
+                    if (contentA.toString() !== contentB.toString()) {
+                        await outputFile(dest, contentA);
+                    }
+                }, 500);
             }
         }
     }

@@ -4,8 +4,8 @@
   - isomor-server
   - for file structure after transpiling?
 
-- FIX: transpiler file does not always get copy
-  -> after copy, look if the two files are the same, if not copy again
+- ~~FIX: transpiler file does not always get copy~~
+  -> ~~after copy, look if the two files are the same, if not copy again~~
 
 
 

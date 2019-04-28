@@ -39,7 +39,7 @@
     "isomor": "^0.3.0",
     "md5": "^2.2.1",
     "react": "^16.8.6",
-    "react-async-cache": "^0.2.0",
+    "react-async-cache": "^0.3.0",
     "react-dom": "^16.8.6",
     "react-scripts": "2.1.8",
     "typescript": "^3.4.1"

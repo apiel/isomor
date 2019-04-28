@@ -1,14 +1,11 @@
 import React from 'react';
-import { useAsyncCache } from 'react-async-cache';
+import { useAsyncCacheEffect } from 'react-async-cache';
 
 import { getTimeUTC } from './server/getTimeUTC';
 
 export const TimeUTC = () => {
-  const { call, response } = useAsyncCache();
-  const load = () => {
-    call(getTimeUTC);
-  }
-  React.useEffect(() => { load(); }, []);
+  // this is the same as time.tsx but wrapped inside useAsyncCacheEffect
+  const { load, response } = useAsyncCacheEffect(getTimeUTC);
   return (
     <div>
       {!response ? <p>Loading...</p> : (

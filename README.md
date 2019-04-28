@@ -208,6 +208,26 @@ export const Time = () => {
 }
 ```
 
+or even more simple:
+
+```jsx
+import React from 'react';
+import { useAsyncCacheEffect } from 'react-async-cache';
+
+import { getTime } from './server/getTime';
+
+export const Time = () => {
+  const { load, response } = useAsyncCacheEffect(getTime);
+  return (
+    <div>
+      {!response ? <p>Loading...</p> : (
+        <p><b>Server time:</b> {response.time} <button onClick={load}>reload</button></p>
+      )}
+    </div>
+  );
+}
+```
+
 **Without cache**, if you would have this component 2 times in your app, it would make 2 requests when the components mount. When you click the `load` button, only the component where the button is located would be refreshed.
 **With the cache**, only 1 request would be sent instead of 2. When you click the `load` button, both component would be refresh.
 

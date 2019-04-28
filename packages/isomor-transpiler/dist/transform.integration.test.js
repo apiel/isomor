@@ -6,6 +6,7 @@ const transform_1 = require("./transform");
 const codeSource = `
 import { readdir } from 'fs-extra';
 import { CpuInfo } from 'os';
+import { something } from './my/import';
 
 export type MyType = string;
 export interface MyInterface {

@@ -20,9 +20,9 @@ const generator_1 = require("@babel/generator");
 const transform_1 = require("./transform");
 exports.default = transform_1.default;
 function getCode(options, path, content) {
-    const { withTypes } = options;
+    const { withTypes, noServerImport } = options;
     const program = typescript_estree_1.parse(content);
-    program.body = transform_1.default(program.body, path, withTypes);
+    program.body = transform_1.default(program.body, path, withTypes, noServerImport);
     const { code } = generator_1.default(program);
     return code;
 }
@@ -99,5 +99,6 @@ start({
     serverFolder: process.env.SERVER_FOLDER || '/server',
     withTypes: process.env.NO_TYPES !== 'true',
     watchMode: process.env.WATCH === 'true',
+    noServerImport: process.env.No_SERVER_IMPORT === 'true',
 });
 //# sourceMappingURL=index.js.map

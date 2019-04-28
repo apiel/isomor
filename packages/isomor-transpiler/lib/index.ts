@@ -25,6 +25,7 @@ interface Options {
     serverFolder: string;
     withTypes: boolean;
     watchMode: boolean;
+    noServerImport: boolean;
 }
 
 interface Func {
@@ -33,9 +34,9 @@ interface Func {
 }
 
 function getCode(options: Options, path: string, content: string) {
-    const { withTypes } = options;
+    const { withTypes, noServerImport } = options;
     const program = parse(content);
-    program.body = transform(program.body, path, withTypes);
+    program.body = transform(program.body, path, withTypes, noServerImport);
     const { code } = generate(program as any);
 
     return code;
@@ -119,4 +120,5 @@ start({
     serverFolder: process.env.SERVER_FOLDER || '/server',
     withTypes: process.env.NO_TYPES !== 'true',
     watchMode: process.env.WATCH === 'true',
+    noServerImport: process.env.No_SERVER_IMPORT === 'true',
 });

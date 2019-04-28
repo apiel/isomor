@@ -22,3 +22,13 @@ export function transformInterface(root: TSESTree.Statement) {
     });
     return root;
 }
+
+export function transformImport(root: TSESTree.Statement) {
+    if (root.type === 'ImportDeclaration' && root.source.type === 'Literal') {
+        if (root.source.value[0] === '.') { // remove local import
+            return null;
+        }
+        root.source.type = 'StringLiteral' as any;
+    }
+    return root;
+}

@@ -18,4 +18,14 @@ function transformInterface(root) {
     return root;
 }
 exports.transformInterface = transformInterface;
+function transformImport(root) {
+    if (root.type === 'ImportDeclaration' && root.source.type === 'Literal') {
+        if (root.source.value[0] === '.') {
+            return null;
+        }
+        root.source.type = 'StringLiteral';
+    }
+    return root;
+}
+exports.transformImport = transformImport;
 //# sourceMappingURL=transformer.js.map

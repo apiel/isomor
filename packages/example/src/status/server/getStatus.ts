@@ -1,7 +1,8 @@
 import { remote } from "isomor";
+import { CpuInfo } from "os";
 export interface Status {
   uptime: number;
-  cpus: any;
+  cpus: CpuInfo[];
   totalmem: number;
   freemem: number;
 }

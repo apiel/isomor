@@ -3,7 +3,7 @@ import { parse } from '@typescript-eslint/typescript-estree';
 
 import transform from './transform';
 import { getCodeImport, getCodeFunc, getCodeArrowFunc, getCodeType } from './code';
-import { transformInterface } from './transformer';
+import { transformInterface, transformImport } from './transformer';
 
 const codeSource = `
 import { readdir } from 'fs-extra';
@@ -36,6 +36,21 @@ function shouldNotBeTranspiled() {
 
 const codeTranspiled =
     `const ImportIsomor;
+const TransformImport;
+const TransformImport;
+const TypeAny;
+export interface MyInterface {
+  foo: CpuInfo;
+  bar: {
+    child: CpuInfo;
+  };
+}
+const Func;
+const Func;
+const ArrowFunc;`;
+
+const codeTranspiledNoServerImport =
+    `const ImportIsomor;
 const TypeAny;
 const TransformInterface;
 const Func;
@@ -51,6 +66,7 @@ jest.mock('./code', () => ({
 
 jest.mock('./transformer', () => ({
     transformInterface: jest.fn().mockReturnValue(getMock('TransformInterface')),
+    transformImport: jest.fn().mockReturnValue(getMock('TransformImport')),
 }));
 
 // getMock('abc') return ast for `const abc;`
@@ -74,6 +90,11 @@ function getMock(name: string) {
 describe('transform', () => {
     const path = 'path/to/file';
     const withTypes = true;
+
+    beforeEach(() => {
+        jest.clearAllMocks();
+    });
+
     describe('transform/transform()', () => {
         it('should generate inport for isomor', () => {
             const program = parse(codeSource);
@@ -84,7 +105,31 @@ describe('transform', () => {
             expect(getCodeType).toHaveBeenCalledTimes(1);
             expect(getCodeType).toHaveBeenCalledWith('MyType');
 
+            expect(transformInterface).toHaveBeenCalledTimes(0);
+            expect(transformImport).toHaveBeenCalledTimes(2);
+
+            expect(getCodeFunc).toHaveBeenCalledTimes(2);
+            expect(getCodeFunc).toHaveBeenCalledWith(path, 'getTime1', true);
+            expect(getCodeFunc).toHaveBeenCalledWith(path, 'getTime2', true);
+
+            expect(getCodeArrowFunc).toHaveBeenCalledTimes(1);
+            expect(getCodeArrowFunc).toHaveBeenCalledWith(path, 'getTime3', true);
+
+            expect(getCodeImport).toHaveBeenCalledTimes(1);
+        });
+
+        it('should generate inport for isomor with noServerImport', () => {
+            const program = parse(codeSource);
+            const noServerImport = true;
+            program.body = transform(program.body, path, withTypes, noServerImport);
+            const { code } = generate(program as any);
+            expect(code).toEqual(codeTranspiledNoServerImport);
+
+            expect(getCodeType).toHaveBeenCalledTimes(1);
+            expect(getCodeType).toHaveBeenCalledWith('MyType');
+
             expect(transformInterface).toHaveBeenCalledTimes(1);
+            expect(transformImport).toHaveBeenCalledTimes(0);
 
             expect(getCodeFunc).toHaveBeenCalledTimes(2);
             expect(getCodeFunc).toHaveBeenCalledWith(path, 'getTime1', true);

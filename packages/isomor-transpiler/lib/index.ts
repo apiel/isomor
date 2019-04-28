@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { info } from 'fancy-log'; // fancy log not so fancy, i want colors :D
+import { info } from 'logol';
 import { readFile, outputFile, emptyDir, copy, unlink } from 'fs-extra';
 import { join } from 'path';
 import {

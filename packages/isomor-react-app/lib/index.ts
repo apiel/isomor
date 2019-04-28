@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { info, warn, error } from 'fancy-log'; // fancy log not so fancy, i want colors :D
+import { info, warn, error, success } from 'logol';
 import {
     copySync,
     readJSONSync,
@@ -28,7 +28,7 @@ async function start({ srcFolder, distAppFolder, serverFolder }: Options) {
         projectDirectory = join(process.cwd(), projectDirectory);
         info('Install create-react-app in', projectDirectory);
         if (!projectDirectory) {
-            warn(`${chalk.yellow('Please provide the project directory')} e.g: npx isomor-react-app my-app`);
+            warn(`Please provide the project directory, e.g: npx isomor-react-app my-app`);
             return;
         }
         await shell('npx', ['create-react-app', projectDirectory, '--typescript']);
@@ -67,7 +67,9 @@ async function start({ srcFolder, distAppFolder, serverFolder }: Options) {
         info('Create empty server/data.ts');
         outputFileSync(join(projectDirectory, srcFolder, serverFolder, 'data.ts'), ''); // we could have an example
 
-        info(`Ready to code :-) ${chalk.bold(chalk.red('Important: ') + chalk.blue(`edit you code in ${srcFolder}`))} instead of ${distAppFolder}`);
+        success(`Ready to code :-)`);
+        // tslint:disable-next-line
+        console.log(chalk.bold(chalk.red('Important: ')), chalk.blue(`edit you code in ${srcFolder}`), `instead of ${distAppFolder}`);
     } catch (err) {
         error(err);
         process.exit(1);

@@ -1,8 +1,10 @@
 ### ToDo
 
-- integration test:
+- use logol
+
+- test:
   - isomor-server
-  - for file structure after transpiling?
+  - integration, for file structure after transpiling?
 
 - ~~FIX: transpiler file does not always get copy~~
   -> ~~after copy, look if the two files are the same, if not copy again~~
@@ -14,9 +16,6 @@
 - vuejs example
 - angular example
 
-
-- stop using fancy-log not so fancy -> implement own log lib
-  - extend console.log to have default colors
 
 - in isomor-react-app include example
         outputFileSync('server/data.ts'), 'something here');

@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const fancy_log_1 = require("fancy-log");
+const logol_1 = require("logol");
 const express = require("express");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
@@ -18,24 +18,24 @@ const path_1 = require("path");
 function start(options) {
     return __awaiter(this, void 0, void 0, function* () {
         const { distServerFolder, port, staticFolder, serverFolder } = options;
-        fancy_log_1.info('Starting server.');
+        logol_1.info('Starting server.');
         const app = express();
         app.use(bodyParser.json());
         app.use(cookieParser());
         const endpoints = yield _1.useIsomor(app, distServerFolder, serverFolder);
-        fancy_log_1.info('Created endpoints:', endpoints);
+        logol_1.info('Created endpoints:', endpoints);
         if (staticFolder) {
-            fancy_log_1.info('Add static folder', staticFolder);
+            logol_1.info('Add static folder', staticFolder);
             app.use(express.static(staticFolder));
             app.get('*', (req, res) => res.sendFile(path_1.join(staticFolder, 'index.html'), {
                 root: process.cwd(),
             }));
         }
         app.use((err, req, res, next) => {
-            fancy_log_1.error('ERROR', err);
+            logol_1.error(err);
             res.status(500).send(err.message);
         });
-        app.listen(port, () => fancy_log_1.info(`Server listening on port ${port}!`));
+        app.listen(port, () => logol_1.success(`Server listening on port ${port}!`));
     });
 }
 start({

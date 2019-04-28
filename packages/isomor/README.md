@@ -208,10 +208,66 @@ export const Time = () => {
 }
 ```
 
+or even more simple:
+
+```jsx
+import React from 'react';
+import { useAsyncCacheEffect } from 'react-async-cache';
+
+import { getTime } from './server/getTime';
+
+export const Time = () => {
+  const { load, response } = useAsyncCacheEffect(getTime);
+  return (
+    <div>
+      {!response ? <p>Loading...</p> : (
+        <p><b>Server time:</b> {response.time} <button onClick={load}>reload</button></p>
+      )}
+    </div>
+  );
+}
+```
+
 **Without cache**, if you would have this component 2 times in your app, it would make 2 requests when the components mount. When you click the `load` button, only the component where the button is located would be refreshed.
 **With the cache**, only 1 request would be sent instead of 2. When you click the `load` button, both component would be refresh.
 
-Other feature are available like updating the cache... See full [documentation](https://github.com/apiel/react-async-cache)
+
+`react-async-cache` has also a mecanism to update the cache, so you don't have to refetch data.
+
+```jsx
+import React from 'react';
+import { useAsyncCache } from 'react-async-cache';
+
+import { getTime } from './server/getTime';
+import { setTime } from './server/setTime';
+
+export const Time = () => {
+  const { call, response, update } = useAsyncCache();
+  const load = () => {
+    call(getTime);
+  }
+  React.useEffect(() => { load(); }, []);
+  const onClickUpdate = (newColor: string) => async () => {
+    const newTime = await setTime('08:00');
+    update(newTime, getTime);
+  }
+  return (
+    <div>
+      {!response ? <p>Loading...</p> : (
+        <p>
+          <b>Server time:</b> {response.time}
+          <button onClick={load}>reload</button>
+          <button onClickUpdate={load}>update</button>
+        </p>
+      )}
+    </div>
+  );
+}
+```
+
+When you click the button `update`, the update request is sent to the server, when the response is received, the cache is updated and the 2 components get updated.
+
+See full [documentation](https://github.com/apiel/react-async-cache)
 
 ## Request / Response context
 

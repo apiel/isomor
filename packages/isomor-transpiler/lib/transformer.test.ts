@@ -1,9 +1,9 @@
 import generate from '@babel/generator';
 import { parse } from '@typescript-eslint/typescript-estree';
 
-import { transformInterface } from './transformer';
+import { transformInterface, transformImport } from './transformer';
 
-const codeSource = `
+const codeSourceInterface = `
 export interface MyInterface {
     hello: string;
     foo: CpuInfo;
@@ -13,7 +13,7 @@ export interface MyInterface {
     world: CpuInfo[];
 }`;
 
-const codeTranspiled =
+const codeTranspiledInterface =
     `export interface MyInterface {
   hello: string;
   foo: any;
@@ -23,14 +23,28 @@ const codeTranspiled =
   world: any;
 }`;
 
+const transformToCode = (fn: any) => (source: string): string  => {
+    const program = parse(source);
+    // console.log('JsonAst', JsonAst(program.body[0]));
+    program.body[0] = fn(program.body[0]);
+    const { code } = generate(program as any);
+    return code;
+};
+
 describe('transformer', () => {
     describe('transformInterface()', () => {
+        const ttc = transformToCode(transformInterface);
         it('should transform props interface to any', () => {
-            const program = parse(codeSource);
-            // console.log('JsonAst', JsonAst(program.body[0]));
-            program.body[0] = transformInterface(program.body[0]);
-            const { code } = generate(program as any);
-            expect(code).toEqual(codeTranspiled);
+            expect(ttc(codeSourceInterface)).toBe(codeTranspiledInterface);
+        });
+    });
+    describe('transformImport()', () => {
+        const ttc = transformToCode(transformImport);
+        it('should transform import Literal to LiteralString', () => {
+            expect(ttc(`import { readdir } from 'fs-extra';`)).toBe(`import { readdir } from "fs-extra";`);
+        });
+        it('should remove locale import', () => {
+            expect(ttc(`import { something } from './my/import';`)).toBe('');
         });
     });
 });

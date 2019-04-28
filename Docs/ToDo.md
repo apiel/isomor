@@ -1,7 +1,5 @@
 ### ToDo
 
-- use logol
-
 - test:
   - isomor-server
   - integration, for file structure after transpiling?

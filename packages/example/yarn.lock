@@ -4755,9 +4755,9 @@ isomor-server@^0.3.0:
     isomor-core "^0.3.0"
     typescript "^3.2.4"
 
-isomor-transpiler@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/isomor-transpiler/-/isomor-transpiler-0.3.0.tgz#a470acb0bc90b613390112f7399f6311dc1d7808"
+isomor-transpiler@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/isomor-transpiler/-/isomor-transpiler-0.3.1.tgz#84eb341a9fdec90768d89ac535489c3b9d81f7ac"
   dependencies:
     "@babel/generator" "^7.4.0"
     "@types/chokidar" "^2.1.3"
@@ -4772,13 +4772,13 @@ isomor-transpiler@^0.3.0:
     ts-node "^8.0.3"
     typescript "^3.4.3"
 
-isomor@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/isomor/-/isomor-0.3.0.tgz#6ed11eae9f38246bfee1b20cc997196184dbf501"
+isomor@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/isomor/-/isomor-0.3.1.tgz#211bc52ef031cd7b5efb4a6da2f34e19ab89fd00"
   dependencies:
     axios "^0.18.0"
     isomor-server "^0.3.0"
-    isomor-transpiler "^0.3.0"
+    isomor-transpiler "^0.3.1"
     typescript "^3.2.4"
 
 isstream@~0.1.2:
@@ -7712,9 +7712,9 @@ run-queue@^1.0.0, run-queue@^1.0.3:
   dependencies:
     aproba "^1.1.1"
 
-run-screen@^0.5.1:
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/run-screen/-/run-screen-0.5.1.tgz#da3bf5b34ff7eaf25b942771b65a2ff9d82b2dea"
+run-screen@^0.5.2:
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/run-screen/-/run-screen-0.5.2.tgz#222fac0f1ad0253d0b5ac42fca20595cc885cb6a"
   dependencies:
     cross-spawn "^6.0.5"
     pidtree "^0.3.0"

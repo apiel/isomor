@@ -53,7 +53,7 @@
     "isomor-transpiler": "^0.3.1",
     "nodemon": "^1.18.10",
     "rimraf": "^2.6.3",
-    "run-screen": "^0.5.1",
+    "run-screen": "^0.5.2",
     "ts-node": "^8.0.3"
   }
 }

@@ -1,5 +1,5 @@
 {
-  "name": "isomor-example",
+  "name": "isomor-example-react",
   "version": "0.4.0",
   "repository": {
     "type": "git",
@@ -16,7 +16,7 @@
     "not op_mini all"
   ],
   "scripts": {
-    "run-in-docker": "docker build . -t isomor-example && docker rmi isomor-example",
+    "run-in-docker": "docker build . -t isomor-example-react && docker rmi isomor-example-react",
     "isomor:build": "isomor-transpiler",
     "isomor:build:dev": "WATCH=true isomor-transpiler",
     "serv:build": "rimraf ./dist-server && tsc -p tsconfig.server.json",
@@ -55,6 +55,5 @@
     "rimraf": "^2.6.3",
     "run-screen": "^0.5.2",
     "ts-node": "^8.0.3"
-  },
-  "gitHead": "3bbfbb8ad4d03246133d853d5345e6b4c332554a"
+  }
 }

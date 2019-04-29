@@ -50,9 +50,15 @@ function start({ srcFolder, distAppFolder, serverFolder }) {
             const newIndex = index.replace(/\<App \/\>/g, '(<AsyncCacheProvider><App /></AsyncCacheProvider>)');
             fs_extra_1.writeFileSync(path_1.join(projectDirectory, srcFolder, 'index.tsx'), newIndex);
             logol_1.info('Create empty server/data.ts');
-            fs_extra_1.outputFileSync(path_1.join(projectDirectory, srcFolder, serverFolder, 'data.ts'), '');
+            fs_extra_1.outputFileSync(path_1.join(projectDirectory, srcFolder, serverFolder, 'data.ts'), ``);
+            logol_1.info('Copy example component');
+            fs_extra_1.copySync(path_1.join(__dirname, '..', 'example'), path_1.join(projectDirectory, srcFolder, 'uptime'));
+            const AppContent = fs_extra_1.readFileSync(path_1.join(projectDirectory, srcFolder, 'App.tsx')).toString();
+            const AppWithUptime = AppContent.replace('</p>', `</p>\n<Uptime />\n`);
+            const App = `import { Uptime } from './uptime/uptime';\n` + AppWithUptime;
+            fs_extra_1.writeFileSync(path_1.join(projectDirectory, srcFolder, 'App.tsx'), App);
             logol_1.success(`Ready to code :-)`);
-            console.log(chalk_1.default.bold(chalk_1.default.red('Important: ')), chalk_1.default.blue(`edit you code in ${chalk_1.default.bold(srcFolder)}`), `instead of ${distAppFolder}`);
+            console.log(chalk_1.default.bold(chalk_1.default.yellow('Important: ')), chalk_1.default.blue(`edit you code in ${chalk_1.default.bold(srcFolder)}`), `instead of ${distAppFolder}`);
         }
         catch (err) {
             logol_1.error(err);

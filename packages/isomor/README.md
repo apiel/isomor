@@ -3,6 +3,8 @@
 `Isomor` is a library to create an interface between your backend and your frontend with nodejs and javascript application. Today, fullstack developers often use monorepo to centralize all their architecture inside a single place. This library allow you to do even more. Instead to have different application for backend and frontend, you develop a single "isomorphic" application and `isomor` will take care to split the code and setup a communication protocole. See following example:
 
 ```tsx
+import { getList } from './server/data';
+
 class App extends Component {
   state = { list: [] };
 

@@ -11,6 +11,7 @@
         "url": "https://github.com/apiel/isomor"
     },
     "scripts": {
+        "test-example": "rm -rf my-app && yarn start my-app && cd my-app && yarn dev",
         "test-in-docker": "docker build . -t test-isomor-react-app && docker rmi test-isomor-react-app",
         "prepublishOnly": "cp ../../Readme.sub.md ./README.md && cp ../example/tsconfig.server.json . && cp ../example/package.json ./package-copy.json && yarn build",
         "start": "ts-node lib/index.ts",

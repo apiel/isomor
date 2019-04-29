@@ -15,5 +15,5 @@
       "outDir": "./dist",
       "baseUrl": "./"
     },
-    "exclude": ["node_modules", "src", "src-isomor"]
+    "exclude": ["node_modules", "example"]
   }

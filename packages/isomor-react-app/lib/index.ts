@@ -65,12 +65,19 @@ async function start({ srcFolder, distAppFolder, serverFolder }: Options) {
         writeFileSync(join(projectDirectory, srcFolder, 'index.tsx'), newIndex);
 
         info('Create empty server/data.ts');
-        outputFileSync(join(projectDirectory, srcFolder, serverFolder, 'data.ts'), ''); // we could have an example
+        outputFileSync(join(projectDirectory, srcFolder, serverFolder, 'data.ts'), ``);
+
+        info('Copy example component');
+        copySync(join(__dirname, '..', 'example'), join(projectDirectory, srcFolder, 'uptime'));
+        const AppContent = readFileSync(join(projectDirectory, srcFolder, 'App.tsx')).toString();
+        const AppWithUptime = AppContent.replace('</p>', `</p>\n<Uptime />\n`);
+        const App = `import { Uptime } from './uptime/uptime';\n` + AppWithUptime;
+        writeFileSync(join(projectDirectory, srcFolder, 'App.tsx'), App);
 
         success(`Ready to code :-)`);
         // tslint:disable-next-line
         console.log(
-            chalk.bold(chalk.red('Important: ')),
+            chalk.bold(chalk.yellow('Important: ')),
             chalk.blue(`edit you code in ${chalk.bold(srcFolder)}`),
             `instead of ${distAppFolder}`,
         );

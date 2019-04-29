@@ -33,9 +33,9 @@ export async function getList(): Promise<string[]> {
 }
 ```
 
-As you can see, on `componentDidMount` the app is calling `getList` located on the server. But no, **I am not speaking about SSR**. Isomor transpile `getList` to a magic function that will call the backend through an http request. Like this, we have very consistent code between backend and server, especially if you are using types.
+As you can see, when the component mount, the app is calling `getList` located on the server. But no, **I am not speaking about SSR**. Isomor transpile `getList` to a magic function that will call the backend through an http request. Like this, we have very consistent code between backend and server, especially if you are using types.
 
-Right now, this library has been implemented for TypeScript, since types bring lot of value to this concept. It might work with FlowType and JavaScript as well. Also, till now all test has been done on React, but it should work as well with Angular, VueJs and so on.
+Right now, this library has been implemented for TypeScript, since types bring lot of value to this concept. It might work with FlowType and JavaScript as well. Also, till now most of the test has been done on React, there is as well a small example with VueJs. Since it is minimalistic and very generic, it should work pretty much with any kind of library.
 
 **[>> Online documentation <<](https://apiel.github.io/isomor/)**
 
@@ -44,6 +44,8 @@ Right now, this library has been implemented for TypeScript, since types bring l
 ```bash
 git clone https://github.com/apiel/isomor.git
 cd packages/examples/react
+# or for VueJs
+# cd packages/examples/vue
 yarn
 yarn prod
 ```
@@ -268,6 +270,10 @@ export const Time = () => {
 When you click the button `update`, the update request is sent to the server, when the response is received, the cache is updated and the 2 components get updated.
 
 See full [documentation](https://github.com/apiel/react-async-cache)
+
+## Getting started with VueJs
+
+TBD.
 
 ## Request / Response context
 

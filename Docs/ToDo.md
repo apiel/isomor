@@ -1,5 +1,13 @@
 ### ToDo
 
+- in isomor-react-app include example
+        outputFileSync('server/data.ts'), 'something here');
+        // as well in App.tsx
+
+- vuejs example
+- angular example
+
+
 - test:
   - isomor-server
   - integration, for file structure after transpiling?
@@ -8,16 +16,6 @@
   -> ~~after copy, look if the two files are the same, if not copy again~~
 
 
-
-
-
-- vuejs example
-- angular example
-
-
-- in isomor-react-app include example
-        outputFileSync('server/data.ts'), 'something here');
-        // as well in App.tsx
 
 
 

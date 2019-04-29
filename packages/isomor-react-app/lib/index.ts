@@ -69,7 +69,11 @@ async function start({ srcFolder, distAppFolder, serverFolder }: Options) {
 
         success(`Ready to code :-)`);
         // tslint:disable-next-line
-        console.log(chalk.bold(chalk.red('Important: ')), chalk.blue(`edit you code in ${srcFolder}`), `instead of ${distAppFolder}`);
+        console.log(
+            chalk.bold(chalk.red('Important: ')),
+            chalk.blue(`edit you code in ${chalk.bold(srcFolder)}`),
+            `instead of ${distAppFolder}`,
+        );
     } catch (err) {
         error(err);
         process.exit(1);

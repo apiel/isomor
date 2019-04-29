@@ -24,14 +24,18 @@ interface Options {
 async function start({ srcFolder, distAppFolder, serverFolder }: Options) {
     try {
         info('Setup create-vue-app with isomor');
-        let { _: [projectDirectory] } = minimist(process.argv.slice(2));
-        projectDirectory = join(process.cwd(), projectDirectory);
+        const { _: [projectName] } = minimist(process.argv.slice(2));
+        const projectDirectory = join(process.cwd(), projectName);
         info('Install VueJs in', projectDirectory);
         if (!projectDirectory) {
             warn(`Please provide the project directory, e.g: npx isomor-vue-app my-app`);
             return;
         }
-        await shell('npx', ['@vue/cli', 'create', projectDirectory]);
+
+        // tslint:disable-next-line
+        // vue create my-app -i '{"useConfigFiles":true,"plugins":{"@vue/cli-plugin-babel":{},"@vue/cli-plugin-typescript":{"classComponent":true,"tsLint":true,"lintOn":["save"],"useTsWithBabel":true}}}'
+        const vuePreset = readJSONSync(join(__dirname, '..', 'vue-preset.json'));
+        await shell('npx', ['@vue/cli', 'create', projectName, '-i', JSON.stringify(vuePreset)]);
 
         info('Copy tsconfig.server.json');
         copySync(

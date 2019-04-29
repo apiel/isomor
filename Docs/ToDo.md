@@ -1,13 +1,8 @@
 ### ToDo
 
-- in isomor-react-app include example
-        outputFileSync('server/data.ts'), 'something here');
-        // as well in App.tsx
-
-- simplify doc, no fs-extra...
-
 - vuejs example
 - angular example
+- TypeORM example
 
 
 - test:

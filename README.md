@@ -9,8 +9,7 @@ class App extends Component {
   state = { list: [] };
 
   async componentDidMount() {
-    const input: GetListInput = { foo: 'magic' };
-    const list = await getList(input);
+    const list = await getList();
     this.setState({ list });
   }
 
@@ -27,11 +26,10 @@ class App extends Component {
 
 ```typescript
 import { readdir } from 'fs-extra';
-import { GetListInput } from './getList.input';
 
-export async function getList(input: GetListInput): Promise<string[]> {
+export async function getList(): Promise<string[]> {
     const files = await readdir('./');
-    return files.map(file => `${file}-${input.foo}-${Math.random()}`);
+    return files.map(file => `./${file}`);
 }
 ```
 

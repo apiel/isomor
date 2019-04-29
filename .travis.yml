@@ -14,7 +14,7 @@ install:
   - cp -r ${BASE}/isomor-transpiler ${BASE}/../../isomor-transpiler # copy transpiler in isolated folder outside of lerna
   - cd ${BASE}/../../isomor-transpiler
   - yarn
-  - cd ${BASE}/example
+  - cd ${BASE}/example/react
   - yarn
   - cd ${BASE}/isomor-core
   - yarn
@@ -31,8 +31,8 @@ script:
   - cd ${BASE}/../../isomor-transpiler
   - yarn test
 
-  - cd ${BASE}/example
-  - DIST_SERVER_FOLDER=${BASE}/example/dist-server yarn prod 2> yarn.prod.log &
+  - cd ${BASE}/example/react
+  - DIST_SERVER_FOLDER=${BASE}/example/react/dist-server yarn prod 2> yarn.prod.log &
   - sleep 30 # should use wait-on lib instead to sleep
   - cat yarn.prod.log
   - curl http://127.0.0.1:3005/

@@ -1,6 +1,6 @@
 FROM node:current
 RUN cd /home/node && git clone https://github.com/apiel/isomor.git
-WORKDIR /home/node/isomor/packages/example
+WORKDIR /home/node/isomor/packages/example/react
 RUN yarn
 RUN (yarn prod 2> yarn.prod.log &) \
     && sleep 30 \

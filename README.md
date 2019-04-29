@@ -43,7 +43,7 @@ Right now, this library has been implemented for TypeScript, since types bring l
 
 ```bash
 git clone https://github.com/apiel/isomor.git
-cd packages/examples/
+cd packages/examples/react
 yarn
 yarn prod
 ```
@@ -132,7 +132,7 @@ const App = () => {
 
 export default App;
 ```
-Here we are using hook instead of class component but you can find an example in the repo  `packages/examples/src-isomor/App.tsx` using class.
+Here we are using hook instead of class component but you can find an example in the repo  `packages/examples/react/src-isomor/App.tsx` using class.
 
 Ok, now we have everything, normally we should now be able to transpile and start.
 

@@ -1,0 +1,39 @@
+{
+    "name": "isomor-vue-app",
+    "version": "0.5.0",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "author": "Alexandre Piel <alexandre.piel@gmail.com>",
+    "license": "MIT",
+    "bin": "dist/index.js",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/apiel/isomor"
+    },
+    "scripts": {
+        "test-example": "rm -rf my-app && yarn start my-app && cd my-app && yarn dev",
+        "test-in-docker": "docker build . -t test-isomor-vue-app && docker rmi test-isomor-vue-app",
+        "prepublishOnly": "cp ../../Readme.sub.md ./README.md && cp ../example/vue/tsconfig.server.json . && cp ../example/vue/package.json ./package-copy.json && yarn build",
+        "start": "ts-node lib/index.ts",
+        "prebuild": "rm -rf dist/",
+        "build": "tsc -p tsconfig.json && chmod +x dist/index.js",
+        "lint": "tslint -p tsconfig.json -c tslint.json"
+    },
+    "dependencies": {
+        "chalk": "^2.4.2",
+        "fs-extra": "^7.0.1",
+        "logol": "^0.0.1",
+        "minimist": "^1.2.0",
+        "ts-node": "^8.0.3",
+        "typescript": "^3.2.4"
+    },
+    "devDependencies": {
+        "@types/chalk": "^2.2.0",
+        "@types/fs-extra": "^5.0.5",
+        "@types/minimist": "^1.2.0",
+        "@types/node": "^11.12.2",
+        "@types/rimraf": "^2.0.2",
+        "rimraf": "^2.6.3",
+        "tslint": "^5.12.1"
+    }
+}

@@ -62,6 +62,11 @@ async function start({ srcFolder, distAppFolder, serverFolder }: Options) {
         pkg.scripts = { ...pkgExample.scripts, ...pkg.scripts };
         writeJSONSync(join(projectDirectory, 'package.json'), pkg);
 
+        info('Install packages...');
+        writeFileSync('cmd', `cd ${projectDirectory} && yarn add isomor && yarn add run-screen nodemon --dev`);
+        await shell('bash', ['cmd']);
+        unlinkSync('cmd');
+
         info('Create empty server/data.ts');
         outputFileSync(join(projectDirectory, srcFolder, serverFolder, 'data.ts'), ``);
 

@@ -20,7 +20,7 @@ install:
   - yarn
   - cd ${BASE}/isomor-core
   - yarn
-  - cd ${BASE}/test/react-app
+  - cd ${BASE}/ci-test/react-app
   - yarn
 
 script:
@@ -35,9 +35,9 @@ script:
 ##
 
   - ls ${BASE}
-  - ls ${BASE}/test
-  - ls ${BASE}/test/react-app
-  - cd ${BASE}/test/react-app
+  - ls ${BASE}/ci-test
+  - ls ${BASE}/ci-test/react-app
+  - cd ${BASE}/ci-test/react-app
   - yarn test # instead to have this /test/react, we could inject e2e test in the react version of isomor-react-app
 
   - cd ${BASE}/example/react

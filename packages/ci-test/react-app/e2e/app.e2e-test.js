@@ -29,7 +29,7 @@ describe('app', () => {
         await page.waitFor(100);
         expect(await getValues()).toEqual(['+ 1', '+ 2']);
     });
-    
+
     it('should load color with cache', async () => {
         const getValues = async () => {
             const value1 = await page.$eval('[data-id="color-1"] b', e => e.innerText);

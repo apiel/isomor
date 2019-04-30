@@ -48,6 +48,7 @@
   "proxy": "http://127.0.0.1:3005",
   "devDependencies": {
     "@types/fs-extra": "^5.0.5",
+    "@types/jest-environment-puppeteer": "^4.0.0",
     "jest-puppeteer": "^4.1.1",
     "nodemon": "^1.18.11",
     "puppeteer": "^1.14.0",

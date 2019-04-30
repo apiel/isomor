@@ -41,7 +41,7 @@ function start({ srcFolder, distAppFolder, serverFolder }) {
             pkg.scripts = Object.assign({}, pkgExample.scripts, pkg.scripts);
             fs_extra_1.writeJSONSync(path_1.join(projectDirectory, 'package.json'), pkg);
             logol_1.info('Install react-async-cache');
-            fs_extra_1.writeFileSync('cmd', `cd ${projectDirectory} && yarn add isomor react-async-cache && yarn add run-server nodemon --dev`);
+            fs_extra_1.writeFileSync('cmd', `cd ${projectDirectory} && yarn add isomor react-async-cache && yarn add run-screen nodemon --dev`);
             yield shell('bash', ['cmd']);
             fs_extra_1.unlinkSync('cmd');
             logol_1.info('Setup react-async-cache in <App />');

@@ -16,20 +16,26 @@ install:
   - yarn
   - cd ${BASE}/example/react
   - yarn
+  - cd ${BASE}/example/vue
+  - yarn
   - cd ${BASE}/isomor-core
   - yarn
   - cd ${BASE}/test/react-app
   - yarn
 
 script:
-  - cd ${BASE}/test/react-app
-  - yarn test
-
   - cd ${BASE}/isomor-core
   - yarn test
 
   - cd ${BASE}/../../isomor-transpiler
   - yarn test
+
+##
+## REACT
+##
+
+  - cd ${BASE}/test/react-app
+  - yarn test # instead to have this /test/react, we could inject e2e test in the react version of isomor-react-app
 
   - cd ${BASE}/example/react
   - DIST_SERVER_FOLDER=${BASE}/example/react/dist-server yarn prod 2> yarn.prod.log &
@@ -46,9 +52,27 @@ script:
   - yarn isomor:build
   - yarn serv:build
   - yarn build
-  # maybe instead use `yarn dev` and then wait-on, and curl 3000 and 3005
-  # then add a new component and server file
-  # and update App.tsx
+  # maybe instead use `yarn dev` and see if pages and api is accessible?
+
+##
+##  VUEjs
+##
+
+  - cd ${BASE}/example/vue
+  - DIST_SERVER_FOLDER=${BASE}/example/vue/dist-server yarn prod 2> yarn.prod.log &
+  - sleep 30 # should use wait-on lib instead to sleep
+  - cat yarn.prod.log
+  - curl http://127.0.0.1:3005/
+  - curl http://127.0.0.1:3005/isomor/server-data/getServerUptime
+
+  - kill $(lsof -t -i:3005 -sTCP:LISTEN)
+
+  - cd ~ && mkdir npxisomorvueapp && cd npxisomorvueapp
+  - npx isomor-vue-app my-app
+  - cd my-app
+  - yarn isomor:build
+  - yarn serv:build
+  - yarn build
 
 cache:
   directories:

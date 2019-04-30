@@ -34,6 +34,7 @@ script:
 ## REACT
 ##
 
+  - ls ${BASE}/test/react-app
   - cd ${BASE}/test/react-app
   - yarn test # instead to have this /test/react, we could inject e2e test in the react version of isomor-react-app
 

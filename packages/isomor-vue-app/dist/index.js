@@ -18,45 +18,39 @@ const minimist = require("minimist");
 function start({ srcFolder, distAppFolder, serverFolder }) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            logol_1.info('Setup create-react-app with isomor');
-            let { _: [projectDirectory] } = minimist(process.argv.slice(2));
-            projectDirectory = path_1.join(process.cwd(), projectDirectory);
-            logol_1.info('Install create-react-app in', projectDirectory);
+            logol_1.info('Setup create-vue-app with isomor');
+            const { _: [projectName] } = minimist(process.argv.slice(2));
+            const projectDirectory = path_1.join(process.cwd(), projectName);
+            logol_1.info('Install VueJs in', projectDirectory);
+            logol_1.info('Wait a little bit... we are loading Vue cli');
             if (!projectDirectory) {
-                logol_1.warn(`Please provide the project directory, e.g: npx isomor-react-app my-app`);
+                logol_1.warn(`Please provide the project directory, e.g: npx isomor-vue-app my-app`);
                 return;
             }
-            yield shell('npx', ['create-react-app', projectDirectory, '--typescript']);
+            const vuePreset = fs_extra_1.readJSONSync(path_1.join(__dirname, '..', 'vue-preset.json'));
+            yield shell('npx', ['@vue/cli', 'create', projectName, '-i', JSON.stringify(vuePreset)]);
             logol_1.info('Copy tsconfig.server.json');
             fs_extra_1.copySync(path_1.join(__dirname, '..', 'tsconfig.server.json'), path_1.join(projectDirectory, 'tsconfig.server.json'));
+            logol_1.info('Copy vue.config.js');
+            fs_extra_1.copySync(path_1.join(__dirname, '..', 'vue.config.js'), path_1.join(projectDirectory, 'vue.config.js'));
             logol_1.info(`Copy ${distAppFolder} to ${srcFolder}`);
             fs_extra_1.copySync(path_1.join(projectDirectory, distAppFolder), path_1.join(projectDirectory, srcFolder));
             logol_1.info('Edit package.json');
             const pkg = fs_extra_1.readJSONSync(path_1.join(projectDirectory, 'package.json'));
-            pkg.proxy = 'http://127.0.0.1:3005';
             const pkgExample = fs_extra_1.readJSONSync(path_1.join(__dirname, '..', 'package-copy.json'));
             if (pkgExample.scripts['run-in-docker']) {
                 delete pkgExample.scripts['run-in-docker'];
             }
             pkg.scripts = Object.assign({}, pkgExample.scripts, pkg.scripts);
             fs_extra_1.writeJSONSync(path_1.join(projectDirectory, 'package.json'), pkg);
-            logol_1.info('Install react-async-cache');
-            fs_extra_1.writeFileSync('cmd', `cd ${projectDirectory} && yarn add isomor react-async-cache && yarn add run-server nodemon --dev`);
+            logol_1.info('Install packages...');
+            fs_extra_1.writeFileSync('cmd', `cd ${projectDirectory} && yarn add isomor && yarn add run-screen nodemon --dev`);
             yield shell('bash', ['cmd']);
             fs_extra_1.unlinkSync('cmd');
-            logol_1.info('Setup react-async-cache in <App />');
-            const index = `import { AsyncCacheProvider } from 'react-async-cache';\n`
-                + fs_extra_1.readFileSync(path_1.join(projectDirectory, srcFolder, 'index.tsx')).toString();
-            const newIndex = index.replace(/\<App \/\>/g, '(<AsyncCacheProvider><App /></AsyncCacheProvider>)');
-            fs_extra_1.writeFileSync(path_1.join(projectDirectory, srcFolder, 'index.tsx'), newIndex);
             logol_1.info('Create empty server/data.ts');
             fs_extra_1.outputFileSync(path_1.join(projectDirectory, srcFolder, serverFolder, 'data.ts'), ``);
             logol_1.info('Copy example component');
-            fs_extra_1.copySync(path_1.join(__dirname, '..', 'example'), path_1.join(projectDirectory, srcFolder, 'uptime'));
-            const AppContent = fs_extra_1.readFileSync(path_1.join(projectDirectory, srcFolder, 'App.tsx')).toString();
-            const AppWithUptime = AppContent.replace('</p>', `</p>\n<Uptime />\n`);
-            const App = `import { Uptime } from './uptime/uptime';\n` + AppWithUptime;
-            fs_extra_1.writeFileSync(path_1.join(projectDirectory, srcFolder, 'App.tsx'), App);
+            fs_extra_1.copySync(path_1.join(__dirname, '..', 'example'), path_1.join(projectDirectory, srcFolder, 'components'));
             logol_1.success(`Ready to code :-)`);
             console.log(chalk_1.default.bold(chalk_1.default.yellow('Important: ')), chalk_1.default.blue(`edit you code in ${chalk_1.default.bold(srcFolder)}`), `instead of ${distAppFolder}`);
         }

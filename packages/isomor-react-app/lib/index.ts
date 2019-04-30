@@ -54,7 +54,7 @@ async function start({ srcFolder, distAppFolder, serverFolder }: Options) {
         writeJSONSync(join(projectDirectory, 'package.json'), pkg);
 
         info('Install react-async-cache');
-        writeFileSync('cmd', `cd ${projectDirectory} && yarn add isomor react-async-cache && yarn add run-server nodemon --dev`);
+        writeFileSync('cmd', `cd ${projectDirectory} && yarn add isomor react-async-cache && yarn add run-screen nodemon --dev`);
         await shell('bash', ['cmd']);
         unlinkSync('cmd');
 

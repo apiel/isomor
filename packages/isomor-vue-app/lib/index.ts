@@ -33,11 +33,13 @@ async function start({ srcFolder, distAppFolder, serverFolder }: Options) {
             return;
         }
 
-        const vuePreset = readJSONSync(join(__dirname, '..', 'vue-preset.json'));
-        await shell('npx', ['@vue/cli', 'create', projectName, '-i', JSON.stringify(vuePreset)]);
-        // might give the possibility to make interactive installation
-        // await shell('npx', ['@vue/cli', 'create', projectName]);
-
+        if (process.env.MANUAL === 'true') {
+            info('Select TypeScript and dedicated config file.');
+            await shell('npx', ['@vue/cli', 'create', projectName]);
+        } else {
+            const vuePreset = readJSONSync(join(__dirname, '..', 'vue-preset.json'));
+            await shell('npx', ['@vue/cli', 'create', projectName, '-i', JSON.stringify(vuePreset)]);
+        }
 
         info('Copy tsconfig.server.json');
         copySync(
@@ -82,6 +84,7 @@ async function start({ srcFolder, distAppFolder, serverFolder }: Options) {
             chalk.blue(`edit you code in ${chalk.bold(srcFolder)}`),
             `instead of ${distAppFolder}`,
         );
+        process.exit();
     } catch (err) {
         error(err);
         process.exit(1);
@@ -90,9 +93,16 @@ async function start({ srcFolder, distAppFolder, serverFolder }: Options) {
 
 function shell(command: string, args?: ReadonlyArray<string>) {
     return new Promise((resolve) => {
-        const cmd = spawn(command, args);
+        let cmd = spawn(command, args, {
+            env: {
+                FORCE_COLOR: 'true',
+                COLUMNS: process.stdout.columns.toString(),
+                LINES: process.stdout.rows.toString(),
+                ...process.env,
+            },
+        });
         cmd.stdout.on('data', data => {
-            process.stdout.write(chalk.gray(data.toString()));
+            process.stdout.write(data);
         });
         cmd.stderr.on('data', data => {
             const dataStr = data.toString();
@@ -102,7 +112,15 @@ function shell(command: string, args?: ReadonlyArray<string>) {
                 process.stdout.write(chalk.red(data.toString()));
             }
         });
-        cmd.on('close', resolve);
+
+        process.stdin.setEncoding('ascii');
+        process.stdin.setRawMode(true);
+        process.stdin.resume();
+        process.stdin.on('data', (key) => {
+            if (key === '\u0003') { process.exit(); } // we might have to kill child process as well
+            if (cmd) { cmd.stdin.write(key); }
+        });
+        cmd.on('close', () => { cmd = null; resolve(); });
     });
 }
 

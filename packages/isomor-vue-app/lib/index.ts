@@ -27,15 +27,17 @@ async function start({ srcFolder, distAppFolder, serverFolder }: Options) {
         const { _: [projectName] } = minimist(process.argv.slice(2));
         const projectDirectory = join(process.cwd(), projectName);
         info('Install VueJs in', projectDirectory);
+        info('Wait a little bit... we are loading Vue cli');
         if (!projectDirectory) {
             warn(`Please provide the project directory, e.g: npx isomor-vue-app my-app`);
             return;
         }
 
-        // tslint:disable-next-line
-        // vue create my-app -i '{"useConfigFiles":true,"plugins":{"@vue/cli-plugin-babel":{},"@vue/cli-plugin-typescript":{"classComponent":true,"tsLint":true,"lintOn":["save"],"useTsWithBabel":true}}}'
         const vuePreset = readJSONSync(join(__dirname, '..', 'vue-preset.json'));
         await shell('npx', ['@vue/cli', 'create', projectName, '-i', JSON.stringify(vuePreset)]);
+        // might give the possibility to make interactive installation
+        // await shell('npx', ['@vue/cli', 'create', projectName]);
+
 
         info('Copy tsconfig.server.json');
         copySync(
@@ -71,11 +73,7 @@ async function start({ srcFolder, distAppFolder, serverFolder }: Options) {
         outputFileSync(join(projectDirectory, srcFolder, serverFolder, 'data.ts'), ``);
 
         info('Copy example component');
-        copySync(join(__dirname, '..', 'example'), join(projectDirectory, srcFolder, 'uptime'));
-        // const AppContent = readFileSync(join(projectDirectory, srcFolder, 'App.tsx')).toString();
-        // const AppWithUptime = AppContent.replace('</p>', `</p>\n<Uptime />\n`);
-        // const App = `import { Uptime } from './uptime/uptime';\n` + AppWithUptime;
-        // writeFileSync(join(projectDirectory, srcFolder, 'App.tsx'), App);
+        copySync(join(__dirname, '..', 'example'), join(projectDirectory, srcFolder, 'components'));
 
         success(`Ready to code :-)`);
         // tslint:disable-next-line

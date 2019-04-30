@@ -7,10 +7,10 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import { getServerUptime } from "./server/data";
+import { getServerUptime } from "./server/uptime";
 
 @Component
-export default class Uptime extends Vue {
+export default class HelloWorld extends Vue {
   private uptime!: string;
 
   data() {

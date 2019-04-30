@@ -34,7 +34,7 @@ async function start({ srcFolder, distAppFolder, serverFolder }: Options) {
         }
 
         if (process.env.MANUAL === 'true') {
-            info('Select TypeScript and dedicated config file.');
+            info('For the moment the installer work only for TypeScript. Please select TypeScript :-)');
             await shell('npx', ['@vue/cli', 'create', projectName]);
         } else {
             const vuePreset = readJSONSync(join(__dirname, '..', 'vue-preset.json'));

@@ -1,8 +1,5 @@
 ### ToDo
 
-- in example, make error only when press btn
-
-- vuejs example
 - angular example
 - TypeORM example
 

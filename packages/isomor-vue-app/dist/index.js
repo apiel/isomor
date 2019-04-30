@@ -27,8 +27,14 @@ function start({ srcFolder, distAppFolder, serverFolder }) {
                 logol_1.warn(`Please provide the project directory, e.g: npx isomor-vue-app my-app`);
                 return;
             }
-            const vuePreset = fs_extra_1.readJSONSync(path_1.join(__dirname, '..', 'vue-preset.json'));
-            yield shell('npx', ['@vue/cli', 'create', projectName, '-i', JSON.stringify(vuePreset)]);
+            if (process.env.MANUAL === 'true') {
+                logol_1.info('For the moment the installer work only for TypeScript. Please select TypeScript :-)');
+                yield shell('npx', ['@vue/cli', 'create', projectName]);
+            }
+            else {
+                const vuePreset = fs_extra_1.readJSONSync(path_1.join(__dirname, '..', 'vue-preset.json'));
+                yield shell('npx', ['@vue/cli', 'create', projectName, '-i', JSON.stringify(vuePreset)]);
+            }
             logol_1.info('Copy tsconfig.server.json');
             fs_extra_1.copySync(path_1.join(__dirname, '..', 'tsconfig.server.json'), path_1.join(projectDirectory, 'tsconfig.server.json'));
             logol_1.info('Copy vue.config.js');
@@ -53,6 +59,7 @@ function start({ srcFolder, distAppFolder, serverFolder }) {
             fs_extra_1.copySync(path_1.join(__dirname, '..', 'example'), path_1.join(projectDirectory, srcFolder, 'components'));
             logol_1.success(`Ready to code :-)`);
             console.log(chalk_1.default.bold(chalk_1.default.yellow('Important: ')), chalk_1.default.blue(`edit you code in ${chalk_1.default.bold(srcFolder)}`), `instead of ${distAppFolder}`);
+            process.exit();
         }
         catch (err) {
             logol_1.error(err);
@@ -62,9 +69,11 @@ function start({ srcFolder, distAppFolder, serverFolder }) {
 }
 function shell(command, args) {
     return new Promise((resolve) => {
-        const cmd = child_process_1.spawn(command, args);
+        let cmd = child_process_1.spawn(command, args, {
+            env: Object.assign({ FORCE_COLOR: 'true', COLUMNS: process.stdout.columns.toString(), LINES: process.stdout.rows.toString() }, process.env),
+        });
         cmd.stdout.on('data', data => {
-            process.stdout.write(chalk_1.default.gray(data.toString()));
+            process.stdout.write(data);
         });
         cmd.stderr.on('data', data => {
             const dataStr = data.toString();
@@ -75,7 +84,18 @@ function shell(command, args) {
                 process.stdout.write(chalk_1.default.red(data.toString()));
             }
         });
-        cmd.on('close', resolve);
+        process.stdin.setEncoding('ascii');
+        process.stdin.setRawMode(true);
+        process.stdin.resume();
+        process.stdin.on('data', (key) => {
+            if (key === '\u0003') {
+                process.exit();
+            }
+            if (cmd) {
+                cmd.stdin.write(key);
+            }
+        });
+        cmd.on('close', () => { cmd = null; resolve(); });
     });
 }
 start({

@@ -9,13 +9,13 @@ const errorStyle = {
 
 export const ErrorExample2 = () => {
   const { call, response, error } = useAsyncCache();
-  React.useEffect(() => {
+  const load = () => {
       call(getSomethingWithError);
-  });
-
+  };
   return (
     <div style={errorStyle}>
       {error && <p><b>Some error handling example 2:</b> {error.toString()} </p>}
+      <button onClick={load}>Throw another error</button>
     </div>
   );
 }

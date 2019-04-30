@@ -13,11 +13,11 @@ export const ErrorExample = () => {
     } catch (error) {
       setError(error.toString());
     }
-  }
-  React.useEffect(() => { load(); }, []);
+  };
   return (
     <div style={errorStyle}>
       {error && <p><b>Some error handling example:</b> {error} </p>}
+      <button onClick={load}>Throw an error</button>
     </div>
   );
 }

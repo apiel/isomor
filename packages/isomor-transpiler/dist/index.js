@@ -87,8 +87,7 @@ function watcher(options) {
                 else {
                     logol_1.info(`Copy ${path} to folder`);
                     const dest = path_1.join(distAppFolder, file);
-                    const content = yield fs_extra_1.readFile(path);
-                    yield fs_extra_1.outputFile(dest, content);
+                    fs_extra_1.copy(path, dest);
                     setTimeout(() => watcherUpdateSpy(path, dest), 200);
                 }
             });

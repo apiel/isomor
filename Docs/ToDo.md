@@ -1,7 +1,5 @@
 ### ToDo
 
-- CHOKIDAR_USEPOLLING=true might have to put this isomor-react-app
-
 - more example for vuejs
 - angular example
 - TypeORM example

@@ -26,7 +26,7 @@
     "serv:prod": "STATIC_FOLDER=./build yarn serv",
     "prod": "yarn isomor:build && yarn build && yarn serv:prod",
     "dev": "run-screen 'yarn isomor:build:dev' 'yarn serv:dev' 'yarn start'",
-    "start": "CHOKIDAR_USEPOLLING=true react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

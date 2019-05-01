@@ -106,10 +106,10 @@ function watcher(options: Options) {
                 transpile(options, file);
             } else {
                 info(`Copy ${path} to folder`);
-                // copy(path, join(distAppFolder, file));
                 const dest = join(distAppFolder, file);
-                const content = await readFile(path);
-                await outputFile(dest, content);
+                copy(path, dest);
+                // const content = await readFile(path);
+                // await outputFile(dest, content);
 
                 // try to fix file that does not get copy correctly
                 setTimeout(() => watcherUpdateSpy(path, dest), 200);

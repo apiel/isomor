@@ -1,5 +1,7 @@
 ### ToDo
 
+- lerna seeem to dont like example/react -> need to change this to example-react
+
 - more example for vuejs
 - angular example
 - TypeORM example

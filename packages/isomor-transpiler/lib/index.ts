@@ -112,7 +112,7 @@ function watcher(options: Options) {
                 await outputFile(dest, content);
 
                 // try to fix file that does not get copy correctly
-                setTimeout(() => watcherUpdateSpy(path, dest), 500);
+                setTimeout(() => watcherUpdateSpy(path, dest), 200);
             }
         }
 
@@ -122,8 +122,8 @@ function watcher(options: Options) {
             if (contentA.toString() !== contentB.toString()) {
                 warn('We found file diff, copy again', dest);
                 await outputFile(dest, contentA);
-                if (retry < 5) {
-                    setTimeout(() => watcherUpdateSpy(path, dest, retry + 1), 500);
+                if (retry < 2) {
+                    setTimeout(() => watcherUpdateSpy(path, dest, retry + 1), 200);
                 }
             }
         }

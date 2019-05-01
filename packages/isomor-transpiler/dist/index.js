@@ -89,13 +89,20 @@ function watcher(options) {
                     const dest = path_1.join(distAppFolder, file);
                     const content = yield fs_extra_1.readFile(path);
                     yield fs_extra_1.outputFile(dest, content);
-                    setTimeout(() => __awaiter(this, void 0, void 0, function* () {
-                        const contentA = yield fs_extra_1.readFile(path);
-                        const contentB = yield fs_extra_1.readFile(dest);
-                        if (contentA.toString() !== contentB.toString()) {
-                            yield fs_extra_1.outputFile(dest, contentA);
-                        }
-                    }), 500);
+                    setTimeout(() => watcherUpdateSpy(path, dest), 500);
+                }
+            });
+        }
+        function watcherUpdateSpy(path, dest, retry = 0) {
+            return __awaiter(this, void 0, void 0, function* () {
+                const contentA = yield fs_extra_1.readFile(path);
+                const contentB = yield fs_extra_1.readFile(dest);
+                if (contentA.toString() !== contentB.toString()) {
+                    logol_1.warn('We found file diff, copy again', dest);
+                    yield fs_extra_1.outputFile(dest, contentA);
+                    if (retry < 5) {
+                        setTimeout(() => watcherUpdateSpy(path, dest, retry + 1), 500);
+                    }
                 }
             });
         }

@@ -1,5 +1,6 @@
 ### ToDo
 
+- more example for vuejs
 - angular example
 - TypeORM example
 

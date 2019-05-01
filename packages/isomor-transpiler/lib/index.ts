@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { info } from 'logol';
+import { info, warn } from 'logol';
 import { readFile, outputFile, emptyDir, copy, unlink } from 'fs-extra';
 import { join } from 'path';
 import {
@@ -112,13 +112,19 @@ function watcher(options: Options) {
                 await outputFile(dest, content);
 
                 // try to fix file that does not get copy correctly
-                setTimeout(async () => {
-                    const contentA = await readFile(path);
-                    const contentB = await readFile(dest);
-                    if (contentA.toString() !== contentB.toString()) {
-                        await outputFile(dest, contentA);
-                    }
-                }, 500);
+                setTimeout(() => watcherUpdateSpy(path, dest), 500);
+            }
+        }
+
+        async function watcherUpdateSpy(path: string, dest: string, retry = 0) {
+            const contentA = await readFile(path);
+            const contentB = await readFile(dest);
+            if (contentA.toString() !== contentB.toString()) {
+                warn('We found file diff, copy again', dest);
+                await outputFile(dest, contentA);
+                if (retry < 5) {
+                    setTimeout(() => watcherUpdateSpy(path, dest, retry + 1), 500);
+                }
             }
         }
     }

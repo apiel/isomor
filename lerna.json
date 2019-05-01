@@ -1,6 +1,8 @@
 {
   "packages": [
-    "packages/*"
+    "packages/*",
+    "packages/example/*",
+    "packages/ci-test/*"
   ],
   "version": "0.5.3"
 }

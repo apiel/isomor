@@ -1,6 +1,6 @@
 ### ToDo
 
-- lerna seeem to dont like example/react -> need to change this to example-react
+- CHOKIDAR_USEPOLLING=true might have to put this isomor-react-app
 
 - more example for vuejs
 - angular example

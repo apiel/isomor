@@ -1,6 +1,5 @@
 ### ToDo
 
-- Doc generation of api - Swagger?
 - more example for vuejs -> vue-async-cache
 
 - angular example

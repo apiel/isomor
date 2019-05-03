@@ -5,7 +5,9 @@
     * [React async cache](/?id=react-async-cache)
 * [Getting started - VueJs](/?id=getting-started-with-vuejs)
 * [Request / Response](/?id=request-response-context)
-* Advance
-    * [Custom server](Docs/Custom-server.md)
+* Advanced guides
+    * [Server](Docs/Server.md)
+        * [Swagger](Docs/Server.md/?id=api-documentation-with-swagger)
+        * [Custom server](Docs/Server.md/?id=custom-server)
     * [Manual setup](Docs/Manual-setup.md)
     * [Babel](Docs/Babel.md)

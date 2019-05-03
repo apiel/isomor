@@ -341,8 +341,8 @@ export async function setAuth(): Promise<string> {
 }
 ```
 
-## Advanced documentation
+## Advanced guides
 
-- [Custom server](./Docs/Custom-server.md)
+- [Server](./Docs/Server.md)
 - [Manual setup](./Docs/Manual-setup.md)
 - [Babel](./Docs/Babel.md)

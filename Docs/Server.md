@@ -1,4 +1,10 @@
-### Custom server
+### server
+
+#### API documentation with Swagger
+
+The server generate automatically the API documentation and make it available using swagger UI at http://localhost:3005/api-docs/
+
+#### Custom server
 
 Since `isomor` is using expressJs, it is possible to integrate it to an existing api. Just import `useIsomor` from `isomor-server`:
 

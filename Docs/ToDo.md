@@ -1,6 +1,7 @@
 ### ToDo
 
 - more example for vuejs -> vue-async-cache
+- include vue-async-cache in isomor-vue-app
 
 - angular example
 - TypeORM example

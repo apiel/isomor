@@ -8132,10 +8132,6 @@ run-screen@^0.5.2:
     shell-quote "^1.6.1"
     typescript "^3.2.4"
 
-run-server@^1.0.6:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/run-server/-/run-server-1.0.6.tgz#e00a2c78882f88ce3f6a89308f79e1593bbb721a"
-
 rx@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/rx/-/rx-4.1.0.tgz#a5f13ff79ef3b740fe30aa803fb09f98805d4782"

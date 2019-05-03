@@ -52,6 +52,6 @@
     "jest-puppeteer": "^4.1.1",
     "nodemon": "^1.18.11",
     "puppeteer": "^1.14.0",
-    "run-server": "^0.5.2"
+    "run-screen": "^0.5.2"
   }
 }

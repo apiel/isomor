@@ -283,7 +283,7 @@ export async function setAuth(): Promise<string> {
 }
 ```
 
-## Advance
+## Advanced documentation
 
 - [Custom server](./Docs/Custom-server.md)
 - [Manual setup](./Docs/Manual-setup.md)

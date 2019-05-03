@@ -7,7 +7,5 @@
 * [Request / Response](/?id=request-response-context)
 * Advanced guides
     * [Server](Docs/Server)
-        * [Swagger](Docs/Server?id=api-documentation-with-swagger)
-        * [Custom server](Docs/Server?id=custom-server)
     * [Manual setup](Docs/Manual-setup)
     * [Babel](Docs/Babel)

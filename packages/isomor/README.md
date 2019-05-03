@@ -190,30 +190,6 @@ Using the cache:
 
 ```jsx
 import React from 'react';
-import { useAsyncCache } from 'react-async-cache';
-
-import { getTime } from './server/getTime';
-
-export const Time = () => {
-  const { call, response } = useAsyncCache();
-  const load = () => {
-    call(getTime);
-  }
-  React.useEffect(() => { load(); }, []);
-  return (
-    <div>
-      {!response ? <p>Loading...</p> : (
-        <p><b>Server time:</b> {response.time} <button onClick={load}>reload</button></p>
-      )}
-    </div>
-  );
-}
-```
-
-or even more simple:
-
-```jsx
-import React from 'react';
 import { useAsyncCacheEffect } from 'react-async-cache';
 
 import { getTime } from './server/getTime';
@@ -238,16 +214,13 @@ export const Time = () => {
 
 ```jsx
 import React from 'react';
-import { useAsyncCache } from 'react-async-cache';
+import { useAsyncCacheWatch } from 'react-async-cache';
 
 import { getTime } from './server/getTime';
 import { setTime } from './server/setTime';
 
 export const Time = () => {
-  const { call, response, update } = useAsyncCache();
-  const load = () => {
-    call(getTime);
-  }
+  const { load, response, update } = useAsyncCacheWatch(getTime);
   React.useEffect(() => { load(); }, []);
   const onClickUpdate = (newColor: string) => async () => {
     const newTime = await setTime('08:00');

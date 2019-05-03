@@ -1,14 +1,11 @@
 import React from 'react';
-import { useAsyncCache } from 'react-async-cache';
+import { useAsyncCacheWatch } from 'react-async-cache';
 import { getColor, setColor } from './server/color';
 import { styleCard } from '../styleCard';
 import { Props } from '../props';
 
 export const Color = ({ e2eId }: Props) => {
-    const { call, response: color, update } = useAsyncCache();
-    const load = () => {
-        call(getColor);
-    }
+    const { load, response: color, update } = useAsyncCacheWatch(getColor);
     React.useEffect(() => { load(); }, []);
     const onClickColor = (newColor: string) => async () => {
         await setColor(newColor);

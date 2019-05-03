@@ -10,7 +10,7 @@
     "fs-extra": "^7.0.1",
     "isomor": "^0.2.2",
     "react": "^16.8.6",
-    "react-async-cache": "^0.1.0",
+    "react-async-cache": "^0.5.1",
     "react-dom": "^16.8.6",
     "react-scripts": "3.0.0",
     "run-screen": "^0.5.2",
@@ -52,6 +52,6 @@
     "jest-puppeteer": "^4.1.1",
     "nodemon": "^1.18.11",
     "puppeteer": "^1.14.0",
-    "run-server": "^1.0.6"
+    "run-server": "^0.5.2"
   }
 }

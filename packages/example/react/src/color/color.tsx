@@ -1,12 +1,9 @@
 import React from 'react';
-import { useAsyncCache } from 'react-async-cache';
+import { useAsyncCacheWatch } from 'react-async-cache';
 import { getColor, setColor } from './server/color';
 
 export const Color = () => {
-    const { call, response: color, update } = useAsyncCache();
-    const load = () => {
-      call(getColor);
-    }
+    const { load, response: color, update } = useAsyncCacheWatch(getColor);
     React.useEffect(() => { load(); }, []);
     const onClickColor = (newColor: string) => async () => {
         console.log('click color', newColor);

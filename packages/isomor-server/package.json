@@ -12,6 +12,7 @@
     },
     "scripts": {
         "prepublishOnly": "cp ../../Readme.sub.md ./README.md && yarn build",
+        "start-example": "DIST_SERVER_FOLDER=../example/react/dist-server yarn start",
         "start": "ts-node src/server.ts",
         "prebuild": "rm -rf dist/",
         "build": "tsc -p tsconfig.json && chmod +x dist/server.js",
@@ -24,6 +25,7 @@
         "fs-extra": "^7.0.1",
         "isomor-core": "^0.5.4",
         "logol": "^0.0.1",
+        "swagger-ui-express": "^4.0.2",
         "typescript": "^3.2.4"
     },
     "devDependencies": {
@@ -33,6 +35,7 @@
         "@types/fs-extra": "^5.0.5",
         "@types/node": "^11.12.2",
         "@types/rimraf": "^2.0.2",
+        "@types/swagger-ui-express": "^3.0.0",
         "rimraf": "^2.6.3",
         "ts-node": "^8.0.3",
         "tslint": "^5.12.1"

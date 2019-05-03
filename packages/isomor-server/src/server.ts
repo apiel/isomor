@@ -4,8 +4,9 @@ import { info, error, success } from 'logol';
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import * as cookieParser from 'cookie-parser';
+import { setup, serve } from 'swagger-ui-express';
 
-import { useIsomor } from '.';
+import { useIsomor, getSwaggerDoc } from '.';
 import { join } from 'path';
 
 interface Options {
@@ -22,6 +23,8 @@ async function start(options: Options) {
 
     app.use(bodyParser.json());
     app.use(cookieParser());
+
+    app.use('/api-docs', serve, setup(await getSwaggerDoc(distServerFolder, serverFolder)));
 
     const endpoints = await useIsomor(app, distServerFolder, serverFolder);
     info('Created endpoints:', endpoints);

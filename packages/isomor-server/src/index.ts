@@ -8,6 +8,21 @@ export interface Context {
     fn: any;
 }
 
+function getFunctions(distServerFolder: string, file: string) {
+    const filepath = require.resolve(
+        join(distServerFolder, file),
+        { paths: [process.cwd()] },
+    );
+    delete require.cache[filepath];
+    const functions = require(filepath);
+
+    return functions;
+}
+
+function getEntrypoint(file: string, name: string) {
+    return `/isomor/${getPathForUrl(file)}/${name}`;
+}
+
 export async function useIsomor(
     app: express.Express,
     distServerFolder: string,
@@ -15,14 +30,9 @@ export async function useIsomor(
 ): Promise<string[]> {
     const files = await getFiles(distServerFolder, serverFolder);
     return (files.map(file => {
-        const filepath = require.resolve(
-            join(distServerFolder, file),
-            { paths: [process.cwd()] },
-        );
-        delete require.cache[filepath];
-        const functions = require(filepath);
+        const functions = getFunctions(distServerFolder, file);
         return Object.keys(functions).map(name => {
-            const entrypoint = `/isomor/${getPathForUrl(file)}/${name}`;
+            const entrypoint = getEntrypoint(file, name);
             app.use(entrypoint, async (
                 req: express.Request,
                 res: express.Response,
@@ -44,4 +54,45 @@ export async function useIsomor(
             return entrypoint;
         });
     }) as any).flat();
+}
+
+export async function getSwaggerDoc(
+    distServerFolder: string,
+    serverFolder: string,
+) {
+    const files = await getFiles(distServerFolder, serverFolder);
+    const paths = {};
+    files.forEach(file => {
+        const functions = getFunctions(distServerFolder, file);
+        return Object.keys(functions).forEach(name => {
+            paths[getEntrypoint(file, name)] = {
+                post: {
+                    operationId: file,
+                    summary: file,
+                    produces: [
+                        'application/json',
+                    ],
+                    responses: {
+                        '200': {
+                            description: '200 response',
+                            examples: {
+                                'application/json': 'abc',
+                            },
+                        },
+                    },
+                },
+            };
+        });
+    });
+    return {
+        swagger: '2.0',
+        info: {
+            title: 'isomor',
+            version: 'API',
+        },
+        paths,
+        consumes: [
+            'application/json',
+        ],
+    };
 }

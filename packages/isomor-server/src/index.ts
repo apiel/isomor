@@ -72,11 +72,22 @@ export async function getSwaggerDoc(
                     produces: [
                         'application/json',
                     ],
+                    parameters: [
+                        {
+                            name: 'args',
+                            in: 'body',
+                            description: 'Function arguments',
+                            required: true,
+                            schema: {
+                                $ref: '#/definitions/Args',
+                            },
+                        },
+                    ],
                     responses: {
-                        '200': {
+                        200: {
                             description: '200 response',
                             examples: {
-                                'application/json': 'abc',
+                                'application/json': '{}',
                             },
                         },
                     },
@@ -91,6 +102,20 @@ export async function getSwaggerDoc(
             version: 'API',
         },
         paths,
+        definitions: {
+            Args: {
+                type: 'object',
+                required: [
+                    'args',
+                ],
+                properties: {
+                    args: {
+                        type: 'array',
+                        example: [],
+                    },
+                },
+            },
+        },
         consumes: [
             'application/json',
         ],

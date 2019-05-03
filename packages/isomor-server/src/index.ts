@@ -67,8 +67,9 @@ export async function getSwaggerDoc(
         return Object.keys(functions).forEach(name => {
             paths[getEntrypoint(file, name)] = {
                 post: {
-                    operationId: file,
+                    operationId: `${file}-${name}`,
                     summary: file,
+                    tags: [file],
                     produces: [
                         'application/json',
                     ],

@@ -1,6 +1,6 @@
 {
     "name": "isomor-server",
-    "version": "0.5.4",
+    "version": "0.6.0",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "author": "Alexandre Piel <alexandre.piel@gmail.com>",
@@ -23,7 +23,7 @@
         "cookie-parser": "^1.4.4",
         "express": "^4.16.4",
         "fs-extra": "^7.0.1",
-        "isomor-core": "^0.5.4",
+        "isomor-core": "^0.6.0",
         "logol": "^0.0.1",
         "swagger-ui-express": "^4.0.2",
         "typescript": "^3.2.4"

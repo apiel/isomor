@@ -6,8 +6,8 @@
 * [Getting started - VueJs](/?id=getting-started-with-vuejs)
 * [Request / Response](/?id=request-response-context)
 * Advanced guides
-    * [Server](Docs/Server.md)
-        * [Swagger](Docs/Server.md/?id=api-documentation-with-swagger)
-        * [Custom server](Docs/Server.md/?id=custom-server)
-    * [Manual setup](Docs/Manual-setup.md)
-    * [Babel](Docs/Babel.md)
+    * [Server](Docs/Server)
+        * [Swagger](Docs/Server?id=api-documentation-with-swagger)
+        * [Custom server](Docs/Server?id=custom-server)
+    * [Manual setup](Docs/Manual-setup)
+    * [Babel](Docs/Babel)

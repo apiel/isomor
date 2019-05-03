@@ -1,6 +1,6 @@
 {
   "name": "react-app",
-  "version": "0.5.4",
+  "version": "0.5.5",
   "private": true,
   "dependencies": {
     "@types/jest": "^24.0.11",

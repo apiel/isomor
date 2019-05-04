@@ -25,6 +25,7 @@
     "vue-property-decorator": "^8.1.0"
   },
   "devDependencies": {
+    "@types/fs-extra": "^5.0.5",
     "@vue/cli-plugin-babel": "^3.7.0",
     "@vue/cli-plugin-typescript": "^3.7.0",
     "@vue/cli-service": "^3.7.0",

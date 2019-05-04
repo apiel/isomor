@@ -1,5 +1,11 @@
 <template>
-  <p>Color</p>
+    <div v-if="color" v-bind:style="{ color }">
+        <b>{{color}}</b> Choose a color &nbsp;
+        <button @click="setColor('blue')">blue</button>
+        <button @click="setColor('red')">red</button>
+        <button @click="setColor('green')">green</button>
+        <button @click="setColor('pink')">pink</button>
+    </div>
 </template>
 
 <script lang="ts">
@@ -7,31 +13,28 @@ import {
   Component,
   Vue,
 } from "vue-property-decorator";
+import { useAsyncCacheWatch } from "vue-async-cache";
+import { getColor, setColor } from "./server/color";
 
 @Component
-export default class Color extends Vue {}
+export default class Color extends Vue {
+  private cacheWatch = useAsyncCacheWatch(getColor);
 
-// import React from 'react';
-// import { useAsyncCacheWatch } from 'react-async-cache';
-// import { getColor, setColor } from './server/color';
+  get color() {
+    return this.cacheWatch.getResponse();
+  }
 
-// export const Color = () => {
-//     const { load, response: color, update } = useAsyncCacheWatch(getColor);
-//     React.useEffect(() => { load(); }, []);
-//     const onClickColor = (newColor: string) => async () => {
-//         console.log('click color', newColor);
-//         await setColor(newColor);
-//         update(newColor, getColor);
-//     }
-//     return (
-//         <div style={{ color }}>
-//             <b>{ color }</b> Choose a color &nbsp;
-//             <button onClick={onClickColor('blue')}>blue</button>
-//             <button onClick={onClickColor('red')}>red</button>
-//             <button onClick={onClickColor('green')}>green</button>
-//             <button onClick={onClickColor('pink')}>pink</button>
-//         </div>
-//     );
-// }
+  async setColor(newColor: string) {
+    await setColor(newColor);
+    this.cacheWatch.update(newColor, getColor);
+  }
 
+  load() {
+    this.cacheWatch.load();
+  }
+
+  async mounted() {
+      this.load();
+  }
+}
 </script>

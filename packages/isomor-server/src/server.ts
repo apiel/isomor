@@ -16,6 +16,8 @@ interface Options {
     staticFolder: string | null;
 }
 
+const API_DOCS = '/api-docs';
+
 async function start(options: Options) {
     const { distServerFolder, port, staticFolder, serverFolder } = options;
     info('Starting server.');
@@ -24,7 +26,7 @@ async function start(options: Options) {
     app.use(bodyParser.json());
     app.use(cookieParser());
 
-    app.use('/api-docs', serve, setup(await getSwaggerDoc(distServerFolder, serverFolder)));
+    app.use(API_DOCS, serve, setup(await getSwaggerDoc(distServerFolder, serverFolder)));
 
     const endpoints = await useIsomor(app, distServerFolder, serverFolder);
     info('Created endpoints:', endpoints);
@@ -49,7 +51,10 @@ async function start(options: Options) {
         res.status(500).send(err.message);
     });
 
-    app.listen(port, () => success(`Server listening on port ${port}!`));
+    app.listen(port, () => {
+        success(`Server listening on port ${port}!`);
+        info(`Find API documentation at http://127.0.0.1:${port}${API_DOCS}`);
+    });
 }
 
 start({

@@ -3,6 +3,10 @@
 - more example for vuejs -> vue-async-cache
 - include vue-async-cache in isomor-vue-app
 
+- pkg.json
+  - add keyword
+  - "homepage": "http://...",
+
 - angular example
 - TypeORM example
 

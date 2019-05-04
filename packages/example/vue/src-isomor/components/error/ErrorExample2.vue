@@ -1,18 +1,35 @@
-// import React from 'react';
-// import { useAsyncCacheWatch } from 'react-async-cache';
+<template>
+    <div>
+        <p v-if="error" class="error"><b>Some error handling example 2:</b> {{error}} </p>
+        <button @click="load()">Throw another error</button>
+    </div>
+</template>
 
-// import { getSomethingWithError } from './server/data';
+<script lang="ts">
+import {
+  Component,
+  Vue,
+} from "vue-property-decorator";
+import { getSomethingWithError } from "./server/data";
+import { asyncCache, useAsyncCacheWatch } from "vue-async-cache";
 
-// const errorStyle = {
-//   color: 'red',
-// }
+@Component
+export default class ErrorExample2 extends Vue {
+  private cacheWatch = useAsyncCacheWatch(getSomethingWithError);
 
-// export const ErrorExample2 = () => {
-//   const { load, response, error } = useAsyncCacheWatch(getSomethingWithError);
-//   return (
-//     <div style={errorStyle}>
-//       {error && <p><b>Some error handling example 2:</b> {error.toString()} </p>}
-//       <button onClick={load}>Throw another error</button>
-//     </div>
-//   );
-// }
+  get error() {
+    return this.cacheWatch.getError();
+  }
+
+  load() {
+    this.cacheWatch.load();
+  }
+}
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+.error {
+  color: red;
+}
+</style>

@@ -5,11 +5,11 @@ import { styleCard } from '../styleCard';
 import { Props } from '../props';
 
 export const Color = ({ e2eId }: Props) => {
-    const { load, response: color, update } = useAsyncCacheWatch(getColor);
-    React.useEffect(() => { load(); }, []);
+    const { call, response: color, update } = useAsyncCacheWatch(getColor);
+    React.useEffect(() => { call(); }, []);
     const onClickColor = (newColor: string) => async () => {
         await setColor(newColor);
-        update(newColor, getColor);
+        update(newColor);
     }
     return (
         <div style={styleCard} data-id={e2eId}>

@@ -22,7 +22,7 @@ export default class Time extends Vue {
   }
 
   load() {
-    this.cacheWatch.load();
+    this.cacheWatch.call();
   }
 
   async mounted() {

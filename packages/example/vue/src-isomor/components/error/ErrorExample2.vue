@@ -22,7 +22,7 @@ export default class ErrorExample2 extends Vue {
   }
 
   load() {
-    this.cacheWatch.load();
+    this.cacheWatch.call();
   }
 }
 </script>

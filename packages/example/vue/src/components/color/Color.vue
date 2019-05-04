@@ -26,11 +26,11 @@ export default class Color extends Vue {
 
   async setColor(newColor: string) {
     await setColor(newColor);
-    this.cacheWatch.update(newColor, getColor);
+    this.cacheWatch.update(newColor);
   }
 
   load() {
-    this.cacheWatch.load();
+    this.cacheWatch.call();
   }
 
   async mounted() {

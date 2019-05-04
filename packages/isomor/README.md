@@ -195,11 +195,11 @@ import { useAsyncCacheEffect } from 'react-async-cache';
 import { getTime } from './server/getTime';
 
 export const Time = () => {
-  const { load, response } = useAsyncCacheEffect(getTime);
+  const { call, response } = useAsyncCacheEffect(getTime);
   return (
     <div>
       {!response ? <p>Loading...</p> : (
-        <p><b>Server time:</b> {response.time} <button onClick={load}>reload</button></p>
+        <p><b>Server time:</b> {response.time} <button onClick={call}>reload</button></p>
       )}
     </div>
   );
@@ -220,19 +220,19 @@ import { getTime } from './server/getTime';
 import { setTime } from './server/setTime';
 
 export const Time = () => {
-  const { load, response, update } = useAsyncCacheWatch(getTime);
-  React.useEffect(() => { load(); }, []);
-  const onClickUpdate = (newColor: string) => async () => {
+  const { call, response, update } = useAsyncCacheWatch(getTime);
+  React.useEffect(() => { call(); }, []);
+  const onClickUpdate = () => async () => {
     const newTime = await setTime('08:00');
-    update(newTime, getTime);
+    update(newTime);
   }
   return (
     <div>
       {!response ? <p>Loading...</p> : (
         <p>
           <b>Server time:</b> {response.time}
-          <button onClick={load}>reload</button>
-          <button onClickUpdate={load}>update</button>
+          <button onClick={call}>reload</button>
+          <button onClickUpdate={onClickUpdate}>update</button>
         </p>
       )}
     </div>

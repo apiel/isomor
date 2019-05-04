@@ -10,7 +10,7 @@
     "fs-extra": "^7.0.1",
     "isomor": "^0.2.2",
     "react": "^16.8.6",
-    "react-async-cache": "^0.5.1",
+    "react-async-cache": "^0.7.0",
     "react-dom": "^16.8.6",
     "react-scripts": "3.0.0",
     "run-screen": "^0.5.2",

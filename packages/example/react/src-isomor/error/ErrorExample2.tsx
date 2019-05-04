@@ -8,11 +8,11 @@ const errorStyle = {
 }
 
 export const ErrorExample2 = () => {
-  const { load, response, error } = useAsyncCacheWatch(getSomethingWithError);
+  const { call, response, error } = useAsyncCacheWatch(getSomethingWithError);
   return (
     <div style={errorStyle}>
       {error && <p><b>Some error handling example 2:</b> {error.toString()} </p>}
-      <button onClick={load}>Throw another error</button>
+      <button onClick={call}>Throw another error</button>
     </div>
   );
 }

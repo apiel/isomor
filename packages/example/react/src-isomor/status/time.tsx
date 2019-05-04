@@ -5,12 +5,12 @@ import { getTime } from './server/getTime';
 
 export const Time = () => {
   // look at timeUTC.tsx using useAsyncCacheEffect taking care of useEffect
-  const { load, response } = useAsyncCacheWatch(getTime);
-  React.useEffect(() => { load(); }, []);
+  const { call, response } = useAsyncCacheWatch(getTime);
+  React.useEffect(() => { call(); }, []);
   return (
     <div>
       {!response ? <p>Loading...</p> : (
-        <p><b>Server time:</b> {response.time} <button onClick={load}>reload</button></p>
+        <p><b>Server time:</b> {response.time} <button onClick={call}>reload</button></p>
       )}
     </div>
   );

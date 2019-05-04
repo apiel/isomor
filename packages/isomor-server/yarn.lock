@@ -403,9 +403,9 @@ ipaddr.js@1.8.0:
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/ipaddr.js/-/ipaddr.js-1.8.0.tgz#eaa33d6ddd7ace8f7f6fe0c9ca0440e706738b1e"
 
-isomor-core@^0.5.4:
-  version "0.5.4"
-  resolved "https://registry.yarnpkg.com/isomor-core/-/isomor-core-0.5.4.tgz#a3170a7c5aff9e7a29601b109877e6f30cae7054"
+isomor-core@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/isomor-core/-/isomor-core-0.6.0.tgz#8bc619815c34429600c7ada52b37032c48df4a0e"
   dependencies:
     fs-extra "^7.0.1"
     glob "^7.1.3"

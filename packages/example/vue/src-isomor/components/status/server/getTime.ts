@@ -1,6 +1,6 @@
 
 export interface ServerTime {
-    time: string,
+    time: string;
 }
 
 export async function getTime(): Promise<ServerTime> {

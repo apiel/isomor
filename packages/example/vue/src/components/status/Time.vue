@@ -1,5 +1,8 @@
 <template>
-  <p>Time</p>
+    <p v-if="time">
+        <b>Server time:</b> {{time}} <button @click="load()">reload</button>
+    </p>
+    <p v-else>Loading...</p>
 </template>
 
 <script lang="ts">
@@ -7,25 +10,23 @@ import {
   Component,
   Vue,
 } from "vue-property-decorator";
+import { useAsyncCacheWatch } from "vue-async-cache";
+import { getTime } from "./server/getTime";
 
 @Component
-export default class Time extends Vue {}
+export default class Time extends Vue {
+  private cacheWatch = useAsyncCacheWatch(getTime);
 
-// import React from 'react';
-// import { useAsyncCacheWatch } from 'react-async-cache';
+  get time() {
+    return this.cacheWatch.getResponse().time;
+  }
 
-// import { getTime } from './server/getTime';
+  load() {
+    this.cacheWatch.load();
+  }
 
-// export const Time = () => {
-//   // look at timeUTC.tsx using useAsyncCacheEffect taking care of useEffect
-//   const { load, response } = useAsyncCacheWatch(getTime);
-//   React.useEffect(() => { load(); }, []);
-//   return (
-//     <div>
-//       {!response ? <p>Loading...</p> : (
-//         <p><b>Server time:</b> {response.time} <button onClick={load}>reload</button></p>
-//       )}
-//     </div>
-//   );
-// }
+  async mounted() {
+      this.load();
+  }
+}
 </script>

@@ -8,17 +8,20 @@
     </ul>
     <button @click="load()">load</button>
     <TwoColumn />
+    <Stats />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import TwoColumn from "./components/TwoColumn.vue";
+import Stats from "./components/status/Stats.vue";
 import { getList } from "./server/data";
 
 @Component({
   components: {
     TwoColumn,
+    Stats,
   }
 })
 export default class App extends Vue {

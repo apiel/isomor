@@ -3,6 +3,16 @@
 - more example for vuejs -> vue-async-cache
 - include vue-async-cache in isomor-vue-app
 
+- FIX 1:26 Could not find a declaration file for module 'express'. '/home/alex/dev/node/pkg/isomor/packages/example/vue/node_modules/express/index.js' implicitly has an 'any' type.
+  Try `npm install @types/express` if it exists or add a new declaration (.d.ts) file containing `declare module 'express';`
+  > 1 | import * as express from 'express';
+      |                          ^
+    2 | export interface Context {
+    3 |     req: express.Request;
+    4 |     res: express.Response;
+Version: typescript 3.4.5
+
+
 - pkg.json
   - add keyword
   - "homepage": "http://...",

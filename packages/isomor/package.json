@@ -1,13 +1,19 @@
 {
     "name": "isomor",
-    "version": "0.6.0",
+    "version": "0.6.1",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "author": "Alexandre Piel <alexandre.piel@gmail.com>",
     "description": "Isomor is a library to create an interface between your backend and your frontend with nodejs and javascript application",
     "license": "MIT",
     "homepage": "https://apiel.github.io/isomor/",
-    "keywords": ["isomorphic", "typescript", "react", "vue", "server"],
+    "keywords": [
+        "isomorphic",
+        "typescript",
+        "react",
+        "vue",
+        "server"
+    ],
     "repository": {
         "type": "git",
         "url": "https://github.com/apiel/isomor"
@@ -20,7 +26,7 @@
     },
     "dependencies": {
         "axios": "^0.18.0",
-        "isomor-server": "^0.6.0",
+        "isomor-server": "^0.6.1",
         "isomor-transpiler": "^0.6.0",
         "typescript": "^3.2.4"
     },

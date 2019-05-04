@@ -8,14 +8,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const fs_extra_1 = require("fs-extra");
-function rand() {
-    return Math.floor(Math.random() * 1000);
-}
-function getList(input) {
+const getCpuAndMem_1 = require("./os/getCpuAndMem");
+function getStatus() {
     return __awaiter(this, void 0, void 0, function* () {
-        const files = yield fs_extra_1.readdir('./');
-        return files.map(file => `${file}-${input.foo}-${rand()}`);
+        return Object.assign({ uptime: process.uptime() }, getCpuAndMem_1.getCpuAndMem());
     });
 }
-exports.getList = getList;
+exports.getStatus = getStatus;

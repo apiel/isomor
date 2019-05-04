@@ -1,4 +1,5 @@
 import { remote } from "isomor";
-export function getServerUptime(...args: any) {
-  return remote("server-data", "getServerUptime", args);
+import { readdir } from "fs-extra";
+export function getList(...args: any) {
+  return remote("server-data", "getList", args);
 }

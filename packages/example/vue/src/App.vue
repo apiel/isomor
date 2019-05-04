@@ -1,28 +1,40 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <p style="color: green">
-      <b>Server uptime:</b>
-      {{ uptime || 'loading...' }}
-    </p>
+    <h1>Isomor Vue example</h1>
+    <ul id="example-1">
+      <li v-for="item in list">
+        {{ item }}
+      </li>
+    </ul>
+    <button @click="load()">load</button>
+    <TwoColumn />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import { getServerUptime } from "./server/data";
+import TwoColumn from "./components/TwoColumn.vue";
+import { getList } from "./server/data";
 
-@Component
+@Component({
+  components: {
+    TwoColumn,
+  }
+})
 export default class App extends Vue {
-  private uptime!: string;
+  private list!: string[];
+
+  async load() {
+    this.list = await getList({ foo: "bar" });
+  }
 
   data() {
     return {
-      uptime: null
+      list: null
     };
   }
-  async mounted() {
-    this.uptime = await getServerUptime();
+  mounted() {
+    this.load();
   }
 }
 </script>
@@ -32,8 +44,6 @@ export default class App extends Vue {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>

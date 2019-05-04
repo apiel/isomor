@@ -16,6 +16,7 @@ const cookieParser = require("cookie-parser");
 const swagger_ui_express_1 = require("swagger-ui-express");
 const _1 = require(".");
 const path_1 = require("path");
+const API_DOCS = '/api-docs';
 function start(options) {
     return __awaiter(this, void 0, void 0, function* () {
         const { distServerFolder, port, staticFolder, serverFolder } = options;
@@ -23,7 +24,7 @@ function start(options) {
         const app = express();
         app.use(bodyParser.json());
         app.use(cookieParser());
-        app.use('/api-docs', swagger_ui_express_1.serve, swagger_ui_express_1.setup(yield _1.getSwaggerDoc(distServerFolder, serverFolder)));
+        app.use(API_DOCS, swagger_ui_express_1.serve, swagger_ui_express_1.setup(yield _1.getSwaggerDoc(distServerFolder, serverFolder)));
         const endpoints = yield _1.useIsomor(app, distServerFolder, serverFolder);
         logol_1.info('Created endpoints:', endpoints);
         if (staticFolder) {
@@ -37,7 +38,10 @@ function start(options) {
             logol_1.error(err);
             res.status(500).send(err.message);
         });
-        app.listen(port, () => logol_1.success(`Server listening on port ${port}!`));
+        app.listen(port, () => {
+            logol_1.success(`Server listening on port ${port}!`);
+            logol_1.info(`Find API documentation at http://127.0.0.1:${port}${API_DOCS}`);
+        });
     });
 }
 start({

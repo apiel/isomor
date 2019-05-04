@@ -1,6 +1,6 @@
 ### ToDo
 
-- Maybe need to put @types/express in dependency instead of dev
+- update doc to use vue-async-cache
 
 - angular example
 - TypeORM example

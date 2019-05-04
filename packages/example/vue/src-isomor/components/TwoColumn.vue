@@ -2,12 +2,10 @@
   <div class="styleRow">
     <div class="styleCol">
       <Time/>
-      <TimeUTC/>
       <Color/>
     </div>
     <div class="styleCol">
       <Time/>
-      <TimeUTC/>
       <Color/>
     </div>
   </div>
@@ -19,13 +17,11 @@ import {
   Vue,
 } from "vue-property-decorator";
 import Time from "./status/Time.vue";
-import TimeUTC from "./status/TimeUTC.vue";
 import Color from "./color/Color.vue";
 
 @Component({
   components: {
     Time,
-    TimeUTC,
     Color,
   }
 })

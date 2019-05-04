@@ -1,6 +1,6 @@
 <template>
-    <p v-if="time">
-        <b>Server time:</b> {{time}} <button @click="load()">reload</button>
+    <p v-if="response">
+        <b>Server time:</b> {{response.time}} <button @click="load()">reload</button>
     </p>
     <p v-else>Loading...</p>
 </template>
@@ -17,8 +17,8 @@ import { getTime } from "./server/getTime";
 export default class Time extends Vue {
   private cacheWatch = useAsyncCacheWatch(getTime);
 
-  get time() {
-    return this.cacheWatch.getResponse().time;
+  get response() {
+    return this.cacheWatch.getResponse();
   }
 
   load() {

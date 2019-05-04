@@ -1,6 +1,7 @@
 ### ToDo
 
 - update doc to use vue-async-cache
+- add vue-async-cache to vue create
 
 - angular example
 - TypeORM example

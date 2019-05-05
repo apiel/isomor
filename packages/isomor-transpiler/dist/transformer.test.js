@@ -42,6 +42,12 @@ describe('transformer', () => {
             expect(ttc(`import { something } from './my/import';`)).toBe('');
         });
     });
+    describe('transformExport()', () => {
+        const ttc = transformToCode(transformer_1.transformExport);
+        it('should transform export Literal to LiteralString', () => {
+            expect(ttc(`export { CpuInfo } from 'os';`)).toBe(`export { CpuInfo } from "os";`);
+        });
+    });
 });
 function JsonAst(node) {
     const skip = ['loc', 'range'];

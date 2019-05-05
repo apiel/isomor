@@ -28,4 +28,11 @@ function transformImport(root) {
     return root;
 }
 exports.transformImport = transformImport;
+function transformExport(root) {
+    if (root.type === 'ExportNamedDeclaration' && root.source.type === 'Literal') {
+        root.source.type = 'StringLiteral';
+    }
+    return root;
+}
+exports.transformExport = transformExport;
 //# sourceMappingURL=transformer.js.map

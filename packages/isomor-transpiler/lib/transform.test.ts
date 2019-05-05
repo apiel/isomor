@@ -47,5 +47,15 @@ describe('transform', () => {
             const newBody = transform([...body], path);
             expect(newBody).toEqual([getCodeImportMock(), anotherNode]);
         });
+
+        it('should insert node array', () => {
+            const nodeArray = ['ins1', 'ins2', 'ins3'];
+            (transformNode as jest.Mock).mockImplementation()
+                                        .mockReturnValueOnce(nodeArray)
+                                        .mockReturnValue('node2');
+            const body = ['node1', 'node2'] as any;
+            const newBody = transform([...body], path);
+            expect(newBody).toEqual([getCodeImportMock(), ...nodeArray, 'node2']);
+        });
     });
 });

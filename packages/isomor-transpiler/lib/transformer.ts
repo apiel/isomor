@@ -39,3 +39,5 @@ export function transformExport(root: TSESTree.Statement) {
     }
     return root;
 }
+
+// export default type = { User: any };

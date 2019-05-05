@@ -1,4 +1,6 @@
-export function getCodeType(name: string): any {
+import { TSESTree } from '@typescript-eslint/typescript-estree';
+
+export function getCodeType(name: string) {
     return {
         type: 'ExportNamedDeclaration',
         declaration: {
@@ -12,10 +14,10 @@ export function getCodeType(name: string): any {
             },
         },
         specifiers: [],
-    };
+    } as TSESTree.Statement;
 }
 
-export function getCodeImport(): any {
+export function getCodeImport() {
     const name = 'remote';
     return {
         type: 'ImportDeclaration',
@@ -36,10 +38,10 @@ export function getCodeImport(): any {
             type: 'StringLiteral',
             value: 'isomor',
         },
-    };
+    } as any as TSESTree.Statement; // need to try to remove any
 }
 
-export function getCodeFunc(fileName: string, name: string, withTypes: boolean): any {
+export function getCodeFunc(fileName: string, name: string, withTypes: boolean) {
     return {
         type: 'ExportNamedDeclaration',
         declaration: {
@@ -51,10 +53,10 @@ export function getCodeFunc(fileName: string, name: string, withTypes: boolean):
             params: getParams(withTypes),
             body: getBody(fileName, name),
         },
-    };
+    } as TSESTree.Statement;
 }
 
-export function getCodeArrowFunc(fileName: string, name: string, withTypes: boolean): any {
+export function getCodeArrowFunc(fileName: string, name: string, withTypes: boolean) {
     return {
         type: 'ExportNamedDeclaration',
         declaration: {
@@ -75,7 +77,7 @@ export function getCodeArrowFunc(fileName: string, name: string, withTypes: bool
             ],
             kind: 'const',
         },
-    };
+    } as TSESTree.Statement;
 }
 
 // arguments => (...args)

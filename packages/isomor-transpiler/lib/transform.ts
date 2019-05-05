@@ -4,6 +4,7 @@ import Debug from 'debug';
 import { getCodeImport } from './code';
 import { transformNode } from './transformNode';
 import { JsonAst } from './transformer.test';
+import { isArray } from 'util';
 
 const debug = Debug('isomor-transpiler:transform');
 
@@ -13,17 +14,18 @@ export default function transform(
     withTypes: boolean = true,
     noServerImport: boolean = false,
 ) {
-    body.forEach((node, index) => {
+    let newBody = [getCodeImport()];
+    body.forEach((node) => {
         const newNode = transformNode(node, path, withTypes, noServerImport);
         if (newNode) {
-            body[index] = newNode;
+            if (isArray(newNode)) {
+                newBody = [...newBody, ...newNode];
+            } else {
+                newBody = [...newBody, newNode];
+            }
         } else {
-            // console.log('delete node', JsonAst(node));
             debug('remove code', node.type);
-            delete body[index];
         }
     });
-    body.unshift(getCodeImport());
-
-    return body.filter(statement => statement);
+    return newBody;
 }

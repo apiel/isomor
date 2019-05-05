@@ -3,6 +3,8 @@
 - transformExport to any for noServerImport option
   - should we keep this noServerImport? I guess
 
+- FIX local export `export { User } from './entity';` to any??
+
 - angular example
 
 - ? isomor-cli > for install react or vue, and maybe some other feature

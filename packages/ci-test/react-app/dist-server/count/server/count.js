@@ -12,14 +12,13 @@ const fs_extra_1 = require("fs-extra");
 const file = './data/count.txt';
 exports.getCount = () => __awaiter(this, void 0, void 0, function* () {
     if (!(yield fs_extra_1.pathExists(file))) {
-        return '0';
+        return 0;
     }
-    return (yield fs_extra_1.readFile(file)).toString();
+    return parseInt((yield fs_extra_1.readFile(file)).toString(), 10);
 });
 exports.increment = () => __awaiter(this, void 0, void 0, function* () {
-    const value = parseInt(yield exports.getCount(), 10);
+    const value = yield exports.getCount();
     const newValue = value + 1;
     yield fs_extra_1.outputFile(file, newValue);
-    console.log('newValue', newValue);
-    return newValue.toString();
+    return newValue;
 });

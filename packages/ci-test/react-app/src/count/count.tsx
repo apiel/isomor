@@ -4,7 +4,7 @@ import { getCount, increment } from './server/count';
 import { Props } from '../props';
 
 export const Count = ({ e2eId }: Props) => {
-    const [count, setCount] = React.useState<string>('loading...');
+    const [count, setCount] = React.useState<number>(0);
     const load = async () => {
         setCount(await getCount());
     }

@@ -2,6 +2,7 @@ import generate from '@babel/generator';
 import { parse } from '@typescript-eslint/typescript-estree';
 
 import { transformInterface, transformImport, transformExport } from './transformer';
+import { getCodeType } from './code';
 
 const codeSourceInterface = `
 export interface MyInterface {
@@ -31,6 +32,10 @@ const transformToCode = (fn: any) => (source: string): string  => {
     return code;
 };
 
+jest.mock('./code', () => ({
+    getCodeType: jest.fn().mockReturnValue('getCodeTypeMock'),
+}));
+
 describe('transformer', () => {
     describe('transformInterface()', () => {
         const ttc = transformToCode(transformInterface);
@@ -51,6 +56,13 @@ describe('transformer', () => {
         const ttc = transformToCode(transformExport);
         it('should transform export Literal to LiteralString', () => {
             expect(ttc(`export { CpuInfo } from 'os';`)).toBe(`export { CpuInfo } from "os";`);
+        });
+        it('should transform locale export', () => {
+            const program = parse(`export { CpuInfo, Abc } from './my/import';`);
+            const node = transformExport(program.body[0]);
+            expect(node).toEqual(['getCodeTypeMock', 'getCodeTypeMock']);
+            expect(getCodeType).toHaveBeenCalledWith('CpuInfo');
+            expect(getCodeType).toHaveBeenCalledWith('Abc');
         });
     });
 });

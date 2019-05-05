@@ -1,6 +1,3 @@
-import generate from '@babel/generator';
-import { parse } from '@typescript-eslint/typescript-estree';
-
 import transform from './transform';
 import { transformNode } from './transformNode';
 

@@ -1,7 +1,6 @@
 ### ToDo
 
 - angular example
-- TypeORM example
 
 - ? isomor-cli > for install react or vue, and maybe some other feature
 

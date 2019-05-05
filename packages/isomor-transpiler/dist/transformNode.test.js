@@ -33,7 +33,7 @@ function shouldNotBeTranspiled() {
         it('should transform export from', () => {
             const { node, newNode } = transformNodeTest(`export { CpuInfo } from 'os';`);
             expect(newNode).toEqual('TransformExport');
-            expect(transformer_1.transformExport).toHaveBeenCalledWith(node);
+            expect(transformer_1.transformExport).toHaveBeenCalledWith(node, false);
         });
         it('should transform import', () => {
             const { node, newNode } = transformNodeTest(`import { readdir } from 'fs-extra';`);

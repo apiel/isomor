@@ -7,7 +7,7 @@ const debug = debug_1.default('isomor-transpiler:transformNode');
 function transformNode(node, path, withTypes, noServerImport) {
     if (node.type === 'ExportNamedDeclaration') {
         if (!node.declaration) {
-            return transformer_1.transformExport(node);
+            return transformer_1.transformExport(node, noServerImport);
         }
         else if (node.declaration.type === 'TSTypeAliasDeclaration') {
             return code_1.getCodeType(node.declaration.id.name);

@@ -58,6 +58,14 @@ describe('transformer', () => {
             expect(code_1.getCodeType).toHaveBeenCalledWith('CpuInfo');
             expect(code_1.getCodeType).toHaveBeenCalledWith('Abc');
         });
+        it('should transform export to any if noServerImport=true', () => {
+            const noServerImport = true;
+            const program = typescript_estree_1.parse(`export { CpuInfo, Abc } from 'os';`);
+            const node = transformer_1.transformExport(program.body[0], noServerImport);
+            expect(node).toEqual(['getCodeTypeMock', 'getCodeTypeMock']);
+            expect(code_1.getCodeType).toHaveBeenCalledWith('CpuInfo');
+            expect(code_1.getCodeType).toHaveBeenCalledWith('Abc');
+        });
     });
 });
 function JsonAst(node) {

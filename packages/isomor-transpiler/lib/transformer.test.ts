@@ -24,7 +24,7 @@ const codeTranspiledInterface =
   world: any;
 }`;
 
-const transformToCode = (fn: any) => (source: string): string  => {
+const transformToCode = (fn: any) => (source: string): string => {
     const program = parse(source);
     // console.log('JsonAst', JsonAst(program.body[0]));
     program.body[0] = fn(program.body[0]);
@@ -64,11 +64,19 @@ describe('transformer', () => {
             expect(getCodeType).toHaveBeenCalledWith('CpuInfo');
             expect(getCodeType).toHaveBeenCalledWith('Abc');
         });
+        it('should transform export to any if noServerImport=true', () => {
+            const noServerImport = true;
+            const program = parse(`export { CpuInfo, Abc } from 'os';`);
+            const node = transformExport(program.body[0], noServerImport);
+            expect(node).toEqual(['getCodeTypeMock', 'getCodeTypeMock']);
+            expect(getCodeType).toHaveBeenCalledWith('CpuInfo');
+            expect(getCodeType).toHaveBeenCalledWith('Abc');
+        });
     });
 });
 
 export function JsonAst(node: any) {
     const skip = ['loc', 'range'];
-    const replacer = (key: string, value: any) => skip.includes(key)  ? undefined : value;
+    const replacer = (key: string, value: any) => skip.includes(key) ? undefined : value;
     return JSON.stringify(node, replacer, 4);
 }

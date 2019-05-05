@@ -29,9 +29,9 @@ function transformImport(root) {
     return root;
 }
 exports.transformImport = transformImport;
-function transformExport(root) {
+function transformExport(root, noServerImport = false) {
     if (root.type === 'ExportNamedDeclaration' && root.source.type === 'Literal') {
-        if (root.source.value[0] === '.') {
+        if (root.source.value[0] === '.' || noServerImport) {
             return root.specifiers.map(({ exported: { name } }) => code_1.getCodeType(name));
         }
         root.source.type = 'StringLiteral';

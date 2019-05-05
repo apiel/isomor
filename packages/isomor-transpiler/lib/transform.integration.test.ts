@@ -66,7 +66,7 @@ export const getTime3 = (...args: any) => {
 // we migh want to transform `export { CpuInfo } from "os";` to `export type CpuInfo = any;`
 const codeTranspiledNoServerImport =
   `import { remote } from "isomor";
-export { CpuInfo } from "os";
+export type CpuInfo = any;
 export type CpuInfo = any;
 export type Abc = any;
 export type MyType = any;

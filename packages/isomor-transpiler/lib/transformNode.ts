@@ -19,7 +19,7 @@ export function transformNode(
             // console.log('node node declaration', JsonAst(node));
             // console.log('node node declaration', JsonAst(transformExport(node)));
             // console.log('transformExport', transformExport(node));
-            return transformExport(node);
+            return transformExport(node, noServerImport);
         } else if (node.declaration.type === 'TSTypeAliasDeclaration') {
             return getCodeType(node.declaration.id.name);
         } else if (node.declaration.type === 'TSInterfaceDeclaration') {

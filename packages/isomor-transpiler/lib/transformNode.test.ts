@@ -37,7 +37,7 @@ function shouldNotBeTranspiled() {
         it('should transform export from', () => {
             const { node, newNode } = transformNodeTest(`export { CpuInfo } from 'os';`);
             expect(newNode).toEqual('TransformExport');
-            expect(transformExport).toHaveBeenCalledWith(node);
+            expect(transformExport).toHaveBeenCalledWith(node, false);
         });
 
         it('should transform import', () => {

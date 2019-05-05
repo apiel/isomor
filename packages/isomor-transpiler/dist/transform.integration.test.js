@@ -58,7 +58,7 @@ export const getTime3 = (...args: any) => {
   return remote("path/to/file", "getTime3", args);
 };`;
 const codeTranspiledNoServerImport = `import { remote } from "isomor";
-export { CpuInfo } from "os";
+export type CpuInfo = any;
 export type CpuInfo = any;
 export type Abc = any;
 export type MyType = any;

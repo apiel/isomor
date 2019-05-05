@@ -34,9 +34,12 @@ export function transformImport(root: TSESTree.Statement) {
     return root;
 }
 
-export function transformExport(root: TSESTree.Statement) {
+export function transformExport(
+    root: TSESTree.Statement,
+    noServerImport: boolean = false,
+) {
     if (root.type === 'ExportNamedDeclaration' && root.source.type === 'Literal') {
-        if (root.source.value[0] === '.') { // transform local export to types any
+        if (root.source.value[0] === '.' || noServerImport) { // transform local export to types any
             return root.specifiers.map(({ exported: { name }}) => getCodeType(name));
         }
         root.source.type = 'StringLiteral' as any;

@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const isomor_core_1 = require("isomor-core");
 const path_1 = require("path");
+const util_1 = require("util");
 function getFunctions(distServerFolder, file) {
     const filepath = require.resolve(path_1.join(distServerFolder, file), { paths: [process.cwd()] });
     delete require.cache[filepath];
@@ -35,7 +36,7 @@ function useIsomor(app, distServerFolder, serverFolder) {
                         };
                         const args = (req.body && req.body.args) || [];
                         const result = yield context.fn(...args);
-                        return res.send(result);
+                        return res.send(util_1.isNumber(result) ? result.toString() : result);
                     }
                     catch (error) {
                         next(error);

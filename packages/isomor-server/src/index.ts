@@ -1,6 +1,7 @@
 import * as express from 'express';
 import { getFiles, getPathForUrl } from 'isomor-core';
 import { join } from 'path';
+import { isNumber } from 'util';
 
 export interface Context {
     req: express.Request;
@@ -46,7 +47,7 @@ export async function useIsomor(
                     };
                     const args = (req.body && req.body.args) || [];
                     const result = await context.fn(...args);
-                    return res.send(result);
+                    return res.send(isNumber(result) ? result.toString() : result);
                 } catch (error) {
                     next(error);
                 }

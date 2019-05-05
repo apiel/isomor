@@ -1,6 +1,6 @@
 {
   "name": "isomor-example-vue",
-  "version": "0.6.2",
+  "version": "0.6.5",
   "private": true,
   "engines": {
     "node": ">=11"

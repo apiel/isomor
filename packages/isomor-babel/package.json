@@ -9,6 +9,9 @@
         "type": "git",
         "url": "https://github.com/apiel/isomor"
     },
+    "engines": {
+        "node": ">=11"
+    },
     "scripts": {
         "prepublishOnly": "cp ../../Readme.sub.md ./README.md && yarn build",
         "test": "node test/test.js",

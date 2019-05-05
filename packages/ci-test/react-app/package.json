@@ -1,6 +1,9 @@
 {
   "name": "ci-test-react-app",
   "version": "0.6.4",
+  "engines": {
+    "node": ">=11"
+  },
   "private": true,
   "dependencies": {
     "@types/jest": "^24.0.11",

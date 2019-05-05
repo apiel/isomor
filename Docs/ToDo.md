@@ -1,8 +1,11 @@
 ### ToDo
 
+- in installer check for node version
+
 - angular example
 - TypeORM example
 
+- ? isomor-cli > for install react or vue, and maybe some other feature
 
 - test:
   - isomor-server

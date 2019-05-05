@@ -7,6 +7,9 @@
     "description": "Isomor is a library to create an interface between your backend and your frontend with nodejs and javascript application",
     "license": "MIT",
     "homepage": "https://apiel.github.io/isomor/",
+    "engines": {
+        "node": ">=11"
+    },
     "keywords": [
         "isomorphic",
         "typescript",

@@ -10,6 +10,9 @@
   "eslintConfig": {
     "extends": "react-app"
   },
+  "engines": {
+    "node": ">=11"
+  },
   "browserslist": [
     ">0.2%",
     "not dead",

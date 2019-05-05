@@ -10,6 +10,9 @@
         "type": "git",
         "url": "https://github.com/apiel/isomor"
     },
+    "engines": {
+        "node": ">=11"
+    },
     "scripts": {
         "prepublishOnly": "cp ../../Readme.sub.md ./README.md && yarn build",
         "start-example": "DIST_SERVER_FOLDER=../example/react/dist-server yarn start",

@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 
-import { getList, IUser as User } from './server/data';
+import { getList, User } from './server/data';
 
 const App = () => {
   const [list, setList] = React.useState<User[]>([]);

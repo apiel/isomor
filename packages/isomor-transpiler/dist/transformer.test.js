@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const generator_1 = require("@babel/generator");
 const typescript_estree_1 = require("@typescript-eslint/typescript-estree");
 const transformer_1 = require("./transformer");
+const code_1 = require("./code");
 const codeSourceInterface = `
 export interface MyInterface {
     hello: string;
@@ -26,6 +27,9 @@ const transformToCode = (fn) => (source) => {
     const { code } = generator_1.default(program);
     return code;
 };
+jest.mock('./code', () => ({
+    getCodeType: jest.fn().mockReturnValue('getCodeTypeMock'),
+}));
 describe('transformer', () => {
     describe('transformInterface()', () => {
         const ttc = transformToCode(transformer_1.transformInterface);
@@ -46,6 +50,13 @@ describe('transformer', () => {
         const ttc = transformToCode(transformer_1.transformExport);
         it('should transform export Literal to LiteralString', () => {
             expect(ttc(`export { CpuInfo } from 'os';`)).toBe(`export { CpuInfo } from "os";`);
+        });
+        it('should transform locale export', () => {
+            const program = typescript_estree_1.parse(`export { CpuInfo, Abc } from './my/import';`);
+            const node = transformer_1.transformExport(program.body[0]);
+            expect(node).toEqual(['getCodeTypeMock', 'getCodeTypeMock']);
+            expect(code_1.getCodeType).toHaveBeenCalledWith('CpuInfo');
+            expect(code_1.getCodeType).toHaveBeenCalledWith('Abc');
         });
     });
 });

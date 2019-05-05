@@ -7,7 +7,7 @@ const util_1 = require("util");
 const debug = debug_1.default('isomor-transpiler:transform');
 function transform(body, path, withTypes = true, noServerImport = false) {
     let newBody = [code_1.getCodeImport()];
-    body.forEach((node, index) => {
+    body.forEach((node) => {
         const newNode = transformNode_1.transformNode(node, path, withTypes, noServerImport);
         if (newNode) {
             if (util_1.isArray(newNode)) {

@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const traverse = require("traverse");
+const code_1 = require("./code");
 function transformInterface(root) {
     traverse(root).forEach(function (node) {
         if (node) {
@@ -30,6 +31,9 @@ function transformImport(root) {
 exports.transformImport = transformImport;
 function transformExport(root) {
     if (root.type === 'ExportNamedDeclaration' && root.source.type === 'Literal') {
+        if (root.source.value[0] === '.') {
+            return root.specifiers.map(({ exported: { name } }) => code_1.getCodeType(name));
+        }
         root.source.type = 'StringLiteral';
     }
     return root;

@@ -9,6 +9,7 @@ import { CpuInfo } from 'os';
 import { something } from './my/import';
 
 export { CpuInfo } from 'os';
+export { CpuInfo, Abc } from './my/import';
 
 export type MyType = string;
 export interface MyInterface {
@@ -38,6 +39,8 @@ const codeTranspiled = `import { remote } from "isomor";
 import { readdir } from "fs-extra";
 import { CpuInfo } from "os";
 export { CpuInfo } from "os";
+export type CpuInfo = any;
+export type Abc = any;
 export type MyType = any;
 export interface MyInterface {
   foo: CpuInfo;
@@ -56,6 +59,8 @@ export const getTime3 = (...args: any) => {
 };`;
 const codeTranspiledNoServerImport = `import { remote } from "isomor";
 export { CpuInfo } from "os";
+export type CpuInfo = any;
+export type Abc = any;
 export type MyType = any;
 export interface MyInterface {
   foo: any;

@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './App.css';
 
-import { getList } from './server/data';
+import { getList, IUser as User } from './server/data';
 
 const App = () => {
-  const [list, setList] = React.useState<any[]>([]);
+  const [list, setList] = React.useState<User[]>([]);
   const load = async () => {
       setList(await getList());
   }

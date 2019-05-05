@@ -5,6 +5,7 @@
     * [React async cache](/?id=react-async-cache)
 * [Getting started - VueJs](/?id=getting-started-with-vuejs)
 * [Request / Response](/?id=request-response-context)
+* [TypeORM](/?id=typeorm)
 * Advanced guides
     * [Server](Docs/Server)
     * [Manual setup](Docs/Manual-setup)

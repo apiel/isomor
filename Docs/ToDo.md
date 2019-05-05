@@ -1,7 +1,5 @@
 ### ToDo
 
-- in installer check for node version
-
 - angular example
 - TypeORM example
 

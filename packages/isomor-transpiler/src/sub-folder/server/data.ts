@@ -1,4 +1,5 @@
 import { remote } from "isomor";
-export function getList(...args) {
+import { readdir } from "fs-extra";
+export function getList(...args: any) {
   return remote("sub-folder-server-data", "getList", args);
 }

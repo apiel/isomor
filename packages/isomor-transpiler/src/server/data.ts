@@ -1,13 +1,14 @@
 import { remote } from "isomor";
+import { readdir } from "fs-extra";
 export interface GetListInput {
   foo: string;
 }
-export function getList(...args) {
+export function getList(...args: any) {
   return remote("server-data", "getList", args);
 }
-export function getListFoo(...args) {
+export function getListFoo(...args: any) {
   return remote("server-data", "getListFoo", args);
 }
-export const getList2 = (...args) => {
+export const getList2 = (...args: any) => {
   return remote("server-data", "getList2", args);
 };

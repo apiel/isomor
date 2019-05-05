@@ -31,6 +31,7 @@
         "fs-extra": "^7.0.1",
         "isomor-core": "^0.6.0",
         "logol": "^0.0.1",
+        "please-upgrade-node": "^3.1.1",
         "traverse": "^0.6.6",
         "ts-node": "^8.0.3",
         "typescript": "^3.4.3"

@@ -9,6 +9,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const pkg = require('../package.json');
+require('please-upgrade-node')(pkg);
 const logol_1 = require("logol");
 const express = require("express");
 const bodyParser = require("body-parser");

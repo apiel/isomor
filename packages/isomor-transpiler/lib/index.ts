@@ -1,5 +1,15 @@
 #!/usr/bin/env node
 
+const pkg = require('../package.json'); // tslint:disable-line
+require('please-upgrade-node')(pkg, {  // tslint:disable-line
+    message: (v: string) => `
+    ┌─────────────────────────────────────────────────────────┐
+    │ isomor-transpiler requires at least version ${v} of Node. │
+    │                     Please upgrade.                     │
+    └─────────────────────────────────────────────────────────┘
+    `,
+});
+
 import { info, warn } from 'logol';
 import { readFile, outputFile, emptyDir, copy, unlink } from 'fs-extra';
 import { join } from 'path';

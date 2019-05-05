@@ -9,9 +9,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const entity_1 = require("./entity");
+const typeorm_1 = require("typeorm");
 function getList() {
     return __awaiter(this, void 0, void 0, function* () {
-        return entity_1.db().manager.find(entity_1.User);
+        return typeorm_1.getConnection().manager.find(entity_1.User);
     });
 }
 exports.getList = getList;

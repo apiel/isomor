@@ -1,4 +1,6 @@
-import { createConnection, getConnection } from 'typeorm';
+import 'reflect-metadata';
+import { createConnection } from 'typeorm';
+
 export { User } from './User';
 
 createConnection().then(() => {

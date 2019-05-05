@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+require("reflect-metadata");
 const typeorm_1 = require("typeorm");
 var User_1 = require("./User");
 exports.User = User_1.User;

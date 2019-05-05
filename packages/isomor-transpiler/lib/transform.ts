@@ -14,44 +14,11 @@ export default function transform(
     noServerImport: boolean = false,
 ) {
     body.forEach((node, index) => {
-        if (node.type === 'ExportNamedDeclaration') {
-            if (node.declaration.type === 'TSTypeAliasDeclaration') {
-                body[index] = getCodeType(node.declaration.id.name);
-            } else if (node.declaration.type === 'TSInterfaceDeclaration') {
-                // console.log('TSInterfaceDeclaration', JsonAst(node));
-                if (noServerImport) {
-                    body[index] = transformInterface(node);
-                }
-            } else if (node.declaration.type === 'FunctionDeclaration') {
-                const { name } = node.declaration.id;
-                body[index] = getCodeFunc(path, name, withTypes);
-            } else if (node.declaration.type === 'VariableDeclaration') {
-                const { declarations } = node.declaration;
-                const declaration = declarations[0];
-                if (declaration.type === 'VariableDeclarator'
-                    && declaration.init.type === 'ArrowFunctionExpression'
-                    && declaration.id.type === 'Identifier'
-                ) {
-                    const { name } = declaration.id;
-                    body[index] = getCodeArrowFunc(path, name, withTypes);
-                } else {
-                    debug('remove code', declaration);
-                    delete body[index];
-                }
-            } else {
-                // console.log('remove code', node.declaration.type);
-                debug('remove code', node.declaration.type);
-                delete body[index];
-            }
-        } else if (node.type === 'ImportDeclaration') {
-            // console.log('ImportDeclaration', JsonAst(node));
-            if (noServerImport) {
-                delete body[index];
-            } else {
-                body[index] = transformImport(node);
-            }
+        const newNode = transformNode(node, path, withTypes, noServerImport);
+        if (newNode) {
+            body[index] = newNode;
         } else {
-            // console.log('remove code', node.type);
+            // console.log('delete node', JsonAst(node));
             debug('remove code', node.type);
             delete body[index];
         }
@@ -59,4 +26,40 @@ export default function transform(
     body.unshift(getCodeImport());
 
     return body.filter(statement => statement);
+}
+
+function transformNode(
+    node: TSESTree.Statement,
+    path: string,
+    withTypes: boolean,
+    noServerImport: boolean,
+) {
+    if (node.type === 'ExportNamedDeclaration') {
+        // if (node.declaration) {
+        if (node.declaration.type === 'TSTypeAliasDeclaration') {
+            return getCodeType(node.declaration.id.name);
+        } else if (node.declaration.type === 'TSInterfaceDeclaration') {
+            // console.log('TSInterfaceDeclaration', JsonAst(node));
+            if (noServerImport) {
+                return transformInterface(node);
+            } else {
+                return node;
+            }
+        } else if (node.declaration.type === 'FunctionDeclaration') {
+            const { name } = node.declaration.id;
+            return getCodeFunc(path, name, withTypes);
+        } else if (node.declaration.type === 'VariableDeclaration') {
+            const { declarations } = node.declaration;
+            const declaration = declarations[0];
+            if (declaration.type === 'VariableDeclarator'
+                && declaration.init.type === 'ArrowFunctionExpression'
+                && declaration.id.type === 'Identifier'
+            ) {
+                const { name } = declaration.id;
+                return getCodeArrowFunc(path, name, withTypes);
+            }
+        }
+    } else if (node.type === 'ImportDeclaration' && !noServerImport) {
+        return transformImport(node);
+    }
 }

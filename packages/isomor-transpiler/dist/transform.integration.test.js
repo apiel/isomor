@@ -8,6 +8,8 @@ import { readdir } from 'fs-extra';
 import { CpuInfo } from 'os';
 import { something } from './my/import';
 
+export { CpuInfo } from 'os';
+
 export type MyType = string;
 export interface MyInterface {
     foo: CpuInfo;
@@ -35,6 +37,7 @@ function shouldNotBeTranspiled() {
 const codeTranspiled = `import { remote } from "isomor";
 import { readdir } from "fs-extra";
 import { CpuInfo } from "os";
+export { CpuInfo } from 'os';
 export type MyType = any;
 export interface MyInterface {
   foo: CpuInfo;

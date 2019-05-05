@@ -17,7 +17,7 @@ const App = () => {
           <div className="App-content">
             <ul>
               {
-                list.map((item, index) => <li key={index}>{item.firstName}</li>)
+                list.map((item, index) => <li key={index}>({item.id}) {item.firstName} {item.lastName}</li>)
               }
             </ul>
             <button onClick={load}>load again</button>

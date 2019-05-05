@@ -9,11 +9,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const entity_1 = require("./entity");
-const User_1 = require("./entity/User");
 function getList() {
     return __awaiter(this, void 0, void 0, function* () {
-        const users = yield entity_1.db().manager.find(User_1.User);
-        return users;
+        return entity_1.db().manager.find(entity_1.User);
     });
 }
 exports.getList = getList;

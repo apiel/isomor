@@ -1,7 +1,5 @@
-import { db } from './entity';
-import { User } from './entity/User';
+import { db, User } from './entity';
 
 export async function getList(): Promise<User[]> {
-    const users = await db().manager.find(User);
-    return users;
+    return db().manager.find(User);
 }

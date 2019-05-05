@@ -32,3 +32,10 @@ export function transformImport(root: TSESTree.Statement) {
     }
     return root;
 }
+
+export function transformExport(root: TSESTree.Statement) {
+    if (root.type === 'ExportNamedDeclaration' && root.source.type === 'Literal') {
+        root.source.type = 'StringLiteral' as any;
+    }
+    return root;
+}

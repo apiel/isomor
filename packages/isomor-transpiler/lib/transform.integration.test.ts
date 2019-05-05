@@ -11,6 +11,8 @@ import { readdir } from 'fs-extra';
 import { CpuInfo } from 'os';
 import { something } from './my/import';
 
+export { CpuInfo } from 'os';
+
 export type MyType = string;
 export interface MyInterface {
     foo: CpuInfo;
@@ -40,6 +42,7 @@ const codeTranspiled =
   `import { remote } from "isomor";
 import { readdir } from "fs-extra";
 import { CpuInfo } from "os";
+export { CpuInfo } from "os";
 export type MyType = any;
 export interface MyInterface {
   foo: CpuInfo;
@@ -57,8 +60,10 @@ export const getTime3 = (...args: any) => {
   return remote("path/to/file", "getTime3", args);
 };`;
 
+// we migh want to transform `export { CpuInfo } from "os";` to `export type CpuInfo = any;`
 const codeTranspiledNoServerImport =
   `import { remote } from "isomor";
+export { CpuInfo } from "os";
 export type MyType = any;
 export interface MyInterface {
   foo: any;

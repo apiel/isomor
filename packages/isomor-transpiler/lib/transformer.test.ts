@@ -1,7 +1,7 @@
 import generate from '@babel/generator';
 import { parse } from '@typescript-eslint/typescript-estree';
 
-import { transformInterface, transformImport } from './transformer';
+import { transformInterface, transformImport, transformExport } from './transformer';
 
 const codeSourceInterface = `
 export interface MyInterface {
@@ -45,6 +45,12 @@ describe('transformer', () => {
         });
         it('should remove locale import', () => {
             expect(ttc(`import { something } from './my/import';`)).toBe('');
+        });
+    });
+    describe('transformExport()', () => {
+        const ttc = transformToCode(transformExport);
+        it('should transform export Literal to LiteralString', () => {
+            expect(ttc(`export { CpuInfo } from 'os';`)).toBe(`export { CpuInfo } from "os";`);
         });
     });
 });

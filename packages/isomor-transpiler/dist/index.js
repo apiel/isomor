@@ -21,6 +21,7 @@ require('please-upgrade-node')(pkg, {
 const logol_1 = require("logol");
 const fs_extra_1 = require("fs-extra");
 const path_1 = require("path");
+const debug_1 = require("debug");
 const isomor_core_1 = require("isomor-core");
 const chokidar_1 = require("chokidar");
 const anymatch = require("anymatch");
@@ -40,10 +41,12 @@ function transpile(options, filePath) {
         const { distAppFolder, srcFolder } = options;
         logol_1.info('Transpile', filePath);
         const buffer = yield fs_extra_1.readFile(path_1.join(srcFolder, filePath));
+        debug_1.default('isomor-transpiler:transpile:in')(buffer.toString());
         const code = getCode(options, isomor_core_1.getPathForUrl(filePath), buffer.toString());
         const appFilePath = path_1.join(distAppFolder, filePath);
         logol_1.info('Save isomor file', appFilePath);
         yield fs_extra_1.outputFile(appFilePath, code);
+        debug_1.default('isomor-transpiler:transpile:out')(code);
     });
 }
 function prepare(options) {
@@ -76,16 +79,17 @@ function watcher(options) {
             ignoreInitial: true,
             ignored: path_1.join(serverFolderPattern, '**', '*'),
             cwd: srcFolder,
+            usePolling: process.env.CHOKIDAR_USEPOLLING === 'true',
         }).on('ready', () => logol_1.info('Initial scan complete. Ready for changes...'))
             .on('add', file => {
             logol_1.info(`File ${file} has been added`);
-            watcherUpdate(file);
+            setTimeout(() => watcherUpdate(file), 100);
         }).on('change', file => {
             logol_1.info(`File ${file} has been changed`);
-            watcherUpdate(file);
+            setTimeout(() => watcherUpdate(file), 100);
         }).on('unlink', file => {
             logol_1.info(`File ${file} has been removed`, '(do nothing)');
-            fs_extra_1.unlink(path_1.join(distAppFolder, file));
+            setTimeout(() => watcherUpdate(file), 100);
         });
         function watcherUpdate(file) {
             return __awaiter(this, void 0, void 0, function* () {

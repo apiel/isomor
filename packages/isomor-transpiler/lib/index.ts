@@ -13,6 +13,7 @@ require('please-upgrade-node')(pkg, {  // tslint:disable-line
 import { info, warn } from 'logol';
 import { readFile, outputFile, emptyDir, copy, unlink } from 'fs-extra';
 import { join } from 'path';
+import debug from 'debug';
 import {
     getFiles,
     getFolders,
@@ -57,12 +58,14 @@ async function transpile(options: Options, filePath: string) {
 
     info('Transpile', filePath);
     const buffer = await readFile(join(srcFolder, filePath));
+    debug('isomor-transpiler:transpile:in')(buffer.toString());
 
     const code = getCode(options, getPathForUrl(filePath), buffer.toString());
 
     const appFilePath = join(distAppFolder, filePath);
     info('Save isomor file', appFilePath);
     await outputFile(appFilePath, code);
+    debug('isomor-transpiler:transpile:out')(code);
 }
 
 async function prepare(options: Options) {
@@ -98,16 +101,20 @@ function watcher(options: Options) {
             ignoreInitial: true,
             ignored: join(serverFolderPattern, '**', '*'),
             cwd: srcFolder,
+            usePolling: process.env.CHOKIDAR_USEPOLLING === 'true',
         }).on('ready', () => info('Initial scan complete. Ready for changes...'))
             .on('add', file => {
                 info(`File ${file} has been added`);
-                watcherUpdate(file);
+                // watcherUpdate(file);
+                setTimeout(() => watcherUpdate(file), 100);
             }).on('change', file => {
                 info(`File ${file} has been changed`);
-                watcherUpdate(file);
+                // watcherUpdate(file);
+                setTimeout(() => watcherUpdate(file), 100);
             }).on('unlink', file => {
                 info(`File ${file} has been removed`, '(do nothing)');
-                unlink(join(distAppFolder, file));
+                // watcherUpdate(file);
+                setTimeout(() => watcherUpdate(file), 100);
             });
 
         async function watcherUpdate(file: string) {
@@ -122,7 +129,7 @@ function watcher(options: Options) {
                 // await outputFile(dest, content);
 
                 // try to fix file that does not get copy correctly
-                setTimeout(() => watcherUpdateSpy(path, dest), 200);
+                setTimeout(() => watcherUpdateSpy(path, dest), 200); // should not be necessary anymore
             }
         }
 

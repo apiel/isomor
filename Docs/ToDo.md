@@ -4,7 +4,11 @@
 - review doc
 - video
 
-- vscode extension?? transpile on save, hilight src-isomor...
+- vscode extension??
+  - transpile on save,
+  - hilight src-isomor...
+  - warn when editing src folder / src folder light grey
+  - show transpiled code in split screen
 
 - think about code that could be common to frontend and backend, like validation system
     - is email, min, max

@@ -4,9 +4,13 @@
 - review doc
 - video
 
+- vscode extension?? transpile on save, hilight src-isomor...
+
 - think about code that could be common to frontend and backend, like validation system
     - is email, min, max
     - ...
+
+- server entrypoint? a file that's would be called when server start
 
 - angular example
 

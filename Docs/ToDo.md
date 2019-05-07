@@ -1,7 +1,12 @@
 ### ToDo
 
+- make travis fail when package are outdated
 - review doc
 - video
+
+- think about code that could be common to frontend and backend, like validation system
+    - is email, min, max
+    - ...
 
 - angular example
 

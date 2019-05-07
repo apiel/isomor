@@ -1,8 +1,9 @@
 ### ToDo
 
-- angular example
+- review doc
+- video
 
-- ? isomor-cli > for install react or vue, and maybe some other feature
+- angular example
 
 - test:
   - isomor-server
@@ -11,11 +12,14 @@
 - ~~FIX: transpiler file does not always get copy~~
   -> ~~after copy, look if the two files are the same, if not copy again~~
 
+- ? isomor-cli > for install react or vue, and maybe some other feature
 
 
 
 
-- base on params types of server function generate validation on endpoint
+- **base on params types of server function generate validation on endpoint**
+  - maybe while transpiling
+  - or
   - https://stackoverflow.com/questions/33800497/check-if-an-object-implements-an-interface-at-runtime-with-typescript
   - https://github.com/pcan/reflec-ts-examples/tree/master/simple-validator
 

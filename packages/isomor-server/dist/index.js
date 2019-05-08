@@ -11,6 +11,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const isomor_core_1 = require("isomor-core");
 const path_1 = require("path");
 const util_1 = require("util");
+const fs_1 = require("fs");
 function getFunctions(distServerFolder, file) {
     const filepath = require.resolve(path_1.join(distServerFolder, file), { paths: [process.cwd()] });
     delete require.cache[filepath];
@@ -48,6 +49,17 @@ function useIsomor(app, distServerFolder, serverFolder) {
     });
 }
 exports.useIsomor = useIsomor;
+function startup(app, distServerFolder, serverFolder, startupFile) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const path = path_1.join(distServerFolder, serverFolder, startupFile);
+        if (yield util_1.promisify(fs_1.exists)(path)) {
+            const filepath = require.resolve(path, { paths: [process.cwd()] });
+            const fn = require(filepath);
+            fn.default(app);
+        }
+    });
+}
+exports.startup = startup;
 function getSwaggerDoc(distServerFolder, serverFolder) {
     return __awaiter(this, void 0, void 0, function* () {
         const files = yield isomor_core_1.getFiles(distServerFolder, serverFolder);

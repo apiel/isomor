@@ -6,7 +6,7 @@
 
 - server entrypoint? a file that's would be called when server start
 
-- src folder in .gitingore?
+- src folder in .gitingore
 
 - make travis fail when package are outdated
 - review doc

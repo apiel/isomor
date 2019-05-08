@@ -1,7 +1,8 @@
 import * as express from 'express';
 import { getFiles, getPathForUrl } from 'isomor-core';
 import { join } from 'path';
-import { isNumber } from 'util';
+import { isNumber, promisify } from 'util';
+import { exists } from 'fs';
 
 export interface Context {
     req: express.Request;
@@ -55,6 +56,20 @@ export async function useIsomor(
             return entrypoint;
         });
     }) as any).flat();
+}
+
+export async function startup(
+    app: express.Express,
+    distServerFolder: string,
+    serverFolder: string,
+    startupFile: string,
+): Promise<void> {
+    const path = join(distServerFolder, serverFolder, startupFile);
+    if (await promisify(exists)(path)) {
+        const filepath = require.resolve(path, { paths: [process.cwd()] });
+        const fn = require(filepath);
+        fn.default(app);
+    }
 }
 
 export async function getSwaggerDoc(

@@ -16,7 +16,7 @@ import * as bodyParser from 'body-parser';
 import * as cookieParser from 'cookie-parser';
 import { setup, serve } from 'swagger-ui-express';
 
-import { useIsomor, getSwaggerDoc } from '.';
+import { useIsomor, getSwaggerDoc, startup } from '.';
 import { join } from 'path';
 
 interface Options {
@@ -24,17 +24,20 @@ interface Options {
     serverFolder: string;
     port: number;
     staticFolder: string | null;
+    startupFile: string;
 }
 
 const API_DOCS = '/api-docs';
 
 async function start(options: Options) {
-    const { distServerFolder, port, staticFolder, serverFolder } = options;
+    const { distServerFolder, port, staticFolder, serverFolder, startupFile } = options;
     info('Starting server.');
     const app = express();
 
     app.use(bodyParser.json());
     app.use(cookieParser());
+
+    await startup(app, distServerFolder, serverFolder, startupFile);
 
     app.use(API_DOCS, serve, setup(await getSwaggerDoc(distServerFolder, serverFolder)));
 
@@ -72,4 +75,5 @@ start({
     port: process.env.PORT ? parseInt(process.env.PORT, 10) : 3005,
     staticFolder: process.env.STATIC_FOLDER || null,
     serverFolder: process.env.SERVER_FOLDER || '/server',
+    startupFile: process.env.STARTUP_FILE || join('startup', 'index.js'),
 });

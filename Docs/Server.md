@@ -4,6 +4,17 @@
 
 The server generate automatically the API documentation and make it available using swagger UI at http://localhost:3005/api-docs/
 
+#### Startup script
+
+The server can call a script when it is starting. Just create a file in `src-isomor/server/startup/index.ts` exporting as default the function to call. The server will call this function at startup, passing as parameter the express server. This can be useful to setup some custom middleware or to simply initialise some library, like an ORM.
+
+*src-isomor/server/startup/index.ts*
+```ts
+export default function(app: express.Express) {
+    // your code...
+}
+```
+
 #### Custom server
 
 Since `isomor` is using expressJs, it is possible to integrate it to an existing api. Just import `useIsomor` from `isomor-server`:

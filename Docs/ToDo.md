@@ -1,5 +1,13 @@
 ### ToDo
 
+- think about code that could be common to frontend and backend, like validation system
+    - is email, min, max
+    - ...
+
+- server entrypoint? a file that's would be called when server start
+
+- src folder in .gitingore?
+
 - make travis fail when package are outdated
 - review doc
 - video
@@ -11,12 +19,12 @@
   - hilight src-isomor...
   - warn when editing src folder / src folder light grey
   - show transpiled code in split screen
-
-- think about code that could be common to frontend and backend, like validation system
-    - is email, min, max
-    - ...
-
-- server entrypoint? a file that's would be called when server start
+  .vscode/settings.json
+  {
+    "files.exclude": {
+      "src": true
+    }
+  } or should "src" be part of gitignore?
 
 - angular example
 

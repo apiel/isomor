@@ -658,8 +658,8 @@
     "@types/serve-static" "*"
 
 "@types/fs-extra@^5.0.5":
-  version "5.0.5"
-  resolved "https://registry.yarnpkg.com/@types/fs-extra/-/fs-extra-5.0.5.tgz#080d90a792f3fa2c5559eb44bd8ef840aae9104b"
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/@types/fs-extra/-/fs-extra-5.1.0.tgz#2a325ef97901504a3828718c390d34b8426a10a1"
   dependencies:
     "@types/node" "*"
 
@@ -680,8 +680,8 @@
   resolved "https://registry.yarnpkg.com/@types/minimatch/-/minimatch-3.0.3.tgz#3dca0e3f33b200fc7d1139c0cd96c1268cadfd9d"
 
 "@types/node@*":
-  version "11.13.8"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.13.8.tgz#e5d71173c95533be9842b2c798978f095f912aab"
+  version "12.0.0"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.0.0.tgz#d11813b9c0ff8aaca29f04cbc12817f4c7d656e5"
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
@@ -5521,9 +5521,9 @@ run-queue@^1.0.0, run-queue@^1.0.3:
   dependencies:
     aproba "^1.1.1"
 
-run-screen@^0.5.2:
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/run-screen/-/run-screen-0.5.2.tgz#222fac0f1ad0253d0b5ac42fca20595cc885cb6a"
+run-screen@^0.5.3:
+  version "0.5.3"
+  resolved "https://registry.yarnpkg.com/run-screen/-/run-screen-0.5.3.tgz#5ad1067dfb162713c833d30de03e3d0a5951cbba"
   dependencies:
     cross-spawn "^6.0.5"
     pidtree "^0.3.0"
@@ -6495,8 +6495,8 @@ vue-loader@^15.7.0:
     vue-style-loader "^4.1.0"
 
 vue-property-decorator@^8.1.0:
-  version "8.1.0"
-  resolved "https://registry.yarnpkg.com/vue-property-decorator/-/vue-property-decorator-8.1.0.tgz#66493a5350e7f643e852e7698ec2c883554daa79"
+  version "8.1.1"
+  resolved "https://registry.yarnpkg.com/vue-property-decorator/-/vue-property-decorator-8.1.1.tgz#80dadbe5ffa0e7eb6a0ba0a07036365471a7d5ee"
   dependencies:
     vue-class-component "^7.0.1"
 

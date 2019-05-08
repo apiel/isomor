@@ -54,12 +54,6 @@
     "@types/express-serve-static-core" "*"
     "@types/serve-static" "*"
 
-"@types/fs-extra@^5.0.5":
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/@types/fs-extra/-/fs-extra-5.1.0.tgz#2a325ef97901504a3828718c390d34b8426a10a1"
-  dependencies:
-    "@types/node" "*"
-
 "@types/glob@*":
   version "7.1.1"
   resolved "https://registry.yarnpkg.com/@types/glob/-/glob-7.1.1.tgz#aa59a1c6e3fbc421e07ccd31a944c30eba521575"
@@ -420,9 +414,9 @@ ipaddr.js@1.8.0:
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/ipaddr.js/-/ipaddr.js-1.8.0.tgz#eaa33d6ddd7ace8f7f6fe0c9ca0440e706738b1e"
 
-isomor-core@^0.7.0:
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/isomor-core/-/isomor-core-0.7.0.tgz#d3495712a60f37b836d1a84c816512701092547b"
+isomor-core@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/isomor-core/-/isomor-core-0.8.0.tgz#ae77c0f2bb191aaa65d0c06ce1178efc181b5b9e"
   dependencies:
     fs-extra "^7.0.1"
     glob "^7.1.3"

@@ -1501,9 +1501,9 @@ isobject@^3.0.0, isobject@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/isobject/-/isobject-3.0.1.tgz#4e431e92b11a9731636aa1f9c8d1ccbcfdab78df"
 
-isomor-core@^0.7.0:
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/isomor-core/-/isomor-core-0.7.0.tgz#d3495712a60f37b836d1a84c816512701092547b"
+isomor-core@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/isomor-core/-/isomor-core-0.8.0.tgz#ae77c0f2bb191aaa65d0c06ce1178efc181b5b9e"
   dependencies:
     fs-extra "^7.0.1"
     glob "^7.1.3"

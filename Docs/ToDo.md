@@ -4,15 +4,13 @@
     - is email, min, max
     - ...
 
-- server entrypoint? a file that's would be called when server start
-
 - src folder in .gitingore
+
+- auth example separate is separate folder
 
 - make travis fail when package are outdated
 - review doc
 - video
-
-- auth example separate is separate folder
 
 - vscode extension??
   - transpile on save,

@@ -4,6 +4,8 @@
 - review doc
 - video
 
+- auth example separate is separate folder
+
 - vscode extension??
   - transpile on save,
   - hilight src-isomor...
@@ -27,7 +29,7 @@
 
 - ? isomor-cli > for install react or vue, and maybe some other feature
 
-
+- Provide all devops around isomor (docker container, docker compose? maybe even deplyoment script?)
 
 
 - **base on params types of server function generate validation on endpoint**

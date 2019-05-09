@@ -1,38 +1,102 @@
 {
     "type": "ExportNamedDeclaration",
     "declaration": {
-        "type": "TSInterfaceDeclaration",
+        "type": "ClassDeclaration",
+        "id": {
+            "type": "Identifier",
+            "name": "Post"
+        },
         "body": {
-            "type": "TSInterfaceBody",
+            "type": "ClassBody",
             "body": [
                 {
-                    "type": "TSPropertySignature",
-                    "computed": false,
+                    "type": "ClassProperty",
                     "key": {
                         "type": "Identifier",
-                        "name": "world"
+                        "name": "title"
                     },
+                    "value": null,
+                    "computed": false,
+                    "static": false,
                     "typeAnnotation": {
                         "type": "TSTypeAnnotation",
                         "typeAnnotation": {
-                            "type": "TSArrayType",
-                            "elementType": {
-                                "type": "TSTypeReference",
-                                "typeName": {
+                            "type": "TSStringKeyword"
+                        }
+                    },
+                    "decorators": [
+                        {
+                            "type": "Decorator",
+                            "expression": {
+                                "type": "CallExpression",
+                                "callee": {
                                     "type": "Identifier",
-                                    "name": "CpuInfo"
-                                }
+                                    "name": "Length"
+                                },
+                                "arguments": [
+                                    {
+                                        "type": "Literal",
+                                        "value": 10,
+                                        "raw": "10"
+                                    },
+                                    {
+                                        "type": "Literal",
+                                        "value": 20,
+                                        "raw": "20"
+                                    }
+                                ]
                             }
                         }
-                    }
+                    ]
+                },
+                {
+                    "type": "ClassProperty",
+                    "key": {
+                        "type": "Identifier",
+                        "name": "text"
+                    },
+                    "value": null,
+                    "computed": false,
+                    "static": false,
+                    "typeAnnotation": {
+                        "type": "TSTypeAnnotation",
+                        "typeAnnotation": {
+                            "type": "TSStringKeyword"
+                        }
+                    },
+                    "decorators": [
+                        {
+                            "type": "Decorator",
+                            "expression": {
+                                "type": "CallExpression",
+                                "callee": {
+                                    "type": "Identifier",
+                                    "name": "Contains"
+                                },
+                                "arguments": [
+                                    {
+                                        "type": "Literal",
+                                        "raw": "\"hello\"",
+                                        "value": "hello"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
                 }
             ]
         },
-        "id": {
-            "type": "Identifier",
-            "name": "MyInterface",
-        }
+        "superClass": null,
+        "implements": [
+            {
+                "type": "TSClassImplements",
+                "expression": {
+                    "type": "Identifier",
+                    "name": "IsomorShare"
+                }
+            }
+        ]
     },
     "specifiers": [],
-    "source": null,
+    "source": null
 }

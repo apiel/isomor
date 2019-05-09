@@ -2,13 +2,14 @@ import { TSESTree } from '@typescript-eslint/typescript-estree';
 import Debug from 'debug';
 
 import { getCodeFunc, getCodeArrowFunc, getCodeType } from './code';
-import { transformInterface, transformImport, transformExport } from './transformer';
+import { transformInterface, transformImport, transformExport, transformClass } from './transformer';
 import { JsonAst } from './transformer.test';
+import { Statement } from '@babel/types';
 
 const debug = Debug('isomor-transpiler:transformNode');
 
 export function transformNode(
-    node: TSESTree.Statement,
+    node: Statement,
     path: string,
     withTypes: boolean,
     noServerImport: boolean,
@@ -42,6 +43,8 @@ export function transformNode(
                 const { name } = declaration.id;
                 return getCodeArrowFunc(path, name, withTypes);
             }
+        } else if (node.declaration.type === 'ClassDeclaration') {
+            return transformClass(node);
         }
     } else if (node.type === 'ImportDeclaration' && !noServerImport) {
         return transformImport(node);

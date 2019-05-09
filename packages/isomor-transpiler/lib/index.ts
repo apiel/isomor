@@ -23,7 +23,9 @@ import {
 import { watch } from 'chokidar';
 import * as anymatch from 'anymatch';
 // we most likely don't need this 2 guys by using ts.createSourceFile...
-import { parse } from '@typescript-eslint/typescript-estree';
+// import { parse } from '@typescript-eslint/typescript-estree';
+// import { parse } from '@babel/parser';
+import parse from './parse';
 import generate from '@babel/generator';
 
 import transform from './transform';
@@ -46,7 +48,7 @@ interface Func {
 
 function getCode(options: Options, path: string, content: string) {
     const { withTypes, noServerImport } = options;
-    const program = parse(content);
+    const { program } = parse(content);
     program.body = transform(program.body, path, withTypes, noServerImport);
     const { code } = generate(program as any);
 

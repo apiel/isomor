@@ -1,4 +1,6 @@
-import { parse } from '@typescript-eslint/typescript-estree';
+// import { parse } from '@typescript-eslint/typescript-estree';
+// import { parse } from '@babel/parser';
+import parse from './parse';
 
 import { transformNode } from './transformNode';
 import { getCodeFunc, getCodeArrowFunc, getCodeType } from './code';
@@ -120,7 +122,7 @@ function transformNodeTest(
     code: string,
     noServerImport = false,
 ) {
-    const program = parse(code);
+    const { program } = parse(code);
     const node = program.body[0];
     const newNode = transformNode(node, path, withTypes, noServerImport);
 

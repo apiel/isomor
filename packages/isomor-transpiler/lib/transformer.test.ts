@@ -1,5 +1,7 @@
 import generate from '@babel/generator';
-import { parse } from '@typescript-eslint/typescript-estree';
+// import { parse } from '@typescript-eslint/typescript-estree';
+// import { parse } from '@babel/parser';
+import parse from './parse';
 
 import { transformInterface, transformImport, transformExport } from './transformer';
 import { getCodeType } from './code';
@@ -25,7 +27,7 @@ const codeTranspiledInterface =
 }`;
 
 const transformToCode = (fn: any) => (source: string): string => {
-    const program = parse(source);
+    const { program } = parse(source);
     // console.log('JsonAst', JsonAst(program.body[0]));
     program.body[0] = fn(program.body[0]);
     const { code } = generate(program as any);
@@ -45,8 +47,8 @@ describe('transformer', () => {
     });
     describe('transformImport()', () => {
         const ttc = transformToCode(transformImport);
-        it('should transform import Literal to LiteralString', () => {
-            expect(ttc(`import { readdir } from 'fs-extra';`)).toBe(`import { readdir } from "fs-extra";`);
+        it('should transform keep import', () => {
+            expect(ttc(`import { readdir } from 'fs-extra';`)).toBe(`import { readdir } from 'fs-extra';`);
         });
         it('should remove locale import', () => {
             expect(ttc(`import { something } from './my/import';`)).toBe('');
@@ -54,20 +56,20 @@ describe('transformer', () => {
     });
     describe('transformExport()', () => {
         const ttc = transformToCode(transformExport);
-        it('should transform export Literal to LiteralString', () => {
-            expect(ttc(`export { CpuInfo } from 'os';`)).toBe(`export { CpuInfo } from "os";`);
+        it('should transform keep export', () => {
+            expect(ttc(`export { CpuInfo } from 'os';`)).toBe(`export { CpuInfo } from 'os';`);
         });
         it('should transform locale export', () => {
-            const program = parse(`export { CpuInfo, Abc } from './my/import';`);
-            const node = transformExport(program.body[0]);
+            const { program } = parse(`export { CpuInfo, Abc } from './my/import';`);
+            const node = transformExport(program.body[0] as any);
             expect(node).toEqual(['getCodeTypeMock', 'getCodeTypeMock']);
             expect(getCodeType).toHaveBeenCalledWith('CpuInfo');
             expect(getCodeType).toHaveBeenCalledWith('Abc');
         });
         it('should transform export to any if noServerImport=true', () => {
             const noServerImport = true;
-            const program = parse(`export { CpuInfo, Abc } from 'os';`);
-            const node = transformExport(program.body[0], noServerImport);
+            const { program } = parse(`export { CpuInfo, Abc } from 'os';`);
+            const node = transformExport(program.body[0] as any, noServerImport);
             expect(node).toEqual(['getCodeTypeMock', 'getCodeTypeMock']);
             expect(getCodeType).toHaveBeenCalledWith('CpuInfo');
             expect(getCodeType).toHaveBeenCalledWith('Abc');

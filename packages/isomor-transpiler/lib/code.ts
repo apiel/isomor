@@ -1,4 +1,5 @@
 import { TSESTree } from '@typescript-eslint/typescript-estree';
+import { Statement } from '@babel/types';
 
 export function getCodeType(name: string) {
     return {
@@ -14,7 +15,7 @@ export function getCodeType(name: string) {
             },
         },
         specifiers: [],
-    } as TSESTree.Statement;
+    } as Statement;
 }
 
 export function getCodeImport() {
@@ -38,7 +39,7 @@ export function getCodeImport() {
             type: 'StringLiteral',
             value: 'isomor',
         },
-    } as any as TSESTree.Statement; // need to try to remove any
+    } as any as Statement; // need to try to remove any
 }
 
 export function getCodeFunc(fileName: string, name: string, withTypes: boolean) {
@@ -53,7 +54,7 @@ export function getCodeFunc(fileName: string, name: string, withTypes: boolean) 
             params: getParams(withTypes),
             body: getBody(fileName, name),
         },
-    } as TSESTree.Statement;
+    } as Statement;
 }
 
 export function getCodeArrowFunc(fileName: string, name: string, withTypes: boolean) {
@@ -77,7 +78,7 @@ export function getCodeArrowFunc(fileName: string, name: string, withTypes: bool
             ],
             kind: 'const',
         },
-    } as TSESTree.Statement;
+    } as Statement;
 }
 
 // arguments => (...args)

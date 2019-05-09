@@ -1,9 +1,10 @@
 import { TSESTree } from '@typescript-eslint/typescript-estree';
 import * as traverse from 'traverse';
 import { getCodeType } from './code';
+import { ExportNamedDeclaration, Statement, ImportDeclaration } from '@babel/types';
 // might have a look again at https://www.npmjs.com/package/esrecurse but need to find AST types for TS
 
-export function transformInterface(root: TSESTree.Statement) {
+export function transformInterface(root: Statement) {
     traverse(root).forEach(function(node: any) {
         if (node) {
             if (
@@ -24,27 +25,41 @@ export function transformInterface(root: TSESTree.Statement) {
     return root;
 }
 
-export function transformImport(root: TSESTree.Statement) {
-    if (root.type === 'ImportDeclaration' && root.source.type === 'Literal') {
+export function transformImport(root: ImportDeclaration) {
+    if (root.source.type === 'StringLiteral') {
         if (root.source.value[0] === '.') { // remove local import
             return null;
         }
-        root.source.type = 'StringLiteral' as any;
     }
     return root;
 }
 
 export function transformExport(
-    root: TSESTree.Statement,
+    root: ExportNamedDeclaration,
     noServerImport: boolean = false,
 ) {
-    if (root.type === 'ExportNamedDeclaration' && root.source.type === 'Literal') {
+    if (root.source.type === 'StringLiteral') {
         if (root.source.value[0] === '.' || noServerImport) { // transform local export to types any
-            return root.specifiers.map(({ exported: { name }}) => getCodeType(name));
+            return root.specifiers.map(({ exported: { name } }) => getCodeType(name));
         }
-        root.source.type = 'StringLiteral' as any;
+        // root.source.type = 'StringLiteral' as any;
     }
     return root;
 }
 
-// export default type = { User: any };
+export function transformClass(
+    root: ExportNamedDeclaration,
+) {
+    if (root.declaration.type === 'ClassDeclaration' && root.declaration.implements) {
+        // const isIsomorShare = root.declaration.implements.filter(
+        //     ({ type, expression }) =>
+        //         type === 'TSClassImplements'
+        //         && expression.type === 'Identifier'
+        //         && expression.name === 'IsomorShare',
+        // ).length > 0;
+        // if (isIsomorShare) {
+        //     return root;
+        // }
+    }
+    return;
+}

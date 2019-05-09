@@ -77,6 +77,11 @@ async function start({ srcFolder, distAppFolder, serverFolder }: Options) {
         info('Copy example component');
         copySync(join(__dirname, '..', 'example'), join(projectDirectory, srcFolder, 'components'));
 
+        info('Edit .gitignore');
+        const gitingore = readFileSync(join(projectDirectory, '.gitignore'))
+            + `\n\n/src\n`;
+        writeFileSync(join(projectDirectory, '.gitignore'), gitingore);
+
         success(`Ready to code :-)`);
         // tslint:disable-next-line
         console.log(

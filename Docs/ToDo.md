@@ -6,21 +6,17 @@
 
 - auth example separate is separate folder
 
-- make travis fail when package are outdated
+- make travis fail when package are outdated?
 - review doc
 - video
 
 - vscode extension??
   - transpile on save,
-  - hilight src-isomor...
-  - warn when editing src folder / src folder light grey
-  - show transpiled code in split screen
-  .vscode/settings.json
-  {
-    "files.exclude": {
-      "src": true
-    }
-  } or should "src" be part of gitignore?
+    - https://code.visualstudio.com/updates/v1_23#_run-code-actions-on-save
+    - https://github.com/emeraldwalk/vscode-runonsave/blob/master/src/extension.ts#L24
+
+  - ?warn when editing src folder?
+  - ?show transpiled code in split screen?
 
 - angular example
 

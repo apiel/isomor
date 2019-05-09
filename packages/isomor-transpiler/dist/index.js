@@ -25,15 +25,14 @@ const debug_1 = require("debug");
 const isomor_core_1 = require("isomor-core");
 const chokidar_1 = require("chokidar");
 const anymatch = require("anymatch");
-const typescript_estree_1 = require("@typescript-eslint/typescript-estree");
-const generator_1 = require("@babel/generator");
+const ast_1 = require("./ast");
 const transform_1 = require("./transform");
 exports.default = transform_1.default;
 function getCode(options, path, content) {
     const { withTypes, noServerImport } = options;
-    const program = typescript_estree_1.parse(content);
+    const { program } = ast_1.parse(content);
     program.body = transform_1.default(program.body, path, withTypes, noServerImport);
-    const { code } = generator_1.default(program);
+    const { code } = ast_1.generate(program);
     return code;
 }
 function transpile(options, filePath) {

@@ -20,23 +20,27 @@ function transformInterface(root) {
 }
 exports.transformInterface = transformInterface;
 function transformImport(root) {
-    if (root.type === 'ImportDeclaration' && root.source.type === 'Literal') {
+    if (root.source.type === 'StringLiteral') {
         if (root.source.value[0] === '.') {
             return null;
         }
-        root.source.type = 'StringLiteral';
     }
     return root;
 }
 exports.transformImport = transformImport;
 function transformExport(root, noServerImport = false) {
-    if (root.type === 'ExportNamedDeclaration' && root.source.type === 'Literal') {
+    if (root.source.type === 'StringLiteral') {
         if (root.source.value[0] === '.' || noServerImport) {
             return root.specifiers.map(({ exported: { name } }) => code_1.getCodeType(name));
         }
-        root.source.type = 'StringLiteral';
     }
     return root;
 }
 exports.transformExport = transformExport;
+function transformClass(root) {
+    if (root.declaration.type === 'ClassDeclaration' && root.declaration.implements) {
+    }
+    return;
+}
+exports.transformClass = transformClass;
 //# sourceMappingURL=transformer.js.map

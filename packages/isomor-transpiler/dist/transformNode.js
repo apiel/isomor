@@ -1,9 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const debug_1 = require("debug");
 const code_1 = require("./code");
 const transformer_1 = require("./transformer");
-const debug = debug_1.default('isomor-transpiler:transformNode');
 function transformNode(node, path, withTypes, noServerImport) {
     if (node.type === 'ExportNamedDeclaration') {
         if (!node.declaration) {
@@ -33,6 +31,9 @@ function transformNode(node, path, withTypes, noServerImport) {
                 const { name } = declaration.id;
                 return code_1.getCodeArrowFunc(path, name, withTypes);
             }
+        }
+        else if (node.declaration.type === 'ClassDeclaration') {
+            return transformer_1.transformClass(node);
         }
     }
     else if (node.type === 'ImportDeclaration' && !noServerImport) {

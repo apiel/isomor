@@ -1,67 +1,18 @@
-// what about ts.createSourceFile...
-
-/*
-* eslint + babel
-*/
-
-// export {
-//     ExportNamedDeclaration, Statement, ImportDeclaration,
-// } from '@typescript-eslint/typescript-estree/dist/ts-estree/ts-estree';
-// import { parse as parseEstree } from '@typescript-eslint/typescript-estree';
-// import generate from '@babel/generator';
-// export { generate };
-
-// export function parse(code: string) {
-//     const program = parseEstree(code);
-//     return { program };
-// }
-
-/*
-* ts
-*/
-// import { createSourceFile, ScriptTarget } from 'typescript';
-// export {
-//     Statement, ImportDeclaration,
-// } from 'typescript';
-// import generate from '@babel/generator';
-// export { generate };
-// export type ExportNamedDeclaration = any;
-
-// export function parse(code: string) {
-//     const source = createSourceFile(
-//         'file.ts',
-//         code,
-//         ScriptTarget.Latest,
-//     );
-//     console.log('source', JSON.stringify(source, null, 4));
-//     process.exit();
-// }
-
-/*
-* babel only
-*/
-
-import { transformSync } from '@babel/core';
-
-import generate from '@babel/generator';
-export { generate };
-
-export { ExportNamedDeclaration, Statement, ImportDeclaration } from '@babel/types';
-
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = require("@babel/core");
+const generator_1 = require("@babel/generator");
+exports.generate = generator_1.default;
 const config = {
-    sourceType: 'unambiguous' as 'unambiguous',
+    sourceType: 'unambiguous',
     presets: [
         '@babel/env',
-        // '@babel/typescript',
-        // '@babel/preset-env',
-        // '@babel/preset-typescript',
     ],
     plugins: [
         require('../dist/babel-ts.js'),
         ['@babel/plugin-proposal-decorators', { legacy: true }],
         '@babel/proposal-class-properties',
         '@babel/proposal-object-rest-spread',
-        // 'exportDefaultFrom',
     ],
     cwd: process.cwd(),
     filename: 'file.ts',
@@ -70,26 +21,18 @@ const config = {
     babelrc: false,
     ast: true,
 };
-
-export function parse(code: string) {
-    const { ast } = transformSync(code, config);
+function parse(code) {
+    const { ast } = core_1.transformSync(code, config);
     return ast;
 }
-
-/*
-* tools
-*/
-
-export function JsonAst(node: any) {
+exports.parse = parse;
+function JsonAst(node) {
     const skip = ['loc', 'range'];
-    const replacer = (key: string, value: any) => skip.includes(key) ? undefined : value;
+    const replacer = (key, value) => skip.includes(key) ? undefined : value;
     return JSON.stringify(node, replacer, 4);
 }
-
+exports.JsonAst = JsonAst;
 if (process.env.TESTME === 'true') {
-    // const node = parse(`export function getTime(...args: any) {
-    //     return remote("path/to/file", "getTime", args);
-    // }`);
     const node = parse(`
     export interface MyInterface2 {
         hello: string;
@@ -150,3 +93,4 @@ if (process.env.TESTME === 'true') {
     console.log('node', JsonAst(node));
     console.log('node', node);
 }
+//# sourceMappingURL=ast.js.map

@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const generator_1 = require("@babel/generator");
-const typescript_estree_1 = require("@typescript-eslint/typescript-estree");
+const ast_1 = require("./ast");
 const transform_1 = require("./transform");
 const codeSource = `
 import { readdir } from 'fs-extra';
@@ -9,7 +8,7 @@ import { CpuInfo } from 'os';
 import { something } from './my/import';
 
 export { CpuInfo } from 'os';
-export { CpuInfo, Abc } from './my/import';
+export { Hello, Abc } from './my/import';
 
 export type MyType = string;
 export interface MyInterface {
@@ -34,12 +33,28 @@ export const getTime3 = async (hello: string) => {
 function shouldNotBeTranspiled() {
     console.log('hello');
 }
+
+export class PostAbc {
+    @Length(10, 20)
+    title: string;
+
+    @Contains("hello")
+    text: string;
+}
+
+export class Post implements IsomorShare {
+    @Length(10, 20)
+    title: string;
+
+    @Contains("hello")
+    text: string;
+}
 `;
 const codeTranspiled = `import { remote } from "isomor";
 import { readdir } from "fs-extra";
 import { CpuInfo } from "os";
 export { CpuInfo } from "os";
-export type CpuInfo = any;
+export type Hello = any;
 export type Abc = any;
 export type MyType = any;
 export interface MyInterface {
@@ -56,10 +71,17 @@ export function getTime2(...args: any) {
 }
 export const getTime3 = (...args: any) => {
   return remote("path/to/file", "getTime3", args);
-};`;
+};
+export class Post implements IsomorShare {
+  @Length(10, 20)
+  title: string;
+
+  @Contains("hello")
+  text: string;
+}`;
 const codeTranspiledNoServerImport = `import { remote } from "isomor";
 export type CpuInfo = any;
-export type CpuInfo = any;
+export type Hello = any;
 export type Abc = any;
 export type MyType = any;
 export interface MyInterface {
@@ -82,16 +104,16 @@ describe('transform', () => {
     const withTypes = true;
     describe('transform/transform()', () => {
         it('should generate import for isomor', () => {
-            const program = typescript_estree_1.parse(codeSource);
+            const { program } = ast_1.parse(codeSource);
             program.body = transform_1.default(program.body, path, withTypes);
-            const { code } = generator_1.default(program);
+            const { code } = ast_1.generate(program);
             expect(code).toEqual(codeTranspiled);
         });
         it('should generate import for isomor with noServerImport', () => {
-            const program = typescript_estree_1.parse(codeSource);
+            const { program } = ast_1.parse(codeSource);
             const noServerImport = true;
             program.body = transform_1.default(program.body, path, withTypes, noServerImport);
-            const { code } = generator_1.default(program);
+            const { code } = ast_1.generate(program);
             expect(code).toEqual(codeTranspiledNoServerImport);
         });
     });

@@ -1,4 +1,5 @@
-import { TSESTree } from '@typescript-eslint/typescript-estree';
-export declare function transformInterface(root: TSESTree.Statement): TSESTree.Statement;
-export declare function transformImport(root: TSESTree.Statement): TSESTree.Statement;
-export declare function transformExport(root: TSESTree.Statement, noServerImport?: boolean): TSESTree.BlockStatement | TSESTree.BreakStatement | TSESTree.ClassDeclaration | TSESTree.ClassExpression | TSESTree.ContinueStatement | TSESTree.DebuggerStatement | TSESTree.DoWhileStatement | TSESTree.EmptyStatement | TSESTree.ExportAllDeclaration | TSESTree.ExportDefaultDeclaration | TSESTree.ExportNamedDeclaration | TSESTree.ExpressionStatement | TSESTree.ForInStatement | TSESTree.ForOfStatement | TSESTree.ForStatement | TSESTree.FunctionDeclaration | TSESTree.IfStatement | TSESTree.ImportDeclaration | TSESTree.LabeledStatement | TSESTree.ReturnStatement | TSESTree.SwitchStatement | TSESTree.ThrowStatement | TSESTree.TryStatement | TSESTree.TSDeclareFunction | TSESTree.TSEnumDeclaration | TSESTree.TSImportEqualsDeclaration | TSESTree.TSInterfaceDeclaration | TSESTree.TSModuleBlock | TSESTree.TSModuleDeclaration | TSESTree.TSNamespaceExportDeclaration | TSESTree.TSTypeAliasDeclaration | TSESTree.VariableDeclaration | TSESTree.WhileStatement | TSESTree.WithStatement | TSESTree.Statement[];
+import { ExportNamedDeclaration, Statement, ImportDeclaration } from './ast';
+export declare function transformInterface(root: Statement): Statement;
+export declare function transformImport(root: ImportDeclaration): ImportDeclaration;
+export declare function transformExport(root: ExportNamedDeclaration, noServerImport?: boolean): ExportNamedDeclaration | Statement[];
+export declare function transformClass(root: ExportNamedDeclaration): void;

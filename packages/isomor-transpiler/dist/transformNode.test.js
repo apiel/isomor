@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const typescript_estree_1 = require("@typescript-eslint/typescript-estree");
+const ast_1 = require("./ast");
 const transformNode_1 = require("./transformNode");
 const code_1 = require("./code");
 const transformer_1 = require("./transformer");
@@ -104,7 +104,7 @@ export const getTime1 = async (hello: string) => {
     });
 });
 function transformNodeTest(code, noServerImport = false) {
-    const program = typescript_estree_1.parse(code);
+    const { program } = ast_1.parse(code);
     const node = program.body[0];
     const newNode = transformNode_1.transformNode(node, path, withTypes, noServerImport);
     return { node, newNode };

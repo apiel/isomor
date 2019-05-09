@@ -26,11 +26,17 @@ export function transformInterface(root: Statement) {
 }
 
 export function transformImport(root: ImportDeclaration) {
-    if (root.source.type === 'StringLiteral') {
+    if (root.source.type === 'Literal') {
         if (root.source.value[0] === '.') { // remove local import
             return null;
         }
+        root.source.type = 'StringLiteral' as any;
     }
+    // if (root.source.type === 'StringLiteral') {
+    //     if (root.source.value[0] === '.') { // remove local import
+    //         return null;
+    //     }
+    // }
     return root;
 }
 
@@ -38,12 +44,18 @@ export function transformExport(
     root: ExportNamedDeclaration,
     noServerImport: boolean = false,
 ) {
-    if (root.source.type === 'StringLiteral') {
+    if (root.source.type === 'Literal') {
         if (root.source.value[0] === '.' || noServerImport) { // transform local export to types any
             return root.specifiers.map(({ exported: { name } }) => getCodeType(name));
         }
-        // root.source.type = 'StringLiteral' as any;
+        root.source.type = 'StringLiteral' as any;
     }
+    // if (root.source.type === 'StringLiteral') {
+    //     if (root.source.value[0] === '.' || noServerImport) { // transform local export to types any
+    //         return root.specifiers.map(({ exported: { name } }) => getCodeType(name));
+    //     }
+    //     // root.source.type = 'StringLiteral' as any;
+    // }
     return root;
 }
 

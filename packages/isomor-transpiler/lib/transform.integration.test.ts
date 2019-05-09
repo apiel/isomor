@@ -1,10 +1,7 @@
 // for the moment run integration test within unit test
 // since it s a very minimal task
 
-import generate from '@babel/generator';
-// import { parse } from '@typescript-eslint/typescript-estree';
-// import { parse } from '@babel/parser';
-import parse from './parse';
+import { parse, generate } from './ast';
 
 import transform from './transform';
 

@@ -1,11 +1,10 @@
-import { TSESTree } from '@typescript-eslint/typescript-estree';
 import Debug from 'debug';
 
 import { getCodeImport } from './code';
 import { transformNode } from './transformNode';
-import { JsonAst } from './transformer.test';
 import { isArray } from 'util';
-import { Statement } from '@babel/types';
+
+import { Statement, JsonAst } from './ast';
 
 const debug = Debug('isomor-transpiler:transform');
 

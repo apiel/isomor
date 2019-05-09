@@ -1,8 +1,8 @@
-import { TSESTree } from '@typescript-eslint/typescript-estree';
 import * as traverse from 'traverse';
 import { getCodeType } from './code';
-import { ExportNamedDeclaration, Statement, ImportDeclaration } from '@babel/types';
+import { ExportNamedDeclaration, Statement, ImportDeclaration } from './ast';
 // might have a look again at https://www.npmjs.com/package/esrecurse but need to find AST types for TS
+
 
 export function transformInterface(root: Statement) {
     traverse(root).forEach(function(node: any) {

@@ -1,7 +1,4 @@
-import generate from '@babel/generator';
-// import { parse } from '@typescript-eslint/typescript-estree';
-// import { parse } from '@babel/parser';
-import parse from './parse';
+import { parse, generate } from './ast';
 
 import { transformInterface, transformImport, transformExport } from './transformer';
 import { getCodeType } from './code';
@@ -41,7 +38,7 @@ jest.mock('./code', () => ({
 describe('transformer', () => {
     describe('transformInterface()', () => {
         const ttc = transformToCode(transformInterface);
-        it('should transform props interface to any', () => {
+        it.only('should transform props interface to any', () => {
             expect(ttc(codeSourceInterface)).toBe(codeTranspiledInterface);
         });
     });
@@ -76,9 +73,3 @@ describe('transformer', () => {
         });
     });
 });
-
-export function JsonAst(node: any) {
-    const skip = ['loc', 'range'];
-    const replacer = (key: string, value: any) => skip.includes(key) ? undefined : value;
-    return JSON.stringify(node, replacer, 4);
-}

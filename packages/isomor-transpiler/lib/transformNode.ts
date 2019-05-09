@@ -1,12 +1,6 @@
-import { TSESTree } from '@typescript-eslint/typescript-estree';
-import Debug from 'debug';
-
 import { getCodeFunc, getCodeArrowFunc, getCodeType } from './code';
 import { transformInterface, transformImport, transformExport, transformClass } from './transformer';
-import { JsonAst } from './transformer.test';
-import { Statement } from '@babel/types';
-
-const debug = Debug('isomor-transpiler:transformNode');
+import { Statement, JsonAst } from './ast';
 
 export function transformNode(
     node: Statement,

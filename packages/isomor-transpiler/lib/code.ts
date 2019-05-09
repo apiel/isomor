@@ -1,5 +1,4 @@
-import { TSESTree } from '@typescript-eslint/typescript-estree';
-import { Statement } from '@babel/types';
+import { Statement } from './ast';
 
 export function getCodeType(name: string) {
     return {

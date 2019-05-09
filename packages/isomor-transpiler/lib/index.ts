@@ -11,7 +11,7 @@ require('please-upgrade-node')(pkg, {  // tslint:disable-line
 });
 
 import { info, warn } from 'logol';
-import { readFile, outputFile, emptyDir, copy, unlink } from 'fs-extra';
+import { readFile, outputFile, emptyDir, copy } from 'fs-extra';
 import { join } from 'path';
 import debug from 'debug';
 import {
@@ -22,11 +22,7 @@ import {
 } from 'isomor-core';
 import { watch } from 'chokidar';
 import * as anymatch from 'anymatch';
-// we most likely don't need this 2 guys by using ts.createSourceFile...
-// import { parse } from '@typescript-eslint/typescript-estree';
-// import { parse } from '@babel/parser';
-import parse from './parse';
-import generate from '@babel/generator';
+import { parse, generate } from './ast';
 
 import transform from './transform';
 

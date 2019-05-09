@@ -57,6 +57,10 @@ function start({ srcFolder, distAppFolder, serverFolder }) {
             const AppWithUptime = AppContent.replace('</p>', `</p>\n<Uptime />\n`);
             const App = `import { Uptime } from './uptime/uptime';\n` + AppWithUptime;
             fs_extra_1.writeFileSync(path_1.join(projectDirectory, srcFolder, 'App.tsx'), App);
+            logol_1.info('Edit .gitignore');
+            const gitingore = fs_extra_1.readFileSync(path_1.join(projectDirectory, '.gitignore'))
+                + `\n\n/src\n`;
+            fs_extra_1.writeFileSync(path_1.join(projectDirectory, '.gitignore'), gitingore);
             logol_1.success(`Ready to code :-)`);
             console.log(chalk_1.default.bold(chalk_1.default.yellow('Important: ')), chalk_1.default.blue(`edit you code in ${chalk_1.default.bold(srcFolder)}`), `instead of ${distAppFolder}`);
         }

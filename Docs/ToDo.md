@@ -4,8 +4,6 @@
     - is email, min, max
     - ...
 
-- src folder in .gitingore
-
 - auth example separate is separate folder
 
 - make travis fail when package are outdated

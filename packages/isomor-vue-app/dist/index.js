@@ -57,6 +57,10 @@ function start({ srcFolder, distAppFolder, serverFolder }) {
             fs_extra_1.outputFileSync(path_1.join(projectDirectory, srcFolder, serverFolder, 'data.ts'), ``);
             logol_1.info('Copy example component');
             fs_extra_1.copySync(path_1.join(__dirname, '..', 'example'), path_1.join(projectDirectory, srcFolder, 'components'));
+            logol_1.info('Edit .gitignore');
+            const gitingore = fs_extra_1.readFileSync(path_1.join(projectDirectory, '.gitignore'))
+                + `\n\n/src\n`;
+            fs_extra_1.writeFileSync(path_1.join(projectDirectory, '.gitignore'), gitingore);
             logol_1.success(`Ready to code :-)`);
             console.log(chalk_1.default.bold(chalk_1.default.yellow('Important: ')), chalk_1.default.blue(`edit you code in ${chalk_1.default.bold(srcFolder)}`), `instead of ${distAppFolder}`);
             process.exit();

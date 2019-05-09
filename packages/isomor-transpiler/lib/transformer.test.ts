@@ -38,14 +38,14 @@ jest.mock('./code', () => ({
 describe('transformer', () => {
     describe('transformInterface()', () => {
         const ttc = transformToCode(transformInterface);
-        it.only('should transform props interface to any', () => {
+        it('should transform props interface to any', () => {
             expect(ttc(codeSourceInterface)).toBe(codeTranspiledInterface);
         });
     });
     describe('transformImport()', () => {
         const ttc = transformToCode(transformImport);
         it('should transform keep import', () => {
-            expect(ttc(`import { readdir } from 'fs-extra';`)).toBe(`import { readdir } from 'fs-extra';`);
+            expect(ttc(`import { readdir } from 'fs-extra';`)).toBe(`import { readdir } from "fs-extra";`);
         });
         it('should remove locale import', () => {
             expect(ttc(`import { something } from './my/import';`)).toBe('');
@@ -54,7 +54,7 @@ describe('transformer', () => {
     describe('transformExport()', () => {
         const ttc = transformToCode(transformExport);
         it('should transform keep export', () => {
-            expect(ttc(`export { CpuInfo } from 'os';`)).toBe(`export { CpuInfo } from 'os';`);
+            expect(ttc(`export { CpuInfo } from 'os';`)).toBe(`export { CpuInfo } from "os";`);
         });
         it('should transform locale export', () => {
             const { program } = parse(`export { CpuInfo, Abc } from './my/import';`);

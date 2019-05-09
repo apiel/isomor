@@ -2,17 +2,8 @@ import { declare } from '@babel/helper-plugin-utils';
 import syntaxTypeScript from '@babel/plugin-syntax-typescript';
 import { types as t } from '@babel/core';
 
-interface State {
-  programPath: any;
-}
-
-const PARSED_PARAMS = new WeakSet();
-const PRAGMA_KEY = '@babel/plugin-transform-typescript/jsxPragma';
-
-export default declare((api, { jsxPragma = 'React' }) => {
+export default declare((api) => {
   api.assertVersion(7);
-
-  const JSX_ANNOTATION_REGEX = /\*?\s*@jsx\s+([^\s]+)/;
 
   return {
     name: 'transform-typescript',
@@ -22,25 +13,9 @@ export default declare((api, { jsxPragma = 'React' }) => {
       Program(path, state: any) {
         state.programPath = path;
 
-        const { file } = state;
-
-        // if (file.ast.comments) {
-        //   for (const comment of (file.ast.comments)) {
-        //     const jsxMatches = JSX_ANNOTATION_REGEX.exec(comment.value);
-        //     if (jsxMatches) {
-        //       file.set(PRAGMA_KEY, jsxMatches[1]);
-        //     }
-        //   }
-        // }
-
         // remove type imports
         for (const stmt of path.get('body')) {
           if (t.isImportDeclaration(stmt)) {
-            // // Note: this will allow both `import { } from 'm'` and `import 'm';`.
-            // // In TypeScript, the former would be elided.
-            // if ((stmt as any).node.specifiers.length === 0) {
-            //   continue;
-            // }
 
             let allElided = true;
             const importsToRemove = [];
@@ -61,13 +36,14 @@ export default declare((api, { jsxPragma = 'React' }) => {
               }
             }
 
-            if (allElided) {
-              (stmt as any).remove();
-            } else {
-              for (const importPath of importsToRemove) {
-                importPath.remove();
-              }
-            }
+            // // console.log('allElided', allElided, importsToRemove);
+            // if (allElided) {
+            //   (stmt as any).remove();
+            // } else {
+            //   for (const importPath of importsToRemove) {
+            //     importPath.remove();
+            //   }
+            // }
           }
         }
       },

@@ -74,6 +74,11 @@ async function start({ srcFolder, distAppFolder, serverFolder }: Options) {
         const App = `import { Uptime } from './uptime/uptime';\n` + AppWithUptime;
         writeFileSync(join(projectDirectory, srcFolder, 'App.tsx'), App);
 
+        info('Edit .gitignore');
+        const gitingore = readFileSync(join(projectDirectory, '.gitignore'))
+            + `\n\n/src\n`;
+        writeFileSync(join(projectDirectory, '.gitignore'), gitingore);
+
         success(`Ready to code :-)`);
         // tslint:disable-next-line
         console.log(

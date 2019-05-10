@@ -69,7 +69,7 @@ export function transformClass(
                 && expression.type === 'Identifier'
                 && expression.name === 'IsomorShare',
         ).length > 0;
-        root.declaration.implements[0].type = 'ClassImplements' as any;
+        root.declaration.implements[0].type = 'ClassImplements' as any; // to fix
         if (isIsomorShare) {
             return root;
         }

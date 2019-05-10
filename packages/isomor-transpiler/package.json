@@ -14,7 +14,9 @@
         "node": ">=11"
     },
     "scripts": {
-        "test:parse": "TESTME=true ts-node lib/ast.ts",
+        "test:ast": "TEST_AST=all ts-node lib/ast.ts",
+        "test:ast:class": "TEST_AST=class ts-node lib/ast.ts",
+        "test:ast:interface": "TEST_AST=interface ts-node lib/ast.ts",
         "test": "jest",
         "prepublishOnly": "cp ../../Readme.sub.md ./README.md && yarn build",
         "start": "ts-node lib/index.ts",

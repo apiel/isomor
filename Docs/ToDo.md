@@ -1,16 +1,7 @@
 ### ToDo
 
-- make travis fail when package are outdated?
 - review doc
 - video
-
-- vscode extension??
-  - transpile on save,
-    - https://code.visualstudio.com/updates/v1_23#_run-code-actions-on-save
-    - https://github.com/emeraldwalk/vscode-runonsave/blob/master/src/extension.ts#L24
-
-  - ?warn when editing src folder?
-  - ?show transpiled code in split screen?
 
 - transpiler: watchupdate delete should delete file !!!
 - transpiler: make output available for `outputChannel.appendLine`
@@ -44,6 +35,8 @@ export async function generateToken(user: UserEntity): Promise<string> {
   };
   ctx.res.cookie('token', jwt, cookieOptions);
 ```
+
+- think about https://keepachangelog.com/en/1.0.0/ CHANGELOG.md
 
 - angular example
 

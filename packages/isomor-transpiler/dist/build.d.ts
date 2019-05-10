@@ -1,6 +1,6 @@
 import transform from './transform';
 export default transform;
-interface Options {
+export interface Options {
     srcFolder: string;
     distAppFolder: string;
     serverFolder: string;

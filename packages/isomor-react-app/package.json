@@ -38,5 +38,6 @@
         "@types/rimraf": "^2.0.2",
         "rimraf": "^2.6.3",
         "tslint": "^5.12.1"
-    }
+    },
+    "gitHead": "62840b589778baa9eaf6765eb1699f007911456b"
 }

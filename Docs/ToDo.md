@@ -1,13 +1,7 @@
 ### ToDo
 
 - think about code that could be common to frontend and backend, like validation system
-    - is email, min, max
-    - ...
     - unit test class transformer
-    - add IsomorShare to isomor
-    - add IsomorShare to import, check there is no conflict
-
-- auth example separate is separate folder
 
 - make travis fail when package are outdated?
 - review doc
@@ -20,6 +14,36 @@
 
   - ?warn when editing src folder?
   - ?show transpiled code in split screen?
+
+- **next** auth example separate is separate folder, use JWT as example
+
+```ts
+import * as jwt from 'express-jwt';
+app.use(jwt({
+    secret: 'secret-to-keep-safe',
+    credentialsRequired: false,
+    getToken: (req) => get(req, 'cookies.token'),
+}));
+```
+
+```ts
+export async function generateToken(user: UserEntity): Promise<string> {
+    const secretkey: string = await getPrivateKey();
+    const jwt: JsonWebToken = {
+        idUser: user.idUser,
+        email: user.email,
+        name: user.name,
+    };
+    return sign(jwt , secretkey, { expiresIn });
+}
+
+  const jwt = await generateToken(user);
+  const cookieOptions = {
+      maxAge: 5 * 60 * 1000, // 5 min
+      httpOnly: true,
+  };
+  ctx.res.cookie('token', jwt, cookieOptions);
+```
 
 - angular example
 

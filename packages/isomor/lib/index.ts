@@ -13,3 +13,5 @@ export async function remote(
     );
     return data;
 }
+
+export type IsomorShare = any;

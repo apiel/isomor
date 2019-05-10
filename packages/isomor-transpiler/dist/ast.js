@@ -8,6 +8,7 @@ function parse(code) {
         sourceType: 'module',
         plugins: [
             'typescript',
+            'decorators-legacy',
         ],
     });
 }
@@ -18,18 +19,31 @@ function JsonAst(node) {
     return JSON.stringify(node, replacer, 4);
 }
 exports.JsonAst = JsonAst;
-if (process.env.TESTME === 'true') {
-    const node = parse(`
-    export interface MyInterface2 {
-        hello: string;
-        foo: CpuInfo;
-        bar: {
-            child: CpuInfo;
-        };
-        world: CpuInfo[];
+if (process.env.TEST_AST) {
+    const result = (node) => {
+        console.log('node', JsonAst(node));
+        console.log('node', node);
+    };
+    if (['interface', 'all'].includes(process.env.TEST_AST)) {
+        const node = parse(`
+            export interface MyInterface2 {
+                hello: string;
+                foo: CpuInfo;
+            }
+        `);
+        result(node);
     }
-    `);
-    console.log('node', JsonAst(node));
-    console.log('node', node);
+    else if (['class', 'all'].includes(process.env.TEST_AST)) {
+        const node = parse(`
+            export class Post implements IsomorShare {
+                @Length(10, 20)
+                title: string;
+
+                @Contains("hello")
+                text: string;
+            }
+        `);
+        result(node);
+    }
 }
 //# sourceMappingURL=ast.js.map

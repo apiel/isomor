@@ -51,9 +51,9 @@ export class Post implements IsomorShare {
 }
 `;
 const codeTranspiled = `import { remote } from "isomor";
-import { readdir } from "fs-extra";
-import { CpuInfo } from "os";
-export { CpuInfo } from "os";
+import { readdir } from 'fs-extra';
+import { CpuInfo } from 'os';
+export { CpuInfo } from 'os';
 export type Hello = any;
 export type Abc = any;
 export type MyType = any;
@@ -75,7 +75,6 @@ export const getTime3 = (...args: any) => {
 export class Post implements IsomorShare {
   @Length(10, 20)
   title: string;
-
   @Contains("hello")
   text: string;
 }`;
@@ -98,7 +97,13 @@ export function getTime2(...args: any) {
 }
 export const getTime3 = (...args: any) => {
   return remote("path/to/file", "getTime3", args);
-};`;
+};
+export class Post implements IsomorShare {
+  @Length(10, 20)
+  title: string;
+  @Contains("hello")
+  text: string;
+}`;
 describe('transform', () => {
     const path = 'path/to/file';
     const withTypes = true;

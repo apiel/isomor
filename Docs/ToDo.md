@@ -3,6 +3,9 @@
 - think about code that could be common to frontend and backend, like validation system
     - is email, min, max
     - ...
+    - unit test class transformer
+    - add IsomorShare to isomor
+    - add IsomorShare to import, check there is no conflict
 
 - auth example separate is separate folder
 

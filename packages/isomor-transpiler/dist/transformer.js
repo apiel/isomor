@@ -20,31 +20,28 @@ function transformInterface(root) {
 }
 exports.transformInterface = transformInterface;
 function transformImport(root) {
-    if (root.source.type === 'Literal') {
+    if (root.source.type === 'StringLiteral') {
         if (root.source.value[0] === '.') {
             return null;
         }
-        root.source.type = 'StringLiteral';
     }
     return root;
 }
 exports.transformImport = transformImport;
 function transformExport(root, noServerImport = false) {
-    if (root.source.type === 'Literal') {
+    if (root.source.type === 'StringLiteral') {
         if (root.source.value[0] === '.' || noServerImport) {
             return root.specifiers.map(({ exported: { name } }) => code_1.getCodeType(name));
         }
-        root.source.type = 'StringLiteral';
     }
     return root;
 }
 exports.transformExport = transformExport;
 function transformClass(root) {
     if (root.declaration.type === 'ClassDeclaration' && root.declaration.implements) {
-        const isIsomorShare = root.declaration.implements.filter(({ type, expression }) => type === 'TSClassImplements'
-            && expression.type === 'Identifier'
-            && expression.name === 'IsomorShare').length > 0;
-        root.declaration.implements[0].type = 'ClassImplements';
+        const isIsomorShare = root.declaration.implements.filter((node) => node.type === 'TSExpressionWithTypeArguments'
+            && node.expression.type === 'Identifier'
+            && node.expression.name === 'IsomorShare').length > 0;
         if (isIsomorShare) {
             return root;
         }

@@ -27,39 +27,3 @@ const App = () => {
 }
 
 export default App;
-
-// class App extends Component {
-//   state = {
-//     list: []
-//   };
-
-//   async componentDidMount() {
-//     await this.onRemoteLoad();
-//   }
-
-//   onRemoteLoad = async () => {
-//     const input: GetListInput = { foo: 'magic' };
-//     const list = await getList(input);
-//     this.setState({ list });
-//   }
-
-//   render() {
-//     return (
-//       <div className="App">
-//         <header className="App-header">
-//           Isomor
-//           <Time />
-//         </header>
-//         <Stats />
-//         <Time />
-//         <hr />
-//         <ul>
-//           {
-//             this.state.list.map((item, index) => <li key={index}>{item}</li>)
-//           }
-//         </ul>
-//         <button onClick={this.onRemoteLoad}>load again</button>
-//       </div>
-//     );
-//   }
-// }

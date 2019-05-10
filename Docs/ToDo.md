@@ -1,8 +1,5 @@
 ### ToDo
 
-- think about code that could be common to frontend and backend, like validation system
-    - unit test class transformer
-
 - make travis fail when package are outdated?
 - review doc
 - video

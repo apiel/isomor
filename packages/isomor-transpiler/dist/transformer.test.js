@@ -66,5 +66,26 @@ describe('transformer', () => {
             expect(code_1.getCodeType).toHaveBeenCalledWith('Abc');
         });
     });
+    describe('transformClass()', () => {
+        const ttc = transformToCode(transformer_1.transformClass);
+        it('should keep class when implement IsomorShare', () => {
+            const code = `export class Post implements IsomorShare {
+  @Length(10, 20)
+  title: string;
+  @Contains("hello")
+  text: string;
+}`;
+            expect(ttc(code)).toBe(code);
+        });
+        it('should remove class when no IsomorShare implementation', () => {
+            const code = `export class Post {
+  @Length(10, 20)
+  title: string;
+  @Contains("hello")
+  text: string;
+}`;
+            expect(ttc(code)).toBe('');
+        });
+    });
 });
 //# sourceMappingURL=transformer.test.js.map

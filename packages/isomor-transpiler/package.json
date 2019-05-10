@@ -1,8 +1,8 @@
 {
     "name": "isomor-transpiler",
     "version": "0.9.0",
-    "main": "dist/index.js",
-    "types": "dist/index.d.ts",
+    "main": "dist/build.js",
+    "types": "dist/build.d.ts",
     "author": "Alexandre Piel <alexandre.piel@gmail.com>",
     "license": "MIT",
     "bin": "dist/index.js",

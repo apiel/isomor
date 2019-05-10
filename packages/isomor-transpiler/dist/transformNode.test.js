@@ -14,6 +14,7 @@ jest.mock('./transformer', () => ({
     transformInterface: jest.fn().mockReturnValue('TransformInterface'),
     transformImport: jest.fn().mockReturnValue('TransformImport'),
     transformExport: jest.fn().mockReturnValue('TransformExport'),
+    transformClass: jest.fn().mockReturnValue('TransformClass'),
 }));
 const path = 'path/to/file';
 const withTypes = true;
@@ -100,6 +101,13 @@ export const getTime1 = async (hello: string) => {
             `);
             expect(newNode).toEqual('ArrowFunc');
             expect(code_1.getCodeArrowFunc).toHaveBeenCalledWith(path, 'getTime1', withTypes);
+        });
+        it('should transform class', () => {
+            const { newNode, node } = transformNodeTest(`
+export class MyClass {
+}          `);
+            expect(newNode).toEqual('TransformClass');
+            expect(transformer_1.transformClass).toHaveBeenCalledWith(node);
         });
     });
 });

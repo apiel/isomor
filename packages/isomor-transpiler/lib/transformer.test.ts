@@ -1,6 +1,6 @@
 import { parse, generate } from './ast';
 
-import { transformInterface, transformImport, transformExport } from './transformer';
+import { transformInterface, transformImport, transformExport, transformClass } from './transformer';
 import { getCodeType } from './code';
 
 const codeSourceInterface = `
@@ -70,6 +70,29 @@ describe('transformer', () => {
             expect(node).toEqual(['getCodeTypeMock', 'getCodeTypeMock']);
             expect(getCodeType).toHaveBeenCalledWith('CpuInfo');
             expect(getCodeType).toHaveBeenCalledWith('Abc');
+        });
+    });
+    describe('transformClass()', () => {
+        const ttc = transformToCode(transformClass);
+        it('should keep class when implement IsomorShare', () => {
+            const code =
+`export class Post implements IsomorShare {
+  @Length(10, 20)
+  title: string;
+  @Contains("hello")
+  text: string;
+}`;
+            expect(ttc(code)).toBe(code);
+        });
+        it('should remove class when no IsomorShare implementation', () => {
+            const code =
+`export class Post {
+  @Length(10, 20)
+  title: string;
+  @Contains("hello")
+  text: string;
+}`;
+            expect(ttc(code)).toBe('');
         });
     });
 });

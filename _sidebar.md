@@ -7,6 +7,7 @@
 * [Request / Response](/?id=request-response-context)
 * [TypeORM](/?id=typeorm)
 * Advanced guides
+    * [Shared class](Docs/Shared-class)
     * [Server](Docs/Server)
     * [Manual setup](Docs/Manual-setup)
     * [Babel](Docs/Babel)

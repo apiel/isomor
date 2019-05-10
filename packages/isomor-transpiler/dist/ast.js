@@ -1,30 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const core_1 = require("@babel/core");
-const generator_1 = require("@babel/generator");
+var generator_1 = require("@babel/generator");
 exports.generate = generator_1.default;
-const config = {
-    sourceType: 'unambiguous',
-    presets: [
-        '@babel/env',
-    ],
-    plugins: [
-        require('../dist/babel-ts.js'),
-        ['@babel/plugin-proposal-decorators', { legacy: true }],
-        '@babel/proposal-class-properties',
-        '@babel/proposal-object-rest-spread',
-    ],
-    cwd: process.cwd(),
-    filename: 'file.ts',
-    filenameRelative: 'file.ts',
-    sourceFileName: 'file.ts',
-    babelrc: false,
-    ast: true,
-};
+const parser_1 = require("@babel/parser");
 function parse(code) {
-    const { ast } = core_1.transformSync(code, config);
-    ast.program.body.splice(0, 1);
-    return ast;
+    return parser_1.parse(code, {
+        sourceType: 'module',
+        plugins: [
+            'typescript',
+        ],
+    });
 }
 exports.parse = parse;
 function JsonAst(node) {

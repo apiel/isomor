@@ -4,17 +4,17 @@
 * eslint + babel
 */
 
-export {
-    ExportNamedDeclaration, Statement, ImportDeclaration,
-} from '@typescript-eslint/typescript-estree/dist/ts-estree/ts-estree';
-import { parse as parseEstree } from '@typescript-eslint/typescript-estree';
-import generate from '@babel/generator';
-export { generate };
+// export {
+//     ExportNamedDeclaration, Statement, ImportDeclaration,
+// } from '@typescript-eslint/typescript-estree/dist/ts-estree/ts-estree';
+// import { parse as parseEstree } from '@typescript-eslint/typescript-estree';
+// import generate from '@babel/generator';
+// export { generate };
 
-export function parse(code: string) {
-    const program = parseEstree(code);
-    return { program };
-}
+// export function parse(code: string) {
+//     const program = parseEstree(code);
+//     return { program };
+// }
 
 /*
 * ts
@@ -75,6 +75,25 @@ export function parse(code: string) {
 //     ast.program.body.splice(0, 1);
 //     return ast;
 // }
+
+/*
+* babel parser
+*/
+
+export { default as generate } from '@babel/generator';
+export { ExportNamedDeclaration, Statement, ImportDeclaration } from '@babel/types';
+
+import { parse as parseBabel } from '@babel/parser';
+
+export function parse(code: string) {
+    return parseBabel(code, {
+        sourceType: 'module',
+        plugins: [
+            'typescript',
+            // ['@babel/plugin-proposal-decorators', { legacy: true }],
+        ],
+    });
+}
 
 /*
 * tools

@@ -8,6 +8,8 @@ export function parse(code: string) {
         sourceType: 'module',
         plugins: [
             'typescript',
+            'decorators-legacy',
+            // 'decorators',
             // ['@babel/plugin-proposal-decorators', { legacy: true }],
             // "classProperties",
             // // TODO: This is enabled by default now, remove in Babel 8

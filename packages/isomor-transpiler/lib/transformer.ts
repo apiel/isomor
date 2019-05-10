@@ -50,15 +50,15 @@ export function transformClass(
     root: ExportNamedDeclaration,
 ) {
     if (root.declaration.type === 'ClassDeclaration' && root.declaration.implements) {
-        // const isIsomorShare = root.declaration.implements.filter(
-        //     ({ type, expression }) =>
-        //         type === 'ClassImplements'
-        //         && expression.type === 'Identifier'
-        //         && expression.name === 'IsomorShare',
-        // ).length > 0;
-        // if (isIsomorShare) {
-        //     return root;
-        // }
+        const isIsomorShare = root.declaration.implements.filter(
+            (node) =>
+                node.type === 'TSExpressionWithTypeArguments'
+                && node.expression.type === 'Identifier'
+                && node.expression.name === 'IsomorShare',
+        ).length > 0;
+        if (isIsomorShare) {
+            return root;
+        }
     }
     return;
 }

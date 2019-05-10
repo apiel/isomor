@@ -37,21 +37,21 @@ function shouldNotBeTranspiled() {
     console.log('hello');
 }
 
-// export class PostAbc {
-//     @Length(10, 20)
-//     title: string;
+export class PostAbc {
+    @Length(10, 20)
+    title: string;
 
-//     @Contains("hello")
-//     text: string;
-// }
+    @Contains("hello")
+    text: string;
+}
 
-// export class Post implements IsomorShare {
-//     @Length(10, 20)
-//     title: string;
+export class Post implements IsomorShare {
+    @Length(10, 20)
+    title: string;
 
-//     @Contains("hello")
-//     text: string;
-// }
+    @Contains("hello")
+    text: string;
+}
 `;
 
 const codeTranspiled =
@@ -76,14 +76,13 @@ export function getTime2(...args: any) {
 }
 export const getTime3 = (...args: any) => {
   return remote("path/to/file", "getTime3", args);
-};`;
-// export class Post implements IsomorShare {
-//   @Length(10, 20)
-//   title: string;
-
-//   @Contains("hello")
-//   text: string;
-// }
+};
+export class Post implements IsomorShare {
+  @Length(10, 20)
+  title: string;
+  @Contains("hello")
+  text: string;
+}`;
 
 // we migh want to transform `export { CpuInfo } from "os";` to `export type CpuInfo = any;`
 const codeTranspiledNoServerImport =
@@ -106,7 +105,13 @@ export function getTime2(...args: any) {
 }
 export const getTime3 = (...args: any) => {
   return remote("path/to/file", "getTime3", args);
-};`;
+};
+export class Post implements IsomorShare {
+  @Length(10, 20)
+  title: string;
+  @Contains("hello")
+  text: string;
+}`;
 
 describe('transform', () => {
   const path = 'path/to/file';

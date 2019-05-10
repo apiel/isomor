@@ -12,6 +12,9 @@
   - ?warn when editing src folder?
   - ?show transpiled code in split screen?
 
+- transpiler: watchupdate delete should delete file !!!
+- transpiler: make output available for `outputChannel.appendLine`
+
 - **next** auth example separate is separate folder, use JWT as example
 
 ```ts

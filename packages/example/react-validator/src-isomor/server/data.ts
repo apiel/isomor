@@ -13,12 +13,10 @@ export async function setUser(input: Input): Promise<string> {
     const user = Object.assign(new Input(), input)
     const errors = await validate(user);
     if (errors.length) {
-        return `Validation failed ${JSON.stringify(errors, null, 4)}`;
+        return `Server validation failed ${JSON.stringify(errors, null, 4)}`;
         // we could as well throw an error
     }
-    return `Validation success for:
+    return `Server validation success for:
     - name: ${user.name}
-    - email: ${user.email}
-
-Server uptime is ${process.uptime()}`;
+    - email: ${user.email} \n\nServer uptime is ${process.uptime()}`;
 }

@@ -34,13 +34,11 @@ function setUser(input) {
         const user = Object.assign(new Input(), input);
         const errors = yield class_validator_1.validate(user);
         if (errors.length) {
-            return `Validation failed ${JSON.stringify(errors, null, 4)}`;
+            return `Server validation failed ${JSON.stringify(errors, null, 4)}`;
         }
-        return `Validation success for:
+        return `Server validation success for:
     - name: ${user.name}
-    - email: ${user.email}
-
-Server uptime is ${process.uptime()}`;
+    - email: ${user.email} \n\nServer uptime is ${process.uptime()}`;
     });
 }
 exports.setUser = setUser;

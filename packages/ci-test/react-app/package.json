@@ -28,6 +28,7 @@
     "serv:prod": "yarn isomor:build && STATIC_FOLDER=./build yarn serv",
     "prod": "yarn build && yarn serv:prod",
     "dev": "run-screen 'yarn isomor:build:dev' 'yarn serv:dev' 'yarn start'",
+    "code": "run-screen 'yarn isomor:build' 'yarn serv:dev' 'yarn start'",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "jest -c jest-e2e.config.js",

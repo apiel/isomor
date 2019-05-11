@@ -1,5 +1,7 @@
 ### ToDo
 
+- **FIX** bug bug vscode extension -> dont let copy file under server
+
 - review doc
 - video
 - provide some test-case example, unit test and integration test

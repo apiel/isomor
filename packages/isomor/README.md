@@ -1,41 +1,34 @@
 # Isomor
 
-`Isomor` is a library to create an interface between your backend and your frontend with nodejs and javascript application. Today, fullstack developers often use monorepo to centralize all their architecture inside a single place. This library allow you to do even more. Instead to have different application for backend and frontend, you develop a single "isomorphic" application and `isomor` will take care to split the code and setup a communication protocole. See following example:
+`isomor` give the possibility to develop a web application in a single project by abstracting the layers between frontend and backend.  Instead to implement an API, using REST or graphql, isomor will allow you to call the server functions directly from the UI code, without to think about the communication protocol. Isomor will take care to generate automatically those layers for you. All your code is implemented in the same folder and isomor will automatically separate them by using Babel transpiler. Since your code is tight together, there is much more consistency, that is one of the big advantage of using isomor, especially with TypeScript. It remove as well lot of overhead and let you focus on implementing features.
 
+See following example:
+
+*./src-isomor/server/uptime.ts - function executed on server*
+```ts
+export async function getServerUptime(): Promise<number> {
+    return process.uptime();
+}
+```
+
+*./src-isomor/Uptime.tsx - UI components*
 ```tsx
-import { getList } from './server/data';
+import React from 'react';
+import { getServerUptime } from './server/uptime';
 
-class App extends Component {
-  state = { list: [] };
-
-  async componentDidMount() {
-    const list = await getList();
-    this.setState({ list });
-  }
-
-  render() {
-    const { list } = this.state;
+export const Uptime = () => {
+    const [uptime, setUptime] = React.useState<number>();
+    const call = async () => setUptime(await getServerUptime());
+    React.useEffect(() => { call(); }, []);
     return (
-      <ul>
-        { list.map((item, index) => <li key={index}>{item}</li>) }
-      </ul>
+        <p><b>Server uptime:</b> { uptime || 'loading...' }</p>
     );
-  }
-}
+};
 ```
 
-```typescript
-import { readdir } from 'fs-extra';
+As you can see, when the component mount, the app is calling directly `getServerUptime` located on the server. During build process, isomor transpile `getServerUptime` to a query function that will call the backend through an http request.
 
-export async function getList(): Promise<string[]> {
-    const files = await readdir('./');
-    return files.map(file => `./${file}`);
-}
-```
-
-As you can see, when the component mount, the app is calling `getList` located on the server. But no, **I am not speaking about SSR**. Isomor transpile `getList` to a magic function that will call the backend through an http request. Like this, we have very consistent code between backend and server, especially if you are using types.
-
-Right now, this library has been implemented for TypeScript, since types bring lot of value to this concept. It might work with FlowType and JavaScript as well. Also, till now most of the test has been done on React, there is as well a small example with VueJs. Since it is minimalistic and very generic, it should work pretty much with any kind of library.
+This tool has been implemented for TypeScript, since types bring lot of value to this concept. It might work with FlowType and JavaScript as well. Since it is minimalistic and very generic, this tool can work with any kind of library, you can find some examples with React and VueJS in the repository.
 
 **[>> Online documentation <<](https://apiel.github.io/isomor/)**
 

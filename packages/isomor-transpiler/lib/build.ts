@@ -73,13 +73,20 @@ export async function build(options: Options) {
     watcher(options);
 }
 
+function getServerSubFolderPattern(serverFolderPattern: string) {
+    return join(serverFolderPattern, '**', '*');
+}
+
 export const watcherUpdate = (
     options: Options,
 ) => async (file: string) => {
     const { srcFolder, serverFolder, distAppFolder, watchMode } = options;
     const serverFolderPattern = getFilesPattern(serverFolder);
     const path = join(srcFolder, file);
-    if (anymatch([serverFolderPattern], path)) {
+
+    if (anymatch([getServerSubFolderPattern(serverFolderPattern)], path)) {
+        info(`Do not copy sub-folder from "./server"`, path);
+    } else if (anymatch([serverFolderPattern], path)) {
         transpile(options, file);
     } else {
         info(`Copy ${path} to folder`);
@@ -114,7 +121,7 @@ function watcher(options: Options) {
         const serverFolderPattern = getFilesPattern(serverFolder);
         watch('.', {
             ignoreInitial: true,
-            ignored: join(serverFolderPattern, '**', '*'),
+            ignored: getServerSubFolderPattern(serverFolderPattern),
             cwd: srcFolder,
             usePolling: process.env.CHOKIDAR_USEPOLLING === 'true',
         }).on('ready', () => info('Initial scan complete. Ready for changes...'))

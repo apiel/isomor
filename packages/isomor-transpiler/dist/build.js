@@ -60,11 +60,17 @@ function build(options) {
     });
 }
 exports.build = build;
+function getServerSubFolderPattern(serverFolderPattern) {
+    return path_1.join(serverFolderPattern, '**', '*');
+}
 exports.watcherUpdate = (options) => (file) => __awaiter(this, void 0, void 0, function* () {
     const { srcFolder, serverFolder, distAppFolder, watchMode } = options;
     const serverFolderPattern = isomor_core_1.getFilesPattern(serverFolder);
     const path = path_1.join(srcFolder, file);
-    if (anymatch([serverFolderPattern], path)) {
+    if (anymatch([getServerSubFolderPattern(serverFolderPattern)], path)) {
+        logol_1.info(`Do not copy sub-folder from "./server"`, path);
+    }
+    else if (anymatch([serverFolderPattern], path)) {
         transpile(options, file);
     }
     else {
@@ -96,7 +102,7 @@ function watcher(options) {
         const serverFolderPattern = isomor_core_1.getFilesPattern(serverFolder);
         chokidar_1.watch('.', {
             ignoreInitial: true,
-            ignored: path_1.join(serverFolderPattern, '**', '*'),
+            ignored: getServerSubFolderPattern(serverFolderPattern),
             cwd: srcFolder,
             usePolling: process.env.CHOKIDAR_USEPOLLING === 'true',
         }).on('ready', () => logol_1.info('Initial scan complete. Ready for changes...'))

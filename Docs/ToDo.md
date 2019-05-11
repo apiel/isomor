@@ -2,6 +2,7 @@
 
 - review doc
 - video
+- provide some test-case example, unit test and integration test
 
 - transpiler: watchupdate delete should delete file !!!
 - transpiler: make output available for `outputChannel.appendLine`

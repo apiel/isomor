@@ -412,6 +412,8 @@ export async function setAuth(): Promise<string> {
 }
 ```
 
+Find an example of authentication using JWT [here](https://github.com/apiel/isomor/tree/master/packages/example/react-auth).
+
 ## TypeORM
 
 [TypeORM](https://typeorm.io/) is a data-Mapper ORM for TypeScript. Supports MySQL, PostgreSQL, MariaDB, SQLite, MS SQL Server, Oracle, MongoDB databases.

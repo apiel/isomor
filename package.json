@@ -2,6 +2,7 @@
   "name": "isomor-monorepo",
   "private": true,
   "scripts": {
+    "up": "lerna exec --concurrency 1 -- yarn && yarn upgrade-interactive",
     "doc": "docsify serve ."
   },
   "repository": {

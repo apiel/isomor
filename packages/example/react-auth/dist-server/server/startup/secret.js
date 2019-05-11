@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const jsonwebtoken_1 = require("jsonwebtoken");
 exports.secret = 'secret-to-keep-safe';
-exports.expiresIn = 30 * 60;
+exports.expiresIn = 20;
 function generateToken(user) {
     const jwt = {
         username: user.username,

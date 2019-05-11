@@ -8,36 +8,6 @@
 
 - transpiler: watchupdate delete should delete file !!!
 
-- **next** auth example separate is separate folder, use JWT as example
-
-```ts
-import * as jwt from 'express-jwt';
-app.use(jwt({
-    secret: 'secret-to-keep-safe',
-    credentialsRequired: false,
-    getToken: (req) => get(req, 'cookies.token'),
-}));
-```
-
-```ts
-export async function generateToken(user: UserEntity): Promise<string> {
-    const secretkey: string = await getPrivateKey();
-    const jwt: JsonWebToken = {
-        idUser: user.idUser,
-        email: user.email,
-        name: user.name,
-    };
-    return sign(jwt , secretkey, { expiresIn });
-}
-
-  const jwt = await generateToken(user);
-  const cookieOptions = {
-      maxAge: 5 * 60 * 1000, // 5 min
-      httpOnly: true,
-  };
-  ctx.res.cookie('token', jwt, cookieOptions);
-```
-
 - think about https://keepachangelog.com/en/1.0.0/ CHANGELOG.md
 
 - angular example

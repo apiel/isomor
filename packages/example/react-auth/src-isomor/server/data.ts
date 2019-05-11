@@ -8,7 +8,8 @@ export interface Input {
 export async function setUser(input: Input): Promise<string> {
     const { username, password } = input;
     if (username !== 'demo' && password !== '1234') {
-        throw new Error('Bad credential');
+        this.res.status(401);
+        return 'Invalid credentials';
     }
 
     const jwt = await generateToken(input);

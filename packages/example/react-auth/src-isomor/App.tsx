@@ -11,12 +11,14 @@ const loadUser = async (
 
 const loggin = (
   setAuth: React.Dispatch<React.SetStateAction<string>>,
+  setError: React.Dispatch<React.SetStateAction<string>>,
   input: Input,
 ) => async () => {
   try {
+    setError('');
     setAuth(await setUser(input));
   } catch (error) {
-    console.log('error', error);
+    setError(error.response.data);
   }
 }
 
@@ -32,6 +34,7 @@ const onChangeInput = (
 }
 
 const App = () => {
+  const [error, setError] = React.useState<string>('');
   const [auth, setAuth] = React.useState<string>('');
   const [input, setInput] = React.useState<Input>({ username: '', password: '' });
 
@@ -52,7 +55,8 @@ const App = () => {
             <>
               <p>Username: <input onChange={onChangeInput('username', setInput, input)} /> (demo)</p>
               <p>Password: <input onChange={onChangeInput('password', setInput, input)} type="password" /> (1234)</p>
-              <button onClick={loggin(setAuth, input)}>Login</button>
+              <button onClick={loggin(setAuth, setError, input)}>Login</button>
+              {error && <p style={{ color: 'red' }}>{error}</p>}
             </>
           )
         }

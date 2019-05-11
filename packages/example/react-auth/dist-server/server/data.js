@@ -13,7 +13,8 @@ function setUser(input) {
     return __awaiter(this, void 0, void 0, function* () {
         const { username, password } = input;
         if (username !== 'demo' && password !== '1234') {
-            throw new Error('Bad credential');
+            this.res.status(401);
+            return 'Invalid credentials';
         }
         const jwt = yield secret_1.generateToken(input);
         const cookieOptions = {

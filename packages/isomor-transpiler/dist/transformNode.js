@@ -33,7 +33,7 @@ function transformNode(node, path, withTypes, noServerImport) {
             }
         }
         else if (node.declaration.type === 'ClassDeclaration') {
-            return transformer_1.transformClass(node);
+            return transformer_1.transformClass(node, path, withTypes);
         }
     }
     else if (node.type === 'ImportDeclaration' && !noServerImport) {

@@ -14,7 +14,7 @@ function parse(code) {
 }
 exports.parse = parse;
 function JsonAst(node) {
-    const skip = ['loc', 'range'];
+    const skip = ['loc', 'range', 'start', 'end'];
     const replacer = (key, value) => skip.includes(key) ? undefined : value;
     return JSON.stringify(node, replacer, 4);
 }

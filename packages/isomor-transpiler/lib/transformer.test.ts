@@ -33,6 +33,14 @@ const transformToCode = (fn: any) => (source: string): string => {
 
 jest.mock('./code', () => ({
     getCodeType: jest.fn().mockReturnValue('getCodeTypeMock'),
+    getCodeMethod: jest.fn().mockReturnValue({
+        type: 'ClassMethod',
+        key: {
+            type: 'Identifier',
+            name: 'mock',
+        },
+        params: [],
+    }),
 }));
 
 describe('transformer', () => {
@@ -86,13 +94,20 @@ describe('transformer', () => {
         });
         it('should remove class when no IsomorShare implementation', () => {
             const code =
-`export class Post {
-  @Length(10, 20)
-  title: string;
-  @Contains("hello")
-  text: string;
+`@Injectable()
+export class CatsService {
+  findAll(id: string): Cat[] {
+    return this.cats;
+  }
+
 }`;
-            expect(ttc(code)).toBe('');
+            expect(ttc(code)).toBe(
+`export @Injectable()
+class CatsService {
+  mock()
+
+}`,
+            );
         });
     });
 });

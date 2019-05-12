@@ -78,11 +78,12 @@ describe('transformer', () => {
             expect(ttc(code)).toBe(code);
         });
         it('should remove class when no IsomorShare implementation', () => {
-            const code = `export class Post {
-  @Length(10, 20)
-  title: string;
-  @Contains("hello")
-  text: string;
+            const code = `@Injectable()
+export class CatsService {
+  findAll(id: string): Cat[] {
+    return this.cats;
+  }
+
 }`;
             expect(ttc(code)).toBe('');
         });

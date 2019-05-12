@@ -156,5 +156,5 @@ export function getCodeMethod(fileName: string, name: string, className: string,
         async: true,
         params: getParams(withTypes),
         body: getBody(fileName, name, className),
-    };
+    } as any as Statement;
 }

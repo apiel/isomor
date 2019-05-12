@@ -98,7 +98,7 @@ function getTypeAny(withTypes) {
         },
     } : {};
 }
-function getBody(fileName, name) {
+function getBody(fileName, name, className) {
     return {
         type: 'BlockStatement',
         body: [
@@ -123,10 +123,28 @@ function getBody(fileName, name) {
                             type: 'Identifier',
                             name: 'args',
                         },
+                        ...(className ? [{
+                                type: 'StringLiteral',
+                                value: className,
+                            }] : []),
                     ],
                 },
             },
         ],
     };
 }
+function getCodeMethod(fileName, name, className, withTypes) {
+    return {
+        type: 'ClassMethod',
+        static: false,
+        key: {
+            type: 'Identifier',
+            name,
+        },
+        async: true,
+        params: getParams(withTypes),
+        body: getBody(fileName, name, className),
+    };
+}
+exports.getCodeMethod = getCodeMethod;
 //# sourceMappingURL=code.js.map

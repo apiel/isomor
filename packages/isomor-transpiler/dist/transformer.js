@@ -37,14 +37,28 @@ function transformExport(root, noServerImport = false) {
     return root;
 }
 exports.transformExport = transformExport;
-function transformClass(root) {
-    if (root.declaration.type === 'ClassDeclaration' && root.declaration.implements) {
-        const isIsomorShare = root.declaration.implements.filter((node) => node.type === 'TSExpressionWithTypeArguments'
-            && node.expression.type === 'Identifier'
-            && node.expression.name === 'IsomorShare').length > 0;
-        if (isIsomorShare) {
-            return root;
+function transformClass(root, path, withTypes) {
+    if (root.declaration.type === 'ClassDeclaration') {
+        if (root.declaration.implements) {
+            const isIsomorShare = root.declaration.implements.filter((node) => node.type === 'TSExpressionWithTypeArguments'
+                && node.expression.type === 'Identifier'
+                && node.expression.name === 'IsomorShare').length > 0;
+            if (isIsomorShare) {
+                return root;
+            }
         }
+        const { name: className } = root.declaration.id;
+        const { body } = root.declaration.body;
+        body.forEach((node, index) => {
+            if (node.type === 'ClassMethod') {
+                const { name } = node.key;
+                root.declaration.body.body[index] = code_1.getCodeMethod(path, name, className, withTypes);
+            }
+            else if (node.type !== 'ClassProperty') {
+                delete root.declaration.body.body[index];
+            }
+        });
+        return root;
     }
     return;
 }

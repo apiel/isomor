@@ -124,7 +124,7 @@ export class Post implements IsomorShare {
   text: string;
 }`;
 
-describe('transform', () => {
+describe.skip('transform', () => {
   const path = 'path/to/file';
   const withTypes = true;
   describe('transform/transform()', () => {

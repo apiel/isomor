@@ -1,5 +1,5 @@
 import * as traverse from 'traverse';
-import { getCodeType } from './code';
+import { getCodeType, getCodeMethod } from './code';
 import { ExportNamedDeclaration, Statement, ImportDeclaration } from './ast';
 import { JsonAst } from './ast';
 // might have a look again at https://www.npmjs.com/package/esrecurse but need to find AST types for TS
@@ -49,6 +49,8 @@ export function transformExport(
 
 export function transformClass(
     root: ExportNamedDeclaration,
+    path: string,
+    withTypes: boolean,
 ) {
     if (root.declaration.type === 'ClassDeclaration') {
         if (root.declaration.implements) {
@@ -64,14 +66,18 @@ export function transformClass(
         }
         // Class didn't implemented IsomorShare we can transform it
         // console.log('ClassDeclaration', JsonAst(root));
+        const { name: className } = root.declaration.id;
         const { body } = root.declaration.body;
         body.forEach((node, index) => {
             if (node.type === 'ClassMethod') {
-                //
+                const { name } = node.key as any;
+                console.log('getCodeMethod', typeof(getCodeMethod));
+                (root as any).declaration.body.body[index] = getCodeMethod(path, name, className, withTypes);
             } else if (node.type !== 'ClassProperty') {
                 delete (root as any).declaration.body.body[index];
             }
         });
+        return root;
     }
     return;
 }

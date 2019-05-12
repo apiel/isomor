@@ -107,7 +107,7 @@ export const getTime1 = async (hello: string) => {
 export class MyClass {
 }          `);
             expect(newNode).toEqual('TransformClass');
-            expect(transformer_1.transformClass).toHaveBeenCalledWith(node);
+            expect(transformer_1.transformClass).toHaveBeenCalledWith(node, path, withTypes);
         });
     });
 });

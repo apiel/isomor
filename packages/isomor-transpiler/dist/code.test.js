@@ -16,10 +16,26 @@ exports.codeTranspiledArrowFunc = `export const getTime = (...args: any) => {
 exports.codeTranspiledArrowFuncNoType = `export const getTime = (...args) => {
   return remote("path/to/file", "getTime", args);
 };`;
+exports.codeTranspiledClass = `export class CatsService {
+  async getTime(...args: any) {
+    return remote("path/to/file", "getTime", args, "CatsService");
+  }
+
+}`;
 describe('code', () => {
     const path = 'path/to/file';
     const fnName = 'getTime';
+    const className = 'CatsService';
     const typeName = 'MyType';
+    describe('code/getCodeMethod()', () => {
+        it('should generate function for isomor', () => {
+            const withType = true;
+            const { program } = ast_1.parse('export class CatsService {}');
+            program.body[0].declaration.body.body = [code_1.getCodeMethod(path, fnName, className, withType)];
+            const { code } = ast_1.generate(program);
+            expect(code).toEqual(exports.codeTranspiledClass);
+        });
+    });
     describe('code/getCodeImport()', () => {
         it('should generate inport for isomor', () => {
             const { program } = ast_1.parse('');

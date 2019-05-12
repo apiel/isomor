@@ -38,7 +38,7 @@ export function transformNode(
                 return getCodeArrowFunc(path, name, withTypes);
             }
         } else if (node.declaration.type === 'ClassDeclaration') {
-            return transformClass(node);
+            return transformClass(node, path, withTypes);
         }
     } else if (node.type === 'ImportDeclaration' && !noServerImport) {
         return transformImport(node);

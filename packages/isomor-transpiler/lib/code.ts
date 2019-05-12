@@ -158,3 +158,20 @@ export function getCodeMethod(fileName: string, name: string, className: string,
         body: getBody(fileName, name, className),
     } as any as Statement;
 }
+
+export function getCodeConstructor(withTypes: boolean) {
+    return {
+        type: 'ClassMethod',
+        static: false,
+        key: {
+            type: 'Identifier',
+            name: 'constructor',
+        },
+        async: false,
+        params: getParams(withTypes),
+        body: {
+            type: 'BlockStatement',
+            body: [],
+        },
+    } as any as Statement;
+}

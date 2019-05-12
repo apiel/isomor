@@ -1,6 +1,6 @@
 import { parse, generate } from './ast';
 
-import { getCodeImport, getCodeFunc, getCodeArrowFunc, getCodeType, getCodeMethod } from './code';
+import { getCodeImport, getCodeFunc, getCodeArrowFunc, getCodeType, getCodeMethod, getCodeConstructor } from './code';
 
 export const isomorImport = `import { remote } from "isomor";`;
 
@@ -34,6 +34,12 @@ export const codeTranspiledClass =
 
 }`;
 
+export const codeTranspiledClassConstruct =
+`export class CatsService {
+  constructor(...args: any) {}
+
+}`;
+
 describe('code', () => {
     const path = 'path/to/file';
     const fnName = 'getTime';
@@ -41,12 +47,22 @@ describe('code', () => {
     const typeName = 'MyType';
 
     describe('code/getCodeMethod()', () => {
-        it('should generate function for isomor', () => {
+        it('should generate method for isomor', () => {
             const withType = true;
             const { program } = parse('export class CatsService {}');
             (program as any).body[0].declaration.body.body = [getCodeMethod(path, fnName, className, withType)];
             const { code } = generate(program as any);
             expect(code).toEqual(codeTranspiledClass);
+        });
+    });
+
+    describe('code/getCodeConstructor()', () => {
+        it('should generate constructor for isomor', () => {
+            const withType = true;
+            const { program } = parse('export class CatsService {}');
+            (program as any).body[0].declaration.body.body = [getCodeConstructor(withType)];
+            const { code } = generate(program as any);
+            expect(code).toEqual(codeTranspiledClassConstruct);
         });
     });
 

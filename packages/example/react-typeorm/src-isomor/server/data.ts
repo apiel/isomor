@@ -1,7 +1,7 @@
-import { User } from './entity';
+import { User } from './entity/User';
 import { getConnection } from 'typeorm';
 
-export { User } from './entity';
+export { User } from './entity/User';
 // or could use interface and class User implements IUser
 // export interface IUser {
 //     id: number;

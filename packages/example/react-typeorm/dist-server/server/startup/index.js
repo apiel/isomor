@@ -8,13 +8,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const User_1 = require("./entity/User");
+require("reflect-metadata");
 const typeorm_1 = require("typeorm");
-var User_2 = require("./entity/User");
-exports.User = User_2.User;
-function getList() {
+function default_1(app) {
     return __awaiter(this, void 0, void 0, function* () {
-        return typeorm_1.getConnection().manager.find(User_1.User);
+        yield typeorm_1.createConnection();
+        console.log('Database connection was successfully created.');
     });
 }
-exports.getList = getList;
+exports.default = default_1;

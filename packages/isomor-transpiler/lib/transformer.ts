@@ -1,11 +1,11 @@
 import * as traverse from 'traverse';
-import { getCodeType, getCodeMethod } from './code';
+import { getCodeType, getCodeMethod, getCodeConstructor } from './code';
 import { ExportNamedDeclaration, Statement, ImportDeclaration } from './ast';
 import { JsonAst } from './ast';
 // might have a look again at https://www.npmjs.com/package/esrecurse but need to find AST types for TS
 
 export function transformInterface(root: Statement) {
-    traverse(root).forEach(function (node: any) {
+    traverse(root).forEach(function(node: any) {
         if (node) {
             if (
                 (node.type === 'TSTypeAnnotation' && node.typeAnnotation.type === 'TSTypeReference')
@@ -71,8 +71,11 @@ export function transformClass(
         body.forEach((node, index) => {
             if (node.type === 'ClassMethod') {
                 const { name } = node.key as any;
-                console.log('getCodeMethod', typeof(getCodeMethod));
-                (root as any).declaration.body.body[index] = getCodeMethod(path, name, className, withTypes);
+                if (name === 'constructor') {
+                    (root as any).declaration.body.body[index] = getCodeConstructor(withTypes);
+                } else {
+                    (root as any).declaration.body.body[index] = getCodeMethod(path, name, className, withTypes);
+                }
             } else if (node.type !== 'ClassProperty') {
                 delete (root as any).declaration.body.body[index];
             }

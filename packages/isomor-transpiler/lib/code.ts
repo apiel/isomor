@@ -168,6 +168,7 @@ export function getCodeConstructor(withTypes: boolean) {
             name: 'constructor',
         },
         async: false,
+        kind: 'constructor',
         params: getParams(withTypes),
         body: {
             type: 'BlockStatement',

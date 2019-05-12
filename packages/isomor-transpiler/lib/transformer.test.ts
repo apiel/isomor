@@ -1,7 +1,7 @@
 import { parse, generate } from './ast';
 
 import { transformInterface, transformImport, transformExport, transformClass } from './transformer';
-import { getCodeType } from './code';
+import { getCodeType, getCodeMethod, getCodeConstructor } from './code';
 
 const codeSourceInterface = `
 export interface MyInterface {
@@ -38,6 +38,14 @@ jest.mock('./code', () => ({
         key: {
             type: 'Identifier',
             name: 'mock',
+        },
+        params: [],
+    }),
+    getCodeConstructor: jest.fn().mockReturnValue({
+        type: 'ClassMethod',
+        key: {
+            type: 'Identifier',
+            name: 'constructorMock',
         },
         params: [],
     }),
@@ -92,7 +100,7 @@ describe('transformer', () => {
 }`;
             expect(ttc(code)).toBe(code);
         });
-        it('should remove class when no IsomorShare implementation', () => {
+        it('should transform class for isomor', () => {
             const code =
 `@Injectable()
 export class CatsService {
@@ -108,6 +116,26 @@ class CatsService {
 
 }`,
             );
+            expect(getCodeMethod).toHaveBeenCalledTimes(1); // called with?
+        });
+        it('should transform class constructor', () => {
+            const code =
+`@Injectable()
+export class CatsService {
+    constructor(
+        @InjectRepository(Photo)
+        private readonly photoRepository: Repository<Photo>,
+    ) {}
+
+}`;
+            expect(ttc(code)).toBe(
+`export @Injectable()
+class CatsService {
+  constructorMock()
+
+}`,
+            );
+            expect(getCodeConstructor).toHaveBeenCalledTimes(1); // called with?
         });
     });
 });

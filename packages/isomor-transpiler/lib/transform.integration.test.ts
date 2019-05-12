@@ -37,12 +37,16 @@ function shouldNotBeTranspiled() {
     console.log('hello');
 }
 
-export class PostAbc {
-    @Length(10, 20)
-    title: string;
+@Injectable()
+export class CatsService {
+  constructor(
+    @InjectRepository(Photo)
+    private readonly photoRepository: Repository<Photo>,
+  ) {}
 
-    @Contains("hello")
-    text: string;
+  findAll(id: string): Cat[] {
+    return this.cats;
+  }
 }
 
 export class Post implements IsomorShare {
@@ -77,6 +81,13 @@ export function getTime2(...args: any) {
 export const getTime3 = (...args: any) => {
   return remote("path/to/file", "getTime3", args);
 };
+@Injectable()
+export class CatsService {
+  constructor(...args: any) {}
+  findAll(...args: any) {
+    return remote("path/to/file", "CatsService/findAll", args);
+  }
+}
 export class Post implements IsomorShare {
   @Length(10, 20)
   title: string;

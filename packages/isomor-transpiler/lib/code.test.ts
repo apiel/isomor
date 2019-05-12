@@ -1,6 +1,6 @@
 import { parse, generate } from './ast';
 
-import { getCodeImport, getCodeFunc, getCodeArrowFunc, getCodeType } from './code';
+import { getCodeImport, getCodeFunc, getCodeArrowFunc, getCodeType, getCodeMethod } from './code';
 
 export const isomorImport = `import { remote } from "isomor";`;
 
@@ -26,10 +26,29 @@ export const codeTranspiledArrowFuncNoType =
   return remote("path/to/file", "getTime", args);
 };`;
 
+export const codeTranspiledClass =
+`export class CatsService {
+  async getTime(...args: any) {
+    return remote("path/to/file", "getTime", args, "CatsService");
+  }
+
+}`;
+
 describe('code', () => {
     const path = 'path/to/file';
     const fnName = 'getTime';
+    const className = 'CatsService';
     const typeName = 'MyType';
+
+    describe('code/getCodeMethod()', () => {
+        it('should generate function for isomor', () => {
+            const withType = true;
+            const { program } = parse('export class CatsService {}');
+            (program as any).body[0].declaration.body.body = [getCodeMethod(path, fnName, className, withType)];
+            const { code } = generate(program as any);
+            expect(code).toEqual(codeTranspiledClass);
+        });
+    });
 
     describe('code/getCodeImport()', () => {
         it('should generate inport for isomor', () => {

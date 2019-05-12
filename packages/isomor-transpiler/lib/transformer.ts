@@ -1,10 +1,11 @@
 import * as traverse from 'traverse';
 import { getCodeType } from './code';
 import { ExportNamedDeclaration, Statement, ImportDeclaration } from './ast';
+import { JsonAst } from './ast';
 // might have a look again at https://www.npmjs.com/package/esrecurse but need to find AST types for TS
 
 export function transformInterface(root: Statement) {
-    traverse(root).forEach(function(node: any) {
+    traverse(root).forEach(function (node: any) {
         if (node) {
             if (
                 (node.type === 'TSTypeAnnotation' && node.typeAnnotation.type === 'TSTypeReference')
@@ -49,16 +50,28 @@ export function transformExport(
 export function transformClass(
     root: ExportNamedDeclaration,
 ) {
-    if (root.declaration.type === 'ClassDeclaration' && root.declaration.implements) {
-        const isIsomorShare = root.declaration.implements.filter(
-            (node) =>
-                node.type === 'TSExpressionWithTypeArguments'
-                && node.expression.type === 'Identifier'
-                && node.expression.name === 'IsomorShare',
-        ).length > 0;
-        if (isIsomorShare) {
-            return root;
+    if (root.declaration.type === 'ClassDeclaration') {
+        if (root.declaration.implements) {
+            const isIsomorShare = root.declaration.implements.filter(
+                (node) =>
+                    node.type === 'TSExpressionWithTypeArguments'
+                    && node.expression.type === 'Identifier'
+                    && node.expression.name === 'IsomorShare',
+            ).length > 0;
+            if (isIsomorShare) {
+                return root;
+            }
         }
+        // Class didn't implemented IsomorShare we can transform it
+        // console.log('ClassDeclaration', JsonAst(root));
+        const { body } = root.declaration.body;
+        body.forEach((node, index) => {
+            if (node.type === 'ClassMethod') {
+                //
+            } else if (node.type !== 'ClassProperty') {
+                delete (root as any).declaration.body.body[index];
+            }
+        });
     }
     return;
 }

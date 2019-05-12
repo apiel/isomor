@@ -109,7 +109,7 @@ function getTypeAny(withTypes: boolean) {
 // {
 //     return remote("example", "getList2", args);
 // }
-function getBody(fileName: string, name: string) {
+function getBody(fileName: string, name: string, className?: string) {
     return {
         type: 'BlockStatement',
         body: [
@@ -134,9 +134,27 @@ function getBody(fileName: string, name: string) {
                             type: 'Identifier',
                             name: 'args',
                         },
+                        ...(className ? [{
+                            type: 'StringLiteral',
+                            value: className,
+                        }] : []),
                     ],
                 },
             },
         ],
+    };
+}
+
+export function getCodeMethod(fileName: string, name: string, className: string, withTypes: boolean) {
+    return {
+        type: 'ClassMethod',
+        static: false,
+        key: {
+            type: 'Identifier',
+            name,
+        },
+        async: true,
+        params: getParams(withTypes),
+        body: getBody(fileName, name, className),
     };
 }

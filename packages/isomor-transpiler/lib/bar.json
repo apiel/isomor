@@ -1,102 +1,147 @@
 {
     "type": "ExportNamedDeclaration",
+    "specifiers": [],
+    "source": null,
     "declaration": {
         "type": "ClassDeclaration",
+        "decorators": [
+            {
+                "type": "Decorator",
+                "expression": {
+                    "type": "CallExpression",
+                    "callee": {
+                        "type": "Identifier",
+                        "name": "Injectable"
+                    },
+                    "arguments": []
+                }
+            }
+        ],
         "id": {
             "type": "Identifier",
-            "name": "Post"
+            "name": "CatsService"
         },
+        "superClass": null,
         "body": {
             "type": "ClassBody",
             "body": [
                 {
-                    "type": "ClassProperty",
+                    "type": "ClassMethod",
+                    "static": false,
                     "key": {
                         "type": "Identifier",
-                        "name": "title"
+                        "name": "constructor"
                     },
-                    "value": null,
                     "computed": false,
-                    "static": false,
-                    "typeAnnotation": {
-                        "type": "TSTypeAnnotation",
-                        "typeAnnotation": {
-                            "type": "TSStringKeyword"
-                        }
-                    },
-                    "decorators": [
+                    "kind": "constructor",
+                    "id": null,
+                    "generator": false,
+                    "async": false,
+                    "params": [
                         {
-                            "type": "Decorator",
-                            "expression": {
-                                "type": "CallExpression",
-                                "callee": {
-                                    "type": "Identifier",
-                                    "name": "Length"
-                                },
-                                "arguments": [
-                                    {
-                                        "type": "Literal",
-                                        "value": 10,
-                                        "raw": "10"
-                                    },
-                                    {
-                                        "type": "Literal",
-                                        "value": 20,
-                                        "raw": "20"
+                            "type": "TSParameterProperty",
+                            "decorators": [
+                                {
+                                    "type": "Decorator",
+                                    "expression": {
+                                        "type": "CallExpression",
+                                        "callee": {
+                                            "type": "Identifier",
+                                            "name": "InjectRepository"
+                                        },
+                                        "arguments": [
+                                            {
+                                                "type": "Identifier",
+                                                "name": "Photo"
+                                            }
+                                        ]
                                     }
-                                ]
+                                }
+                            ],
+                            "accessibility": "private",
+                            "readonly": true,
+                            "parameter": {
+                                "type": "Identifier",
+                                "name": "photoRepository",
+                                "typeAnnotation": {
+                                    "type": "TSTypeAnnotation",
+                                    "typeAnnotation": {
+                                        "type": "TSTypeReference",
+                                        "typeName": {
+                                            "type": "Identifier",
+                                            "name": "Repository"
+                                        },
+                                        "typeParameters": {
+                                            "type": "TSTypeParameterInstantiation",
+                                            "params": [
+                                                {
+                                                    "type": "TSTypeReference",
+                                                    "typeName": {
+                                                        "type": "Identifier",
+                                                        "name": "Photo"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
                             }
                         }
-                    ]
+                    ],
+                    "body": {
+                        "type": "BlockStatement",
+                        "body": [],
+                        "directives": []
+                    }
                 },
                 {
-                    "type": "ClassProperty",
+                    "type": "ClassMethod",
+                    "static": false,
                     "key": {
                         "type": "Identifier",
-                        "name": "text"
+                        "name": "findAll"
                     },
-                    "value": null,
                     "computed": false,
-                    "static": false,
-                    "typeAnnotation": {
+                    "kind": "method",
+                    "id": null,
+                    "generator": false,
+                    "async": false,
+                    "params": [],
+                    "returnType": {
                         "type": "TSTypeAnnotation",
                         "typeAnnotation": {
-                            "type": "TSStringKeyword"
-                        }
-                    },
-                    "decorators": [
-                        {
-                            "type": "Decorator",
-                            "expression": {
-                                "type": "CallExpression",
-                                "callee": {
+                            "type": "TSArrayType",
+                            "elementType": {
+                                "type": "TSTypeReference",
+                                "typeName": {
                                     "type": "Identifier",
-                                    "name": "Contains"
-                                },
-                                "arguments": [
-                                    {
-                                        "type": "Literal",
-                                        "raw": "\"hello\"",
-                                        "value": "hello"
-                                    }
-                                ]
+                                    "name": "Cat"
+                                }
                             }
                         }
-                    ]
+                    },
+                    "body": {
+                        "type": "BlockStatement",
+                        "body": [
+                            {
+                                "type": "ReturnStatement",
+                                "argument": {
+                                    "type": "MemberExpression",
+                                    "object": {
+                                        "type": "ThisExpression"
+                                    },
+                                    "property": {
+                                        "type": "Identifier",
+                                        "name": "cats"
+                                    },
+                                    "computed": false
+                                }
+                            }
+                        ],
+                        "directives": []
+                    }
                 }
             ]
-        },
-        "superClass": null,
-        "implements": [
-            {
-                "type": "TSClassImplements",
-                "expression": {
-                    "type": "Identifier",
-                    "name": "IsomorShare"
-                }
-            }
-        ]
-    },
-    "specifiers": [],
-    "source": null
+        }
+    }
 }

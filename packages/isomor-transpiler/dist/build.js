@@ -96,7 +96,7 @@ function watcherUpdateSpy(path, dest, retry = 0) {
     });
 }
 function watcher(options) {
-    const { srcFolder, serverFolder, watchMode } = options;
+    const { srcFolder, serverFolder, watchMode, distAppFolder } = options;
     if (watchMode) {
         logol_1.info('Starting watch mode.');
         const serverFolderPattern = isomor_core_1.getFilesPattern(serverFolder);
@@ -114,7 +114,8 @@ function watcher(options) {
             setTimeout(() => exports.watcherUpdate(options)(file), 100);
         }).on('unlink', file => {
             logol_1.info(`File ${file} has been removed`, '(do nothing)');
-            setTimeout(() => exports.watcherUpdate(options)(file), 100);
+            const path = path_1.join(distAppFolder, file);
+            fs_extra_1.unlink(path);
         });
     }
 }

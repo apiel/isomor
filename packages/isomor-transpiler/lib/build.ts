@@ -1,5 +1,5 @@
 import { info, warn } from 'logol';
-import { readFile, outputFile, emptyDir, copy } from 'fs-extra';
+import { readFile, outputFile, emptyDir, copy, unlink } from 'fs-extra';
 import { join } from 'path';
 import debug from 'debug';
 import {
@@ -115,7 +115,7 @@ async function watcherUpdateSpy(path: string, dest: string, retry = 0) {
 }
 
 function watcher(options: Options) {
-    const { srcFolder, serverFolder, watchMode } = options;
+    const { srcFolder, serverFolder, watchMode, distAppFolder } = options;
     if (watchMode) {
         info('Starting watch mode.');
         const serverFolderPattern = getFilesPattern(serverFolder);
@@ -135,8 +135,8 @@ function watcher(options: Options) {
                 setTimeout(() => watcherUpdate(options)(file), 100);
             }).on('unlink', file => {
                 info(`File ${file} has been removed`, '(do nothing)');
-                // watcherUpdate(file);
-                setTimeout(() => watcherUpdate(options)(file), 100);
+                const path = join(distAppFolder, file);
+                unlink(path);
             });
     }
 }

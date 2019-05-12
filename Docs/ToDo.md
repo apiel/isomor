@@ -1,11 +1,11 @@
 ### ToDo
 
 - isomor-NG > nest + angular
-- transpiler: watchupdate delete should delete file !!!
 - params checking in endpoint base on types
 
-
 - @share in addition of IsomorShare (give the possibility to use one or the other)
+
+- vscode extension handle delete and move file
 
 - review doc
 - video

@@ -1,0 +1,6 @@
+{
+    "/isomor": {
+      "target": "http://localhost:3005/isomor",
+      "secure": false
+    }
+  }

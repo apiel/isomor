@@ -60,8 +60,8 @@ export class Post implements IsomorShare {
 `;
 
 const codeTranspiled =
-  `import { Injectable } from '@angular/core';
-import { remote } from "isomor";
+  `import { remote } from "isomor";
+import { Injectable } from '@angular/core';
 import { readdir } from 'fs-extra';
 import { CpuInfo } from 'os';
 export { CpuInfo } from 'os';
@@ -144,11 +144,11 @@ export class Post implements IsomorShare {
   text: string;
 }`;
 
-describe.skip('transform', () => {
+describe('transform', () => {
   const path = 'path/to/file';
   const withTypes = true;
   describe('transform/transform()', () => {
-    it('should isomor code for e2e', () => {
+    it.skip('should isomor code for e2e', () => {
       const { program } = parse(codeSource);
       program.body = transform(program.body, path, withTypes);
       const { code } = generate(program as any);

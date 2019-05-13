@@ -40,7 +40,7 @@ export function transformNode(
         } else if (node.declaration.type === 'ClassDeclaration') {
             return transformClass(node, path, withTypes);
         }
-    } else if (node.type === 'ImportDeclaration' && !noServerImport) {
-        return transformImport(node);
+    } else if (node.type === 'ImportDeclaration') {
+        return transformImport(node, noServerImport);
     }
 }

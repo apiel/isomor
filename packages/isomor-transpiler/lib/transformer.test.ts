@@ -25,10 +25,10 @@ const codeTranspiledInterface =
   world: any;
 }`;
 
-const transformToCode = (fn: any) => (source: string): string => {
+const transformToCode = (fn: any) => (source: string, ...params: any[]): string => {
     const { program } = parse(source);
     // console.log('JsonAst', JsonAst(program.body[0]));
-    const body = fn(program.body[0]);
+    const body = fn(program.body[0], ...params);
     program.body = isArray(body) ? body : [body];
     // console.log('JsonAst2', JsonAst(program.body[0]));
     const { code } = generate(program as any);
@@ -66,6 +66,10 @@ describe('transformer', () => {
         const ttc = transformToCode(transformImport);
         it('should keep import', () => {
             expect(ttc(`import { readdir } from 'fs-extra';`)).toBe(`import { readdir } from 'fs-extra';`);
+        });
+        it('should remove import', () => {
+            const noServerImport = true;
+            expect(ttc(`import { readdir } from 'fs-extra';`, noServerImport)).toBe(``);
         });
         it('should transform server import to browser import', () => {
             expect(ttc(`import { Injectable } from '@nestjs/common'; // > import { Injectable } from '@angular/core';`))

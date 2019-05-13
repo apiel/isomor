@@ -44,14 +44,7 @@ function shouldNotBeTranspiled() {
         it('should transform import', () => {
             const { node, newNode } = transformNodeTest(`import { readdir } from 'fs-extra';`);
             expect(newNode).toEqual('TransformImport');
-            expect(transformImport).toHaveBeenCalledWith(node);
-        });
-
-        it('should return undefined for import with noServerImport=true', () => {
-            const noServerImport = true;
-            const { newNode } = transformNodeTest(`import { readdir } from 'fs-extra';`, noServerImport);
-            expect(newNode).toBeUndefined();
-            expect(transformExport).toHaveBeenCalledTimes(0);
+            expect(transformImport).toHaveBeenCalledWith(node, false);
         });
 
         it('should transform type', () => {

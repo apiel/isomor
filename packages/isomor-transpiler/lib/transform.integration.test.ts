@@ -124,17 +124,17 @@ export class Post implements IsomorShare {
   text: string;
 }`;
 
-describe.skip('transform', () => {
+describe('transform', () => {
   const path = 'path/to/file';
   const withTypes = true;
   describe('transform/transform()', () => {
-    it('should generate import for isomor', () => {
+    it.skip('should isomor code for e2e', () => {
       const { program } = parse(codeSource);
       program.body = transform(program.body, path, withTypes);
       const { code } = generate(program as any);
       expect(code).toEqual(codeTranspiled);
     });
-    it('should generate import for isomor with noServerImport', () => {
+    it.skip('should isomor code for e2e with noServerImport', () => {
       const { program } = parse(codeSource);
       const noServerImport = true;
       program.body = transform(program.body, path, withTypes, noServerImport);

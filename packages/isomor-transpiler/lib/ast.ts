@@ -9,8 +9,8 @@ export function parse(code: string) {
         plugins: [
             'typescript',
             'decorators-legacy',
-            // 'decorators',
-            // ['@babel/plugin-proposal-decorators', { legacy: true }],
+            // ['decorators', { decoratorsBeforeExport: true }],
+            // ['@babel/plugin-proposal-decorators', { legacy: true }] as any,
             // "classProperties",
             // // TODO: This is enabled by default now, remove in Babel 8
             // "objectRestSpread",

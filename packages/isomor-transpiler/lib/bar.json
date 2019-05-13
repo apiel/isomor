@@ -1,4 +1,78 @@
 {
+    "type": "File",
+    "program": {
+        "type": "Program",
+        "sourceType": "module",
+        "interpreter": null,
+        "body": [
+            {
+                "type": "ClassDeclaration",
+                "decorators": [
+                    {
+                        "type": "Decorator",
+                        "expression": {
+                            "type": "CallExpression",
+                            "callee": {
+                                "type": "Identifier",
+                                "name": "Injectable"
+                            },
+                            "arguments": []
+                        }
+                    }
+                ],
+                "id": {
+                    "type": "Identifier",
+                    "name": "CatsService__deco_export__"
+                },
+                "superClass": null,
+                "body": {
+                    "type": "ClassBody",
+                    "body": []
+                }
+            },
+            {
+                "type": "ExportNamedDeclaration",
+                "specifiers": [],
+                "source": null,
+                "declaration": {
+                    "type": "ClassDeclaration",
+                    "id": {
+                        "type": "Identifier",
+                        "name": "CatsService"
+                    },
+                    "superClass": {
+                        "type": "Identifier",
+                        "name": "CatsService__deco_export__"
+                    },
+                    "body": {
+                        "type": "ClassBody",
+                        "body": [
+                            {
+                                "type": "TSDeclareMethod",
+                                "static": false,
+                                "key": {
+                                    "type": "Identifier",
+                                    "name": "mock"
+                                },
+                                "computed": false,
+                                "kind": "method",
+                                "id": null,
+                                "generator": false,
+                                "async": false,
+                                "params": []
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "directives": []
+    },
+    "comments": []
+}
+
+
+{
     "type": "ExportNamedDeclaration",
     "specifiers": [],
     "source": null,

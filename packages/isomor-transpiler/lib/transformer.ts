@@ -80,7 +80,28 @@ export function transformClass(
                 delete (root as any).declaration.body.body[index];
             }
         });
-        return root;
+        return transformClassExportBeforeDecorator(root);
+        // return root;
     }
     return;
+}
+
+// https://github.com/babel/babel/issues/7526
+// https://github.com/tc39/proposal-decorators/issues/69
+// created issue on TS to support it https://github.com/microsoft/TypeScript/issues/31370
+export function transformClassExportBeforeDecorator(
+    root: any,
+) {
+    const suffix = '__deco_export__';
+    const rootDeco = JSON.parse(JSON.stringify(root.declaration)); // deep copy
+    rootDeco.id.name += suffix;
+    rootDeco.body.body = [];
+
+    root.declaration.decorators = [];
+    root.declaration.superClass = {
+        type: 'Identifier',
+        name: rootDeco.id.name,
+    };
+
+    return [rootDeco, root];
 }

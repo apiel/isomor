@@ -2,6 +2,8 @@ import { parse, generate } from './ast';
 
 import { transformInterface, transformImport, transformExport, transformClass } from './transformer';
 import { getCodeType, getCodeMethod, getCodeConstructor } from './code';
+import { JsonAst } from './ast';
+import { isArray } from 'util';
 
 const codeSourceInterface = `
 export interface MyInterface {
@@ -26,7 +28,9 @@ const codeTranspiledInterface =
 const transformToCode = (fn: any) => (source: string): string => {
     const { program } = parse(source);
     // console.log('JsonAst', JsonAst(program.body[0]));
-    program.body[0] = fn(program.body[0]);
+    const body = fn(program.body[0]);
+    program.body = isArray(body) ? body : [body];
+    // console.log('JsonAst2', JsonAst(program.body[0]));
     const { code } = generate(program as any);
     return code;
 };
@@ -100,7 +104,7 @@ describe('transformer', () => {
 }`;
             expect(ttc(code)).toBe(code);
         });
-        it('should transform class for isomor', () => {
+        it.only('should transform class for isomor', () => {
             const code =
 `@Injectable()
 export class CatsService {
@@ -110,8 +114,10 @@ export class CatsService {
 
 }`;
             expect(ttc(code)).toBe(
-`export @Injectable()
-class CatsService {
+`@Injectable()
+class CatsService__deco_export__ {}
+
+export class CatsService extends CatsService__deco_export__ {
   mock()
 
 }`,
@@ -129,8 +135,8 @@ export class CatsService {
 
 }`;
             expect(ttc(code)).toBe(
-`export @Injectable()
-class CatsService {
+`@Injectable()
+export class CatsService {
   constructorMock()
 
 }`,

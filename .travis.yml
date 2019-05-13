@@ -3,11 +3,11 @@ language: node_js
 node_js:
   - 'node'
 
-branches:
-  only:
-  - master
-  - develop
-  - /^release-.*/
+# branches:
+#   only:
+#   - master
+#   - develop
+#   - /^release-.*/
 
 install:
   - BASE=$(pwd)/packages

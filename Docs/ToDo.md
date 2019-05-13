@@ -1,7 +1,6 @@
 ### ToDo
 
 - isomor-NG > nest + angular
-    - centralize the way to build url
     - some issue with import 'os' ?? why
     - should we provide a way to use something else than axios, like HttpClient from angular?
 

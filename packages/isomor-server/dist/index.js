@@ -13,21 +13,26 @@ const path_1 = require("path");
 const util_1 = require("util");
 const fs_1 = require("fs");
 let startupImport;
+const urlPrefix = '/isomor';
+function getUrl(path, funcName, classname) {
+    const url = classname
+        ? `${urlPrefix}/${path}/${classname}/${funcName}`
+        : `${urlPrefix}/${path}/${funcName}`;
+    return url;
+}
+exports.getUrl = getUrl;
+function getEntrypointPath(file, name, classname) {
+    return getUrl(isomor_core_1.getPathForUrl(file), name, classname);
+}
 function getFunctions(distServerFolder, file) {
     const filepath = require.resolve(path_1.join(distServerFolder, file), { paths: [process.cwd()] });
     delete require.cache[filepath];
     const functions = require(filepath);
     return functions;
 }
-function getEntrypointPath(file, name, classname) {
-    if (classname) {
-        return `/isomor/${isomor_core_1.getPathForUrl(file)}/${classname}/${name}`;
-    }
-    return `/isomor/${isomor_core_1.getPathForUrl(file)}/${name}`;
-}
 function getEntrypoint(app, file, fn, name, classname) {
-    const entrypoint = getEntrypointPath(file, name, classname);
-    app.use(entrypoint, (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+    const path = getEntrypointPath(file, name, classname);
+    app.use(path, (req, res, next) => __awaiter(this, void 0, void 0, function* () {
         try {
             const context = {
                 req,
@@ -42,7 +47,7 @@ function getEntrypoint(app, file, fn, name, classname) {
             next(error);
         }
     }));
-    return entrypoint;
+    return { path, file };
 }
 function getClassEntrypoints(app, file, classname) {
     if (startupImport && startupImport.getInstance) {
@@ -88,10 +93,40 @@ function startup(app, distServerFolder, serverFolder, startupFile) {
     });
 }
 exports.startup = startup;
-function getSwaggerDoc(distServerFolder, serverFolder) {
+function getSwaggerDoc(endpoints) {
     return __awaiter(this, void 0, void 0, function* () {
-        const files = yield isomor_core_1.getFiles(distServerFolder, serverFolder);
         const paths = {};
+        endpoints.forEach(({ file, path }) => {
+            paths[path] = {
+                post: {
+                    operationId: `${file}-${path}`,
+                    summary: file,
+                    tags: [file],
+                    produces: [
+                        'application/json',
+                    ],
+                    parameters: [
+                        {
+                            name: 'args',
+                            in: 'body',
+                            description: 'Function arguments',
+                            required: true,
+                            schema: {
+                                $ref: '#/definitions/Args',
+                            },
+                        },
+                    ],
+                    responses: {
+                        200: {
+                            description: '200 response',
+                            examples: {
+                                'application/json': '{}',
+                            },
+                        },
+                    },
+                },
+            };
+        });
         return {
             swagger: '2.0',
             info: {

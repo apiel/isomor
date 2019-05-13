@@ -34,9 +34,9 @@ function start(options) {
         app.use(bodyParser.json());
         app.use(cookieParser());
         yield _1.startup(app, distServerFolder, serverFolder, startupFile);
-        app.use(API_DOCS, swagger_ui_express_1.serve, swagger_ui_express_1.setup(yield _1.getSwaggerDoc(distServerFolder, serverFolder)));
         const endpoints = yield _1.useIsomor(app, distServerFolder, serverFolder);
-        logol_1.info('Created endpoints:', endpoints);
+        logol_1.info(`Created endpoints:`, endpoints.map(({ path }) => path));
+        app.use(API_DOCS, swagger_ui_express_1.serve, swagger_ui_express_1.setup(yield _1.getSwaggerDoc(endpoints)));
         if (staticFolder) {
             logol_1.info('Add static folder', staticFolder);
             app.use(express.static(staticFolder));

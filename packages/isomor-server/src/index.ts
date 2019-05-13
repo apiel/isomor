@@ -4,12 +4,30 @@ import { join } from 'path';
 import { isNumber, promisify, isFunction } from 'util';
 import { exists } from 'fs';
 
-let startupImport: any;
-
 export interface Context {
     req: express.Request;
     res: express.Response;
     fn: any;
+}
+
+let startupImport: any;
+
+const urlPrefix = '/isomor'; // http://127.0.0.1:3000/
+
+export function getUrl(
+    path: string,
+    funcName: string,
+    classname?: string,
+): string {
+    const url = classname
+        ? `${urlPrefix}/${path}/${classname}/${funcName}`
+        : `${urlPrefix}/${path}/${funcName}`;
+
+    return url;
+}
+
+function getEntrypointPath(file: string, name: string, classname?: string) {
+    return getUrl(getPathForUrl(file), name, classname);
 }
 
 function getFunctions(distServerFolder: string, file: string) {
@@ -21,13 +39,6 @@ function getFunctions(distServerFolder: string, file: string) {
     const functions = require(filepath);
 
     return functions;
-}
-
-function getEntrypointPath(file: string, name: string, classname?: string) {
-    if (classname) {
-        return `/isomor/${getPathForUrl(file)}/${classname}/${name}`;
-    }
-    return `/isomor/${getPathForUrl(file)}/${name}`;
 }
 
 export interface Entrypoint {

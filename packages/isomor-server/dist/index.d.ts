@@ -4,10 +4,15 @@ export interface Context {
     res: express.Response;
     fn: any;
 }
-export declare function useIsomor(app: express.Express, distServerFolder: string, serverFolder: string): Promise<string[]>;
+export declare function getUrl(path: string, funcName: string, classname?: string): string;
+export interface Entrypoint {
+    path: string;
+    file: string;
+}
+export declare function useIsomor(app: express.Express, distServerFolder: string, serverFolder: string): Promise<Entrypoint[]>;
 export declare function loadStartupImport(distServerFolder: string, serverFolder: string, startupFile: string): Promise<void>;
 export declare function startup(app: express.Express, distServerFolder: string, serverFolder: string, startupFile: string): Promise<void>;
-export declare function getSwaggerDoc(distServerFolder: string, serverFolder: string): Promise<{
+export declare function getSwaggerDoc(endpoints: Entrypoint[]): Promise<{
     swagger: string;
     info: {
         title: string;

@@ -1,6 +1,5 @@
 import axios from 'axios';
-
-const urlPrefix = '/isomor'; // http://127.0.0.1:3000/
+import { getUrl } from 'isomor-server';
 
 export async function remote(
     path: string,
@@ -8,10 +7,7 @@ export async function remote(
     args: any,
     classname?: string,
 ): Promise<any> {
-    const url = classname
-        ? `${urlPrefix}/${path}/${classname}/${funcName}`
-        : `${urlPrefix}/${path}/${funcName}`;
-
+    const url = getUrl(path, funcName, classname);
     const { data } = await axios.post(url, { args });
     return data;
 }

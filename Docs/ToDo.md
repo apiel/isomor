@@ -1,8 +1,10 @@
 ### ToDo
 
 - isomor-NG > nest + angular
-    - need to fix swagger
     - centralize the way to build url
+    - some issue with import 'os' ?? why
+    - should we provide a way to use something else than axios, like HttpClient from angular?
+
 - params checking in endpoint base on types
 
 - @share in addition of IsomorShare (give the possibility to use one or the other)

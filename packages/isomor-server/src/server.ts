@@ -39,10 +39,10 @@ async function start(options: Options) {
 
     await startup(app, distServerFolder, serverFolder, startupFile);
 
-    app.use(API_DOCS, serve, setup(await getSwaggerDoc(distServerFolder, serverFolder)));
-
     const endpoints = await useIsomor(app, distServerFolder, serverFolder);
-    info('Created endpoints:', endpoints);
+    info(`Created endpoints:`, endpoints.map(({ path }) => path));
+
+    app.use(API_DOCS, serve, setup(await getSwaggerDoc(endpoints)));
 
     if (staticFolder) {
         info('Add static folder', staticFolder);

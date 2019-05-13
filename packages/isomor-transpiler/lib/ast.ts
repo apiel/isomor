@@ -34,8 +34,8 @@ export function JsonAst(node: any) {
 
 if (process.env.TEST_AST) {
     const result = (node: any) => {
-        console.log('node', JsonAst(node));
-        console.log('node', node);
+        console.log('node', JsonAst(node)); // tslint:disable-line
+        console.log('node', node); // tslint:disable-line
     };
     if (['interface', 'all'].includes(process.env.TEST_AST)) {
         const node = parse(`

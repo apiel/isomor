@@ -30,15 +30,20 @@ function getEntrypointPath(file: string, name: string, classname?: string) {
     return `/isomor/${getPathForUrl(file)}/${name}`;
 }
 
+export interface Entrypoint {
+    path: string;
+    file: string;
+}
+
 function getEntrypoint(
     app: express.Express,
     file: string,
     fn: any,
     name: string,
     classname?: string,
-) {
-    const entrypoint = getEntrypointPath(file, name, classname);
-    app.use(entrypoint, async (
+): Entrypoint {
+    const path = getEntrypointPath(file, name, classname);
+    app.use(path, async (
         req: express.Request,
         res: express.Response,
         next: express.NextFunction,
@@ -56,7 +61,7 @@ function getEntrypoint(
             next(error);
         }
     });
-    return entrypoint;
+    return { path, file };
 }
 
 // should getInstance be async?
@@ -65,7 +70,7 @@ function getClassEntrypoints(
     app: express.Express,
     file: string,
     classname: string,
-) {
+): Entrypoint[] {
     if (startupImport && startupImport.getInstance) {
         const obj = startupImport.getInstance(classname);
         return Object.getOwnPropertyNames(Object.getPrototypeOf(obj))
@@ -79,7 +84,7 @@ export async function useIsomor(
     app: express.Express,
     distServerFolder: string,
     serverFolder: string,
-): Promise<string[]> {
+): Promise<Entrypoint[]> {
     const files = await getFiles(distServerFolder, serverFolder);
     return (files.map(file => {
         const functions = getFunctions(distServerFolder, file);
@@ -118,48 +123,43 @@ export async function startup(
 }
 
 export async function getSwaggerDoc(
-    distServerFolder: string,
-    serverFolder: string,
+    endpoints: Entrypoint[],
 ) {
-    const files = await getFiles(distServerFolder, serverFolder);
     const paths = {};
 
     // need to fix swagger
 
-    // files.forEach(file => {
-    //     const functions = getFunctions(distServerFolder, file);
-    //     return Object.keys(functions).forEach(name => {
-    //         paths[getEntrypointPath(file, name)] = {
-    //             post: {
-    //                 operationId: `${file}-${name}`,
-    //                 summary: file,
-    //                 tags: [file],
-    //                 produces: [
-    //                     'application/json',
-    //                 ],
-    //                 parameters: [
-    //                     {
-    //                         name: 'args',
-    //                         in: 'body',
-    //                         description: 'Function arguments',
-    //                         required: true,
-    //                         schema: {
-    //                             $ref: '#/definitions/Args',
-    //                         },
-    //                     },
-    //                 ],
-    //                 responses: {
-    //                     200: {
-    //                         description: '200 response',
-    //                         examples: {
-    //                             'application/json': '{}',
-    //                         },
-    //                     },
-    //                 },
-    //             },
-    //         };
-    //     });
-    // });
+    endpoints.forEach(({ file, path }) => {
+        paths[path] = {
+            post: {
+                operationId: `${file}-${path}`,
+                summary: file,
+                tags: [file],
+                produces: [
+                    'application/json',
+                ],
+                parameters: [
+                    {
+                        name: 'args',
+                        in: 'body',
+                        description: 'Function arguments',
+                        required: true,
+                        schema: {
+                            $ref: '#/definitions/Args',
+                        },
+                    },
+                ],
+                responses: {
+                    200: {
+                        description: '200 response',
+                        examples: {
+                            'application/json': '{}',
+                        },
+                    },
+                },
+            },
+        };
+    });
     return {
         swagger: '2.0',
         info: {

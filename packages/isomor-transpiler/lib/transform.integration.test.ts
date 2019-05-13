@@ -81,12 +81,17 @@ export function getTime2(...args: any) {
 export const getTime3 = (...args: any) => {
   return remote("path/to/file", "getTime3", args);
 };
+
 @Injectable()
-export class CatsService {
+class CatsService__deco_export__ {}
+
+export class CatsService extends CatsService__deco_export__ {
   constructor(...args: any) {}
-  findAll(...args: any) {
-    return remote("path/to/file", "CatsService/findAll", args);
+
+  async findAll(...args: any) {
+    return remote("path/to/file", "findAll", args, "CatsService");
   }
+
 }
 export class Post implements IsomorShare {
   @Length(10, 20)
@@ -117,6 +122,18 @@ export function getTime2(...args: any) {
 export const getTime3 = (...args: any) => {
   return remote("path/to/file", "getTime3", args);
 };
+
+@Injectable()
+class CatsService__deco_export__ {}
+
+export class CatsService extends CatsService__deco_export__ {
+  constructor(...args: any) {}
+
+  async findAll(...args: any) {
+    return remote("path/to/file", "findAll", args, "CatsService");
+  }
+
+}
 export class Post implements IsomorShare {
   @Length(10, 20)
   title: string;
@@ -128,13 +145,13 @@ describe('transform', () => {
   const path = 'path/to/file';
   const withTypes = true;
   describe('transform/transform()', () => {
-    it.skip('should isomor code for e2e', () => {
+    it('should isomor code for e2e', () => {
       const { program } = parse(codeSource);
       program.body = transform(program.body, path, withTypes);
       const { code } = generate(program as any);
       expect(code).toEqual(codeTranspiled);
     });
-    it.skip('should isomor code for e2e with noServerImport', () => {
+    it('should isomor code for e2e with noServerImport', () => {
       const { program } = parse(codeSource);
       const noServerImport = true;
       program.body = transform(program.body, path, withTypes, noServerImport);

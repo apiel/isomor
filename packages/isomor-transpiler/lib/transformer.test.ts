@@ -104,10 +104,10 @@ describe('transformer', () => {
 }`;
             expect(ttc(code)).toBe(code);
         });
-        it.only('should transform class for isomor', () => {
+        it('should transform class for isomor', () => {
             const code =
 `@Injectable()
-export class CatsService {
+export class CatsService extends Hello {
   findAll(id: string): Cat[] {
     return this.cats;
   }
@@ -115,7 +115,7 @@ export class CatsService {
 }`;
             expect(ttc(code)).toBe(
 `@Injectable()
-class CatsService__deco_export__ {}
+class CatsService__deco_export__ extends Hello {}
 
 export class CatsService extends CatsService__deco_export__ {
   mock()
@@ -136,7 +136,9 @@ export class CatsService {
 }`;
             expect(ttc(code)).toBe(
 `@Injectable()
-export class CatsService {
+class CatsService__deco_export__ {}
+
+export class CatsService extends CatsService__deco_export__ {
   constructorMock()
 
 }`,

@@ -12,50 +12,78 @@ const isomor_core_1 = require("isomor-core");
 const path_1 = require("path");
 const util_1 = require("util");
 const fs_1 = require("fs");
+let startupImport;
 function getFunctions(distServerFolder, file) {
     const filepath = require.resolve(path_1.join(distServerFolder, file), { paths: [process.cwd()] });
     delete require.cache[filepath];
     const functions = require(filepath);
     return functions;
 }
-function getEntrypoint(file, name) {
+function getEntrypointPath(file, name, classname) {
+    if (classname) {
+        return `/isomor/${isomor_core_1.getPathForUrl(file)}/${classname}/${name}`;
+    }
     return `/isomor/${isomor_core_1.getPathForUrl(file)}/${name}`;
+}
+function getEntrypoint(app, file, fn, name, classname) {
+    const entrypoint = getEntrypointPath(file, name, classname);
+    app.use(entrypoint, (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+        try {
+            const context = {
+                req,
+                res,
+                fn,
+            };
+            const args = (req.body && req.body.args) || [];
+            const result = yield context.fn(...args);
+            return res.send(util_1.isNumber(result) ? result.toString() : result);
+        }
+        catch (error) {
+            next(error);
+        }
+    }));
+    return entrypoint;
+}
+function getClassEntrypoints(app, file, classname) {
+    if (startupImport && startupImport.getInstance) {
+        const obj = startupImport.getInstance(classname);
+        return Object.getOwnPropertyNames(Object.getPrototypeOf(obj))
+            .filter(name => util_1.isFunction(obj[name]) && name !== 'constructor')
+            .map(name => getEntrypoint(app, file, obj[name], name, classname));
+    }
+    return;
 }
 function useIsomor(app, distServerFolder, serverFolder) {
     return __awaiter(this, void 0, void 0, function* () {
         const files = yield isomor_core_1.getFiles(distServerFolder, serverFolder);
         return files.map(file => {
             const functions = getFunctions(distServerFolder, file);
-            return Object.keys(functions).map(name => {
-                const entrypoint = getEntrypoint(file, name);
-                app.use(entrypoint, (req, res, next) => __awaiter(this, void 0, void 0, function* () {
-                    try {
-                        const context = {
-                            req,
-                            res,
-                            fn: functions[name],
-                        };
-                        const args = (req.body && req.body.args) || [];
-                        const result = yield context.fn(...args);
-                        return res.send(util_1.isNumber(result) ? result.toString() : result);
-                    }
-                    catch (error) {
-                        next(error);
-                    }
-                }));
-                return entrypoint;
-            });
+            return Object.keys(functions)
+                .filter(name => util_1.isFunction(functions[name]))
+                .map(name => {
+                const isClass = /^\s*class/.test(functions[name].toString());
+                return isClass ? getClassEntrypoints(app, file, name)
+                    : [getEntrypoint(app, file, functions[name], name)];
+            }).flat();
         }).flat();
     });
 }
 exports.useIsomor = useIsomor;
-function startup(app, distServerFolder, serverFolder, startupFile) {
+function loadStartupImport(distServerFolder, serverFolder, startupFile) {
     return __awaiter(this, void 0, void 0, function* () {
         const path = path_1.join(distServerFolder, serverFolder, startupFile);
         if (yield util_1.promisify(fs_1.exists)(path)) {
             const filepath = require.resolve(path, { paths: [process.cwd()] });
-            const fn = require(filepath);
-            fn.default(app);
+            startupImport = require(filepath);
+        }
+    });
+}
+exports.loadStartupImport = loadStartupImport;
+function startup(app, distServerFolder, serverFolder, startupFile) {
+    return __awaiter(this, void 0, void 0, function* () {
+        yield loadStartupImport(distServerFolder, serverFolder, startupFile);
+        if (startupImport && startupImport.default) {
+            startupImport.default(app);
         }
     });
 }
@@ -64,40 +92,6 @@ function getSwaggerDoc(distServerFolder, serverFolder) {
     return __awaiter(this, void 0, void 0, function* () {
         const files = yield isomor_core_1.getFiles(distServerFolder, serverFolder);
         const paths = {};
-        files.forEach(file => {
-            const functions = getFunctions(distServerFolder, file);
-            return Object.keys(functions).forEach(name => {
-                paths[getEntrypoint(file, name)] = {
-                    post: {
-                        operationId: `${file}-${name}`,
-                        summary: file,
-                        tags: [file],
-                        produces: [
-                            'application/json',
-                        ],
-                        parameters: [
-                            {
-                                name: 'args',
-                                in: 'body',
-                                description: 'Function arguments',
-                                required: true,
-                                schema: {
-                                    $ref: '#/definitions/Args',
-                                },
-                            },
-                        ],
-                        responses: {
-                            200: {
-                                description: '200 response',
-                                examples: {
-                                    'application/json': '{}',
-                                },
-                            },
-                        },
-                    },
-                };
-            });
-        });
         return {
             swagger: '2.0',
             info: {

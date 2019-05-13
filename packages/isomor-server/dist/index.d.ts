@@ -5,6 +5,7 @@ export interface Context {
     fn: any;
 }
 export declare function useIsomor(app: express.Express, distServerFolder: string, serverFolder: string): Promise<string[]>;
+export declare function loadStartupImport(distServerFolder: string, serverFolder: string, startupFile: string): Promise<void>;
 export declare function startup(app: express.Express, distServerFolder: string, serverFolder: string, startupFile: string): Promise<void>;
 export declare function getSwaggerDoc(distServerFolder: string, serverFolder: string): Promise<{
     swagger: string;

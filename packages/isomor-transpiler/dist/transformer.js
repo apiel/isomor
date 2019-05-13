@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const traverse = require("traverse");
 const code_1 = require("./code");
+const ast_1 = require("./ast");
 function transformInterface(root) {
     traverse(root).forEach(function (node) {
         if (node) {
@@ -19,7 +20,15 @@ function transformInterface(root) {
     return root;
 }
 exports.transformInterface = transformInterface;
-function transformImport(root) {
+function transformImport(root, noServerImport) {
+    if (root.trailingComments && root.trailingComments[0].value.indexOf(' > ') === 0) {
+        const code = root.trailingComments[0].value.substring(3);
+        const { program: { body } } = ast_1.parse(code);
+        return body;
+    }
+    if (noServerImport) {
+        return;
+    }
     if (root.source.type === 'StringLiteral') {
         if (root.source.value[0] === '.') {
             return null;
@@ -52,15 +61,33 @@ function transformClass(root, path, withTypes) {
         body.forEach((node, index) => {
             if (node.type === 'ClassMethod') {
                 const { name } = node.key;
-                root.declaration.body.body[index] = code_1.getCodeMethod(path, name, className, withTypes);
+                if (name === 'constructor') {
+                    root.declaration.body.body[index] = code_1.getCodeConstructor(withTypes);
+                }
+                else {
+                    root.declaration.body.body[index] = code_1.getCodeMethod(path, name, className, withTypes);
+                }
             }
             else if (node.type !== 'ClassProperty') {
                 delete root.declaration.body.body[index];
             }
         });
-        return root;
+        return transformClassExportBeforeDecorator(root);
     }
     return;
 }
 exports.transformClass = transformClass;
+function transformClassExportBeforeDecorator(root) {
+    const suffix = '__deco_export__';
+    const rootDeco = JSON.parse(JSON.stringify(root.declaration));
+    rootDeco.id.name += suffix;
+    rootDeco.body.body = [];
+    root.declaration.decorators = [];
+    root.declaration.superClass = {
+        type: 'Identifier',
+        name: rootDeco.id.name,
+    };
+    return [rootDeco, root];
+}
+exports.transformClassExportBeforeDecorator = transformClassExportBeforeDecorator;
 //# sourceMappingURL=transformer.js.map

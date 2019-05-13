@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const ast_1 = require("./ast");
 const transform_1 = require("./transform");
 const codeSource = `
+import { Injectable } from '@nestjs/common'; // > import { Injectable } from '@angular/core';
 import { readdir } from 'fs-extra';
 import { CpuInfo } from 'os';
 import { something } from './my/import';
@@ -55,6 +56,8 @@ export class Post implements IsomorShare {
 }
 `;
 const codeTranspiled = `import { remote } from "isomor";
+import { Injectable } from '@angular/core';
+// > import { Injectable } from '@angular/core';
 import { readdir } from 'fs-extra';
 import { CpuInfo } from 'os';
 export { CpuInfo } from 'os';
@@ -76,12 +79,19 @@ export function getTime2(...args: any) {
 export const getTime3 = (...args: any) => {
   return remote("path/to/file", "getTime3", args);
 };
+
 @Injectable()
-export class CatsService {
-  constructor(...args: any) {}
-  findAll(...args: any) {
-    return remote("path/to/file", "CatsService/findAll", args);
+class CatsService__deco_export__ {}
+
+export class CatsService extends CatsService__deco_export__ {
+  constructor(...args: any) {
+    super(...args);
   }
+
+  async findAll(...args: any) {
+    return remote("path/to/file", "findAll", args, "CatsService");
+  }
+
 }
 export class Post implements IsomorShare {
   @Length(10, 20)
@@ -90,6 +100,7 @@ export class Post implements IsomorShare {
   text: string;
 }`;
 const codeTranspiledNoServerImport = `import { remote } from "isomor";
+import { Injectable } from '@angular/core';
 export type CpuInfo = any;
 export type Hello = any;
 export type Abc = any;
@@ -109,6 +120,20 @@ export function getTime2(...args: any) {
 export const getTime3 = (...args: any) => {
   return remote("path/to/file", "getTime3", args);
 };
+
+@Injectable()
+class CatsService__deco_export__ {}
+
+export class CatsService extends CatsService__deco_export__ {
+  constructor(...args: any) {
+    super(...args);
+  }
+
+  async findAll(...args: any) {
+    return remote("path/to/file", "findAll", args, "CatsService");
+  }
+
+}
 export class Post implements IsomorShare {
   @Length(10, 20)
   title: string;
@@ -119,13 +144,13 @@ describe('transform', () => {
     const path = 'path/to/file';
     const withTypes = true;
     describe('transform/transform()', () => {
-        it('should generate import for isomor', () => {
+        it('should isomor code for e2e', () => {
             const { program } = ast_1.parse(codeSource);
             program.body = transform_1.default(program.body, path, withTypes);
             const { code } = ast_1.generate(program);
             expect(code).toEqual(codeTranspiled);
         });
-        it('should generate import for isomor with noServerImport', () => {
+        it('should isomor code for e2e with noServerImport', () => {
             const { program } = ast_1.parse(codeSource);
             const noServerImport = true;
             program.body = transform_1.default(program.body, path, withTypes, noServerImport);

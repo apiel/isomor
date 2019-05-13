@@ -36,8 +36,8 @@ function transformNode(node, path, withTypes, noServerImport) {
             return transformer_1.transformClass(node, path, withTypes);
         }
     }
-    else if (node.type === 'ImportDeclaration' && !noServerImport) {
-        return transformer_1.transformImport(node);
+    else if (node.type === 'ImportDeclaration') {
+        return transformer_1.transformImport(node, noServerImport);
     }
 }
 exports.transformNode = transformNode;

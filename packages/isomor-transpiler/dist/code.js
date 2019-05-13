@@ -147,4 +147,41 @@ function getCodeMethod(fileName, name, className, withTypes) {
     };
 }
 exports.getCodeMethod = getCodeMethod;
+function getCodeConstructor(withTypes, withSuper = true) {
+    return {
+        type: 'ClassMethod',
+        static: false,
+        key: {
+            type: 'Identifier',
+            name: 'constructor',
+        },
+        async: false,
+        kind: 'constructor',
+        params: getParams(withTypes),
+        body: {
+            type: 'BlockStatement',
+            body: !withSuper ? [] : [
+                {
+                    type: 'ExpressionStatement',
+                    expression: {
+                        type: 'CallExpression',
+                        callee: {
+                            type: 'Super',
+                        },
+                        arguments: [
+                            {
+                                type: 'SpreadElement',
+                                argument: {
+                                    type: 'Identifier',
+                                    name: 'args',
+                                },
+                            },
+                        ],
+                    },
+                },
+            ],
+        },
+    };
+}
+exports.getCodeConstructor = getCodeConstructor;
 //# sourceMappingURL=code.js.map

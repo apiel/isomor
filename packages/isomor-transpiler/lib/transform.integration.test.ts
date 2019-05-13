@@ -91,7 +91,9 @@ export const getTime3 = (...args: any) => {
 class CatsService__deco_export__ {}
 
 export class CatsService extends CatsService__deco_export__ {
-  constructor(...args: any) {}
+  constructor(...args: any) {
+    super(...args);
+  }
 
   async findAll(...args: any) {
     return remote("path/to/file", "findAll", args, "CatsService");
@@ -133,7 +135,9 @@ export const getTime3 = (...args: any) => {
 class CatsService__deco_export__ {}
 
 export class CatsService extends CatsService__deco_export__ {
-  constructor(...args: any) {}
+  constructor(...args: any) {
+    super(...args);
+  }
 
   async findAll(...args: any) {
     return remote("path/to/file", "findAll", args, "CatsService");

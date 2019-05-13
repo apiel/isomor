@@ -1,4 +1,4 @@
-import { parse, generate } from './ast';
+import { parse, generate, JsonAst } from './ast';
 
 import { getCodeImport, getCodeFunc, getCodeArrowFunc, getCodeType, getCodeMethod, getCodeConstructor } from './code';
 
@@ -45,7 +45,11 @@ describe('code', () => {
         it('should generate constructor for isomor', () => {
             const withType = true;
             const { code } = generate(getCodeConstructor(withType) as any);
-            expect(code).toEqual('constructor(...args: any) {}');
+            expect(code).toEqual(
+`constructor(...args: any) {
+  super(...args);
+}`,
+            );
         });
     });
 

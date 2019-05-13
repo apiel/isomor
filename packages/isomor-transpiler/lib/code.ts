@@ -159,7 +159,7 @@ export function getCodeMethod(fileName: string, name: string, className: string,
     } as any as Statement;
 }
 
-export function getCodeConstructor(withTypes: boolean) {
+export function getCodeConstructor(withTypes: boolean, withSuper = true) {
     return {
         type: 'ClassMethod',
         static: false,
@@ -172,7 +172,26 @@ export function getCodeConstructor(withTypes: boolean) {
         params: getParams(withTypes),
         body: {
             type: 'BlockStatement',
-            body: [],
+            body: !withSuper ? [] : [
+                {
+                    type: 'ExpressionStatement',
+                    expression: {
+                        type: 'CallExpression',
+                        callee: {
+                            type: 'Super',
+                        },
+                        arguments: [
+                            {
+                                type: 'SpreadElement',
+                                argument: {
+                                    type: 'Identifier',
+                                    name: 'args',
+                                },
+                            },
+                        ],
+                    },
+                },
+            ],
         },
     } as any as Statement;
 }

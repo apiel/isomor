@@ -2,8 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const ast_1 = require("./ast");
 const code_1 = require("./code");
-exports.isomorImport = `import { remote } from "isomor";`;
-exports.codeTranspiledType = `export type MyType = any;`;
 exports.codeTranspiledFunc = `export function getTime(...args: any) {
   return remote("path/to/file", "getTime", args);
 }`;
@@ -16,11 +14,8 @@ exports.codeTranspiledArrowFunc = `export const getTime = (...args: any) => {
 exports.codeTranspiledArrowFuncNoType = `export const getTime = (...args) => {
   return remote("path/to/file", "getTime", args);
 };`;
-exports.codeTranspiledClass = `export class CatsService {
-  async getTime(...args: any) {
-    return remote("path/to/file", "getTime", args, "CatsService");
-  }
-
+exports.codeTranspiledClass = `async getTime(...args: any) {
+  return remote("path/to/file", "getTime", args, "CatsService");
 }`;
 describe('code', () => {
     const path = 'path/to/file';
@@ -28,59 +23,54 @@ describe('code', () => {
     const className = 'CatsService';
     const typeName = 'MyType';
     describe('code/getCodeMethod()', () => {
-        it('should generate function for isomor', () => {
+        it('should generate method for isomor', () => {
             const withType = true;
-            const { program } = ast_1.parse('export class CatsService {}');
-            program.body[0].declaration.body.body = [code_1.getCodeMethod(path, fnName, className, withType)];
-            const { code } = ast_1.generate(program);
+            const { code } = ast_1.generate(code_1.getCodeMethod(path, fnName, className, withType));
             expect(code).toEqual(exports.codeTranspiledClass);
+        });
+    });
+    describe('code/getCodeConstructor()', () => {
+        it('should generate constructor for isomor', () => {
+            const withType = true;
+            const { code } = ast_1.generate(code_1.getCodeConstructor(withType));
+            expect(code).toEqual(`constructor(...args: any) {
+  super(...args);
+}`);
         });
     });
     describe('code/getCodeImport()', () => {
         it('should generate inport for isomor', () => {
-            const { program } = ast_1.parse('');
-            program.body = [code_1.getCodeImport()];
-            const { code } = ast_1.generate(program);
-            expect(code).toEqual(exports.isomorImport);
+            const { code } = ast_1.generate(code_1.getCodeImport());
+            expect(code).toEqual(`import { remote } from "isomor";`);
         });
     });
     describe('code/getCodeType()', () => {
         it('should generate type for isomor', () => {
-            const { program } = ast_1.parse('');
-            program.body = [code_1.getCodeType(typeName)];
-            const { code } = ast_1.generate(program);
-            expect(code).toEqual(exports.codeTranspiledType);
+            const { code } = ast_1.generate(code_1.getCodeType(typeName));
+            expect(code).toEqual(`export type MyType = any;`);
         });
     });
     describe('code/getCodeFunc()', () => {
         it('should generate function for isomor', () => {
             const withType = true;
-            const { program } = ast_1.parse('');
-            program.body = [code_1.getCodeFunc(path, fnName, withType)];
-            const { code } = ast_1.generate(program);
+            const { code } = ast_1.generate(code_1.getCodeFunc(path, fnName, withType));
             expect(code).toEqual(exports.codeTranspiledFunc);
         });
         it('should generate function for isomor without type', () => {
             const withType = false;
-            const { program } = ast_1.parse('');
-            program.body = [code_1.getCodeFunc(path, fnName, withType)];
-            const { code } = ast_1.generate(program);
+            const { code } = ast_1.generate(code_1.getCodeFunc(path, fnName, withType));
             expect(code).toEqual(exports.codeTranspiledFuncNoType);
         });
     });
     describe('code/getCodeArrowFunc()', () => {
         it('should generate function for isomor', () => {
             const withType = true;
-            const { program } = ast_1.parse('');
-            program.body = [code_1.getCodeArrowFunc(path, fnName, withType)];
-            const { code } = ast_1.generate(program);
+            const { code } = ast_1.generate(code_1.getCodeArrowFunc(path, fnName, withType));
             expect(code).toEqual(exports.codeTranspiledArrowFunc);
         });
         it('should generate function for isomor without type', () => {
             const withType = false;
-            const { program } = ast_1.parse('');
-            program.body = [code_1.getCodeArrowFunc(path, fnName, withType)];
-            const { code } = ast_1.generate(program);
+            const { code } = ast_1.generate(code_1.getCodeArrowFunc(path, fnName, withType));
             expect(code).toEqual(exports.codeTranspiledArrowFuncNoType);
         });
     });

@@ -1,7 +1,8 @@
 import * as traverse from 'traverse';
 import { getCodeType, getCodeMethod, getCodeConstructor } from './code';
 import { ExportNamedDeclaration, Statement, ImportDeclaration } from './ast';
-import { JsonAst } from './ast';
+import { JsonAst, parse } from './ast';
+
 // might have a look again at https://www.npmjs.com/package/esrecurse but need to find AST types for TS
 
 export function transformInterface(root: Statement) {
@@ -26,6 +27,11 @@ export function transformInterface(root: Statement) {
 }
 
 export function transformImport(root: ImportDeclaration) {
+    if (root.trailingComments && root.trailingComments[0].value.indexOf(' > ') === 0) {
+        const code = root.trailingComments[0].value.substring(3);
+        const { program: { body } } = parse(code);
+        return body;
+    }
     if (root.source.type === 'StringLiteral') {
         if (root.source.value[0] === '.') { // remove local import
             return null;

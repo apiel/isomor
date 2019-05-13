@@ -6,216 +6,42 @@
         "interpreter": null,
         "body": [
             {
-                "type": "ClassDeclaration",
-                "decorators": [
+                "type": "ImportDeclaration",
+                "specifiers": [
                     {
-                        "type": "Decorator",
-                        "expression": {
-                            "type": "CallExpression",
-                            "callee": {
-                                "type": "Identifier",
-                                "name": "Injectable"
-                            },
-                            "arguments": []
+                        "type": "ImportSpecifier",
+                        "imported": {
+                            "type": "Identifier",
+                            "name": "Injectable"
+                        },
+                        "local": {
+                            "type": "Identifier",
+                            "name": "Injectable"
                         }
                     }
                 ],
-                "id": {
-                    "type": "Identifier",
-                    "name": "CatsService__deco_export__"
+                "source": {
+                    "type": "StringLiteral",
+                    "extra": {
+                        "rawValue": "@nestjs/common",
+                        "raw": "'@nestjs/common'"
+                    },
+                    "value": "@nestjs/common"
                 },
-                "superClass": null,
-                "body": {
-                    "type": "ClassBody",
-                    "body": []
-                }
-            },
-            {
-                "type": "ExportNamedDeclaration",
-                "specifiers": [],
-                "source": null,
-                "declaration": {
-                    "type": "ClassDeclaration",
-                    "id": {
-                        "type": "Identifier",
-                        "name": "CatsService"
-                    },
-                    "superClass": {
-                        "type": "Identifier",
-                        "name": "CatsService__deco_export__"
-                    },
-                    "body": {
-                        "type": "ClassBody",
-                        "body": [
-                            {
-                                "type": "TSDeclareMethod",
-                                "static": false,
-                                "key": {
-                                    "type": "Identifier",
-                                    "name": "mock"
-                                },
-                                "computed": false,
-                                "kind": "method",
-                                "id": null,
-                                "generator": false,
-                                "async": false,
-                                "params": []
-                            }
-                        ]
+                "trailingComments": [
+                    {
+                        "type": "CommentLine",
+                        "value": " > import { Injectable } from '@angular/core';"
                     }
-                }
+                ]
             }
         ],
         "directives": []
     },
-    "comments": []
-}
-
-
-{
-    "type": "ExportNamedDeclaration",
-    "specifiers": [],
-    "source": null,
-    "declaration": {
-        "type": "ClassDeclaration",
-        "decorators": [
-            {
-                "type": "Decorator",
-                "expression": {
-                    "type": "CallExpression",
-                    "callee": {
-                        "type": "Identifier",
-                        "name": "Injectable"
-                    },
-                    "arguments": []
-                }
-            }
-        ],
-        "id": {
-            "type": "Identifier",
-            "name": "CatsService"
-        },
-        "superClass": null,
-        "body": {
-            "type": "ClassBody",
-            "body": [
-                {
-                    "type": "ClassMethod",
-                    "static": false,
-                    "key": {
-                        "type": "Identifier",
-                        "name": "constructor"
-                    },
-                    "computed": false,
-                    "kind": "constructor",
-                    "id": null,
-                    "generator": false,
-                    "async": false,
-                    "params": [
-                        {
-                            "type": "TSParameterProperty",
-                            "decorators": [
-                                {
-                                    "type": "Decorator",
-                                    "expression": {
-                                        "type": "CallExpression",
-                                        "callee": {
-                                            "type": "Identifier",
-                                            "name": "InjectRepository"
-                                        },
-                                        "arguments": [
-                                            {
-                                                "type": "Identifier",
-                                                "name": "Photo"
-                                            }
-                                        ]
-                                    }
-                                }
-                            ],
-                            "accessibility": "private",
-                            "readonly": true,
-                            "parameter": {
-                                "type": "Identifier",
-                                "name": "photoRepository",
-                                "typeAnnotation": {
-                                    "type": "TSTypeAnnotation",
-                                    "typeAnnotation": {
-                                        "type": "TSTypeReference",
-                                        "typeName": {
-                                            "type": "Identifier",
-                                            "name": "Repository"
-                                        },
-                                        "typeParameters": {
-                                            "type": "TSTypeParameterInstantiation",
-                                            "params": [
-                                                {
-                                                    "type": "TSTypeReference",
-                                                    "typeName": {
-                                                        "type": "Identifier",
-                                                        "name": "Photo"
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    ],
-                    "body": {
-                        "type": "BlockStatement",
-                        "body": [],
-                        "directives": []
-                    }
-                },
-                {
-                    "type": "ClassMethod",
-                    "static": false,
-                    "key": {
-                        "type": "Identifier",
-                        "name": "findAll"
-                    },
-                    "computed": false,
-                    "kind": "method",
-                    "id": null,
-                    "generator": false,
-                    "async": false,
-                    "params": [],
-                    "returnType": {
-                        "type": "TSTypeAnnotation",
-                        "typeAnnotation": {
-                            "type": "TSArrayType",
-                            "elementType": {
-                                "type": "TSTypeReference",
-                                "typeName": {
-                                    "type": "Identifier",
-                                    "name": "Cat"
-                                }
-                            }
-                        }
-                    },
-                    "body": {
-                        "type": "BlockStatement",
-                        "body": [
-                            {
-                                "type": "ReturnStatement",
-                                "argument": {
-                                    "type": "MemberExpression",
-                                    "object": {
-                                        "type": "ThisExpression"
-                                    },
-                                    "property": {
-                                        "type": "Identifier",
-                                        "name": "cats"
-                                    },
-                                    "computed": false
-                                }
-                            }
-                        ],
-                        "directives": []
-                    }
-                }
-            ]
+    "comments": [
+        {
+            "type": "CommentLine",
+            "value": " > import { Injectable } from '@angular/core';"
         }
-    }
+    ]
 }

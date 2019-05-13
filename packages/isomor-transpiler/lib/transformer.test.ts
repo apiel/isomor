@@ -64,8 +64,12 @@ describe('transformer', () => {
     });
     describe('transformImport()', () => {
         const ttc = transformToCode(transformImport);
-        it('should transform keep import', () => {
+        it('should keep import', () => {
             expect(ttc(`import { readdir } from 'fs-extra';`)).toBe(`import { readdir } from 'fs-extra';`);
+        });
+        it('should transform server import to browser import', () => {
+            expect(ttc(`import { Injectable } from '@nestjs/common'; // > import { Injectable } from '@angular/core';`))
+                .toBe(`import { Injectable } from '@angular/core';`);
         });
         it('should remove locale import', () => {
             expect(ttc(`import { something } from './my/import';`)).toBe('');

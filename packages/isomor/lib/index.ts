@@ -6,11 +6,13 @@ export async function remote(
     path: string,
     funcName: string,
     args: any,
+    classname?: string,
 ): Promise<any> {
-    const { data } = await axios.post(
-        `${urlPrefix}/${path}/${funcName}`,
-        { args },
-    );
+    const url = classname
+        ? `${urlPrefix}/${path}/${classname}/${funcName}`
+        : `${urlPrefix}/${path}/${funcName}`;
+
+    const { data } = await axios.post(url, { args });
     return data;
 }
 

@@ -2,6 +2,7 @@
 
 - isomor-NG > nest + angular
     - need to fix swagger
+    - centralize the way to build url
 - params checking in endpoint base on types
 
 - @share in addition of IsomorShare (give the possibility to use one or the other)

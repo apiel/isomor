@@ -10,9 +10,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const axios_1 = require("axios");
 const urlPrefix = '/isomor';
-function remote(path, funcName, args) {
+function remote(path, funcName, args, classname) {
     return __awaiter(this, void 0, void 0, function* () {
-        const { data } = yield axios_1.default.post(`${urlPrefix}/${path}/${funcName}`, { args });
+        const url = classname
+            ? `${urlPrefix}/${path}/${classname}/${funcName}`
+            : `${urlPrefix}/${path}/${funcName}`;
+        const { data } = yield axios_1.default.post(url, { args });
         return data;
     });
 }

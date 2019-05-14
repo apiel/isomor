@@ -1,5 +1,24 @@
+/**
+ * IMPORTANT: this file should never import node files,
+ * even if it's just for types, some library like angular
+ * dont like it!
+ */
+
 import axios from 'axios';
-import { getUrl } from 'isomor-server';
+
+const urlPrefix = '/isomor'; // http://127.0.0.1:3000/
+
+export function getUrl(
+    path: string,
+    funcName: string,
+    classname?: string,
+): string {
+    const url = classname
+        ? `${urlPrefix}/${path}/${classname}/${funcName}`
+        : `${urlPrefix}/${path}/${funcName}`;
+
+    return url;
+}
 
 export async function remote(
     path: string,

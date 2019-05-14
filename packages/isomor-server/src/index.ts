@@ -1,6 +1,6 @@
 import * as express from 'express';
 import { getFiles, getPathForUrl } from 'isomor-core';
-import { isIsomorClass } from 'isomor';
+import { isIsomorClass, getUrl } from 'isomor';
 import { join } from 'path';
 import { isNumber, promisify, isFunction } from 'util';
 import { exists } from 'fs';
@@ -12,20 +12,6 @@ export interface Context {
 }
 
 let startupImport: any;
-
-const urlPrefix = '/isomor'; // http://127.0.0.1:3000/
-
-export function getUrl(
-    path: string,
-    funcName: string,
-    classname?: string,
-): string {
-    const url = classname
-        ? `${urlPrefix}/${path}/${classname}/${funcName}`
-        : `${urlPrefix}/${path}/${funcName}`;
-
-    return url;
-}
 
 function getEntrypointPath(file: string, name: string, classname?: string) {
     return getUrl(getPathForUrl(file), name, classname);

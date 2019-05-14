@@ -4,7 +4,6 @@ export interface Context {
     res: express.Response;
     fn: any;
 }
-export declare function getUrl(path: string, funcName: string, classname?: string): string;
 export interface Entrypoint {
     path: string;
     file: string;

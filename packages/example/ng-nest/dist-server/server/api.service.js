@@ -19,12 +19,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const common_1 = require("@nestjs/common");
 const isomor_1 = require("isomor");
-const os_1 = require("os");
+const uptime_1 = require("./data/uptime");
 let ApiService = class ApiService {
     constructor() { }
     uptime() {
         return __awaiter(this, void 0, void 0, function* () {
-            return os_1.uptime();
+            return uptime_1.getUptime();
         });
     }
 };

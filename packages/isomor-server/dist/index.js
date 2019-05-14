@@ -14,16 +14,8 @@ const path_1 = require("path");
 const util_1 = require("util");
 const fs_1 = require("fs");
 let startupImport;
-const urlPrefix = '/isomor';
-function getUrl(path, funcName, classname) {
-    const url = classname
-        ? `${urlPrefix}/${path}/${classname}/${funcName}`
-        : `${urlPrefix}/${path}/${funcName}`;
-    return url;
-}
-exports.getUrl = getUrl;
 function getEntrypointPath(file, name, classname) {
-    return getUrl(isomor_core_1.getPathForUrl(file), name, classname);
+    return isomor_1.getUrl(isomor_core_1.getPathForUrl(file), name, classname);
 }
 function getFunctions(distServerFolder, file) {
     const filepath = require.resolve(path_1.join(distServerFolder, file), { paths: [process.cwd()] });

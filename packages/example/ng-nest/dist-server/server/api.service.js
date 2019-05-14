@@ -18,6 +18,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const common_1 = require("@nestjs/common");
+const isomor_1 = require("isomor");
 const os_1 = require("os");
 let ApiService = class ApiService {
     constructor() { }
@@ -29,6 +30,7 @@ let ApiService = class ApiService {
 };
 ApiService = __decorate([
     common_1.Injectable(),
+    isomor_1.isomor,
     __metadata("design:paramtypes", [])
 ], ApiService);
 exports.ApiService = ApiService;

@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const isomor_core_1 = require("isomor-core");
+const isomor_1 = require("isomor");
 const path_1 = require("path");
 const util_1 = require("util");
 const fs_1 = require("fs");
@@ -49,16 +50,19 @@ function getEntrypoint(app, file, fn, name, classname) {
     }));
     return { path, file };
 }
-function getClassEntrypoints(app, file, classname) {
+function getClassEntrypoints(app, file, classname, noDecorator) {
     if (startupImport && startupImport.getInstance) {
+        if (!noDecorator && !isomor_1.isIsomorClass(classname)) {
+            return [];
+        }
         const obj = startupImport.getInstance(classname);
         return Object.getOwnPropertyNames(Object.getPrototypeOf(obj))
             .filter(name => util_1.isFunction(obj[name]) && name !== 'constructor')
             .map(name => getEntrypoint(app, file, obj[name], name, classname));
     }
-    return;
+    return [];
 }
-function useIsomor(app, distServerFolder, serverFolder) {
+function useIsomor(app, distServerFolder, serverFolder, noDecorator = false) {
     return __awaiter(this, void 0, void 0, function* () {
         const files = yield isomor_core_1.getFiles(distServerFolder, serverFolder);
         return files.map(file => {
@@ -67,7 +71,7 @@ function useIsomor(app, distServerFolder, serverFolder) {
                 .filter(name => util_1.isFunction(functions[name]))
                 .map(name => {
                 const isClass = /^\s*class/.test(functions[name].toString());
-                return isClass ? getClassEntrypoints(app, file, name)
+                return isClass ? getClassEntrypoints(app, file, name, noDecorator)
                     : [getEntrypoint(app, file, functions[name], name)];
             }).flat();
         }).flat();

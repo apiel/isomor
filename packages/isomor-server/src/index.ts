@@ -1,5 +1,6 @@
 import * as express from 'express';
 import { getFiles, getPathForUrl } from 'isomor-core';
+import { isIsomorClass } from 'isomor';
 import { join } from 'path';
 import { isNumber, promisify, isFunction } from 'util';
 import { exists } from 'fs';
@@ -81,20 +82,25 @@ function getClassEntrypoints(
     app: express.Express,
     file: string,
     classname: string,
+    noDecorator: boolean,
 ): Entrypoint[] {
     if (startupImport && startupImport.getInstance) {
+        if (!noDecorator && !isIsomorClass(classname)) {
+            return [];
+        }
         const obj = startupImport.getInstance(classname);
         return Object.getOwnPropertyNames(Object.getPrototypeOf(obj))
             .filter(name => isFunction(obj[name]) && name !== 'constructor')
             .map(name => getEntrypoint(app, file, obj[name], name, classname));
     }
-    return;
+    return [];
 }
 
 export async function useIsomor(
     app: express.Express,
     distServerFolder: string,
     serverFolder: string,
+    noDecorator: boolean = false,
 ): Promise<Entrypoint[]> {
     const files = await getFiles(distServerFolder, serverFolder);
     return (files.map(file => {
@@ -103,7 +109,7 @@ export async function useIsomor(
             .filter(name => isFunction(functions[name]))
             .map(name => {
                 const isClass = /^\s*class/.test(functions[name].toString());
-                return isClass ? getClassEntrypoints(app, file, name)
+                return isClass ? getClassEntrypoints(app, file, name, noDecorator)
                     : [getEntrypoint(app, file, functions[name], name)];
             }) as any).flat();
     }) as any).flat();

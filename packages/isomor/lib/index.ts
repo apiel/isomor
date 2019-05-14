@@ -13,3 +13,17 @@ export async function remote(
 }
 
 export type IsomorShare = any;
+
+// @isomorShare
+export function isomorShare(constructor: any) {
+    //
+}
+
+// @isomor
+const isomorDecorators: string[] = [];
+export function isomor(constructor: any) {
+    isomorDecorators.push(constructor.name);
+}
+export function isIsomorClass(name: string) {
+    return isomorDecorators.includes(name);
+}

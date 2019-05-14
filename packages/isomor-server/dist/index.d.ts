@@ -9,7 +9,7 @@ export interface Entrypoint {
     path: string;
     file: string;
 }
-export declare function useIsomor(app: express.Express, distServerFolder: string, serverFolder: string): Promise<Entrypoint[]>;
+export declare function useIsomor(app: express.Express, distServerFolder: string, serverFolder: string, noDecorator?: boolean): Promise<Entrypoint[]>;
 export declare function loadStartupImport(distServerFolder: string, serverFolder: string, startupFile: string): Promise<void>;
 export declare function startup(app: express.Express, distServerFolder: string, serverFolder: string, startupFile: string): Promise<void>;
 export declare function getSwaggerDoc(endpoints: Entrypoint[]): Promise<{

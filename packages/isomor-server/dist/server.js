@@ -28,13 +28,13 @@ const path_1 = require("path");
 const API_DOCS = '/api-docs';
 function start(options) {
     return __awaiter(this, void 0, void 0, function* () {
-        const { distServerFolder, port, staticFolder, serverFolder, startupFile } = options;
+        const { distServerFolder, port, staticFolder, serverFolder, startupFile, noDecorator } = options;
         logol_1.info('Starting server.');
         const app = express();
         app.use(bodyParser.json());
         app.use(cookieParser());
         yield _1.startup(app, distServerFolder, serverFolder, startupFile);
-        const endpoints = yield _1.useIsomor(app, distServerFolder, serverFolder);
+        const endpoints = yield _1.useIsomor(app, distServerFolder, serverFolder, noDecorator);
         logol_1.info(`Created endpoints:`, endpoints.map(({ path }) => path));
         app.use(API_DOCS, swagger_ui_express_1.serve, swagger_ui_express_1.setup(yield _1.getSwaggerDoc(endpoints)));
         if (staticFolder) {
@@ -60,5 +60,6 @@ start({
     staticFolder: process.env.STATIC_FOLDER || null,
     serverFolder: process.env.SERVER_FOLDER || '/server',
     startupFile: process.env.STARTUP_FILE || path_1.join('startup', 'index.js'),
+    noDecorator: process.env.NO_DECORATOR === 'true',
 });
 //# sourceMappingURL=server.js.map

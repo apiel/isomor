@@ -25,12 +25,13 @@ interface Options {
     port: number;
     staticFolder: string | null;
     startupFile: string;
+    noDecorator: boolean;
 }
 
 const API_DOCS = '/api-docs';
 
 async function start(options: Options) {
-    const { distServerFolder, port, staticFolder, serverFolder, startupFile } = options;
+    const { distServerFolder, port, staticFolder, serverFolder, startupFile, noDecorator } = options;
     info('Starting server.');
     const app = express();
 
@@ -39,7 +40,7 @@ async function start(options: Options) {
 
     await startup(app, distServerFolder, serverFolder, startupFile);
 
-    const endpoints = await useIsomor(app, distServerFolder, serverFolder);
+    const endpoints = await useIsomor(app, distServerFolder, serverFolder, noDecorator);
     info(`Created endpoints:`, endpoints.map(({ path }) => path));
 
     app.use(API_DOCS, serve, setup(await getSwaggerDoc(endpoints)));
@@ -76,4 +77,5 @@ start({
     staticFolder: process.env.STATIC_FOLDER || null,
     serverFolder: process.env.SERVER_FOLDER || '/server',
     startupFile: process.env.STARTUP_FILE || join('startup', 'index.js'),
+    noDecorator: process.env.NO_DECORATOR === 'true',
 });

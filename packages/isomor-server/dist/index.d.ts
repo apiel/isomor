@@ -2,7 +2,6 @@ import * as express from 'express';
 export interface Context {
     req: express.Request;
     res: express.Response;
-    fn: any;
 }
 export interface Entrypoint {
     path: string;

@@ -1,11 +1,9 @@
 import { Module } from '@nestjs/common';
-// import { CatsModule } from './cats/cats.module';
-import { ApiService } from '../api.service';
+import { ApiModule } from '../api.module';
 
 @Module({
   imports: [
-    // CatsModule,
+    ApiModule,
   ],
-  providers: [ApiService],
 })
 export class ApplicationModule {}

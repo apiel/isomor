@@ -1,13 +1,16 @@
 import { Injectable } from '@nestjs/common'; // > import { Injectable } from '@angular/core';
 import { isomor } from 'isomor';
-import { getUptime } from './data/uptime';
+import { UptimeService } from './data/uptime/uptime.service';
 
 @Injectable()
 @isomor
 export class ApiService {
-  constructor() {}
+  constructor(
+    private readonly uptimeService: UptimeService,
+  ) {}
 
   async uptime() {
-    return getUptime();
+    console.log('this.uptimeService', this.uptimeService);
+    return this.uptimeService.uptime();
   }
 }

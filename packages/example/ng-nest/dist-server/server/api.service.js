@@ -19,18 +19,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const common_1 = require("@nestjs/common");
 const isomor_1 = require("isomor");
-const uptime_1 = require("./data/uptime");
+const uptime_service_1 = require("./data/uptime/uptime.service");
 let ApiService = class ApiService {
-    constructor() { }
+    constructor(uptimeService) {
+        this.uptimeService = uptimeService;
+    }
     uptime() {
         return __awaiter(this, void 0, void 0, function* () {
-            return uptime_1.getUptime();
+            console.log('this.uptimeService', this.uptimeService);
+            return this.uptimeService.uptime();
         });
     }
 };
 ApiService = __decorate([
     common_1.Injectable(),
     isomor_1.isomor,
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [uptime_service_1.UptimeService])
 ], ApiService);
 exports.ApiService = ApiService;

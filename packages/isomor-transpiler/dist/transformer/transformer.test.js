@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const ast_1 = require("./ast");
+const ast_1 = require("../ast");
 const transformer_1 = require("./transformer");
-const code_1 = require("./code");
+const code_1 = require("../code");
 const util_1 = require("util");
 const codeSourceInterface = `
 export interface MyInterface {
@@ -62,7 +62,7 @@ describe('transformer', () => {
         it('should keep import', () => {
             expect(ttc(`import { readdir } from 'fs-extra';`)).toBe(`import { readdir } from 'fs-extra';`);
         });
-        it('should remove import', () => {
+        it('should remove import if noServerImport is true', () => {
             const noServerImport = true;
             expect(ttc(`import { readdir } from 'fs-extra';`, noServerImport)).toBe(``);
         });
@@ -72,6 +72,10 @@ describe('transformer', () => {
         });
         it('should remove locale import', () => {
             expect(ttc(`import { something } from './my/import';`)).toBe('');
+        });
+        it('should remove import if // >', () => {
+            expect(ttc(`import { Injectable } from '@nestjs/common'; // >`))
+                .toBe(``);
         });
     });
     describe('transformExport()', () => {

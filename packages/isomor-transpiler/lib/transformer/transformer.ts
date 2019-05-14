@@ -1,7 +1,7 @@
 import * as traverse from 'traverse';
-import { getCodeType } from './code';
-import { ExportNamedDeclaration, Statement, ImportDeclaration } from './ast';
-import { JsonAst, parse } from './ast';
+import { getCodeType } from '../code';
+import { ExportNamedDeclaration, Statement, ImportDeclaration } from '../ast';
+import { JsonAst, parse } from '../ast';
 
 // might have a look again at https://www.npmjs.com/package/esrecurse but need to find AST types for TS
 

@@ -1,10 +1,11 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const ast_1 = require("./ast");
-const transformerClass_1 = require("./transformerClass");
-const code_1 = require("./code");
-const util_1 = require("util");
-jest.mock('./code', () => ({
+import { parse, generate } from '../ast';
+
+import { transformClass } from './transformerClass';
+import { getCodeMethod, getCodeConstructor } from '../code';
+import { JsonAst } from '../ast';
+import { isArray } from 'util';
+
+jest.mock('../code', () => ({
     getCodeType: jest.fn().mockReturnValue('getCodeTypeMock'),
     getCodeMethod: jest.fn().mockReturnValue({
         type: 'ClassMethod',
@@ -23,21 +24,30 @@ jest.mock('./code', () => ({
         params: [],
     }),
 }));
-const transformClassFromCode = (source, noDecorator = false) => {
+
+const transformClassFromCode = (
+    source: string,
+    noDecorator: boolean = false,
+): string => {
     const withTypes = true;
     const path = 'path/to/somewhere';
-    const { program } = ast_1.parse(source);
-    const body = transformerClass_1.transformClass(program.body[0], path, withTypes, noDecorator);
-    program.body = util_1.isArray(body) ? body : [body];
-    const { code } = ast_1.generate(program);
+    const { program } = parse(source);
+    // console.log('JsonAst', JsonAst(program.body[0]));
+    const body = transformClass(program.body[0] as any, path, withTypes, noDecorator);
+    program.body = isArray(body) ? body : [body];
+    // console.log('JsonAst2', JsonAst(program.body[0]));
+    const { code } = generate(program as any);
     return code;
 };
+
 describe('transformerClass', () => {
     beforeEach(() => {
         jest.clearAllMocks();
     });
+    // -----------------
     it('should keep class as it is when implement IsomorShare', () => {
-        const code = `export class Post implements IsomorShare {
+        const code =
+            `export class Post implements IsomorShare {
   @Length(10, 20)
   title: string;
   @Contains("hello")
@@ -45,6 +55,7 @@ describe('transformerClass', () => {
 }`;
         expect(transformClassFromCode(code)).toBe(code);
     });
+    // -----------------
     it('should keep class as it is when @isomorShare is defined', () => {
         expect(transformClassFromCode(`@isomorShare
         export class Post {
@@ -62,34 +73,42 @@ export class Post extends Post__deco_export__ {
   text: string;
 }`);
     });
+    // -----------------
     it('should transform class for isomor when noDecorator is true', () => {
-        const code = `export class CatsService extends Hello {
+        const code =
+            `export class CatsService extends Hello {
                 findAll(id: string): Cat[] {
                     return this.cats;
                 }
 
                 }`;
         const noDecorator = true;
-        expect(transformClassFromCode(code, noDecorator)).toBe(`class CatsService__deco_export__ extends Hello {}
+        expect(transformClassFromCode(code, noDecorator)).toBe(
+            `class CatsService__deco_export__ extends Hello {}
 
 export class CatsService extends CatsService__deco_export__ {
   mock()
 
-}`);
-        expect(code_1.getCodeMethod).toHaveBeenCalledTimes(1);
+}`,
+        );
+        expect(getCodeMethod).toHaveBeenCalledTimes(1); // called with?
     });
+    // -----------------
     it('should not transform class when no noDecorator but dont provide @isomor', () => {
-        const code = `@Injectable()
+        const code =
+            `@Injectable()
                 export class CatsService extends Hello {
                     findAll(id: string): Cat[] {
                         return this.cats;
                     }
                 }`;
         expect(transformClassFromCode(code)).toBe(``);
-        expect(code_1.getCodeMethod).toHaveBeenCalledTimes(0);
+        expect(getCodeMethod).toHaveBeenCalledTimes(0);
     });
+    // -----------------
     it('should transform class for isomor', () => {
-        const code = `@Injectable()
+        const code =
+            `@Injectable()
                 @isomor
                 export class CatsService extends Hello {
                 findAll(id: string): Cat[] {
@@ -97,18 +116,22 @@ export class CatsService extends CatsService__deco_export__ {
                 }
 
                 }`;
-        expect(transformClassFromCode(code)).toBe(`@Injectable()
+        expect(transformClassFromCode(code)).toBe(
+            `@Injectable()
 @isomor
 class CatsService__deco_export__ extends Hello {}
 
 export class CatsService extends CatsService__deco_export__ {
   mock()
 
-}`);
-        expect(code_1.getCodeMethod).toHaveBeenCalledTimes(1);
+}`,
+        );
+        expect(getCodeMethod).toHaveBeenCalledTimes(1); // called with?
     });
+    // -----------------
     it('should transform class constructor', () => {
-        const code = `@Injectable()
+        const code =
+            `@Injectable()
                 @isomor
                 export class CatsService {
                     constructor(
@@ -117,15 +140,17 @@ export class CatsService extends CatsService__deco_export__ {
                     ) {}
 
                 }`;
-        expect(transformClassFromCode(code)).toBe(`@Injectable()
+        expect(transformClassFromCode(code)).toBe(
+            `@Injectable()
 @isomor
 class CatsService__deco_export__ {}
 
 export class CatsService extends CatsService__deco_export__ {
   constructorMock()
 
-}`);
-        expect(code_1.getCodeConstructor).toHaveBeenCalledTimes(1);
+}`,
+        );
+        expect(getCodeConstructor).toHaveBeenCalledTimes(1); // called with?
     });
+    // -----------------
 });
-//# sourceMappingURL=transformerClass.test.js.map

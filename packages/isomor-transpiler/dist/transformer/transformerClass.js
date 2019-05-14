@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const code_1 = require("./code");
+const code_1 = require("../code");
 function transformClass(root, path, withTypes, noDecorator) {
     if (root.declaration.type === 'ClassDeclaration') {
         if (checkIfClassImplementInterface(root.declaration, 'IsomorShare')) {

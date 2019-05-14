@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const code_1 = require("./code");
-const transformer_1 = require("./transformer");
-const transformerClass_1 = require("./transformerClass");
+const transformer_1 = require("./transformer/transformer");
+const transformerClass_1 = require("./transformer/transformerClass");
 function transformNode(node, path, withTypes, noServerImport, noDecorator) {
     if (node.type === 'ExportNamedDeclaration') {
         if (!node.declaration) {

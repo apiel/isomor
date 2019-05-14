@@ -1,6 +1,6 @@
-import { getCodeMethod, getCodeConstructor } from './code';
-import { ExportNamedDeclaration } from './ast';
-import { JsonAst } from './ast';
+import { getCodeMethod, getCodeConstructor } from '../code';
+import { ExportNamedDeclaration } from '../ast';
+import { JsonAst } from '../ast';
 import { ClassDeclaration } from '@babel/types';
 
 export function transformClass(

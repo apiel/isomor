@@ -2,8 +2,8 @@ import { parse } from './ast';
 
 import { transformNode } from './transformNode';
 import { getCodeFunc, getCodeArrowFunc, getCodeType } from './code';
-import { transformInterface, transformImport, transformExport } from './transformer';
-import { transformClass } from './transformerClass';
+import { transformInterface, transformImport, transformExport } from './transformer/transformer';
+import { transformClass } from './transformer/transformerClass';
 
 jest.mock('./code', () => ({
     getCodeImport: jest.fn().mockReturnValue('ImportIsomor'),
@@ -12,14 +12,14 @@ jest.mock('./code', () => ({
     getCodeType: jest.fn().mockReturnValue('TypeAny'),
 }));
 
-jest.mock('./transformer', () => ({
+jest.mock('./transformer/transformer', () => ({
     transformInterface: jest.fn().mockReturnValue('TransformInterface'),
     transformImport: jest.fn().mockReturnValue('TransformImport'),
     transformExport: jest.fn().mockReturnValue('TransformExport'),
     transformClass: jest.fn().mockReturnValue('TransformClass'),
 }));
 
-jest.mock('./transformerClass', () => ({
+jest.mock('./transformer/transformerClass', () => ({
     transformClass: jest.fn().mockReturnValue('TransformClass'),
 }));
 

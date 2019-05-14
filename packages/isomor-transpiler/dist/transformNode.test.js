@@ -3,8 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const ast_1 = require("./ast");
 const transformNode_1 = require("./transformNode");
 const code_1 = require("./code");
-const transformer_1 = require("./transformer");
-const transformerClass_1 = require("./transformerClass");
+const transformer_1 = require("./transformer/transformer");
+const transformerClass_1 = require("./transformer/transformerClass");
 jest.mock('./code', () => ({
     getCodeImport: jest.fn().mockReturnValue('ImportIsomor'),
     getCodeFunc: jest.fn().mockReturnValue('Func'),

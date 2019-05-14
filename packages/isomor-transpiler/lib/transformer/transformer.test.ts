@@ -1,8 +1,8 @@
-import { parse, generate } from './ast';
+import { parse, generate } from '../ast';
 
 import { transformInterface, transformImport, transformExport } from './transformer';
-import { getCodeType } from './code';
-import { JsonAst } from './ast';
+import { getCodeType } from '../code';
+import { JsonAst } from '../ast';
 import { isArray } from 'util';
 
 const codeSourceInterface = `
@@ -35,7 +35,7 @@ const transformToCode = (fn: any) => (source: string, ...params: any[]): string 
     return code;
 };
 
-jest.mock('./code', () => ({
+jest.mock('../code', () => ({
     getCodeType: jest.fn().mockReturnValue('getCodeTypeMock'),
     getCodeMethod: jest.fn().mockReturnValue({
         type: 'ClassMethod',

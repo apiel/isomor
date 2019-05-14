@@ -8,7 +8,6 @@ import { exists } from 'fs';
 export interface Context {
     req: express.Request;
     res: express.Response;
-    fn: any;
 }
 
 let startupImport: any;
@@ -39,7 +38,6 @@ function getEntrypoint(
     fn: any,
     name: string,
     classname?: string,
-    instance?: any,
 ): Entrypoint {
     const path = getEntrypointPath(file, name, classname);
     app.use(path, async (
@@ -48,16 +46,9 @@ function getEntrypoint(
         next: express.NextFunction,
     ) => {
         try {
-            const context: Context = {
-                req,
-                res,
-                fn,
-            };
-            if (instance) {
-                instance.context = context;
-            }
+            const ctx: Context = {req, res};
             const args = (req.body && req.body.args) || [];
-            const result = await context.fn(...args);
+            const result = await fn.call(ctx, ...args, req, res);
             return res.send(isNumber(result) ? result.toString() : result);
         } catch (error) {
             next(error);
@@ -81,7 +72,7 @@ function getClassEntrypoints(
         const obj = startupImport.getInstance(classname);
         return Object.getOwnPropertyNames(Object.getPrototypeOf(obj))
             .filter(name => isFunction(obj[name]) && name !== 'constructor')
-            .map(name => getEntrypoint(app, file, obj[name].bind(obj), name, classname, obj));
+            .map(name => getEntrypoint(app, file, obj[name].bind(obj), name, classname));
     }
     return [];
 }

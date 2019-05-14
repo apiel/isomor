@@ -29,6 +29,12 @@ let ApiService = class ApiService {
             return this.uptimeService.uptime();
         });
     }
+    test(req) {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log('long base url', req.baseUrl);
+            return req.baseUrl;
+        });
+    }
 };
 ApiService = __decorate([
     common_1.Injectable(),

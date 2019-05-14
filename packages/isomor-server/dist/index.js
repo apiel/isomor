@@ -27,16 +27,8 @@ function getEntrypoint(app, file, fn, name, classname, instance) {
     const path = getEntrypointPath(file, name, classname);
     app.use(path, (req, res, next) => __awaiter(this, void 0, void 0, function* () {
         try {
-            const context = {
-                req,
-                res,
-                fn,
-            };
-            if (instance) {
-                instance.context = context;
-            }
             const args = (req.body && req.body.args) || [];
-            const result = yield context.fn(...args);
+            const result = yield fn.call({ req, res }, ...args, req, res);
             return res.send(util_1.isNumber(result) ? result.toString() : result);
         }
         catch (error) {

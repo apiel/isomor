@@ -1,7 +1,7 @@
 import { parse, generate } from './ast';
 
 import { transformInterface, transformImport, transformExport } from './transformer';
-import { getCodeType, getCodeMethod, getCodeConstructor } from './code';
+import { getCodeType } from './code';
 import { JsonAst } from './ast';
 import { isArray } from 'util';
 
@@ -70,7 +70,7 @@ describe('transformer', () => {
         it('should keep import', () => {
             expect(ttc(`import { readdir } from 'fs-extra';`)).toBe(`import { readdir } from 'fs-extra';`);
         });
-        it('should remove import', () => {
+        it('should remove import if noServerImport is true', () => {
             const noServerImport = true;
             expect(ttc(`import { readdir } from 'fs-extra';`, noServerImport)).toBe(``);
         });
@@ -80,6 +80,10 @@ describe('transformer', () => {
         });
         it('should remove locale import', () => {
             expect(ttc(`import { something } from './my/import';`)).toBe('');
+        });
+        it('should remove import if // >', () => {
+            expect(ttc(`import { Injectable } from '@nestjs/common'; // >`))
+                .toBe(``);
         });
     });
     describe('transformExport()', () => {

@@ -1,7 +1,8 @@
 import { getCodeFunc, getCodeArrowFunc, getCodeType } from './code';
-import { transformInterface, transformImport, transformExport } from './transformer/transformer';
+import { transformInterface, transformExport } from './transformer/transformer';
 import { Statement, JsonAst } from './ast';
 import { transformClass } from './transformer/transformerClass';
+import { transformImport } from './transformer/transformerImport';
 
 export function transformNode(
     node: Statement,

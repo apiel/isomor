@@ -168,15 +168,7 @@ function getCodeConstructor(withTypes, withSuper = true) {
                         callee: {
                             type: 'Super',
                         },
-                        arguments: [
-                            {
-                                type: 'SpreadElement',
-                                argument: {
-                                    type: 'Identifier',
-                                    name: 'args',
-                                },
-                            },
-                        ],
+                        arguments: [],
                     },
                 },
             ],

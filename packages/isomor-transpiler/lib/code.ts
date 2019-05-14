@@ -180,15 +180,7 @@ export function getCodeConstructor(withTypes: boolean, withSuper = true) {
                         callee: {
                             type: 'Super',
                         },
-                        arguments: [
-                            {
-                                type: 'SpreadElement',
-                                argument: {
-                                    type: 'Identifier',
-                                    name: 'args',
-                                },
-                            },
-                        ],
+                        arguments: [],
                     },
                 },
             ],

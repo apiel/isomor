@@ -87,7 +87,7 @@ class CatsService__deco_export__ {}
 
 export class CatsService extends CatsService__deco_export__ {
   constructor(...args: any) {
-    super(...args);
+    super();
   }
 
   async findAll(...args: any) {

@@ -47,7 +47,7 @@ describe('code', () => {
             const { code } = generate(getCodeConstructor(withType) as any);
             expect(code).toEqual(
 `constructor(...args: any) {
-  super(...args);
+  super();
 }`,
             );
         });

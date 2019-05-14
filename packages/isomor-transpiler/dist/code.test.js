@@ -34,7 +34,7 @@ describe('code', () => {
             const withType = true;
             const { code } = ast_1.generate(code_1.getCodeConstructor(withType));
             expect(code).toEqual(`constructor(...args: any) {
-  super(...args);
+  super();
 }`);
         });
     });

@@ -45,7 +45,7 @@ describe('transformerClass', () => {
         jest.clearAllMocks();
     });
     // -----------------
-    it('should keep class when implement IsomorShare', () => {
+    it('should keep class as it is when implement IsomorShare', () => {
         const code =
             `export class Post implements IsomorShare {
   @Length(10, 20)
@@ -54,6 +54,24 @@ describe('transformerClass', () => {
   text: string;
 }`;
         expect(transformClassFromCode(code)).toBe(code);
+    });
+    // -----------------
+    it('should keep class as it is when @isomorShare is defined', () => {
+        expect(transformClassFromCode(`@isomorShare
+        export class Post {
+          @Length(10, 20)
+          title: string;
+          @Contains("hello")
+          text: string;
+        }`)).toBe(`@isomorShare
+class Post__deco_export__ {}
+
+export class Post extends Post__deco_export__ {
+  @Length(10, 20)
+  title: string;
+  @Contains("hello")
+  text: string;
+}`);
     });
     // -----------------
     it('should transform class for isomor when noDecorator is true', () => {

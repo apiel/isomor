@@ -10,8 +10,11 @@ export function transformClass(
     noDecorator: boolean,
 ) {
     if (root.declaration.type === 'ClassDeclaration') {
-        if (checkForIsomorShare(root.declaration)) {
+        if (checkIfClassImplementInterface(root.declaration, 'IsomorShare')) {
             return root;
+        }
+        if (!noDecorator && checkIfClassContainDecorator(root.declaration, 'isomorShare')) {
+            return transformClassExportBeforeDecorator(root);
         }
         // Class didn't implemented IsomorShare we can transform it
         if (!checkForIsomorDecorator(root.declaration, noDecorator)) {
@@ -38,20 +41,6 @@ export function transformClass(
     return;
 }
 
-function checkForIsomorShare(
-    root: ClassDeclaration,
-) {
-    if (root.implements) {
-        return root.implements.filter(
-            (node) =>
-                node.type === 'TSExpressionWithTypeArguments'
-                && node.expression.type === 'Identifier'
-                && node.expression.name === 'IsomorShare',
-        ).length > 0;
-    }
-    return false;
-}
-
 /**
  * Check if @isomor decorator is enabled. If not we can just transpile the full class
  * If yes, we need to check that @isomor is on the top of the class to allow transform.
@@ -60,21 +49,41 @@ function checkForIsomorDecorator(
     root: ClassDeclaration,
     noDecorator: boolean,
 ) {
-    if (!noDecorator) {
-        if (!root.decorators || !root.decorators.length) {
-            return false; // isomor decorator is enable, so we need @isomor to transform it
-        } else {
-            let isomorFound = false;
-            root.decorators.forEach(decorator => {
-                if (decorator.expression.type === 'Identifier'
-                    && decorator.expression.name === 'isomor') {
-                        isomorFound = true;
-                        return;
-                    }
-            });
-            if (!isomorFound) {
-                return false; // isomor decorator is enable, so we need @isomor to transform it
-            }
+    return noDecorator || checkIfClassContainDecorator(root, 'isomor');
+}
+
+function checkIfClassImplementInterface(
+    root: ClassDeclaration,
+    name: string,
+) {
+    if (root.implements) {
+        return root.implements.filter(
+            (node) =>
+                node.type === 'TSExpressionWithTypeArguments'
+                && node.expression.type === 'Identifier'
+                && node.expression.name === name,
+        ).length > 0;
+    }
+    return false;
+}
+
+function checkIfClassContainDecorator(
+    root: ClassDeclaration,
+    name: string,
+) {
+    if (!root.decorators || !root.decorators.length) {
+        return false;
+    } else {
+        let isomorFound = false;
+        root.decorators.forEach(decorator => {
+            if (decorator.expression.type === 'Identifier'
+                && decorator.expression.name === name) {
+                    isomorFound = true;
+                    return;
+                }
+        });
+        if (!isomorFound) {
+            return false;
         }
     }
     return true;

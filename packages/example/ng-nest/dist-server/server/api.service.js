@@ -26,7 +26,6 @@ let ApiService = class ApiService {
     }
     uptime() {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log('this.uptimeService', this.uptimeService);
             return this.uptimeService.uptime();
         });
     }

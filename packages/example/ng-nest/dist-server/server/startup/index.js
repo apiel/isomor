@@ -14,9 +14,6 @@ let nest;
 function default_1() {
     return __awaiter(this, void 0, void 0, function* () {
         nest = yield core_1.NestFactory.createApplicationContext(app_module_1.ApplicationModule);
-        const yo = nest.get('UptimeService');
-        console.log('yo', yo);
-        console.log('yo2', yo.uptime());
     });
 }
 exports.default = default_1;

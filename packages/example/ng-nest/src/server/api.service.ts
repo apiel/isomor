@@ -1,7 +1,7 @@
 import { remote } from "isomor";
 import { Injectable } from '@angular/core';
 // > import { Injectable } from '@angular/core';
-import { isomor } from 'isomor';
+import { isomor } from 'isomor'; // import { Context } from 'isomor-server';
 
 @Injectable()
 @isomor

@@ -23,7 +23,7 @@ function getFunctions(distServerFolder, file) {
     const functions = require(filepath);
     return functions;
 }
-function getEntrypoint(app, file, fn, name, classname) {
+function getEntrypoint(app, file, fn, name, classname, instance) {
     const path = getEntrypointPath(file, name, classname);
     app.use(path, (req, res, next) => __awaiter(this, void 0, void 0, function* () {
         try {
@@ -32,6 +32,9 @@ function getEntrypoint(app, file, fn, name, classname) {
                 res,
                 fn,
             };
+            if (instance) {
+                instance.context = context;
+            }
             const args = (req.body && req.body.args) || [];
             const result = yield context.fn(...args);
             return res.send(util_1.isNumber(result) ? result.toString() : result);
@@ -50,7 +53,7 @@ function getClassEntrypoints(app, file, classname, noDecorator) {
         const obj = startupImport.getInstance(classname);
         return Object.getOwnPropertyNames(Object.getPrototypeOf(obj))
             .filter(name => util_1.isFunction(obj[name]) && name !== 'constructor')
-            .map(name => getEntrypoint(app, file, obj[name], name, classname));
+            .map(name => getEntrypoint(app, file, obj[name].bind(obj), name, classname, obj));
     }
     return [];
 }

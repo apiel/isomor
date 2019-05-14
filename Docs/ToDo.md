@@ -6,6 +6,7 @@
     - should we provide a way to use something else than axios, like HttpClient from angular?
     - remove import on transpile with empty... import ... // >
     - in another version: should as well allow decorator only per method
+    - context in class level, not sure about it.
 
 - export * from './Image';
 

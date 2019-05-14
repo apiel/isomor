@@ -2,6 +2,7 @@ import * as traverse from 'traverse';
 import { getCodeType, getCodeMethod, getCodeConstructor } from './code';
 import { ExportNamedDeclaration, Statement, ImportDeclaration } from './ast';
 import { JsonAst, parse } from './ast';
+import { ClassDeclaration } from '@babel/types';
 
 // might have a look again at https://www.npmjs.com/package/esrecurse but need to find AST types for TS
 
@@ -60,6 +61,7 @@ export function transformClass(
     root: ExportNamedDeclaration,
     path: string,
     withTypes: boolean,
+    noDecorator: boolean,
 ) {
     if (root.declaration.type === 'ClassDeclaration') {
         if (root.declaration.implements) {
@@ -74,6 +76,9 @@ export function transformClass(
             }
         }
         // Class didn't implemented IsomorShare we can transform it
+        if (!checkForIsomorDecorator(root.declaration, noDecorator)) {
+            return; // isomor decorator is enable, so we need @isomor to transform it
+        }
         // console.log('ClassDeclaration', JsonAst(root));
         const { name: className } = root.declaration.id;
         const { body } = root.declaration.body;
@@ -93,6 +98,34 @@ export function transformClass(
         // return root;
     }
     return;
+}
+
+/**
+ * Check if @isomor decorator is enabled. If not we can just transpile the full class
+ * If yes, we need to check that @isomor is on the top of the class to allow transform.
+ */
+function checkForIsomorDecorator(
+    root: ClassDeclaration,
+    noDecorator: boolean,
+) {
+    if (!noDecorator) {
+        if (!root.decorators.length) {
+            return false; // isomor decorator is enable, so we need @isomor to transform it
+        } else {
+            let isomorFound = false;
+            root.decorators.forEach(decorator => {
+                if (decorator.expression.type === 'Identifier'
+                    && decorator.expression.name === 'isomor') {
+                        isomorFound = true;
+                        return;
+                    }
+            });
+            if (!isomorFound) {
+                return false; // isomor decorator is enable, so we need @isomor to transform it
+            }
+        }
+    }
+    return true;
 }
 
 // https://github.com/babel/babel/issues/7526

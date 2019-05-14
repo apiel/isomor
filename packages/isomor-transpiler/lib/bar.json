@@ -1,47 +1,99 @@
 {
-    "type": "File",
-    "program": {
-        "type": "Program",
-        "sourceType": "module",
-        "interpreter": null,
-        "body": [
+    "type": "ExportNamedDeclaration",
+    "specifiers": [],
+    "source": null,
+    "declaration": {
+        "type": "ClassDeclaration",
+        "decorators": [
             {
-                "type": "ImportDeclaration",
-                "specifiers": [
-                    {
-                        "type": "ImportSpecifier",
-                        "imported": {
-                            "type": "Identifier",
-                            "name": "Injectable"
-                        },
-                        "local": {
-                            "type": "Identifier",
-                            "name": "Injectable"
-                        }
-                    }
-                ],
-                "source": {
-                    "type": "StringLiteral",
-                    "extra": {
-                        "rawValue": "@nestjs/common",
-                        "raw": "'@nestjs/common'"
+                "type": "Decorator",
+                "expression": {
+                    "type": "CallExpression",
+                    "callee": {
+                        "type": "Identifier",
+                        "name": "Injectable"
                     },
-                    "value": "@nestjs/common"
-                },
-                "trailingComments": [
-                    {
-                        "type": "CommentLine",
-                        "value": " > import { Injectable } from '@angular/core';"
-                    }
-                ]
+                    "arguments": []
+                }
+            },
+            {
+                "type": "Decorator",
+                "expression": {
+                    "type": "Identifier",
+                    "name": "isomor"
+                }
             }
         ],
-        "directives": []
-    },
-    "comments": [
-        {
-            "type": "CommentLine",
-            "value": " > import { Injectable } from '@angular/core';"
+        "id": {
+            "type": "Identifier",
+            "name": "CatsService"
+        },
+        "superClass": {
+            "type": "Identifier",
+            "name": "Hello"
+        },
+        "body": {
+            "type": "ClassBody",
+            "body": [
+                {
+                    "type": "ClassMethod",
+                    "static": false,
+                    "key": {
+                        "type": "Identifier",
+                        "name": "findAll"
+                    },
+                    "computed": false,
+                    "kind": "method",
+                    "id": null,
+                    "generator": false,
+                    "async": false,
+                    "params": [
+                        {
+                            "type": "Identifier",
+                            "name": "id",
+                            "typeAnnotation": {
+                                "type": "TSTypeAnnotation",
+                                "typeAnnotation": {
+                                    "type": "TSStringKeyword"
+                                }
+                            }
+                        }
+                    ],
+                    "returnType": {
+                        "type": "TSTypeAnnotation",
+                        "typeAnnotation": {
+                            "type": "TSArrayType",
+                            "elementType": {
+                                "type": "TSTypeReference",
+                                "typeName": {
+                                    "type": "Identifier",
+                                    "name": "Cat"
+                                }
+                            }
+                        }
+                    },
+                    "body": {
+                        "type": "BlockStatement",
+                        "body": [
+                            {
+                                "type": "ReturnStatement",
+                                "argument": {
+                                    "type": "MemberExpression",
+                                    "object": {
+                                        "type": "ThisExpression"
+                                    },
+                                    "property": {
+                                        "type": "Identifier",
+                                        "name": "cats"
+                                    },
+                                    "computed": false
+                                }
+                            }
+                        ],
+                        "directives": []
+                    }
+                }
+            ]
         }
-    ]
+    }
 }

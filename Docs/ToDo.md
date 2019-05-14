@@ -4,6 +4,8 @@
     - use decorator
     - some issue with import 'os' ?? why
     - should we provide a way to use something else than axios, like HttpClient from angular?
+    - remove import on transpile with empty... import ... // >
+    - in another version: should as well allow decorator only per method
 
 - export * from './Image';
 

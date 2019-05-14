@@ -39,6 +39,7 @@ function shouldNotBeTranspiled() {
 }
 
 @Injectable()
+@isomor
 export class CatsService {
   constructor(
     @InjectRepository(Photo)
@@ -88,6 +89,7 @@ export const getTime3 = (...args: any) => {
 };
 
 @Injectable()
+@isomor
 class CatsService__deco_export__ {}
 
 export class CatsService extends CatsService__deco_export__ {
@@ -132,6 +134,7 @@ export const getTime3 = (...args: any) => {
 };
 
 @Injectable()
+@isomor
 class CatsService__deco_export__ {}
 
 export class CatsService extends CatsService__deco_export__ {

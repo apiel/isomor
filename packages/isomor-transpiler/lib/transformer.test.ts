@@ -56,6 +56,9 @@ jest.mock('./code', () => ({
 }));
 
 describe('transformer', () => {
+    beforeEach(() => {
+        jest.clearAllMocks();
+    });
     describe('transformInterface()', () => {
         const ttc = transformToCode(transformInterface);
         it('should transform props interface to any', () => {
@@ -102,9 +105,10 @@ describe('transformer', () => {
     });
     describe('transformClass()', () => {
         const ttc = transformToCode(transformClass);
+        // -----------------
         it('should keep class when implement IsomorShare', () => {
             const code =
-`export class Post implements IsomorShare {
+                `export class Post implements IsomorShare {
   @Length(10, 20)
   title: string;
   @Contains("hello")
@@ -112,17 +116,55 @@ describe('transformer', () => {
 }`;
             expect(ttc(code)).toBe(code);
         });
+        // -----------------
+        it('should transform class for isomor when noDecorator is true', () => {
+            const code =
+                `export class CatsService extends Hello {
+                findAll(id: string): Cat[] {
+                    return this.cats;
+                }
+
+                }`;
+            const withTypes = true;
+            const noDecorator = true;
+            expect(ttc(code, 'path/to/somewhere', withTypes, noDecorator)).toBe(
+                `class CatsService__deco_export__ extends Hello {}
+
+export class CatsService extends CatsService__deco_export__ {
+  mock()
+
+}`,
+            );
+            expect(getCodeMethod).toHaveBeenCalledTimes(1); // called with?
+        });
+        // -----------------
+        it('should not transform class when no noDecorator but dont provide @isomor', () => {
+            const code =
+                `@Injectable()
+                export class CatsService extends Hello {
+                    findAll(id: string): Cat[] {
+                        return this.cats;
+                    }
+                }`;
+            const withTypes = true;
+            const noDecorator = false;
+            expect(ttc(code, 'path/to/somewhere', withTypes, noDecorator)).toBe(``);
+            expect(getCodeMethod).toHaveBeenCalledTimes(0);
+        });
+        // -----------------
         it('should transform class for isomor', () => {
             const code =
-`@Injectable()
-export class CatsService extends Hello {
-  findAll(id: string): Cat[] {
-    return this.cats;
-  }
+                `@Injectable()
+                @isomor
+                export class CatsService extends Hello {
+                findAll(id: string): Cat[] {
+                    return this.cats;
+                }
 
-}`;
+                }`;
             expect(ttc(code)).toBe(
-`@Injectable()
+                `@Injectable()
+@isomor
 class CatsService__deco_export__ extends Hello {}
 
 export class CatsService extends CatsService__deco_export__ {
@@ -132,18 +174,21 @@ export class CatsService extends CatsService__deco_export__ {
             );
             expect(getCodeMethod).toHaveBeenCalledTimes(1); // called with?
         });
+        // -----------------
         it('should transform class constructor', () => {
             const code =
-`@Injectable()
-export class CatsService {
-    constructor(
-        @InjectRepository(Photo)
-        private readonly photoRepository: Repository<Photo>,
-    ) {}
+                `@Injectable()
+                @isomor
+                export class CatsService {
+                    constructor(
+                        @InjectRepository(Photo)
+                        private readonly photoRepository: Repository<Photo>,
+                    ) {}
 
-}`;
+                }`;
             expect(ttc(code)).toBe(
-`@Injectable()
+                `@Injectable()
+@isomor
 class CatsService__deco_export__ {}
 
 export class CatsService extends CatsService__deco_export__ {
@@ -153,5 +198,6 @@ export class CatsService extends CatsService__deco_export__ {
             );
             expect(getCodeConstructor).toHaveBeenCalledTimes(1); // called with?
         });
+        // -----------------
     });
 });

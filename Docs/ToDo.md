@@ -1,8 +1,13 @@
 ### ToDo
 
 - isomor-NG > nest + angular
+    - use decorator
     - some issue with import 'os' ?? why
     - should we provide a way to use something else than axios, like HttpClient from angular?
+
+- export * from './Image';
+
+- refactor server to be usable with nest server...
 
 - params checking in endpoint base on types
 
@@ -30,6 +35,9 @@
 
 - think about https://keepachangelog.com/en/1.0.0/ CHANGELOG.md
 
+
+
+- isomor-rendering, pre-rendering caching... out of scope, so maybe not do it!
 
 
 - ~~FIX: transpiler file does not always get copy~~

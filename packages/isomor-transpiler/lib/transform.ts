@@ -13,10 +13,11 @@ export default function transform(
     path: string,
     withTypes: boolean = true,
     noServerImport: boolean = false,
+    noDecorator: boolean = false,
 ) {
     let newBody = [getCodeImport()];
     body.forEach((node) => {
-        const newNode = transformNode(node, path, withTypes, noServerImport);
+        const newNode = transformNode(node, path, withTypes, noServerImport, noDecorator);
         if (newNode) {
             if (isArray(newNode)) {
                 newBody = [...newBody, ...newNode];

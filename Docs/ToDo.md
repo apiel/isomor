@@ -11,6 +11,8 @@
 
 - refactor server to be usable with nest server...
 
+- refactor transformer and move each in different file
+
 - params checking in endpoint base on types
 
 - @share in addition of IsomorShare (give the possibility to use one or the other)

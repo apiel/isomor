@@ -2,7 +2,8 @@ import { parse } from './ast';
 
 import { transformNode } from './transformNode';
 import { getCodeFunc, getCodeArrowFunc, getCodeType } from './code';
-import { transformInterface, transformImport, transformExport, transformClass } from './transformer';
+import { transformInterface, transformImport, transformExport } from './transformer';
+import { transformClass } from './transformerClass';
 
 jest.mock('./code', () => ({
     getCodeImport: jest.fn().mockReturnValue('ImportIsomor'),
@@ -15,6 +16,10 @@ jest.mock('./transformer', () => ({
     transformInterface: jest.fn().mockReturnValue('TransformInterface'),
     transformImport: jest.fn().mockReturnValue('TransformImport'),
     transformExport: jest.fn().mockReturnValue('TransformExport'),
+    transformClass: jest.fn().mockReturnValue('TransformClass'),
+}));
+
+jest.mock('./transformerClass', () => ({
     transformClass: jest.fn().mockReturnValue('TransformClass'),
 }));
 
@@ -109,11 +114,13 @@ export const getTime1 = async (hello: string) => {
         });
 
         it('should transform class', () => {
+            const noServerImport = false;
+            const noDecorator = true;
             const { newNode, node } = transformNodeTest(`
 export class MyClass {
-}          `);
+}          `, noServerImport, noDecorator);
             expect(newNode).toEqual('TransformClass');
-            expect(transformClass).toHaveBeenCalledWith(node, path, withTypes);
+            expect(transformClass).toHaveBeenCalledWith(node, path, withTypes, noDecorator);
         });
     });
 });
@@ -121,10 +128,11 @@ export class MyClass {
 function transformNodeTest(
     code: string,
     noServerImport = false,
+    noDecorator = false,
 ) {
     const { program } = parse(code);
     const node = program.body[0];
-    const newNode = transformNode(node, path, withTypes, noServerImport);
+    const newNode = transformNode(node, path, withTypes, noServerImport, noDecorator);
 
     return { node, newNode };
 }

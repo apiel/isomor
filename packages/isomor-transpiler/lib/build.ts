@@ -23,12 +23,25 @@ export interface Options {
     withTypes: boolean;
     watchMode: boolean;
     noServerImport: boolean;
+    noDecorator: boolean;
+}
+
+export function getOptions(): Options {
+    return {
+        srcFolder: process.env.SRC_FOLDER || './src-isomor',
+        distAppFolder: process.env.DIST_APP_FOLDER || './src',
+        serverFolder: process.env.SERVER_FOLDER || '/server',
+        withTypes: process.env.NO_TYPES !== 'true',
+        watchMode: process.env.WATCH === 'true',
+        noServerImport: process.env.NO_SERVER_IMPORT === 'true',
+        noDecorator: process.env.NO_DECORATOR === 'true',
+    };
 }
 
 function getCode(options: Options, path: string, content: string) {
-    const { withTypes, noServerImport } = options;
+    const { withTypes, noServerImport, noDecorator } = options;
     const { program } = parse(content);
-    program.body = transform(program.body, path, withTypes, noServerImport);
+    program.body = transform(program.body, path, withTypes, noServerImport, noDecorator);
     const { code } = generate(program as any);
 
     return code;
@@ -139,15 +152,4 @@ function watcher(options: Options) {
                 unlink(path);
             });
     }
-}
-
-export function getOptions() {
-    return {
-        srcFolder: process.env.SRC_FOLDER || './src-isomor',
-        distAppFolder: process.env.DIST_APP_FOLDER || './src',
-        serverFolder: process.env.SERVER_FOLDER || '/server',
-        withTypes: process.env.NO_TYPES !== 'true',
-        watchMode: process.env.WATCH === 'true',
-        noServerImport: process.env.No_SERVER_IMPORT === 'true',
-    };
 }

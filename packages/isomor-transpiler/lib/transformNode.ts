@@ -1,12 +1,14 @@
 import { getCodeFunc, getCodeArrowFunc, getCodeType } from './code';
-import { transformInterface, transformImport, transformExport, transformClass } from './transformer';
+import { transformInterface, transformImport, transformExport } from './transformer';
 import { Statement, JsonAst } from './ast';
+import { transformClass } from './transformerClass';
 
 export function transformNode(
     node: Statement,
     path: string,
     withTypes: boolean,
     noServerImport: boolean,
+    noDecorator: boolean,
 ) {
     if (node.type === 'ExportNamedDeclaration') {
         if (!node.declaration) {
@@ -38,7 +40,7 @@ export function transformNode(
                 return getCodeArrowFunc(path, name, withTypes);
             }
         } else if (node.declaration.type === 'ClassDeclaration') {
-            return transformClass(node, path, withTypes);
+            return transformClass(node, path, withTypes, noDecorator);
         }
     } else if (node.type === 'ImportDeclaration') {
         return transformImport(node, noServerImport);

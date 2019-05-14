@@ -18,10 +18,22 @@ const anymatch = require("anymatch");
 const ast_1 = require("./ast");
 const transform_1 = require("./transform");
 exports.default = transform_1.default;
+function getOptions() {
+    return {
+        srcFolder: process.env.SRC_FOLDER || './src-isomor',
+        distAppFolder: process.env.DIST_APP_FOLDER || './src',
+        serverFolder: process.env.SERVER_FOLDER || '/server',
+        withTypes: process.env.NO_TYPES !== 'true',
+        watchMode: process.env.WATCH === 'true',
+        noServerImport: process.env.NO_SERVER_IMPORT === 'true',
+        noDecorator: process.env.NO_DECORATOR === 'true',
+    };
+}
+exports.getOptions = getOptions;
 function getCode(options, path, content) {
-    const { withTypes, noServerImport } = options;
+    const { withTypes, noServerImport, noDecorator } = options;
     const { program } = ast_1.parse(content);
-    program.body = transform_1.default(program.body, path, withTypes, noServerImport);
+    program.body = transform_1.default(program.body, path, withTypes, noServerImport, noDecorator);
     const { code } = ast_1.generate(program);
     return code;
 }
@@ -119,15 +131,4 @@ function watcher(options) {
         });
     }
 }
-function getOptions() {
-    return {
-        srcFolder: process.env.SRC_FOLDER || './src-isomor',
-        distAppFolder: process.env.DIST_APP_FOLDER || './src',
-        serverFolder: process.env.SERVER_FOLDER || '/server',
-        withTypes: process.env.NO_TYPES !== 'true',
-        watchMode: process.env.WATCH === 'true',
-        noServerImport: process.env.No_SERVER_IMPORT === 'true',
-    };
-}
-exports.getOptions = getOptions;
 //# sourceMappingURL=build.js.map

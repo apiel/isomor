@@ -5,11 +5,10 @@
     - should we provide a way to use something else than axios, like HttpClient from angular?
     - maybe later: should as well allow decorator only per method
 
-- export * from './Image';
-
 - refactor server to be usable with nest server...
 
 - refactor transformer and move each in different file
+    - rename tranformerImport to transformImport... and so on
 
 - params checking in endpoint base on types
 

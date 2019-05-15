@@ -1,6 +1,7 @@
 {
   "packages": [
     "packages/*",
+    "packages/installer/*",
     "packages/ci-test/*",
     "packages/example/*"
   ],

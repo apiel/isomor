@@ -1,7 +1,5 @@
 ### ToDo
 
-- isomor pkg remove dependency to server and transpiler?
-
 - isomor-NG > nest + angular
     - isomor-ng-nest
     - vscode
@@ -9,20 +7,20 @@
     - should we provide a way to use something else than express, like nest server?
     - maybe later: should as well allow decorator only per method
 
-- ~~@share in addition of IsomorShare (give the possibility to use one or the other)~~
-
 - refactor transformer and move each in different file
     - rename tranformerImport to transformImport... and so on
 
 - params checking in endpoint base on types
 
-- vscode extension handle delete and move file
+- vscode extension
+    - handle delete and move file
+    - automatically publish when new isomor-transpiler using ~~asure or travis~~? or manually trigger...
 
 - review doc
 - video
 - provide some test-case example, unit test and integration test
-- angular example
 
+- isomor pkg remove dependency to server and transpiler? should it?
 
 - **base on params types of server function generate validation on endpoint**
   - maybe while transpiling

@@ -1,6 +1,6 @@
 {
   "name": "isomor-example-ng-nest",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "scripts": {
     "isomor:build": "isomor-transpiler",
     "isomor:build:dev": "WATCH=true isomor-transpiler",
@@ -31,7 +31,7 @@
     "@nestjs/common": "^6.2.0",
     "@nestjs/core": "^6.2.0",
     "core-js": "^2.5.4",
-    "isomor": "^0.10.0",
+    "isomor": "^0.11.0",
     "rxjs": "~6.3.3",
     "tslib": "^1.9.0",
     "zone.js": "~0.8.26"

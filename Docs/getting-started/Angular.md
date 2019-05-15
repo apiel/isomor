@@ -36,9 +36,9 @@ export class ApiService {
 
 The method `uptime` is calling the NestJs uptime service, returning the server uptime.
 
-To inform the transpiler that this class is used on the frontend and the backend to exchange data, you need to set the decorator `@isomor` to the class. This decorator will tell to the transpiler to build a communication interface between the browser and the client.
+To inform the transpiler that this class is used on the frontend and the backend to exchange data, you need to set the decorator `@isomor` to the class. This decorator will tell to the transpiler to build the communication between the browser and the client.
 
-> **Note:** The sub-folder of `./server` folder will not be transpiled.
+> **Note:** The sub-folders of `./server` folders will not be transpiled.
 
 > **Note:** it is also possible to use isomor without decorator with the environment variable `NO_DECORATOR=true`. Then all the class defined in the root of `./server` folder will be transpiled.
 

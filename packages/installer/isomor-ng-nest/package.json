@@ -13,9 +13,17 @@
     "engines": {
         "node": ">=11"
     },
+    "keywords": [
+        "isomorphic",
+        "typescript",
+        "angular",
+        "ng",
+        "nest",
+        "server"
+    ],
     "scripts": {
         "test-example": "rm -rf my-app && yarn start my-app && cd my-app && yarn dev",
-        "prepublishOnly": "cp ../../Readme.sub.md ./README.md && cp ../example/ng-nest/tsconfig.server.json . && cp ../example/ng-nest/package.json ./package-copy.json && cp ../example/ng-nest/proxy.conf.json . && yarn build",
+        "prepublishOnly": "cp ../../../Readme.sub.md ./README.md && cp ../../example/ng-nest/tsconfig.server.json . && cp ../../example/ng-nest/package.json ./package-copy.json && cp ../../example/ng-nest/proxy.conf.json . && yarn build",
         "start": "ts-node lib/index.ts",
         "prebuild": "rm -rf dist/",
         "build": "tsc -p tsconfig.json && chmod +x dist/index.js",

@@ -61,11 +61,19 @@ async function start({ srcFolder, distAppFolder, serverFolder }: Options) {
 
         info('Copy example component');
         copySync(join(__dirname, '..', 'example', 'server'), join(projectDirectory, srcFolder, 'server'));
-        // const AppContent = readFileSync(join(projectDirectory, srcFolder, 'App.tsx')).toString();
-        // const AppWithUptime = AppContent.replace('</p>', `</p>\n<Uptime />\n`);
-        // const App = `import { Uptime } from './uptime/uptime';\n` + AppWithUptime;
-        // writeFileSync(join(projectDirectory, srcFolder, 'App.tsx'), App);
-        // TBD.
+        copySync(join(__dirname, '..', 'example', 'uptime'), join(projectDirectory, srcFolder, 'app', 'uptime'));
+        let AppModule = readFileSync(join(projectDirectory, srcFolder, 'app', 'app.module.ts')).toString();
+        AppModule = `
+import { ApiService } from '../server/api.service';
+import { UptimeComponent } from './uptime/uptime.component';
+
+        ` + AppModule;
+        AppModule = AppModule.replace('declarations: [', 'declarations: [ UptimeComponent,');
+        AppModule = AppModule.replace('providers: [', 'providers: [ ApiService,');
+        writeFileSync(join(projectDirectory, srcFolder, 'app', 'app.module.ts'), AppModule);
+        let AppHtml = readFileSync(join(projectDirectory, srcFolder, 'app', 'app.component.html')).toString();
+        AppHtml = `<app-uptime></app-uptime>\n` + AppHtml;
+        writeFileSync(join(projectDirectory, srcFolder, 'app', 'app.component.html'), AppHtml);
 
         info('Setup proxy');
         copySync(join(__dirname, '..', 'proxy.conf.json'), join(projectDirectory, 'proxy.conf.json'));

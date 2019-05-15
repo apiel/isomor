@@ -13,10 +13,16 @@
     "engines": {
         "node": ">=11"
     },
+    "keywords": [
+        "isomorphic",
+        "typescript",
+        "react",
+        "server"
+    ],
     "scripts": {
         "test-example": "rm -rf my-app && yarn start my-app && cd my-app && yarn dev",
         "test-in-docker": "docker build . -t test-isomor-react-app && docker rmi test-isomor-react-app",
-        "prepublishOnly": "cp ../../Readme.sub.md ./README.md && cp ../example/react/tsconfig.server.json . && cp ../example/react/package.json ./package-copy.json && yarn build",
+        "prepublishOnly": "cp ../../../Readme.sub.md ./README.md && cp ../../example/react/tsconfig.server.json . && cp ../../example/react/package.json ./package-copy.json && yarn build",
         "start": "ts-node lib/index.ts",
         "prebuild": "rm -rf dist/",
         "build": "tsc -p tsconfig.json && chmod +x dist/index.js",

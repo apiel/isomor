@@ -15,6 +15,9 @@
         "typescript",
         "react",
         "vue",
+        "angular",
+        "ng",
+        "nest",
         "server"
     ],
     "repository": {

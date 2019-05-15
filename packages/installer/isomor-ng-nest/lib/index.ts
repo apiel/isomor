@@ -69,7 +69,9 @@ async function start({ srcFolder, distAppFolder, serverFolder }: Options) {
 
         info('Setup proxy');
         copySync(join(__dirname, '..', 'proxy.conf.json'), join(projectDirectory, 'proxy.conf.json'));
-        // TBD. Need to add proxy to angular.json
+        const angularJson = readJSONSync(join(projectDirectory, 'angular.json'));
+        angularJson.projects[projectName].architect.serve.options.proxyConfig = 'proxy.conf.json';
+        writeJSONSync(join(projectDirectory, 'angular.json'), angularJson);
 
         info('Edit .gitignore');
         const gitingore = readFileSync(join(projectDirectory, '.gitignore'))

@@ -2,17 +2,17 @@
 
 - isomor-NG > nest + angular
     - isomor-ng-nest
+    - vscode
     - should we provide a way to use something else than axios, like HttpClient from angular?
+    - should we provide a way to use something else than express, like nest server?
     - maybe later: should as well allow decorator only per method
 
-- refactor server to be usable with nest server...
+- ~~@share in addition of IsomorShare (give the possibility to use one or the other)~~
 
 - refactor transformer and move each in different file
     - rename tranformerImport to transformImport... and so on
 
 - params checking in endpoint base on types
-
-- @share in addition of IsomorShare (give the possibility to use one or the other)
 
 - vscode extension handle delete and move file
 

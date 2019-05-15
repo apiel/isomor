@@ -1,5 +1,7 @@
 ### ToDo
 
+- isomor pkg remove dependency to server and transpiler?
+
 - isomor-NG > nest + angular
     - isomor-ng-nest
     - vscode

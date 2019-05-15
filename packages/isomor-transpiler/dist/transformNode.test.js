@@ -5,19 +5,22 @@ const transformNode_1 = require("./transformNode");
 const code_1 = require("./code");
 const transformer_1 = require("./transformer/transformer");
 const transformerClass_1 = require("./transformer/transformerClass");
+const transformerImport_1 = require("./transformer/transformerImport");
 jest.mock('./code', () => ({
     getCodeImport: jest.fn().mockReturnValue('ImportIsomor'),
     getCodeFunc: jest.fn().mockReturnValue('Func'),
     getCodeArrowFunc: jest.fn().mockReturnValue('ArrowFunc'),
     getCodeType: jest.fn().mockReturnValue('TypeAny'),
 }));
-jest.mock('./transformer', () => ({
+jest.mock('./transformer/transformer', () => ({
     transformInterface: jest.fn().mockReturnValue('TransformInterface'),
-    transformImport: jest.fn().mockReturnValue('TransformImport'),
     transformExport: jest.fn().mockReturnValue('TransformExport'),
     transformClass: jest.fn().mockReturnValue('TransformClass'),
 }));
-jest.mock('./transformerClass', () => ({
+jest.mock('./transformer/transformerImport', () => ({
+    transformImport: jest.fn().mockReturnValue('TransformImport'),
+}));
+jest.mock('./transformer/transformerClass', () => ({
     transformClass: jest.fn().mockReturnValue('TransformClass'),
 }));
 const path = 'path/to/file';
@@ -43,7 +46,7 @@ function shouldNotBeTranspiled() {
         it('should transform import', () => {
             const { node, newNode } = transformNodeTest(`import { readdir } from 'fs-extra';`);
             expect(newNode).toEqual('TransformImport');
-            expect(transformer_1.transformImport).toHaveBeenCalledWith(node, false);
+            expect(transformerImport_1.transformImport).toHaveBeenCalledWith(node, false);
         });
         it('should transform type', () => {
             const { newNode } = transformNodeTest(`export type MyType = string;`);

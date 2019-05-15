@@ -24,7 +24,7 @@ function start({ srcFolder, distAppFolder, serverFolder }) {
             logol_1.info('Install VueJs in', projectDirectory);
             logol_1.info('Wait a little bit... we are loading Vue cli');
             if (!projectDirectory) {
-                logol_1.warn(`Please provide the project directory, e.g: npx isomor-vue-app my-app`);
+                logol_1.warn(`Please provide the project name, e.g: npx isomor-vue-app my-app`);
                 return;
             }
             if (process.env.MANUAL === 'true') {

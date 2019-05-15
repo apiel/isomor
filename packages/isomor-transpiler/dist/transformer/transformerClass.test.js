@@ -4,7 +4,7 @@ const ast_1 = require("../ast");
 const transformerClass_1 = require("./transformerClass");
 const code_1 = require("../code");
 const util_1 = require("util");
-jest.mock('./code', () => ({
+jest.mock('../code', () => ({
     getCodeType: jest.fn().mockReturnValue('getCodeTypeMock'),
     getCodeMethod: jest.fn().mockReturnValue({
         type: 'ClassMethod',

@@ -1,11 +1,6 @@
 ### ToDo
 
-- isomor-NG > nest + angular
-    - isomor-ng-nest
-    - vscode
-    - should we provide a way to use something else than axios, like HttpClient from angular?
-    - should we provide a way to use something else than express, like nest server?
-    - maybe later: should as well allow decorator only per method
+- DOC ng-nest
 
 - refactor transformer and move each in different file
     - rename tranformerImport to transformImport... and so on
@@ -15,6 +10,12 @@
 - vscode extension
     - handle delete and move file
     - automatically publish when new isomor-transpiler using ~~asure or travis~~? or manually trigger...
+
+- isomor-NG > nest + angular
+    - travis
+    - should we provide a way to use something else than axios, like HttpClient from angular?
+    - should we provide a way to use something else than express, like nest server?
+    - maybe later: should as well allow decorator only per method
 
 - review doc
 - video

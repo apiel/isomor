@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const code_1 = require("./code");
 const transformer_1 = require("./transformer/transformer");
 const transformerClass_1 = require("./transformer/transformerClass");
+const transformerImport_1 = require("./transformer/transformerImport");
 function transformNode(node, path, withTypes, noServerImport, noDecorator) {
     if (node.type === 'ExportNamedDeclaration') {
         if (!node.declaration) {
@@ -38,7 +39,7 @@ function transformNode(node, path, withTypes, noServerImport, noDecorator) {
         }
     }
     else if (node.type === 'ImportDeclaration') {
-        return transformer_1.transformImport(node, noServerImport);
+        return transformerImport_1.transformImport(node, noServerImport);
     }
 }
 exports.transformNode = transformNode;

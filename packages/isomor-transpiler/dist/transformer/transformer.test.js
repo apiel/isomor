@@ -28,7 +28,7 @@ const transformToCode = (fn) => (source, ...params) => {
     const { code } = ast_1.generate(program);
     return code;
 };
-jest.mock('./code', () => ({
+jest.mock('../code', () => ({
     getCodeType: jest.fn().mockReturnValue('getCodeTypeMock'),
     getCodeMethod: jest.fn().mockReturnValue({
         type: 'ClassMethod',
@@ -55,27 +55,6 @@ describe('transformer', () => {
         const ttc = transformToCode(transformer_1.transformInterface);
         it('should transform props interface to any', () => {
             expect(ttc(codeSourceInterface)).toBe(codeTranspiledInterface);
-        });
-    });
-    describe('transformImport()', () => {
-        const ttc = transformToCode(transformer_1.transformImport);
-        it('should keep import', () => {
-            expect(ttc(`import { readdir } from 'fs-extra';`)).toBe(`import { readdir } from 'fs-extra';`);
-        });
-        it('should remove import if noServerImport is true', () => {
-            const noServerImport = true;
-            expect(ttc(`import { readdir } from 'fs-extra';`, noServerImport)).toBe(``);
-        });
-        it('should transform server import to browser import', () => {
-            expect(ttc(`import { Injectable } from '@nestjs/common'; // > import { Injectable } from '@angular/core';`))
-                .toBe(`import { Injectable } from '@angular/core';`);
-        });
-        it('should remove locale import', () => {
-            expect(ttc(`import { something } from './my/import';`)).toBe('');
-        });
-        it('should remove import if // >', () => {
-            expect(ttc(`import { Injectable } from '@nestjs/common'; // >`))
-                .toBe(``);
         });
     });
     describe('transformExport()', () => {

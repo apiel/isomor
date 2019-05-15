@@ -54,17 +54,17 @@ yarn dev
 
 Find lot of different example in the folder `packages/examples`, for React, VueJS and as well Angular + NestJs.
 
-## [Getting started with React](./Docs/getting-started/React.md)
+## [Getting started with React](Docs/getting-started/React.md)
 
-Click [here](./Docs/getting-started/React.md) to see how to use isomor with React.
+Click [here](Docs/getting-started/React.md) to see how to use isomor with React.
 
-## [Getting started with Vue](./Docs/getting-started/Vue.md)
+## [Getting started with Vue](Docs/getting-started/Vue.md)
 
-Click [here](./Docs/getting-started/Vue.md) to see how to use isomor with VueJs.
+Click [here](Docs/getting-started/Vue.md) to see how to use isomor with VueJs.
 
-## [Getting started with Angular and NestJs](./Docs/getting-started/Angular.md)
+## [Getting started with Angular and NestJs](Docs/getting-started/Angular.md)
 
-Click [here](./Docs/getting-started/Angular.md) to see how to use isomor with Angular and NestJs.
+Click [here](Docs/getting-started/Angular.md) to see how to use isomor with Angular and NestJs.
 
 ## Advanced guides
 

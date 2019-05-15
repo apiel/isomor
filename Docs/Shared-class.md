@@ -12,6 +12,17 @@ export class Input implements IsomorShare {
 
 > **Note:** Be cautious with `IsomorShare`, the code must be compatible with server and browser.
 
+It is also possible to use decorator `@isomorShare` instead of the interface.
+
+```ts
+import { isomorShare } from 'isomor';
+
+@isomorShare
+export class Input {
+    // ...
+}
+```
+
 #### Example
 
 The example, will show how to use [class-validator](https://www.npmjs.com/package/class-validator) to validate user input on both side, server and browser.

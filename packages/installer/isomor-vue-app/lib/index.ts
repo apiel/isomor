@@ -29,7 +29,7 @@ async function start({ srcFolder, distAppFolder, serverFolder }: Options) {
         info('Install VueJs in', projectDirectory);
         info('Wait a little bit... we are loading Vue cli');
         if (!projectDirectory) {
-            warn(`Please provide the project directory, e.g: npx isomor-vue-app my-app`);
+            warn(`Please provide the project name, e.g: npx isomor-vue-app my-app`);
             return;
         }
 

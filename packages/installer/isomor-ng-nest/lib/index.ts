@@ -23,15 +23,15 @@ interface Options {
 
 async function start({ srcFolder, distAppFolder, serverFolder }: Options) {
     try {
-        info('Setup create-react-app with isomor');
-        let { _: [projectDirectory] } = minimist(process.argv.slice(2));
-        projectDirectory = join(process.cwd(), projectDirectory);
-        info('Install create-react-app in', projectDirectory);
+        info('Setup angular and nest with isomor');
+        const { _: [projectName] } = minimist(process.argv.slice(2));
+        const projectDirectory = join(process.cwd(), projectName);
+        info('Install angular in', projectDirectory);
         if (!projectDirectory) {
-            warn(`Please provide the project directory, e.g: npx isomor-react-app my-app`);
+            warn(`Please provide the project name, e.g: npx isomor-ng-nest my-app`);
             return;
         }
-        await shell('npx', ['create-react-app', projectDirectory, '--typescript']);
+        await shell('npx', ['@angular/cli', 'new', projectName, '--defaults=true']);
 
         info('Copy tsconfig.server.json');
         copySync(
@@ -47,32 +47,29 @@ async function start({ srcFolder, distAppFolder, serverFolder }: Options) {
 
         info('Edit package.json');
         const pkg = readJSONSync(join(projectDirectory, 'package.json'));
-        pkg.proxy = 'http://127.0.0.1:3005';
         const pkgExample = readJSONSync(join(__dirname, '..', 'package-copy.json'));
         if (pkgExample.scripts['run-in-docker']) { delete pkgExample.scripts['run-in-docker']; }
         pkg.scripts = { ...pkgExample.scripts, ...pkg.scripts };
         writeJSONSync(join(projectDirectory, 'package.json'), pkg);
 
         info('Install packages...');
-        writeFileSync('cmd', `cd ${projectDirectory} && yarn add isomor react-async-cache && yarn add run-screen nodemon --dev`);
+        writeFileSync('cmd', `cd ${projectDirectory} && \
+            yarn add isomor react-async-cache @nestjs/common @nestjs/core && \
+            yarn add run-screen nodemon --dev`);
         await shell('bash', ['cmd']);
         unlinkSync('cmd');
 
-        info('Setup react-async-cache in <App />');
-        const index = `import { AsyncCacheProvider } from 'react-async-cache';\n`
-            + readFileSync(join(projectDirectory, srcFolder, 'index.tsx')).toString();
-        const newIndex = index.replace(/\<App \/\>/g, '(<AsyncCacheProvider><App /></AsyncCacheProvider>)');
-        writeFileSync(join(projectDirectory, srcFolder, 'index.tsx'), newIndex);
-
-        info('Create empty server/data.ts');
-        outputFileSync(join(projectDirectory, srcFolder, serverFolder, 'data.ts'), ``);
-
         info('Copy example component');
-        copySync(join(__dirname, '..', 'example'), join(projectDirectory, srcFolder, 'uptime'));
-        const AppContent = readFileSync(join(projectDirectory, srcFolder, 'App.tsx')).toString();
-        const AppWithUptime = AppContent.replace('</p>', `</p>\n<Uptime />\n`);
-        const App = `import { Uptime } from './uptime/uptime';\n` + AppWithUptime;
-        writeFileSync(join(projectDirectory, srcFolder, 'App.tsx'), App);
+        copySync(join(__dirname, '..', 'example', 'server'), join(projectDirectory, srcFolder, 'server'));
+        // const AppContent = readFileSync(join(projectDirectory, srcFolder, 'App.tsx')).toString();
+        // const AppWithUptime = AppContent.replace('</p>', `</p>\n<Uptime />\n`);
+        // const App = `import { Uptime } from './uptime/uptime';\n` + AppWithUptime;
+        // writeFileSync(join(projectDirectory, srcFolder, 'App.tsx'), App);
+        // TBD.
+
+        info('Setup proxy');
+        copySync(join(__dirname, '..', 'proxy.conf.json'), join(projectDirectory, 'proxy.conf.json'));
+        // TBD. Need to add proxy to angular.json
 
         info('Edit .gitignore');
         const gitingore = readFileSync(join(projectDirectory, '.gitignore'))

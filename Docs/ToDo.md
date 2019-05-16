@@ -1,11 +1,9 @@
 ### ToDo
 
-- DOC ng-nest
+- params checking in endpoint base on types
 
 - refactor transformer and move each in different file
     - rename tranformerImport to transformImport... and so on
-
-- params checking in endpoint base on types
 
 - vscode extension
     - handle delete and move file

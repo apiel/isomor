@@ -9,7 +9,7 @@ import {
     getFilesPattern,
 } from 'isomor-core';
 import { watch } from 'chokidar';
-import * as anymatch from 'anymatch';
+import anymatch from 'anymatch';
 import { parse, generate } from './ast';
 
 import transform from './transform';
@@ -97,9 +97,9 @@ export const watcherUpdate = (
     const serverFolderPattern = getFilesPattern(serverFolder);
     const path = join(srcFolder, file);
 
-    if (anymatch([getServerSubFolderPattern(serverFolderPattern)], path)) {
+    if (anymatch(getServerSubFolderPattern(serverFolderPattern), path)) {
         info(`Do not copy sub-folder from "./server"`, path);
-    } else if (anymatch([serverFolderPattern], path)) {
+    } else if (anymatch(serverFolderPattern, path)) {
         transpile(options, file);
     } else {
         info(`Copy ${path} to folder`);

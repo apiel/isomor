@@ -982,30 +982,31 @@ isobject@^3.0.0, isobject@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/isobject/-/isobject-3.0.1.tgz#4e431e92b11a9731636aa1f9c8d1ccbcfdab78df"
 
-isomor-core@^0.9.0:
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/isomor-core/-/isomor-core-0.9.0.tgz#cea3bd4e9706840b96ae5432da0e3729a6b2b087"
+isomor-core@^0.11.0:
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/isomor-core/-/isomor-core-0.11.0.tgz#81ec74df2a13caef90bbfca837bcdb3005951640"
   dependencies:
     fs-extra "^7.0.1"
     glob "^7.1.3"
     typescript "^3.2.4"
 
-isomor-server@^0.9.6:
-  version "0.9.6"
-  resolved "https://registry.yarnpkg.com/isomor-server/-/isomor-server-0.9.6.tgz#f51c80c25cd99576fe9170c61b6a9ede176ad58c"
+isomor-server@^0.11.1:
+  version "0.11.1"
+  resolved "https://registry.yarnpkg.com/isomor-server/-/isomor-server-0.11.1.tgz#84e28d56e20ff20112e038776d7e9a5383788a32"
   dependencies:
     body-parser "^1.18.3"
     cookie-parser "^1.4.4"
     express "^4.16.4"
-    isomor-core "^0.9.0"
+    isomor "^0.11.1"
+    isomor-core "^0.11.0"
     logol "^0.0.1"
     please-upgrade-node "^3.1.1"
     swagger-ui-express "^4.0.2"
     typescript "^3.2.4"
 
-isomor-transpiler@^0.9.6:
-  version "0.9.6"
-  resolved "https://registry.yarnpkg.com/isomor-transpiler/-/isomor-transpiler-0.9.6.tgz#f8aa6f6351a99e9b3c46db56d9693fb0400305cf"
+isomor-transpiler@^0.11.1:
+  version "0.11.1"
+  resolved "https://registry.yarnpkg.com/isomor-transpiler/-/isomor-transpiler-0.11.1.tgz#64626f545e56f06eb2ab5e7951d7a554b2f3659c"
   dependencies:
     "@babel/generator" "^7.4.0"
     "@babel/parser" "^7.4.4"
@@ -1015,20 +1016,20 @@ isomor-transpiler@^0.9.6:
     chokidar "^2.1.5"
     debug "^4.1.1"
     fs-extra "^7.0.1"
-    isomor-core "^0.9.0"
+    isomor-core "^0.11.0"
     logol "^0.0.3"
     please-upgrade-node "^3.1.1"
     traverse "^0.6.6"
     ts-node "^8.0.3"
     typescript "^3.4.3"
 
-isomor@^0.9.6:
-  version "0.9.6"
-  resolved "https://registry.yarnpkg.com/isomor/-/isomor-0.9.6.tgz#2771c25bf34e1ecc8fafedbe35f134818ea4509e"
+isomor@^0.11.1:
+  version "0.11.1"
+  resolved "https://registry.yarnpkg.com/isomor/-/isomor-0.11.1.tgz#5c4f10bda0474b3b82788d2edb157a636fed87cf"
   dependencies:
     axios "^0.18.0"
-    isomor-server "^0.9.6"
-    isomor-transpiler "^0.9.6"
+    isomor-server "^0.11.1"
+    isomor-transpiler "^0.11.1"
     typescript "^3.2.4"
 
 js-tokens@^4.0.0:

@@ -1,5 +1,7 @@
 ### ToDo
 
+- FIX warning "but never used" in react example
+
 - params checking in endpoint base on types
 
 - refactor transformer and move each in different file
@@ -27,7 +29,8 @@
   - https://stackoverflow.com/questions/33800497/check-if-an-object-implements-an-interface-at-runtime-with-typescript
   - https://github.com/pcan/reflec-ts-examples/tree/master/simple-validator
 
-
+- isomor-inject
+  - it might be possible to do something like isomor without transpiler, just by using dependency injection. Maybe something like that https://www.npmjs.com/package/inversify . The library could easily inject different script depending if it is on the server or on the client. The downside of this would be that you have to change your way of coding, at least for people from react and vuejs.
 
 - test:
   - isomor-server

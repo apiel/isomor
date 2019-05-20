@@ -1828,9 +1828,9 @@ swagger-ui-express@^4.0.2:
   dependencies:
     swagger-ui-dist "^3.18.1"
 
-swagger-ui-express@^4.0.3:
-  version "4.0.3"
-  resolved "https://registry.yarnpkg.com/swagger-ui-express/-/swagger-ui-express-4.0.3.tgz#e4e0642c43c6a204124c6b8e86649dd75361b76e"
+swagger-ui-express@^4.0.4:
+  version "4.0.4"
+  resolved "https://registry.yarnpkg.com/swagger-ui-express/-/swagger-ui-express-4.0.4.tgz#dd2fcbc841718a9eed07c6d8990fefa25e7a4a3d"
   dependencies:
     swagger-ui-dist "^3.18.1"
 

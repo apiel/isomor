@@ -31,7 +31,6 @@ let ApiService = class ApiService {
     }
     test(req) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log('long base url', req.baseUrl);
             return req.baseUrl;
         });
     }

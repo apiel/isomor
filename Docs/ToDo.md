@@ -4,6 +4,10 @@
 
 - params checking in endpoint base on types
 
+- improve server, especially error handling
+
+- react + typeORM installer
+
 - refactor transformer and move each in different file
     - rename tranformerImport to transformImport... and so on
 

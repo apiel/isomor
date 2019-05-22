@@ -1,6 +1,6 @@
 {
   "name": "isomor-example-vue",
-  "version": "0.11.0",
+  "version": "0.12.0",
   "private": true,
   "engines": {
     "node": ">=11"
@@ -19,9 +19,9 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "core-js": "^2.6.5",
-    "fs-extra": "^7.0.1",
-    "isomor": "^0.4.0",
+    "core-js": "^3.1.0",
+    "fs-extra": "^8.0.1",
+    "isomor": "^0.12.0",
     "vue": "^2.6.10",
     "vue-async-cache": "^0.7.0",
     "vue-class-component": "^7.0.2",
@@ -29,10 +29,11 @@
   },
   "devDependencies": {
     "@types/express": "^4.16.1",
-    "@types/fs-extra": "^5.0.5",
+    "@types/fs-extra": "^7.0.0",
     "@vue/cli-plugin-babel": "^3.7.0",
     "@vue/cli-plugin-typescript": "^3.7.0",
     "@vue/cli-service": "^3.7.0",
+    "nodemon": "^1.19.0",
     "run-screen": "^0.5.3",
     "typescript": "^3.4.3",
     "vue-template-compiler": "^2.5.21"

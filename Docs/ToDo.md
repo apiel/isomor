@@ -1,5 +1,11 @@
 ### ToDo
 
+- always make the body of the axios query a json object.
+  - So no need of `isNumber(result) ? result.toString() : result` in server
+  - instead `{ result }`
+  - axios { data: { result }}
+  - require breaking change version
+
 - FIX warning "but never used" in react example
 
 - params checking in endpoint base on types

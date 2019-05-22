@@ -4,13 +4,12 @@
     <title>isomor</title>
     <meta charset="utf-8">
     <style>
-      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
-      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
       @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Montserrat:700&display=swap);
 
-      body { font-family: 'Droid Serif'; }
+      body { font-family: 'Sans-serif'; }
       h1, h2, h3 {
-        font-family: 'Yanone Kaffeesatz';
+        font-family: 'Montserrat';
         font-weight: normal;
       }
       .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
@@ -35,7 +34,7 @@ import * as express from 'express';
 const app = express();
 
 app.get('/api/uptime', function (req, res) {
-  res.send(`${os.uptime()}`);
+  res.send(`${process.uptime()}`);
 });
 app.listen(3000, () => console.log(`Example app listening on port 3000!`));
 ```
@@ -47,8 +46,8 @@ A bit of refactoring.
 
 *api/uptime.js*
 ```js
-export function uptime(req, res) {
-  res.send(`${os.uptime()}`);
+export function getServerUptime(req, res) {
+  res.send(`${process.uptime()}`);
 });
 
 ```
@@ -56,17 +55,92 @@ export function uptime(req, res) {
 *server.js*
 ```js
 import * as express from 'express';
-import { uptime } from './api/uptime'
+import { getServerUptime } from './api/uptime'
 
 const app = express();
 
-app.get('/api/uptime', uptime);
+app.get('/api/uptime', getServerUptime);
 app.listen(3000, () => console.log(`Example app listening on port 3000!`));
 ```
 
 ---
 
 # Client
+
+A react application consuming the endpoint.
+
+*app.jsx*
+```jsx
+import React from 'react';
+import axios from 'axios';
+
+async function load(setUptime) {
+  const { data } = await axios.get('http://127.0.0.1:3000/api/uptime');
+  setUptime(data);
+}
+
+export const App = () => {
+    const [uptime, setUptime] = React.useState<string>('loading...');
+    React.useEffect(() => { load(setUptime); }, []);
+    return (
+        <div>Server uptime: {uptime}</div>
+    );
+}
+```
+
+---
+
+# Easy!
+
+But what's about to make it even easier.
+
+---
+
+# isomor
+
+*server/uptime.ts*
+```ts
+export async function getServerUptime(): Promise<number> {
+  return process.uptime();
+}
+```
+
+*app.tsx*
+```tsx
+import React from 'react';
+import { getServerUptime } from './server/uptime';
+
+export const App = () => {
+    const [uptime, setUptime] = React.useState<number>();
+    const call = async () => setUptime(await getServerUptime());
+    React.useEffect(() => { call(); }, []);
+    return (
+        <div>Server uptime: { uptime || 'loading...' }</div>
+    );
+};
+```
+
+---
+
+# isomor
+
+The client import directly the function from the server.
+
+- simple
+  - no more API implementation
+  - focus on features
+
+- single project
+  - better overview
+  - (no monorepo)
+
+- consistent
+  - types
+  - no more separation between the backend and the frontend
+
+- follow component concept
+  - reusable pieces
+  - independent
 
     </textarea>
     <script src="https://remarkjs.com/downloads/remark-latest.min.js">

@@ -8,6 +8,8 @@
 
 - FIX warning "but never used" in react example
 
+- example web components, stencil js
+
 - params checking in endpoint base on types
 
 - improve server, especially error handling

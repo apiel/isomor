@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Time } from './status/time';
 import { TimeUTC } from './status/timeUTC';
 import { Color } from './color/color';

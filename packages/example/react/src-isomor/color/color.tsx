@@ -4,7 +4,7 @@ import { getColor, setColor } from './server/color';
 
 export const Color = () => {
     const { call, response: color, update } = useAsyncCacheWatch(getColor);
-    React.useEffect(() => { call(); }, []);
+    React.useEffect(() => { call(); }, [call]);
     const onClickColor = (newColor: string) => async () => {
         console.log('click color', newColor);
         await setColor(newColor);

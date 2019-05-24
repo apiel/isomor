@@ -27,8 +27,8 @@ export async function remote(
     classname?: string,
 ): Promise<any> {
     const url = getUrl(path, funcName, classname);
-    const { data } = await axios.post(url, { args });
-    return data;
+    const { data: { result } } = await axios.post(url, { args });
+    return result;
 }
 
 export type IsomorShare = any;

@@ -49,7 +49,7 @@ function getEntrypoint(
             const ctx: Context = {req, res};
             const args = (req.body && req.body.args) || [];
             const result = await fn.call(ctx, ...args, req, res);
-            return res.send(isNumber(result) ? result.toString() : result);
+            return res.send({ result });
         } catch (error) {
             next(error);
         }

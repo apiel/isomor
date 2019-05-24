@@ -20,8 +20,8 @@ exports.getUrl = getUrl;
 function remote(path, funcName, args, classname) {
     return __awaiter(this, void 0, void 0, function* () {
         const url = getUrl(path, funcName, classname);
-        const { data } = yield axios_1.default.post(url, { args });
-        return data;
+        const { data: { result } } = yield axios_1.default.post(url, { args });
+        return result;
     });
 }
 exports.remote = remote;

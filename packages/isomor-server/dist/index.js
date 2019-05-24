@@ -30,7 +30,7 @@ function getEntrypoint(app, file, fn, name, classname) {
             const ctx = { req, res };
             const args = (req.body && req.body.args) || [];
             const result = yield fn.call(ctx, ...args, req, res);
-            return res.send(util_1.isNumber(result) ? result.toString() : result);
+            return res.send({ result });
         }
         catch (error) {
             next(error);

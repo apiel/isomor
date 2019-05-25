@@ -9,10 +9,12 @@ import {
     getFilesPattern,
 } from 'isomor-core';
 import { watch } from 'chokidar';
-import anymatch from 'anymatch';
+import * as anymatch2 from 'anymatch';
 import { parse, generate } from './ast';
 
 import transform from './transform';
+
+const anymatch = anymatch2 as any; // typing issue, might need to upgrade again
 
 export default transform;
 

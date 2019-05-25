@@ -1,9 +1,5 @@
 ### ToDo
 
-- upgrade anymatch to fix type issue
-
-- FIX warning "but never used" in react example > dont show lint yarn start
-
 - example web components, stencil js
 
 - update slide base on stencil argumentation

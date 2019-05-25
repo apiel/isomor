@@ -1,6 +1,6 @@
 {
     "name": "isomor-vue-app",
-    "version": "0.12.0",
+    "version": "1.0.0",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "author": "Alexandre Piel <alexandre.piel@gmail.com>",

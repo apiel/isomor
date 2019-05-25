@@ -14,10 +14,9 @@ const path_1 = require("path");
 const debug_1 = require("debug");
 const isomor_core_1 = require("isomor-core");
 const chokidar_1 = require("chokidar");
-const anymatch2 = require("anymatch");
+const anymatch_1 = require("anymatch");
 const ast_1 = require("./ast");
 const transform_1 = require("./transform");
-const anymatch = anymatch2;
 exports.default = transform_1.default;
 function getOptions() {
     return {
@@ -80,10 +79,10 @@ exports.watcherUpdate = (options) => (file) => __awaiter(this, void 0, void 0, f
     const { srcFolder, serverFolder, distAppFolder, watchMode } = options;
     const serverFolderPattern = isomor_core_1.getFilesPattern(serverFolder);
     const path = path_1.join(srcFolder, file);
-    if (anymatch(getServerSubFolderPattern(serverFolderPattern), path)) {
+    if (anymatch_1.default(getServerSubFolderPattern(serverFolderPattern), path)) {
         logol_1.info(`Do not copy sub-folder from "./server"`, path);
     }
-    else if (anymatch(serverFolderPattern, path)) {
+    else if (anymatch_1.default(serverFolderPattern, path)) {
         transpile(options, file);
     }
     else {

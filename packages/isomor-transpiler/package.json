@@ -26,7 +26,7 @@
     },
     "dependencies": {
         "@babel/generator": "^7.4.0",
-        "@babel/parser": "^7.4.4",
+        "@babel/parser": "^7.4.5",
         "@babel/plugin-syntax-typescript": "^7.3.3",
         "@types/chokidar": "^2.1.3",
         "anymatch": "^3.0.2",
@@ -37,7 +37,7 @@
         "logol": "^0.0.3",
         "please-upgrade-node": "^3.1.1",
         "traverse": "^0.6.6",
-        "ts-node": "^8.0.3",
+        "ts-node": "^8.1.1",
         "typescript": "^3.4.3"
     },
     "devDependencies": {

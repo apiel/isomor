@@ -1,56 +1,25 @@
-{
+ArrowFunctionExpression {
     "type": "ExportNamedDeclaration",
     "specifiers": [],
     "source": null,
     "declaration": {
-        "type": "ClassDeclaration",
-        "decorators": [
+        "type": "VariableDeclaration",
+        "declarations": [
             {
-                "type": "Decorator",
-                "expression": {
-                    "type": "CallExpression",
-                    "callee": {
-                        "type": "Identifier",
-                        "name": "Injectable"
-                    },
-                    "arguments": []
-                }
-            },
-            {
-                "type": "Decorator",
-                "expression": {
+                "type": "VariableDeclarator",
+                "id": {
                     "type": "Identifier",
-                    "name": "isomor"
-                }
-            }
-        ],
-        "id": {
-            "type": "Identifier",
-            "name": "CatsService"
-        },
-        "superClass": {
-            "type": "Identifier",
-            "name": "Hello"
-        },
-        "body": {
-            "type": "ClassBody",
-            "body": [
-                {
-                    "type": "ClassMethod",
-                    "static": false,
-                    "key": {
-                        "type": "Identifier",
-                        "name": "findAll"
-                    },
-                    "computed": false,
-                    "kind": "method",
+                    "name": "getTime3"
+                },
+                "init": {
+                    "type": "ArrowFunctionExpression",
                     "id": null,
                     "generator": false,
-                    "async": false,
+                    "async": true,
                     "params": [
                         {
                             "type": "Identifier",
-                            "name": "id",
+                            "name": "hello",
                             "typeAnnotation": {
                                 "type": "TSTypeAnnotation",
                                 "typeAnnotation": {
@@ -59,41 +28,128 @@
                             }
                         }
                     ],
-                    "returnType": {
-                        "type": "TSTypeAnnotation",
-                        "typeAnnotation": {
-                            "type": "TSArrayType",
-                            "elementType": {
-                                "type": "TSTypeReference",
-                                "typeName": {
-                                    "type": "Identifier",
-                                    "name": "Cat"
-                                }
-                            }
-                        }
-                    },
                     "body": {
                         "type": "BlockStatement",
                         "body": [
                             {
                                 "type": "ReturnStatement",
                                 "argument": {
-                                    "type": "MemberExpression",
-                                    "object": {
-                                        "type": "ThisExpression"
-                                    },
-                                    "property": {
-                                        "type": "Identifier",
-                                        "name": "cats"
-                                    },
-                                    "computed": false
+                                    "type": "AwaitExpression",
+                                    "argument": {
+                                        "type": "CallExpression",
+                                        "callee": {
+                                            "type": "Identifier",
+                                            "name": "readdir"
+                                        },
+                                        "arguments": [
+                                            {
+                                                "type": "StringLiteral",
+                                                "extra": {
+                                                    "rawValue": "./",
+                                                    "raw": "'./'"
+                                                },
+                                                "value": "./"
+                                            }
+                                        ]
+                                    }
                                 }
                             }
                         ],
                         "directives": []
                     }
                 }
-            ]
+            }
+        ],
+        "kind": "const"
+    }
+}
+
+FunctionDeclaration {
+    "type": "ExportNamedDeclaration",
+    "specifiers": [],
+    "source": null,
+    "declaration": {
+        "type": "FunctionDeclaration",
+        "id": {
+            "type": "Identifier",
+            "name": "getTime2"
+        },
+        "generator": false,
+        "async": true,
+        "params": [
+            {
+                "type": "Identifier",
+                "name": "input",
+                "typeAnnotation": {
+                    "type": "TSTypeAnnotation",
+                    "typeAnnotation": {
+                        "type": "TSTypeLiteral",
+                        "members": [
+                            {
+                                "type": "TSPropertySignature",
+                                "key": {
+                                    "type": "Identifier",
+                                    "name": "foo"
+                                },
+                                "computed": false,
+                                "typeAnnotation": {
+                                    "type": "TSTypeAnnotation",
+                                    "typeAnnotation": {
+                                        "type": "TSStringKeyword"
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "returnType": {
+            "type": "TSTypeAnnotation",
+            "typeAnnotation": {
+                "type": "TSTypeReference",
+                "typeName": {
+                    "type": "Identifier",
+                    "name": "Promise"
+                },
+                "typeParameters": {
+                    "type": "TSTypeParameterInstantiation",
+                    "params": [
+                        {
+                            "type": "TSArrayType",
+                            "elementType": {
+                                "type": "TSStringKeyword"
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        "body": {
+            "type": "BlockStatement",
+            "body": [
+                {
+                    "type": "ReturnStatement",
+                    "argument": {
+                        "type": "CallExpression",
+                        "callee": {
+                            "type": "Identifier",
+                            "name": "readdir"
+                        },
+                        "arguments": [
+                            {
+                                "type": "StringLiteral",
+                                "extra": {
+                                    "rawValue": "./",
+                                    "raw": "'./'"
+                                },
+                                "value": "./"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "directives": []
         }
     }
 }

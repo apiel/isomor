@@ -29,6 +29,7 @@ export function transformNode(
                 return node;
             }
         } else if (node.declaration.type === 'FunctionDeclaration') {
+            // console.log('FunctionDeclaration', JsonAst(node));
             const { name } = node.declaration.id;
             return getCodeFunc(path, name, withTypes);
         } else if (node.declaration.type === 'VariableDeclaration') {
@@ -38,6 +39,7 @@ export function transformNode(
                 && declaration.init.type === 'ArrowFunctionExpression'
                 && declaration.id.type === 'Identifier'
             ) {
+                // console.log('ArrowFunctionExpression', JsonAst(node));
                 const { name } = declaration.id;
                 return getCodeArrowFunc(path, name, withTypes);
             }

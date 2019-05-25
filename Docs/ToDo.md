@@ -2,8 +2,6 @@
 
 - example web components, stencil js
 
-- update slide base on stencil argumentation
-
 - params checking in endpoint base on types
 
 - improve server, especially error handling

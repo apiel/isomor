@@ -1,20 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const code_1 = require("./code");
-const transformer_1 = require("./transformer/transformer");
-const transformerClass_1 = require("./transformer/transformerClass");
-const transformerImport_1 = require("./transformer/transformerImport");
+const transformClass_1 = require("./transformer/transformClass");
+const transformImport_1 = require("./transformer/transformImport");
+const transformInterface_1 = require("./transformer/transformInterface");
+const transformExport_1 = require("./transformer/transformExport");
 function transformNode(node, path, withTypes, noServerImport, noDecorator) {
     if (node.type === 'ExportNamedDeclaration') {
         if (!node.declaration) {
-            return transformer_1.transformExport(node, noServerImport);
+            return transformExport_1.transformExport(node, noServerImport);
         }
         else if (node.declaration.type === 'TSTypeAliasDeclaration') {
             return code_1.getCodeType(node.declaration.id.name);
         }
         else if (node.declaration.type === 'TSInterfaceDeclaration') {
             if (noServerImport) {
-                return transformer_1.transformInterface(node);
+                return transformInterface_1.transformInterface(node);
             }
             else {
                 return node;
@@ -35,11 +36,11 @@ function transformNode(node, path, withTypes, noServerImport, noDecorator) {
             }
         }
         else if (node.declaration.type === 'ClassDeclaration') {
-            return transformerClass_1.transformClass(node, path, withTypes, noDecorator);
+            return transformClass_1.transformClass(node, path, withTypes, noDecorator);
         }
     }
     else if (node.type === 'ImportDeclaration') {
-        return transformerImport_1.transformImport(node, noServerImport);
+        return transformImport_1.transformImport(node, noServerImport);
     }
 }
 exports.transformNode = transformNode;

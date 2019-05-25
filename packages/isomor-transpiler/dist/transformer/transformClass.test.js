@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const ast_1 = require("../ast");
-const transformerClass_1 = require("./transformerClass");
+const transformClass_1 = require("./transformClass");
 const code_1 = require("../code");
 const util_1 = require("util");
 jest.mock('../code', () => ({
@@ -27,7 +27,7 @@ const transformClassFromCode = (source, noDecorator = false) => {
     const withTypes = true;
     const path = 'path/to/somewhere';
     const { program } = ast_1.parse(source);
-    const body = transformerClass_1.transformClass(program.body[0], path, withTypes, noDecorator);
+    const body = transformClass_1.transformClass(program.body[0], path, withTypes, noDecorator);
     program.body = util_1.isArray(body) ? body : [body];
     const { code } = ast_1.generate(program);
     return code;
@@ -128,4 +128,4 @@ export class CatsService extends CatsService__deco_export__ {
         expect(code_1.getCodeConstructor).toHaveBeenCalledTimes(1);
     });
 });
-//# sourceMappingURL=transformerClass.test.js.map
+//# sourceMappingURL=transformClass.test.js.map

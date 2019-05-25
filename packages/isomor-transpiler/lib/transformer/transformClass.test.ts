@@ -1,6 +1,6 @@
 import { parse, generate } from '../ast';
 
-import { transformClass } from './transformerClass';
+import { transformClass } from './transformClass';
 import { getCodeMethod, getCodeConstructor } from '../code';
 import { JsonAst } from '../ast';
 import { isArray } from 'util';

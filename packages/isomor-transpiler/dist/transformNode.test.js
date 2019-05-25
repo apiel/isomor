@@ -3,24 +3,26 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const ast_1 = require("./ast");
 const transformNode_1 = require("./transformNode");
 const code_1 = require("./code");
-const transformer_1 = require("./transformer/transformer");
-const transformerClass_1 = require("./transformer/transformerClass");
-const transformerImport_1 = require("./transformer/transformerImport");
+const transformClass_1 = require("./transformer/transformClass");
+const transformImport_1 = require("./transformer/transformImport");
+const transformInterface_1 = require("./transformer/transformInterface");
+const transformExport_1 = require("./transformer/transformExport");
 jest.mock('./code', () => ({
     getCodeImport: jest.fn().mockReturnValue('ImportIsomor'),
     getCodeFunc: jest.fn().mockReturnValue('Func'),
     getCodeArrowFunc: jest.fn().mockReturnValue('ArrowFunc'),
     getCodeType: jest.fn().mockReturnValue('TypeAny'),
 }));
-jest.mock('./transformer/transformer', () => ({
-    transformInterface: jest.fn().mockReturnValue('TransformInterface'),
+jest.mock('./transformer/transformExport', () => ({
     transformExport: jest.fn().mockReturnValue('TransformExport'),
-    transformClass: jest.fn().mockReturnValue('TransformClass'),
 }));
-jest.mock('./transformer/transformerImport', () => ({
+jest.mock('./transformer/transformInterface', () => ({
+    transformInterface: jest.fn().mockReturnValue('TransformInterface'),
+}));
+jest.mock('./transformer/transformImport', () => ({
     transformImport: jest.fn().mockReturnValue('TransformImport'),
 }));
-jest.mock('./transformer/transformerClass', () => ({
+jest.mock('./transformer/transformClass', () => ({
     transformClass: jest.fn().mockReturnValue('TransformClass'),
 }));
 const path = 'path/to/file';
@@ -41,12 +43,12 @@ function shouldNotBeTranspiled() {
         it('should transform export from', () => {
             const { node, newNode } = transformNodeTest(`export { CpuInfo } from 'os';`);
             expect(newNode).toEqual('TransformExport');
-            expect(transformer_1.transformExport).toHaveBeenCalledWith(node, false);
+            expect(transformExport_1.transformExport).toHaveBeenCalledWith(node, false);
         });
         it('should transform import', () => {
             const { node, newNode } = transformNodeTest(`import { readdir } from 'fs-extra';`);
             expect(newNode).toEqual('TransformImport');
-            expect(transformerImport_1.transformImport).toHaveBeenCalledWith(node, false);
+            expect(transformImport_1.transformImport).toHaveBeenCalledWith(node, false);
         });
         it('should transform type', () => {
             const { newNode } = transformNodeTest(`export type MyType = string;`);
@@ -62,7 +64,7 @@ export interface MyInterface {
     };
 }          `);
             expect(newNode).toEqual(node);
-            expect(transformer_1.transformInterface).toHaveBeenCalledTimes(0);
+            expect(transformInterface_1.transformInterface).toHaveBeenCalledTimes(0);
         });
         it('should transform interface with noServerImport=true', () => {
             const noServerImport = true;
@@ -74,7 +76,7 @@ export interface MyInterface {
     };
 }          `, noServerImport);
             expect(newNode).toEqual('TransformInterface');
-            expect(transformer_1.transformInterface).toHaveBeenCalledWith(node);
+            expect(transformInterface_1.transformInterface).toHaveBeenCalledWith(node);
         });
         it('should transform function', () => {
             const { newNode } = transformNodeTest(`
@@ -110,7 +112,7 @@ export const getTime1 = async (hello: string) => {
 export class MyClass {
 }          `, noServerImport, noDecorator);
             expect(newNode).toEqual('TransformClass');
-            expect(transformerClass_1.transformClass).toHaveBeenCalledWith(node, path, withTypes, noDecorator);
+            expect(transformClass_1.transformClass).toHaveBeenCalledWith(node, path, withTypes, noDecorator);
         });
     });
 });

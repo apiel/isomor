@@ -1,20 +1,15 @@
-import { parse, generate } from '../ast';
-
-import { transformImport } from './transformerImport';
-import { JsonAst } from '../ast';
-import { isArray } from 'util';
-
-const transformImportFromCode = (
-    source: string,
-    noServerImport: boolean = false,
-): string => {
-    const { program } = parse(source);
-    const body = transformImport(program.body[0] as any, noServerImport);
-    program.body = isArray(body) ? body : [body];
-    const { code } = generate(program as any);
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const ast_1 = require("../ast");
+const transformImport_1 = require("./transformImport");
+const util_1 = require("util");
+const transformImportFromCode = (source, noServerImport = false) => {
+    const { program } = ast_1.parse(source);
+    const body = transformImport_1.transformImport(program.body[0], noServerImport);
+    program.body = util_1.isArray(body) ? body : [body];
+    const { code } = ast_1.generate(program);
     return code;
 };
-
 describe('transformImport()', () => {
     it('should keep import', () => {
         expect(transformImportFromCode(`import { readdir } from 'fs-extra';`)).toBe(`import { readdir } from 'fs-extra';`);
@@ -35,3 +30,4 @@ describe('transformImport()', () => {
             .toBe(``);
     });
 });
+//# sourceMappingURL=transformImport.test.js.map

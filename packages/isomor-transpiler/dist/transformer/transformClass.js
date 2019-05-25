@@ -76,4 +76,4 @@ function transformClassExportBeforeDecorator(root) {
     return [rootDeco, root];
 }
 exports.transformClassExportBeforeDecorator = transformClassExportBeforeDecorator;
-//# sourceMappingURL=transformerClass.js.map
+//# sourceMappingURL=transformClass.js.map

@@ -2,7 +2,7 @@
 
 - upgrade anymatch to fix type issue
 
-- FIX warning "but never used" in react example
+- FIX warning "but never used" in react example > dont show lint yarn start
 
 - example web components, stencil js
 
@@ -12,14 +12,11 @@
 
 - improve server, especially error handling
 
-- react + typeORM installer
-
-- refactor transformer and move each in different file
-    - rename tranformerImport to transformImport... and so on
-
 - vscode extension
     - handle delete and move file
     - automatically publish when new isomor-transpiler using ~~asure or travis~~? or manually trigger...
+
+- react + typeORM installer
 
 - isomor-NG > nest + angular
     - travis

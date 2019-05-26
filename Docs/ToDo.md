@@ -1,14 +1,16 @@
 ### ToDo
 
-- improve server, especially error handling
+- improve server
+    - better error handling
+    - refactoring
+    - test
+    - custom loggin system
 
 - update vscode
 
 - vscode extension
     - handle delete and move file
     - automatically publish when new isomor-transpiler using ~~asure or travis~~? or manually trigger...
-
-- react + typeORM installer
 
 - isomor-NG > nest + angular
     - travis
@@ -17,10 +19,10 @@
     - maybe later: should as well allow decorator only per method
 
 - review doc
+    - explain how isomor work in details: transpiler, server
+    - explain why to use babel instead of ts.createProgram
 - video
 - provide some test-case example, unit test and integration test
-
-- isomor pkg remove dependency to server and transpiler? should it?
 
 - example web components, stencil js: stencil is still not stable
 
@@ -34,20 +36,8 @@
 - isomor-inject
   - it might be possible to do something like isomor without transpiler, just by using dependency injection. Maybe something like that https://www.npmjs.com/package/inversify . The library could easily inject different script depending if it is on the server or on the client. The downside of this would be that you have to change your way of coding, at least for people from react and vuejs.
 
-- test:
-  - isomor-server
-  - integration, for file structure after transpiling?
-
 - think about https://keepachangelog.com/en/1.0.0/ CHANGELOG.md
 
 
 
 - isomor-rendering, pre-rendering caching... out of scope, so maybe not do it!
-
-
-- ~~FIX: transpiler file does not always get copy~~
-  -> ~~after copy, look if the two files are the same, if not copy again~~
-
-- ? isomor-cli > for install react or vue, and maybe some other feature
-
-- Provide all devops around isomor (docker container, docker compose? maybe even deplyoment script?)

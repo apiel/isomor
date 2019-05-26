@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const pkg = require('../package.json'); // tslint:disable-line
+const pkg = require('../../package.json'); // tslint:disable-line
 require('please-upgrade-node')(pkg, {  // tslint:disable-line
     message: (v: string) => `
     ┌────────────────────────────────────────────────────────┐
@@ -16,7 +16,7 @@ import * as bodyParser from 'body-parser';
 import * as cookieParser from 'cookie-parser';
 import { setup, serve } from 'swagger-ui-express';
 
-import { useIsomor, getSwaggerDoc, startup } from '.';
+import { useIsomor, startup, getApiDoc } from '../lib';
 import { join } from 'path';
 
 interface Options {
@@ -43,7 +43,7 @@ async function start(options: Options) {
     const endpoints = await useIsomor(app, distServerFolder, serverFolder, noDecorator);
     info(`Created endpoints:`, endpoints.map(({ path }) => path));
 
-    app.use(API_DOCS, serve, setup(await getSwaggerDoc(endpoints)));
+    app.use(API_DOCS, serve, setup(await getApiDoc(endpoints)));
 
     if (staticFolder) {
         info('Add static folder', staticFolder);

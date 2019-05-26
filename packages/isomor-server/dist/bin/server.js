@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const pkg = require('../package.json');
+const pkg = require('../../package.json');
 require('please-upgrade-node')(pkg, {
     message: (v) => `
     ┌────────────────────────────────────────────────────────┐
@@ -23,7 +23,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const swagger_ui_express_1 = require("swagger-ui-express");
-const _1 = require(".");
+const lib_1 = require("../lib");
 const path_1 = require("path");
 const API_DOCS = '/api-docs';
 function start(options) {
@@ -33,10 +33,10 @@ function start(options) {
         const app = express();
         app.use(bodyParser.json());
         app.use(cookieParser());
-        yield _1.startup(app, distServerFolder, serverFolder, startupFile);
-        const endpoints = yield _1.useIsomor(app, distServerFolder, serverFolder, noDecorator);
+        yield lib_1.startup(app, distServerFolder, serverFolder, startupFile);
+        const endpoints = yield lib_1.useIsomor(app, distServerFolder, serverFolder, noDecorator);
         logol_1.info(`Created endpoints:`, endpoints.map(({ path }) => path));
-        app.use(API_DOCS, swagger_ui_express_1.serve, swagger_ui_express_1.setup(yield _1.getSwaggerDoc(endpoints)));
+        app.use(API_DOCS, swagger_ui_express_1.serve, swagger_ui_express_1.setup(yield lib_1.getApiDoc(endpoints)));
         if (staticFolder) {
             logol_1.info('Add static folder', staticFolder);
             app.use(express.static(staticFolder));

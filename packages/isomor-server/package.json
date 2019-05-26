@@ -1,11 +1,11 @@
 {
     "name": "isomor-server",
     "version": "1.0.1",
-    "main": "dist/index.js",
-    "types": "dist/index.d.ts",
+    "main": "dist/lib/index.js",
+    "types": "dist/lib/index.d.ts",
     "author": "Alexandre Piel <alexandre.piel@gmail.com>",
     "license": "MIT",
-    "bin": "dist/server.js",
+    "bin": "dist/bin/server.js",
     "repository": {
         "type": "git",
         "url": "https://github.com/apiel/isomor"
@@ -16,9 +16,9 @@
     "scripts": {
         "prepublishOnly": "cp ../../Readme.sub.md ./README.md && yarn build",
         "start-example": "DIST_SERVER_FOLDER=../example/react/dist-server yarn start",
-        "start": "ts-node src/server.ts",
+        "start": "ts-node bin/server.ts",
         "prebuild": "rm -rf dist/",
-        "build": "tsc -p tsconfig.json && chmod +x dist/server.js",
+        "build": "tsc -p tsconfig.json && chmod +x dist/bin/server.js",
         "lint": "tslint -p tsconfig.json -c tslint.json"
     },
     "dependencies": {

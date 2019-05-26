@@ -1,10 +1,8 @@
 ### ToDo
 
-- example web components, stencil js
-
-- params checking in endpoint base on types
-
 - improve server, especially error handling
+
+- update vscode
 
 - vscode extension
     - handle delete and move file
@@ -24,11 +22,14 @@
 
 - isomor pkg remove dependency to server and transpiler? should it?
 
+- example web components, stencil js: stencil is still not stable
+
 - **base on params types of server function generate validation on endpoint**
-  - maybe while transpiling
-  - or
-  - https://stackoverflow.com/questions/33800497/check-if-an-object-implements-an-interface-at-runtime-with-typescript
-  - https://github.com/pcan/reflec-ts-examples/tree/master/simple-validator
+  - https://www.npmjs.com/package/ts-json-schema-generator
+  - https://www.npmjs.com/package/typescript-json-schema
+  - the problem is those library use tsc and it is very slow to bootstrap since tsc need to load all dependency unlike babel (this is also why we should prefer using babel instead of tsc for transpiler)
+  - to use this library, we would have to build the json schema in a separate process/task in parallel of transpiling
+  - other option would be to implement similar lib with babel (too much work!)
 
 - isomor-inject
   - it might be possible to do something like isomor without transpiler, just by using dependency injection. Maybe something like that https://www.npmjs.com/package/inversify . The library could easily inject different script depending if it is on the server or on the client. The downside of this would be that you have to change your way of coding, at least for people from react and vuejs.

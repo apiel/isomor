@@ -1,17 +1,14 @@
 ### ToDo
 
-- improve server
-    - better error handling
-    - refactoring
-    - test
-
-- update vscode
-
 - vscode extension
     - handle delete and move file
     - automatically publish when new isomor-transpiler using ~~asure or travis~~? or manually trigger...
 
 - make a pure Ts/js example without react, vue, ...
+
+- improve server
+    - test
+    - doc: available methods for api doc, useIsomor...
 
 - isomor-NG > nest + angular
     - travis

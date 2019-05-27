@@ -10,7 +10,7 @@ require('please-upgrade-node')(pkg, {  // tslint:disable-line
     `,
 });
 
-import { info, error, success, log, warn } from 'logol';
+import { info, error, success, log } from 'logol';
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import * as cookieParser from 'cookie-parser';

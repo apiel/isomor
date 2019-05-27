@@ -23,6 +23,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const swagger_ui_express_1 = require("swagger-ui-express");
+const morgan = require("morgan");
 const lib_1 = require("../lib");
 const path_1 = require("path");
 const API_DOCS = '/api-docs';
@@ -33,6 +34,7 @@ function start(options) {
         const app = express();
         app.use(bodyParser.json());
         app.use(cookieParser());
+        app.use(morgan('tiny', { stream: { write: (str) => logol_1.log(str.trim()) } }));
         yield lib_1.startup(app, distServerFolder, serverFolder, startupFile, logol_1.info);
         const endpoints = yield lib_1.useIsomor(app, distServerFolder, serverFolder, noDecorator);
         logol_1.info(`Created endpoints:`, endpoints.map(({ path }) => path));

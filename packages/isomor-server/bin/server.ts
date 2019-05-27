@@ -10,11 +10,12 @@ require('please-upgrade-node')(pkg, {  // tslint:disable-line
     `,
 });
 
-import { info, error, success } from 'logol';
+import { info, error, success, log } from 'logol';
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import * as cookieParser from 'cookie-parser';
 import { setup, serve } from 'swagger-ui-express';
+import * as morgan from 'morgan';
 
 import { useIsomor, startup, getApiDoc } from '../lib';
 import { join } from 'path';
@@ -37,6 +38,7 @@ async function start(options: Options) {
 
     app.use(bodyParser.json());
     app.use(cookieParser());
+    app.use(morgan('tiny', { stream: { write: (str: string) => log(str.trim()) }}));
 
     await startup(app, distServerFolder, serverFolder, startupFile, info);
 

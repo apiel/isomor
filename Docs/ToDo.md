@@ -4,8 +4,6 @@
     - better error handling
     - refactoring
     - test
-    - custom loggin system, is this really necessary?
-    - log each query, might use morgan
 
 - update vscode
 

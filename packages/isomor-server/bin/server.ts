@@ -38,7 +38,7 @@ async function start(options: Options) {
     app.use(bodyParser.json());
     app.use(cookieParser());
 
-    await startup(app, distServerFolder, serverFolder, startupFile);
+    await startup(app, distServerFolder, serverFolder, startupFile, info);
 
     const endpoints = await useIsomor(app, distServerFolder, serverFolder, noDecorator);
     info(`Created endpoints:`, endpoints.map(({ path }) => path));

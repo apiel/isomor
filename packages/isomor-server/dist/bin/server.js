@@ -33,7 +33,7 @@ function start(options) {
         const app = express();
         app.use(bodyParser.json());
         app.use(cookieParser());
-        yield lib_1.startup(app, distServerFolder, serverFolder, startupFile);
+        yield lib_1.startup(app, distServerFolder, serverFolder, startupFile, logol_1.info);
         const endpoints = yield lib_1.useIsomor(app, distServerFolder, serverFolder, noDecorator);
         logol_1.info(`Created endpoints:`, endpoints.map(({ path }) => path));
         app.use(API_DOCS, swagger_ui_express_1.serve, swagger_ui_express_1.setup(yield lib_1.getApiDoc(endpoints)));

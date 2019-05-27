@@ -13,21 +13,27 @@ const util_1 = require("util");
 const fs_1 = require("fs");
 let startupImport;
 exports.getInstance = () => startupImport && startupImport.getInstance;
-function loadStartupImport(distServerFolder, serverFolder, startupFile) {
+function loadStartupImport(distServerFolder, serverFolder, startupFile, info) {
     return __awaiter(this, void 0, void 0, function* () {
         const path = path_1.join(distServerFolder, serverFolder, startupFile);
         if (yield util_1.promisify(fs_1.exists)(path)) {
             const filepath = require.resolve(path, { paths: [process.cwd()] });
             startupImport = require(filepath);
+            if (info) {
+                info('Startup file loaded.');
+            }
         }
     });
 }
 exports.loadStartupImport = loadStartupImport;
-function startup(app, distServerFolder, serverFolder, startupFile) {
+function startup(app, distServerFolder, serverFolder, startupFile, info) {
     return __awaiter(this, void 0, void 0, function* () {
-        yield loadStartupImport(distServerFolder, serverFolder, startupFile);
+        yield loadStartupImport(distServerFolder, serverFolder, startupFile, info);
         if (startupImport && startupImport.default) {
             startupImport.default(app);
+            if (info) {
+                info('Startup script executed.');
+            }
         }
     });
 }

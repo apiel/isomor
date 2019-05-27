@@ -4,13 +4,16 @@
     - better error handling
     - refactoring
     - test
-    - custom loggin system
+    - custom loggin system, is this really necessary?
+    - log each query, might use morgan
 
 - update vscode
 
 - vscode extension
     - handle delete and move file
     - automatically publish when new isomor-transpiler using ~~asure or travis~~? or manually trigger...
+
+- make a pure Ts/js example without react, vue, ...
 
 - isomor-NG > nest + angular
     - travis

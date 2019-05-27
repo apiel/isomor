@@ -10,7 +10,7 @@ require('please-upgrade-node')(pkg, {  // tslint:disable-line
     `,
 });
 
-import { info, error, success, log } from 'logol';
+import { info, error, success, log, warn } from 'logol';
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import * as cookieParser from 'cookie-parser';
@@ -38,7 +38,10 @@ async function start(options: Options) {
 
     app.use(bodyParser.json());
     app.use(cookieParser());
-    app.use(morgan('tiny', { stream: { write: (str: string) => log(str.trim()) }}));
+
+    app.use(morgan('dev', {
+        stream: { write: (str: string) => log(str.trim()) },
+    }));
 
     await startup(app, distServerFolder, serverFolder, startupFile, info);
 

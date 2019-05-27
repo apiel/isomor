@@ -34,7 +34,9 @@ function start(options) {
         const app = express();
         app.use(bodyParser.json());
         app.use(cookieParser());
-        app.use(morgan('tiny', { stream: { write: (str) => logol_1.log(str.trim()) } }));
+        app.use(morgan('dev', {
+            stream: { write: (str) => logol_1.log(str.trim()) },
+        }));
         yield lib_1.startup(app, distServerFolder, serverFolder, startupFile, logol_1.info);
         const endpoints = yield lib_1.useIsomor(app, distServerFolder, serverFolder, noDecorator);
         logol_1.info(`Created endpoints:`, endpoints.map(({ path }) => path));

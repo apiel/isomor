@@ -1,5 +1,6 @@
 import { getCodeArrowFunc } from '../code';
-import { VariableDeclaration } from '../ast';
+import { VariableDeclaration, Identifier, JsonAst } from '../ast';
+import { warn } from 'logol';
 
 export function transformArrowFunc(
     root: VariableDeclaration,
@@ -12,8 +13,14 @@ export function transformArrowFunc(
         && declaration.init.type === 'ArrowFunctionExpression'
         && declaration.id.type === 'Identifier'
     ) {
-        // console.log('ArrowFunctionExpression', JsonAst(node));
+        // console.log('ArrowFunctionExpression', JsonAst(declaration));
         const { name } = declaration.id;
-        return getCodeArrowFunc(path, name, [], withTypes);
+        const params = declaration.init.params.filter(({ type }) => type === 'Identifier') as Identifier[];
+        let args = params.map((node) => node.name);
+        if (params.length !== declaration.init.params.length) {
+            warn('TransformFunc support only Identifier as params');
+            args = [];
+        }
+        return getCodeArrowFunc(path, name, args, withTypes);
     }
 }

@@ -1,5 +1,7 @@
 ### ToDo
 
+- rename remote to isomorRemote
+
 - vscode extension
     - handle delete and move file
     - automatically publish when new isomor-transpiler using ~~asure or travis~~? or manually trigger...

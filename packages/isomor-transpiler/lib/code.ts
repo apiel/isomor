@@ -45,7 +45,7 @@ export function getCodeImport() {
     } as any as Statement; // need to try to remove any
 }
 
-export function getCodeFunc(fileName: string, name: string, withTypes: boolean) {
+export function getCodeFunc(fileName: string, name: string, args: string[], withTypes: boolean) {
     return {
         type: 'ExportNamedDeclaration',
         declaration: {
@@ -55,12 +55,12 @@ export function getCodeFunc(fileName: string, name: string, withTypes: boolean) 
                 name,
             },
             params: getParams(withTypes),
-            body: getBody(fileName, name),
+            body: getBody(fileName, name, args),
         },
     } as Statement;
 }
 
-export function getCodeArrowFunc(fileName: string, name: string, withTypes: boolean) {
+export function getCodeArrowFunc(fileName: string, name: string, args: string[], withTypes: boolean) {
     return {
         type: 'ExportNamedDeclaration',
         declaration: {
@@ -75,7 +75,7 @@ export function getCodeArrowFunc(fileName: string, name: string, withTypes: bool
                     init: {
                         type: 'ArrowFunctionExpression',
                         params: getParams(withTypes),
-                        body: getBody(fileName, name),
+                        body: getBody(fileName, name, args),
                     },
                 },
             ],
@@ -113,18 +113,18 @@ function getTypeAny(withTypes: boolean) {
 // {
 //     return remote("example", "getList2", args);
 // }
-function getBody(fileName: string, name: string, className?: string) {
+function getBody(fileName: string, name: string, args: string[], className?: string) {
     return {
         type: 'BlockStatement',
         body: [
-            getBodyArgs(),
-            getBodyArgsObject(),
+            getBodyArgs(args),
+            getBodyArgsObject(args),
             getBodyRemote(fileName, name, className),
         ],
     };
 }
 
-function getBodyArgs() {
+function getBodyArgs(args: string[]) {
     return {
         type: 'VariableDeclaration',
         declarations: [
@@ -132,16 +132,10 @@ function getBodyArgs() {
                 type: 'VariableDeclarator',
                 id: {
                     type: 'ArrayPattern',
-                    elements: [
-                        {
-                            type: 'Identifier',
-                            name: 'input1',
-                        },
-                        {
-                            type: 'Identifier',
-                            name: 'input2',
-                        },
-                    ],
+                    elements: args.map(name => ({
+                        type: 'Identifier',
+                        name,
+                    })),
                 },
                 init: {
                     type: 'Identifier',
@@ -153,7 +147,7 @@ function getBodyArgs() {
     };
 }
 
-function getBodyArgsObject() {
+function getBodyArgsObject(args: string[]) {
     return {
         type: 'VariableDeclaration',
         declarations: [
@@ -165,42 +159,23 @@ function getBodyArgsObject() {
                 },
                 init: {
                     type: 'ObjectExpression',
-                    properties: [
-                        {
-                            type: 'ObjectProperty',
-                            method: false,
-                            key: {
-                                type: 'Identifier',
-                                name: 'input1',
-                            },
-                            computed: false,
-                            shorthand: true,
-                            value: {
-                                type: 'Identifier',
-                                name: 'input1',
-                            },
-                            extra: {
-                                shorthand: true,
-                            },
+                    properties: args.map(name => ({
+                        type: 'ObjectProperty',
+                        method: false,
+                        key: {
+                            type: 'Identifier',
+                            name,
                         },
-                        {
-                            type: 'ObjectProperty',
-                            method: false,
-                            key: {
-                                type: 'Identifier',
-                                name: 'input2',
-                            },
-                            computed: false,
-                            shorthand: true,
-                            value: {
-                                type: 'Identifier',
-                                name: 'input2',
-                            },
-                            extra: {
-                                shorthand: true,
-                            },
+                        computed: false,
+                        shorthand: true,
+                        value: {
+                            type: 'Identifier',
+                            name,
                         },
-                    ],
+                        extra: {
+                            shorthand: true,
+                        },
+                    })),
                 },
             },
         ],
@@ -243,7 +218,7 @@ function getBodyRemote(fileName: string, name: string, className?: string) {
     };
 }
 
-export function getCodeMethod(fileName: string, name: string, className: string, withTypes: boolean) {
+export function getCodeMethod(fileName: string, name: string, className: string, args: string[], withTypes: boolean) {
     return {
         type: 'ClassMethod',
         static: false,
@@ -253,7 +228,7 @@ export function getCodeMethod(fileName: string, name: string, className: string,
         },
         async: true,
         params: getParams(withTypes),
-        body: getBody(fileName, name, className),
+        body: getBody(fileName, name, args, className),
     } as any as Statement;
 }
 

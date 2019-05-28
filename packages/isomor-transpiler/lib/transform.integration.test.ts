@@ -63,7 +63,7 @@ export class Post implements IsomorShare {
 // somehow babel put `// > import { Injectable } from '@angular/core';` that kind of weird
 // since it doesnt make any problem no need to fix this for the moment
 const codeTranspiled =
-  `import { isomorRemote, isomorValidate } from "isomor";
+  `import { isomorRemote } from "isomor";
 import { Injectable } from '@angular/core';
 // > import { Injectable } from '@angular/core';
 import { readdir } from 'fs-extra';
@@ -79,13 +79,28 @@ export interface MyInterface {
   };
 }
 export function getTime1(...args: any) {
-  return isomorRemote("path/to/file", "getTime1", args);
+  const [input1, input2] = args;
+  const argsObject = {
+    input1,
+    input2
+  };
+  return isomorRemote("path/to/file", "getTime1", args, argsObject);
 }
 export function getTime2(...args: any) {
-  return isomorRemote("path/to/file", "getTime2", args);
+  const [input1, input2] = args;
+  const argsObject = {
+    input1,
+    input2
+  };
+  return isomorRemote("path/to/file", "getTime2", args, argsObject);
 }
 export const getTime3 = (...args: any) => {
-  return isomorRemote("path/to/file", "getTime3", args);
+  const [input1, input2] = args;
+  const argsObject = {
+    input1,
+    input2
+  };
+  return isomorRemote("path/to/file", "getTime3", args, argsObject);
 };
 
 @Injectable()
@@ -98,7 +113,12 @@ export class CatsService extends CatsService__deco_export__ {
   }
 
   async findAll(...args: any) {
-    return isomorRemote("path/to/file", "findAll", args, "CatsService");
+    const [input1, input2] = args;
+    const argsObject = {
+      input1,
+      input2
+    };
+    return isomorRemote("path/to/file", "findAll", args, argsObject, "CatsService");
   }
 
 }

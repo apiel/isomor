@@ -24,20 +24,12 @@ export async function isomorRemote(
     path: string,
     funcName: string,
     args: any,
+    argsObject: object,
     classname?: string,
 ): Promise<any> {
     const url = getUrl(path, funcName, classname);
     const { data: { result } } = await axios.post(url, { args });
     return result;
-}
-
-export function isomorValidate(
-    params: object,
-    path: string,
-    funcName: string,
-    classname?: string,
-) {
-    // TBD.
 }
 
 export type IsomorShare = any;

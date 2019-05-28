@@ -36,7 +36,7 @@ export function getCodeImport() {
         type: 'ImportDeclaration',
         specifiers: [
             getCodeImportSpecifier('isomorRemote'),
-            getCodeImportSpecifier('isomorValidate'),
+            // getCodeImportSpecifier('isomorValidate'),
         ],
         source: {
             type: 'StringLiteral',
@@ -117,35 +117,129 @@ function getBody(fileName: string, name: string, className?: string) {
     return {
         type: 'BlockStatement',
         body: [
+            getBodyArgs(),
+            getBodyArgsObject(),
+            getBodyRemote(fileName, name, className),
+        ],
+    };
+}
+
+function getBodyArgs() {
+    return {
+        type: 'VariableDeclaration',
+        declarations: [
             {
-                type: 'ReturnStatement',
-                argument: {
-                    type: 'CallExpression',
-                    callee: {
-                        type: 'Identifier',
-                        name: 'isomorRemote',
-                    },
-                    arguments: [
+                type: 'VariableDeclarator',
+                id: {
+                    type: 'ArrayPattern',
+                    elements: [
                         {
-                            type: 'StringLiteral',
-                            value: fileName,
-                        },
-                        {
-                            type: 'StringLiteral',
-                            value: name,
+                            type: 'Identifier',
+                            name: 'input1',
                         },
                         {
                             type: 'Identifier',
-                            name: 'args',
+                            name: 'input2',
                         },
-                        ...(className ? [{
-                            type: 'StringLiteral',
-                            value: className,
-                        }] : []),
+                    ],
+                },
+                init: {
+                    type: 'Identifier',
+                    name: 'args',
+                },
+            },
+        ],
+        kind: 'const',
+    };
+}
+
+function getBodyArgsObject() {
+    return {
+        type: 'VariableDeclaration',
+        declarations: [
+            {
+                type: 'VariableDeclarator',
+                id: {
+                    type: 'Identifier',
+                    name: 'argsObject',
+                },
+                init: {
+                    type: 'ObjectExpression',
+                    properties: [
+                        {
+                            type: 'ObjectProperty',
+                            method: false,
+                            key: {
+                                type: 'Identifier',
+                                name: 'input1',
+                            },
+                            computed: false,
+                            shorthand: true,
+                            value: {
+                                type: 'Identifier',
+                                name: 'input1',
+                            },
+                            extra: {
+                                shorthand: true,
+                            },
+                        },
+                        {
+                            type: 'ObjectProperty',
+                            method: false,
+                            key: {
+                                type: 'Identifier',
+                                name: 'input2',
+                            },
+                            computed: false,
+                            shorthand: true,
+                            value: {
+                                type: 'Identifier',
+                                name: 'input2',
+                            },
+                            extra: {
+                                shorthand: true,
+                            },
+                        },
                     ],
                 },
             },
         ],
+        kind: 'const',
+    };
+}
+
+function getBodyRemote(fileName: string, name: string, className?: string) {
+    return {
+        type: 'ReturnStatement',
+        argument: {
+            type: 'CallExpression',
+            callee: {
+                type: 'Identifier',
+                name: 'isomorRemote',
+            },
+            arguments: [
+                {
+                    type: 'StringLiteral',
+                    value: fileName,
+                },
+                {
+                    type: 'StringLiteral',
+                    value: name,
+                },
+                {
+                    type: 'Identifier',
+                    name: 'args',
+                },
+                {
+                    type: 'Identifier',
+                    name: 'argsObject',
+                },
+                ...(className ? [{
+                    type: 'StringLiteral',
+                    value: className,
+                }] : []),
+            ],
+        },
     };
 }
 

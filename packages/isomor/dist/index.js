@@ -17,7 +17,7 @@ function getUrl(path, funcName, classname) {
     return url;
 }
 exports.getUrl = getUrl;
-function isomorRemote(path, funcName, args, classname) {
+function isomorRemote(path, funcName, args, argsObject, classname) {
     return __awaiter(this, void 0, void 0, function* () {
         const url = getUrl(path, funcName, classname);
         const { data: { result } } = yield axios_1.default.post(url, { args });

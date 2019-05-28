@@ -4,27 +4,52 @@ import { getCodeImport, getCodeFunc, getCodeArrowFunc, getCodeType, getCodeMetho
 
 export const codeTranspiledFunc =
 `export function getTime(...args: any) {
-  return isomorRemote("path/to/file", "getTime", args);
+  const [input1, input2] = args;
+  const argsObject = {
+    input1,
+    input2
+  };
+  return isomorRemote("path/to/file", "getTime", args, argsObject);
 }`;
 
 export const codeTranspiledFuncNoType =
 `export function getTime(...args) {
-  return isomorRemote("path/to/file", "getTime", args);
+  const [input1, input2] = args;
+  const argsObject = {
+    input1,
+    input2
+  };
+  return isomorRemote("path/to/file", "getTime", args, argsObject);
 }`;
 
 export const codeTranspiledArrowFunc =
 `export const getTime = (...args: any) => {
-  return isomorRemote("path/to/file", "getTime", args);
+  const [input1, input2] = args;
+  const argsObject = {
+    input1,
+    input2
+  };
+  return isomorRemote("path/to/file", "getTime", args, argsObject);
 };`;
 
 export const codeTranspiledArrowFuncNoType =
 `export const getTime = (...args) => {
-  return isomorRemote("path/to/file", "getTime", args);
+  const [input1, input2] = args;
+  const argsObject = {
+    input1,
+    input2
+  };
+  return isomorRemote("path/to/file", "getTime", args, argsObject);
 };`;
 
 export const codeTranspiledClass =
 `async getTime(...args: any) {
-  return isomorRemote("path/to/file", "getTime", args, "CatsService");
+  const [input1, input2] = args;
+  const argsObject = {
+    input1,
+    input2
+  };
+  return isomorRemote("path/to/file", "getTime", args, argsObject, "CatsService");
 }`;
 
 describe('code', () => {
@@ -56,7 +81,7 @@ describe('code', () => {
     describe('code/getCodeImport()', () => {
         it('should generate inport for isomor', () => {
             const { code } = generate(getCodeImport() as any);
-            expect(code).toEqual(`import { isomorRemote, isomorValidate } from "isomor";`);
+            expect(code).toEqual(`import { isomorRemote } from "isomor";`);
         });
     });
 

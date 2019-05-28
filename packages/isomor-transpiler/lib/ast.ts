@@ -1,5 +1,11 @@
 export { default as generate } from '@babel/generator';
-export { ExportNamedDeclaration, Statement, ImportDeclaration } from '@babel/types';
+export {
+    ExportNamedDeclaration,
+    Statement,
+    ImportDeclaration,
+    FunctionDeclaration,
+    VariableDeclaration,
+} from '@babel/types';
 
 import { parse as parseBabel } from '@babel/parser';
 

@@ -1,16 +1,15 @@
 import { parse } from './ast';
 
 import { transformNode } from './transformNode';
-import { getCodeFunc, getCodeArrowFunc, getCodeType } from './code';
+import { getCodeType } from './code';
 import { transformClass } from './transformer/transformClass';
 import { transformImport } from './transformer/transformImport';
 import { transformInterface } from './transformer/transformInterface';
 import { transformExport } from './transformer/transformExport';
+import { transformFunc } from './transformer/transformFunc';
+import { transformArrowFunc } from './transformer/transformArrowFunc';
 
 jest.mock('./code', () => ({
-    getCodeImport: jest.fn().mockReturnValue('ImportIsomor'),
-    getCodeFunc: jest.fn().mockReturnValue('Func'),
-    getCodeArrowFunc: jest.fn().mockReturnValue('ArrowFunc'),
     getCodeType: jest.fn().mockReturnValue('TypeAny'),
 }));
 
@@ -28,6 +27,14 @@ jest.mock('./transformer/transformImport', () => ({
 
 jest.mock('./transformer/transformClass', () => ({
     transformClass: jest.fn().mockReturnValue('TransformClass'),
+}));
+
+jest.mock('./transformer/transformFunc', () => ({
+    transformFunc: jest.fn().mockReturnValue('TransformFunc'),
+}));
+
+jest.mock('./transformer/transformArrowFunc', () => ({
+    transformArrowFunc: jest.fn().mockReturnValue('TransformArrowFunc'),
 }));
 
 const path = 'path/to/file';
@@ -91,33 +98,33 @@ export interface MyInterface {
         });
 
         it('should transform function', () => {
-            const { newNode } = transformNodeTest(`
+            const { newNode, node } = transformNodeTest(`
 export function getTime1(): Promise<string[]> {
     return readdir('./');
 }
             `);
-            expect(newNode).toEqual('Func');
-            expect(getCodeFunc).toHaveBeenCalledWith(path, 'getTime1', withTypes);
+            expect(newNode).toEqual('TransformFunc');
+            expect(transformFunc).toHaveBeenCalledWith((node as any).declaration, path, withTypes);
         });
 
         it('should transform async function', () => {
-            const { newNode } = transformNodeTest(`
+            const { newNode, node } = transformNodeTest(`
 export async function getTime1(): Promise<string[]> {
     return readdir('./');
 }
             `);
-            expect(newNode).toEqual('Func');
-            expect(getCodeFunc).toHaveBeenCalledWith(path, 'getTime1', withTypes);
+            expect(newNode).toEqual('TransformFunc');
+            expect(transformFunc).toHaveBeenCalledWith((node as any).declaration, path, withTypes);
         });
 
         it('should transform arrow function', () => {
-            const { newNode } = transformNodeTest(`
+            const { newNode, node } = transformNodeTest(`
 export const getTime1 = async (hello: string) => {
     return await readdir('./');
 };
             `);
-            expect(newNode).toEqual('ArrowFunc');
-            expect(getCodeArrowFunc).toHaveBeenCalledWith(path, 'getTime1', withTypes);
+            expect(newNode).toEqual('TransformArrowFunc');
+            expect(transformArrowFunc).toHaveBeenCalledWith((node as any).declaration, path, withTypes);
         });
 
         it('should transform class', () => {

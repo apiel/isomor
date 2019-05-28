@@ -29,7 +29,7 @@ export function transformClass(
                 if (name === 'constructor') {
                     (root as any).declaration.body.body[index] = getCodeConstructor(withTypes);
                 } else {
-                    (root as any).declaration.body.body[index] = getCodeMethod(path, name, className, withTypes);
+                    (root as any).declaration.body.body[index] = getCodeMethod(path, name, className, [], withTypes);
                 }
             } else if (node.type !== 'ClassProperty') {
                 delete (root as any).declaration.body.body[index];

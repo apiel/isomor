@@ -131,7 +131,7 @@ export class Post implements IsomorShare {
 
 describe('transform', () => {
   const path = 'path/to/file';
-  describe('transform/transform()', () => {
+  describe.skip('transform/transform()', () => {
     it('should isomor code for e2e', () => {
       const { program } = parse(codeSource);
       program.body = transform(program.body, path);

@@ -79,26 +79,21 @@ export interface MyInterface {
   };
 }
 export function getTime1(...args: any) {
-  const [input1, input2] = args;
-  const argsObject = {
-    input1,
-    input2
-  };
+  const [] = args;
+  const argsObject = {};
   return isomorRemote("path/to/file", "getTime1", args, argsObject);
 }
 export function getTime2(...args: any) {
-  const [input1, input2] = args;
+  const [input] = args;
   const argsObject = {
-    input1,
-    input2
+    input
   };
   return isomorRemote("path/to/file", "getTime2", args, argsObject);
 }
 export const getTime3 = (...args: any) => {
-  const [input1, input2] = args;
+  const [hello] = args;
   const argsObject = {
-    input1,
-    input2
+    hello
   };
   return isomorRemote("path/to/file", "getTime3", args, argsObject);
 };
@@ -113,10 +108,9 @@ export class CatsService extends CatsService__deco_export__ {
   }
 
   async findAll(...args: any) {
-    const [input1, input2] = args;
+    const [id] = args;
     const argsObject = {
-      input1,
-      input2
+      id
     };
     return isomorRemote("path/to/file", "findAll", args, argsObject, "CatsService");
   }
@@ -131,7 +125,7 @@ export class Post implements IsomorShare {
 
 describe('transform', () => {
   const path = 'path/to/file';
-  describe.skip('transform/transform()', () => {
+  describe('transform/transform()', () => {
     it('should isomor code for e2e', () => {
       const { program } = parse(codeSource);
       program.body = transform(program.body, path);

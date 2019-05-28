@@ -25,12 +25,13 @@ jest.mock('../code', () => ({
     }),
 }));
 
+const withTypes = true;
+const path = 'path/to/somewhere';
+
 const transformClassFromCode = (
     source: string,
     noDecorator: boolean = false,
 ): string => {
-    const withTypes = true;
-    const path = 'path/to/somewhere';
     const { program } = parse(source);
     // console.log('JsonAst', JsonAst(program.body[0]));
     const body = transformClass(program.body[0] as any, path, withTypes, noDecorator);
@@ -80,8 +81,7 @@ export class Post extends Post__deco_export__ {
                 findAll(id: string): Cat[] {
                     return this.cats;
                 }
-
-                }`;
+            }`;
         const noDecorator = true;
         expect(transformClassFromCode(code, noDecorator)).toBe(
             `class CatsService__deco_export__ extends Hello {}
@@ -92,6 +92,7 @@ export class CatsService extends CatsService__deco_export__ {
 }`,
         );
         expect(getCodeMethod).toHaveBeenCalledTimes(1); // called with?
+        expect(getCodeMethod).toHaveBeenCalledWith(path, 'findAll', 'CatsService', ['id'], withTypes);
     });
     // -----------------
     it('should not transform class when no noDecorator but dont provide @isomor', () => {
@@ -109,13 +110,12 @@ export class CatsService extends CatsService__deco_export__ {
     it('should transform class for isomor', () => {
         const code =
             `@Injectable()
-                @isomor
-                export class CatsService extends Hello {
+            @isomor
+            export class CatsService extends Hello {
                 findAll(id: string): Cat[] {
                     return this.cats;
                 }
-
-                }`;
+            }`;
         expect(transformClassFromCode(code)).toBe(
             `@Injectable()
 @isomor

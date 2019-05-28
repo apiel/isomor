@@ -4,27 +4,27 @@ import { getCodeImport, getCodeFunc, getCodeArrowFunc, getCodeType, getCodeMetho
 
 export const codeTranspiledFunc =
 `export function getTime(...args: any) {
-  return remote("path/to/file", "getTime", args);
+  return isomorRemote("path/to/file", "getTime", args);
 }`;
 
 export const codeTranspiledFuncNoType =
 `export function getTime(...args) {
-  return remote("path/to/file", "getTime", args);
+  return isomorRemote("path/to/file", "getTime", args);
 }`;
 
 export const codeTranspiledArrowFunc =
 `export const getTime = (...args: any) => {
-  return remote("path/to/file", "getTime", args);
+  return isomorRemote("path/to/file", "getTime", args);
 };`;
 
 export const codeTranspiledArrowFuncNoType =
 `export const getTime = (...args) => {
-  return remote("path/to/file", "getTime", args);
+  return isomorRemote("path/to/file", "getTime", args);
 };`;
 
 export const codeTranspiledClass =
 `async getTime(...args: any) {
-  return remote("path/to/file", "getTime", args, "CatsService");
+  return isomorRemote("path/to/file", "getTime", args, "CatsService");
 }`;
 
 describe('code', () => {
@@ -56,7 +56,7 @@ describe('code', () => {
     describe('code/getCodeImport()', () => {
         it('should generate inport for isomor', () => {
             const { code } = generate(getCodeImport() as any);
-            expect(code).toEqual(`import { remote } from "isomor";`);
+            expect(code).toEqual(`import { isomorRemote, isomorValidate } from "isomor";`);
         });
     });
 

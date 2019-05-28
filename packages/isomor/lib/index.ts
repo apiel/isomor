@@ -20,7 +20,7 @@ export function getUrl(
     return url;
 }
 
-export async function remote(
+export async function isomorRemote(
     path: string,
     funcName: string,
     args: any,
@@ -29,6 +29,15 @@ export async function remote(
     const url = getUrl(path, funcName, classname);
     const { data: { result } } = await axios.post(url, { args });
     return result;
+}
+
+export function isomorValidate(
+    params: object,
+    path: string,
+    funcName: string,
+    classname?: string,
+) {
+    // TBD.
 }
 
 export type IsomorShare = any;

@@ -17,22 +17,26 @@ export function getCodeType(name: string) {
     } as Statement;
 }
 
+function getCodeImportSpecifier(name: string) {
+    return {
+        type: 'ImportSpecifier',
+        imported: {
+            type: 'Identifier',
+            name,
+        },
+        local: {
+            type: 'Identifier',
+            name,
+        },
+    };
+}
+
 export function getCodeImport() {
-    const name = 'remote';
     return {
         type: 'ImportDeclaration',
         specifiers: [
-            {
-                type: 'ImportSpecifier',
-                imported: {
-                    type: 'Identifier',
-                    name,
-                },
-                local: {
-                    type: 'Identifier',
-                    name,
-                },
-            },
+            getCodeImportSpecifier('isomorRemote'),
+            getCodeImportSpecifier('isomorValidate'),
         ],
         source: {
             type: 'StringLiteral',
@@ -119,7 +123,7 @@ function getBody(fileName: string, name: string, className?: string) {
                     type: 'CallExpression',
                     callee: {
                         type: 'Identifier',
-                        name: 'remote',
+                        name: 'isomorRemote',
                     },
                     arguments: [
                         {

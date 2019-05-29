@@ -1,5 +1,9 @@
 import { exec, ChildProcess } from 'child_process';
 import { warn, info, error } from 'logol';
+import { join } from 'path';
+import { outputJSON } from 'fs-extra';
+
+import { getOptions } from './build';
 
 interface Queue {
     args: string[];
@@ -19,7 +23,8 @@ export function pushToQueue(
     name: string,
     className: string | undefined,
 ) {
-    if (args.length) {
+    const { jsonSchemaFolder } = getOptions();
+    if (args.length && jsonSchemaFolder && jsonSchemaFolder.length) {
         info(`Queue JSON schema generation for ${name} in ${srcFilePath}`);
         queueList.push({ args, srcFilePath, path, name, className });
         run();
@@ -28,10 +33,11 @@ export function pushToQueue(
 
 function run() {
     if (!process && queueList.length) {
-        const { name, srcFilePath } = queueList.pop();
+        const { jsonSchemaFolder } = getOptions();
+        const { name, srcFilePath, path } = queueList.pop();
         const command = `isomor-json-schema-generator --path ${srcFilePath} --type ${name}`;
-        info(`Start JSON schema generation for ${name} in ${srcFilePath}...`);
-        process = exec(command, (err, stdout, stderr) => {
+        info(`Start JSON schema generation for ${name} in ${srcFilePath} (might take few seconds)`);
+        process = exec(command, async (err, stdout, stderr) => {
             if (err) {
                 error(err);
             }
@@ -39,6 +45,8 @@ function run() {
                 warn(stderr);
             }
             // console.log(`stdout: ${stdout}`);
+            const jsonFile = join(jsonSchemaFolder, `${path}.${name}.json`);
+            await outputJSON(jsonFile, JSON.parse(stdout), { spaces: 4 });
             info(`JSON schema generation finished for ${name} in ${srcFilePath}`);
             process = null;
             run();

@@ -23,6 +23,7 @@ function getOptions() {
         srcFolder: process.env.SRC_FOLDER || './src-isomor',
         distAppFolder: process.env.DIST_APP_FOLDER || './src',
         serverFolder: process.env.SERVER_FOLDER || '/server',
+        jsonSchemaFolder: process.env.JSON_SCHEMA_FOLDER || './json-schema',
         withTypes: process.env.NO_TYPES !== 'true',
         watchMode: process.env.WATCH === 'true',
         noServerImport: process.env.NO_SERVER_IMPORT === 'true',

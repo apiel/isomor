@@ -1,0 +1,30 @@
+{
+    "$ref": "#/definitions/getList",
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "definitions": {
+        "GetListInput": {
+            "additionalProperties": false,
+            "properties": {
+                "foo": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "foo"
+            ],
+            "type": "object"
+        },
+        "getList": {
+            "additionalProperties": false,
+            "properties": {
+                "input": {
+                    "$ref": "#/definitions/GetListInput"
+                }
+            },
+            "required": [
+                "input"
+            ],
+            "type": "object"
+        }
+    }
+}

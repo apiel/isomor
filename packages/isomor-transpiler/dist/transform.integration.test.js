@@ -75,21 +75,21 @@ export interface MyInterface {
 export function getTime1(...args: any) {
   const [] = args;
   const argsObject = {};
-  return isomorRemote("path/to/file", "getTime1", args, argsObject);
+  return isomorRemote("path-to-file", "getTime1", args, argsObject);
 }
 export function getTime2(...args: any) {
   const [input] = args;
   const argsObject = {
     input
   };
-  return isomorRemote("path/to/file", "getTime2", args, argsObject);
+  return isomorRemote("path-to-file", "getTime2", args, argsObject);
 }
 export const getTime3 = (...args: any) => {
   const [hello] = args;
   const argsObject = {
     hello
   };
-  return isomorRemote("path/to/file", "getTime3", args, argsObject);
+  return isomorRemote("path-to-file", "getTime3", args, argsObject);
 };
 
 @Injectable()
@@ -106,7 +106,7 @@ export class CatsService extends CatsService__deco_export__ {
     const argsObject = {
       id
     };
-    return isomorRemote("path/to/file", "findAll", args, argsObject, "CatsService");
+    return isomorRemote("path-to-file", "findAll", args, argsObject, "CatsService");
   }
 
 }
@@ -117,11 +117,12 @@ export class Post implements IsomorShare {
   text: string;
 }`;
 describe('transform', () => {
-    const path = 'path/to/file';
+    const srcFilePath = 'src-isomor/path/to/file';
+    const path = 'path-to-file';
     describe('transform/transform()', () => {
         it('should isomor code for e2e', () => {
             const { program } = ast_1.parse(codeSource);
-            program.body = transform_1.default(program.body, path);
+            program.body = transform_1.default(program.body, srcFilePath, path);
             const { code } = ast_1.generate(program);
             expect(code).toEqual(codeTranspiled);
         });

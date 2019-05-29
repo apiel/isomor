@@ -38,7 +38,8 @@ jest.mock('./transformer/transformType', () => ({
     transformType: jest.fn().mockReturnValue('TransformType'),
 }));
 
-const path = 'path/to/file';
+const srcFilePath = 'src-isomor/path/to/file';
+const path = 'path-to-file';
 const withTypes = true;
 describe('transform', () => {
     beforeEach(() => {
@@ -93,7 +94,7 @@ export function getTime1(): Promise<string[]> {
 }
             `);
             expect(newNode).toEqual('TransformFunc');
-            expect(transformFunc).toHaveBeenCalledWith((node as any).declaration, path, withTypes);
+            expect(transformFunc).toHaveBeenCalledWith((node as any).declaration, srcFilePath, path, withTypes);
         });
 
         it('should transform async function', () => {
@@ -103,7 +104,7 @@ export async function getTime1(): Promise<string[]> {
 }
             `);
             expect(newNode).toEqual('TransformFunc');
-            expect(transformFunc).toHaveBeenCalledWith((node as any).declaration, path, withTypes);
+            expect(transformFunc).toHaveBeenCalledWith((node as any).declaration, srcFilePath, path, withTypes);
         });
 
         it('should transform arrow function', () => {
@@ -113,7 +114,7 @@ export const getTime1 = async (hello: string) => {
 };
             `);
             expect(newNode).toEqual('TransformArrowFunc');
-            expect(transformArrowFunc).toHaveBeenCalledWith((node as any).declaration, path, withTypes);
+            expect(transformArrowFunc).toHaveBeenCalledWith((node as any).declaration, srcFilePath, path, withTypes);
         });
 
         it('should transform class', () => {
@@ -123,7 +124,7 @@ export const getTime1 = async (hello: string) => {
 export class MyClass {
 }          `, noServerImport, noDecorator);
             expect(newNode).toEqual('TransformClass');
-            expect(transformClass).toHaveBeenCalledWith(node, path, withTypes, noDecorator);
+            expect(transformClass).toHaveBeenCalledWith(node, srcFilePath, path, withTypes, noDecorator);
         });
     });
 });
@@ -135,7 +136,7 @@ function transformNodeTest(
 ) {
     const { program } = parse(code);
     const node = program.body[0];
-    const newNode = transformNode(node, path, withTypes, noServerImport, noDecorator);
+    const newNode = transformNode(node, srcFilePath, path, withTypes, noServerImport, noDecorator);
 
     return { node, newNode };
 }

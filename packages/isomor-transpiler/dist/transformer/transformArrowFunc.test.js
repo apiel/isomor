@@ -11,7 +11,8 @@ jest.mock('../code', () => ({
     getCodeArrowFunc: jest.fn().mockReturnValue('getCodeArrowFuncMock'),
 }));
 jest.mock('logol');
-const path = 'path/to/file';
+const srcFilePath = 'src-isomor/path/to/file';
+const path = 'path-to-file';
 const withTypes = true;
 describe('transformFunc()', () => {
     beforeEach(() => {
@@ -21,10 +22,10 @@ describe('transformFunc()', () => {
         const { program } = ast_1.parse(`export const getTime = (input1: string, input2: number): Promise<string[]> => {
             return readdir('./');
         }`);
-        const node = transformArrowFunc_1.transformArrowFunc(program.body[0].declaration, path, withTypes);
+        const node = transformArrowFunc_1.transformArrowFunc(program.body[0].declaration, srcFilePath, path, withTypes);
         expect(node).toEqual('getCodeArrowFuncMock');
         expect(code_1.getCodeArrowFunc).toHaveBeenCalledWith(path, 'getTime', ['input1', 'input2'], withTypes);
-        expect(getArgs_1.getArgs).toBeCalledWith(program.body[0].declaration.declarations[0].init, path, 'getTime');
+        expect(getArgs_1.getArgs).toBeCalledWith(program.body[0].declaration.declarations[0].init, srcFilePath, path, 'getTime');
     });
 });
 //# sourceMappingURL=transformArrowFunc.test.js.map

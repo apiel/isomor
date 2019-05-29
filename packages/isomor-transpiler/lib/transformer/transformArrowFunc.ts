@@ -4,6 +4,7 @@ import { getArgs } from './utils/getArgs';
 
 export function transformArrowFunc(
     root: VariableDeclaration,
+    srcFilePath: string,
     path: string,
     withTypes: boolean,
 ) {
@@ -14,7 +15,7 @@ export function transformArrowFunc(
         && declaration.id.type === 'Identifier'
     ) {
         const { name } = declaration.id;
-        const args = getArgs(declaration.init, path, name);
+        const args = getArgs(declaration.init, srcFilePath, path, name);
         return getCodeArrowFunc(path, name, args, withTypes);
     }
 }

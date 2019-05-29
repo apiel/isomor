@@ -38,10 +38,10 @@ export function getOptions(): Options {
     };
 }
 
-function getCode(options: Options, path: string, content: string) {
+function getCode(options: Options, srcFilePath: string, path: string, content: string) {
     const { withTypes, noServerImport, noDecorator } = options;
     const { program } = parse(content);
-    program.body = transform(program.body, path, withTypes, noServerImport, noDecorator);
+    program.body = transform(program.body, srcFilePath, path, withTypes, noServerImport, noDecorator);
     const { code } = generate(program as any);
 
     return code;
@@ -51,10 +51,11 @@ async function transpile(options: Options, filePath: string) {
     const { distAppFolder, srcFolder } = options;
 
     info('Transpile', filePath);
-    const buffer = await readFile(join(srcFolder, filePath));
+    const srcFilePath = join(srcFolder, filePath);
+    const buffer = await readFile(srcFilePath);
     debug('isomor-transpiler:transpile:in')(buffer.toString());
 
-    const code = getCode(options, getPathForUrl(filePath), buffer.toString());
+    const code = getCode(options, srcFilePath, getPathForUrl(filePath), buffer.toString());
 
     const appFilePath = join(distAppFolder, filePath);
     info('Save isomor file', appFilePath);

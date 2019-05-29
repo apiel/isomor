@@ -10,6 +10,7 @@ const debug = Debug('isomor-transpiler:transform');
 
 export default function transform(
     body: Statement[],
+    srcFilePath: string,
     path: string,
     withTypes: boolean = true,
     noServerImport: boolean = false,
@@ -17,7 +18,7 @@ export default function transform(
 ) {
     let newBody = [getCodeImport()];
     body.forEach((node) => {
-        const newNode = transformNode(node, path, withTypes, noServerImport, noDecorator);
+        const newNode = transformNode(node, srcFilePath, path, withTypes, noServerImport, noDecorator);
         if (newNode) {
             if (isArray(newNode)) {
                 newBody = [...newBody, ...newNode];

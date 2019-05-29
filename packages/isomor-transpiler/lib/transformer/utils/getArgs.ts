@@ -7,6 +7,7 @@ type RootParams = FunctionDeclaration | ClassMethod | ArrowFunctionExpression;
 
 export function getArgs(
     paramRoot: RootParams,
+    srcFilePath: string,
     path: string,
     name: string,
     className?: string,
@@ -18,7 +19,7 @@ export function getArgs(
         warn('TransformFunc support only Identifier as params');
         args = [];
     } else {
-        pushToQueue(args, path, name, className);
+        pushToQueue(args, srcFilePath, path, name, className);
     }
     return args;
 }

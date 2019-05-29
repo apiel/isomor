@@ -30,7 +30,8 @@ jest.mock('./transformer/transformArrowFunc', () => ({
 jest.mock('./transformer/transformType', () => ({
     transformType: jest.fn().mockReturnValue('TransformType'),
 }));
-const path = 'path/to/file';
+const srcFilePath = 'src-isomor/path/to/file';
+const path = 'path-to-file';
 const withTypes = true;
 describe('transform', () => {
     beforeEach(() => {
@@ -79,7 +80,7 @@ export function getTime1(): Promise<string[]> {
 }
             `);
             expect(newNode).toEqual('TransformFunc');
-            expect(transformFunc_1.transformFunc).toHaveBeenCalledWith(node.declaration, path, withTypes);
+            expect(transformFunc_1.transformFunc).toHaveBeenCalledWith(node.declaration, srcFilePath, path, withTypes);
         });
         it('should transform async function', () => {
             const { newNode, node } = transformNodeTest(`
@@ -88,7 +89,7 @@ export async function getTime1(): Promise<string[]> {
 }
             `);
             expect(newNode).toEqual('TransformFunc');
-            expect(transformFunc_1.transformFunc).toHaveBeenCalledWith(node.declaration, path, withTypes);
+            expect(transformFunc_1.transformFunc).toHaveBeenCalledWith(node.declaration, srcFilePath, path, withTypes);
         });
         it('should transform arrow function', () => {
             const { newNode, node } = transformNodeTest(`
@@ -97,7 +98,7 @@ export const getTime1 = async (hello: string) => {
 };
             `);
             expect(newNode).toEqual('TransformArrowFunc');
-            expect(transformArrowFunc_1.transformArrowFunc).toHaveBeenCalledWith(node.declaration, path, withTypes);
+            expect(transformArrowFunc_1.transformArrowFunc).toHaveBeenCalledWith(node.declaration, srcFilePath, path, withTypes);
         });
         it('should transform class', () => {
             const noServerImport = false;
@@ -106,14 +107,14 @@ export const getTime1 = async (hello: string) => {
 export class MyClass {
 }          `, noServerImport, noDecorator);
             expect(newNode).toEqual('TransformClass');
-            expect(transformClass_1.transformClass).toHaveBeenCalledWith(node, path, withTypes, noDecorator);
+            expect(transformClass_1.transformClass).toHaveBeenCalledWith(node, srcFilePath, path, withTypes, noDecorator);
         });
     });
 });
 function transformNodeTest(code, noServerImport = false, noDecorator = false) {
     const { program } = ast_1.parse(code);
     const node = program.body[0];
-    const newNode = transformNode_1.transformNode(node, path, withTypes, noServerImport, noDecorator);
+    const newNode = transformNode_1.transformNode(node, srcFilePath, path, withTypes, noServerImport, noDecorator);
     return { node, newNode };
 }
 //# sourceMappingURL=transformNode.test.js.map

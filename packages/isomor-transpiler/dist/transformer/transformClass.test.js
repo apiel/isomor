@@ -27,10 +27,11 @@ jest.mock('../code', () => ({
     }),
 }));
 const withTypes = true;
-const path = 'path/to/somewhere';
+const srcFilePath = 'src-isomor/path/to/file';
+const path = 'path-to-file';
 const transformClassFromCode = (source, noDecorator = false) => {
     const { program } = ast_1.parse(source);
-    const body = transformClass_1.transformClass(program.body[0], path, withTypes, noDecorator);
+    const body = transformClass_1.transformClass(program.body[0], srcFilePath, path, withTypes, noDecorator);
     program.body = util_1.isArray(body) ? body : [body];
     const { code } = ast_1.generate(program);
     return code;

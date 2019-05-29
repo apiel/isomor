@@ -30,10 +30,10 @@ function getOptions() {
     };
 }
 exports.getOptions = getOptions;
-function getCode(options, path, content) {
+function getCode(options, srcFilePath, path, content) {
     const { withTypes, noServerImport, noDecorator } = options;
     const { program } = ast_1.parse(content);
-    program.body = transform_1.default(program.body, path, withTypes, noServerImport, noDecorator);
+    program.body = transform_1.default(program.body, srcFilePath, path, withTypes, noServerImport, noDecorator);
     const { code } = ast_1.generate(program);
     return code;
 }
@@ -41,9 +41,10 @@ function transpile(options, filePath) {
     return __awaiter(this, void 0, void 0, function* () {
         const { distAppFolder, srcFolder } = options;
         logol_1.info('Transpile', filePath);
-        const buffer = yield fs_extra_1.readFile(path_1.join(srcFolder, filePath));
+        const srcFilePath = path_1.join(srcFolder, filePath);
+        const buffer = yield fs_extra_1.readFile(srcFilePath);
         debug_1.default('isomor-transpiler:transpile:in')(buffer.toString());
-        const code = getCode(options, isomor_core_1.getPathForUrl(filePath), buffer.toString());
+        const code = getCode(options, srcFilePath, isomor_core_1.getPathForUrl(filePath), buffer.toString());
         const appFilePath = path_1.join(distAppFolder, filePath);
         logol_1.info('Save isomor file', appFilePath);
         yield fs_extra_1.outputFile(appFilePath, code);

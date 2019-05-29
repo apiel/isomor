@@ -30,7 +30,8 @@ jest.mock('../code', () => ({
 }));
 
 const withTypes = true;
-const path = 'path/to/somewhere';
+const srcFilePath = 'src-isomor/path/to/file';
+const path = 'path-to-file';
 
 const transformClassFromCode = (
     source: string,
@@ -38,7 +39,7 @@ const transformClassFromCode = (
 ): string => {
     const { program } = parse(source);
     // console.log('JsonAst', JsonAst(program.body[0]));
-    const body = transformClass(program.body[0] as any, path, withTypes, noDecorator);
+    const body = transformClass(program.body[0] as any, srcFilePath, path, withTypes, noDecorator);
     program.body = isArray(body) ? body : [body];
     // console.log('JsonAst2', JsonAst(program.body[0]));
     const { code } = generate(program as any);

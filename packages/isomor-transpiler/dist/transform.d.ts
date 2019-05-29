@@ -1,2 +1,2 @@
 import { Statement } from './ast';
-export default function transform(body: Statement[], path: string, withTypes?: boolean, noServerImport?: boolean, noDecorator?: boolean): Statement[];
+export default function transform(body: Statement[], srcFilePath: string, path: string, withTypes?: boolean, noServerImport?: boolean, noDecorator?: boolean): Statement[];

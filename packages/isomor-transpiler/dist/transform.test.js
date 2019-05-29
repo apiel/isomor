@@ -10,27 +10,28 @@ jest.mock('./code', () => ({
     getCodeImport: jest.fn().mockReturnValue(getCodeImportMock()),
 }));
 describe('transform', () => {
-    const path = 'path/to/file';
+    const srcFilePath = 'src-isomor/path/to/file';
+    const path = 'path-to-file';
     beforeEach(() => {
         jest.clearAllMocks();
     });
     describe('transform/transform()', () => {
         it('should add isomor import to body', () => {
             const body = [];
-            const newBody = transform_1.default([...body], path);
+            const newBody = transform_1.default([...body], srcFilePath, path);
             expect(newBody).toEqual([getCodeImportMock()]);
         });
         it('should remove node if transformNode return nothing', () => {
             const node = 'node';
             const body = [node];
-            const newBody = transform_1.default([...body], path);
+            const newBody = transform_1.default([...body], srcFilePath, path);
             expect(newBody).toEqual([getCodeImportMock()]);
         });
         it('should keep node if transformNode return the same node', () => {
             const node = 'node';
             transformNode_1.transformNode.mockImplementation().mockReturnValue(node);
             const body = [node];
-            const newBody = transform_1.default([...body], path);
+            const newBody = transform_1.default([...body], srcFilePath, path);
             expect(newBody).toEqual([getCodeImportMock(), node]);
         });
         it('should transform node if transformNode return a different node', () => {
@@ -38,7 +39,7 @@ describe('transform', () => {
             const anotherNode = 'anotherNode';
             transformNode_1.transformNode.mockImplementation().mockReturnValue(anotherNode);
             const body = [node];
-            const newBody = transform_1.default([...body], path);
+            const newBody = transform_1.default([...body], srcFilePath, path);
             expect(newBody).toEqual([getCodeImportMock(), anotherNode]);
         });
         it('should insert node array', () => {
@@ -47,7 +48,7 @@ describe('transform', () => {
                 .mockReturnValueOnce(nodeArray)
                 .mockReturnValue('node2');
             const body = ['node1', 'node2'];
-            const newBody = transform_1.default([...body], path);
+            const newBody = transform_1.default([...body], srcFilePath, path);
             expect(newBody).toEqual([getCodeImportMock(), ...nodeArray, 'node2']);
         });
     });

@@ -4,6 +4,7 @@ import { getArgs } from './utils/getArgs';
 
 export function transformClass(
     root: ExportNamedDeclaration,
+    srcFilePath: string,
     path: string,
     withTypes: boolean,
     noDecorator: boolean,
@@ -28,7 +29,7 @@ export function transformClass(
                 if (name === 'constructor') {
                     (root as any).declaration.body.body[index] = getCodeConstructor(withTypes);
                 } else {
-                    const args = getArgs((root as any).declaration.body.body[index], path, name, className);
+                    const args = getArgs((root as any).declaration.body.body[index], srcFilePath, path, name, className);
                     (root as any).declaration.body.body[index] = getCodeMethod(path, name, className, args, withTypes);
                 }
             } else if (node.type !== 'ClassProperty') {

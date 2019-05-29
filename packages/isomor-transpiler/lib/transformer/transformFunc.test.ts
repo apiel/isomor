@@ -14,7 +14,8 @@ jest.mock('../code', () => ({
 
 jest.mock('logol');
 
-const path = 'path/to/file';
+const srcFilePath = 'src-isomor/path/to/file';
+const path = 'path-to-file';
 const withTypes = true;
 describe('transformFunc()', () => {
     beforeEach(() => {
@@ -24,9 +25,9 @@ describe('transformFunc()', () => {
         const { program } = parse(`export function getTime(input1: string, input2: number): Promise<string[]> {
             return readdir('./');
         }`);
-        const node = transformFunc((program.body[0] as any).declaration, path, withTypes);
+        const node = transformFunc((program.body[0] as any).declaration, srcFilePath, path, withTypes);
         expect(node).toEqual('getCodeFuncMock');
         expect(getCodeFunc).toHaveBeenCalledWith(path, 'getTime', ['input1', 'input2'], withTypes);
-        expect(getArgs).toBeCalledWith((program.body[0] as any).declaration, path, 'getTime');
+        expect(getArgs).toBeCalledWith((program.body[0] as any).declaration, srcFilePath, path, 'getTime');
     });
 });

@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const code_1 = require("../code");
 const getArgs_1 = require("./utils/getArgs");
-function transformClass(root, path, withTypes, noDecorator) {
+function transformClass(root, srcFilePath, path, withTypes, noDecorator) {
     if (root.declaration.type === 'ClassDeclaration') {
         if (checkIfClassImplementInterface(root.declaration, 'IsomorShare')) {
             return root;
@@ -22,7 +22,7 @@ function transformClass(root, path, withTypes, noDecorator) {
                     root.declaration.body.body[index] = code_1.getCodeConstructor(withTypes);
                 }
                 else {
-                    const args = getArgs_1.getArgs(root.declaration.body.body[index], path, name, className);
+                    const args = getArgs_1.getArgs(root.declaration.body.body[index], srcFilePath, path, name, className);
                     root.declaration.body.body[index] = code_1.getCodeMethod(path, name, className, args, withTypes);
                 }
             }

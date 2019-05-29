@@ -10,6 +10,7 @@ import { transformType } from './transformer/transformType';
 
 export function transformNode(
     node: Statement,
+    srcFilePath: string,
     path: string,
     withTypes: boolean,
     noServerImport: boolean,
@@ -23,11 +24,11 @@ export function transformNode(
         } else if (node.declaration.type === 'TSInterfaceDeclaration') {
             return transformInterface(node, noServerImport);
         } else if (node.declaration.type === 'FunctionDeclaration') {
-            return transformFunc(node.declaration, path, withTypes);
+            return transformFunc(node.declaration, srcFilePath, path, withTypes);
         } else if (node.declaration.type === 'VariableDeclaration') {
-            return transformArrowFunc(node.declaration, path, withTypes);
+            return transformArrowFunc(node.declaration, srcFilePath, path, withTypes);
         } else if (node.declaration.type === 'ClassDeclaration') {
-            return transformClass(node, path, withTypes, noDecorator);
+            return transformClass(node, srcFilePath, path, withTypes, noDecorator);
         }
     } else if (node.type === 'ImportDeclaration') {
         return transformImport(node, noServerImport);

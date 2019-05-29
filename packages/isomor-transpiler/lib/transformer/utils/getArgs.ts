@@ -1,6 +1,6 @@
 import { warn } from 'logol';
 
-import { JsonAst, Identifier, FunctionDeclaration, ClassMethod, ArrowFunctionExpression } from '../../ast';
+import { JsonAst, FunctionDeclaration, ClassMethod, ArrowFunctionExpression } from '../../ast';
 import { pushToQueue } from '../../validation';
 
 type RootParams = FunctionDeclaration | ClassMethod | ArrowFunctionExpression;
@@ -12,11 +12,17 @@ export function getArgs(
     name: string,
     className?: string,
 ) {
-    const params = paramRoot.params.filter(({ type }) => type === 'Identifier') as Identifier[];
-    let args = params.map((param) => param.name);
-    if (params.length !== paramRoot.params.length) {
+    let args = paramRoot.params.map((param) => {
+        if (param.type === 'Identifier') {
+            return param.name;
+        } else if (param.type === 'AssignmentPattern' && param.left.type === 'Identifier') {
+            return param.left.name;
+        }
+    }).filter(param => param);
+    if (args.length !== paramRoot.params.length) {
         // need to work on that to support as well ...
-        warn('TransformFunc support only Identifier as params');
+        warn('TransformFunc support only Identifier as params', srcFilePath, name);
+        // console.log('paramRoot', JsonAst(paramRoot));
         args = [];
     } else {
         pushToQueue(args, srcFilePath, path, name, className);

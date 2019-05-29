@@ -2,6 +2,8 @@
 
 - look at stdlib.com or lambda function and think about an isomor version just to generate API without frontend.
 
+- unit test getArgs and validate
+
 - vscode extension
     - handle delete and move file
     - automatically publish when new isomor-transpiler using ~~asure or travis~~? or manually trigger...

@@ -1,11 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const child_process_1 = require("child_process");
-const build_1 = require("./build");
+const logol_1 = require("logol");
 const queueList = [];
 let process;
 function pushToQueue(args, srcFilePath, path, name, className) {
     if (args.length) {
+        logol_1.info(`Queue JSON schema generation for ${name} in ${srcFilePath}`);
         queueList.push({ args, srcFilePath, path, name, className });
         run();
     }
@@ -13,14 +14,17 @@ function pushToQueue(args, srcFilePath, path, name, className) {
 exports.pushToQueue = pushToQueue;
 function run() {
     if (!process && queueList.length) {
-        const { srcFolder } = build_1.getOptions();
         const { name, srcFilePath } = queueList.pop();
         const command = `isomor-json-schema-generator --path ${srcFilePath} --type ${name}`;
-        console.log('command', command);
-        process = child_process_1.exec(command, (error, stdout, stderr) => {
-            console.error(`exec error: ${error}`);
-            console.log(`stdout: ${stdout}`);
-            console.log(`stderr: ${stderr}`);
+        logol_1.info(`Start JSON schema generation for ${name} in ${srcFilePath}...`);
+        process = child_process_1.exec(command, (err, stdout, stderr) => {
+            if (err) {
+                logol_1.error(err);
+            }
+            if (stderr) {
+                logol_1.warn(stderr);
+            }
+            logol_1.info(`JSON schema generation finished for ${name} in ${srcFilePath}`);
             process = null;
             run();
         });

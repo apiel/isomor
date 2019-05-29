@@ -1,4 +1,5 @@
 import { exec, ChildProcess } from 'child_process';
+import { warn, info, error } from 'logol';
 
 interface Queue {
     args: string[];
@@ -19,6 +20,7 @@ export function pushToQueue(
     className: string | undefined,
 ) {
     if (args.length) {
+        info(`Queue JSON schema generation for ${name} in ${srcFilePath}`);
         queueList.push({ args, srcFilePath, path, name, className });
         run();
     }
@@ -28,11 +30,16 @@ function run() {
     if (!process && queueList.length) {
         const { name, srcFilePath } = queueList.pop();
         const command = `isomor-json-schema-generator --path ${srcFilePath} --type ${name}`;
-        console.log('command', command);
-        process = exec(command, (error, stdout, stderr) => {
-            console.error(`exec error: ${error}`);
-            console.log(`stdout: ${stdout}`);
-            console.log(`stderr: ${stderr}`);
+        info(`Start JSON schema generation for ${name} in ${srcFilePath}...`);
+        process = exec(command, (err, stdout, stderr) => {
+            if (err) {
+                error(err);
+            }
+            if (stderr) {
+                warn(stderr);
+            }
+            // console.log(`stdout: ${stdout}`);
+            info(`JSON schema generation finished for ${name} in ${srcFilePath}`);
             process = null;
             run();
         });

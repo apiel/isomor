@@ -8,10 +8,7 @@ import { transformInterface } from './transformer/transformInterface';
 import { transformExport } from './transformer/transformExport';
 import { transformFunc } from './transformer/transformFunc';
 import { transformArrowFunc } from './transformer/transformArrowFunc';
-
-jest.mock('./code', () => ({
-    getCodeType: jest.fn().mockReturnValue('TypeAny'),
-}));
+import { transformType } from './transformer/transformType';
 
 jest.mock('./transformer/transformExport', () => ({
     transformExport: jest.fn().mockReturnValue('TransformExport'),
@@ -35,6 +32,10 @@ jest.mock('./transformer/transformFunc', () => ({
 
 jest.mock('./transformer/transformArrowFunc', () => ({
     transformArrowFunc: jest.fn().mockReturnValue('TransformArrowFunc'),
+}));
+
+jest.mock('./transformer/transformType', () => ({
+    transformType: jest.fn().mockReturnValue('TransformType'),
 }));
 
 const path = 'path/to/file';
@@ -67,9 +68,9 @@ function shouldNotBeTranspiled() {
         });
 
         it('should transform type', () => {
-            const { newNode } = transformNodeTest(`export type MyType = string;`);
-            expect(newNode).toEqual('TypeAny');
-            expect(getCodeType).toHaveBeenCalledWith('MyType');
+            const { node, newNode } = transformNodeTest(`export type MyType = string;`);
+            expect(newNode).toEqual('TransformType');
+            expect(transformType).toHaveBeenCalledWith((node as any).declaration);
         });
 
         it('should transform interface', () => {

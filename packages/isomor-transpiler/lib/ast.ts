@@ -9,6 +9,7 @@ export {
     ClassMethod,
     ClassDeclaration,
     ArrowFunctionExpression,
+    TSTypeAliasDeclaration,
 } from '@babel/types';
 
 import { parse as parseBabel } from '@babel/parser';

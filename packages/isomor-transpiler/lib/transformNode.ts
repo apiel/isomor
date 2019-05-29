@@ -6,6 +6,7 @@ import { transformInterface } from './transformer/transformInterface';
 import { transformExport } from './transformer/transformExport';
 import { transformFunc } from './transformer/transformFunc';
 import { transformArrowFunc } from './transformer/transformArrowFunc';
+import { transformType } from './transformer/transformType';
 
 export function transformNode(
     node: Statement,
@@ -18,7 +19,7 @@ export function transformNode(
         if (!node.declaration) {
             return transformExport(node, noServerImport);
         } else if (node.declaration.type === 'TSTypeAliasDeclaration') {
-            return getCodeType(node.declaration.id.name); // lets create a transformType
+            return transformType(node.declaration);
         } else if (node.declaration.type === 'TSInterfaceDeclaration') {
             return transformInterface(node, noServerImport);
         } else if (node.declaration.type === 'FunctionDeclaration') {

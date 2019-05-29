@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const ast_1 = require("./ast");
 const transform_1 = require("./transform");
+jest.mock('./validation');
 const codeSource = `
 import { Injectable } from '@nestjs/common'; // > import { Injectable } from '@angular/core';
 import { readdir } from 'fs-extra';
@@ -56,7 +57,7 @@ export class Post implements IsomorShare {
     text: string;
 }
 `;
-const codeTranspiled = `import { remote } from "isomor";
+const codeTranspiled = `import { isomorRemote } from "isomor";
 import { Injectable } from '@angular/core';
 // > import { Injectable } from '@angular/core';
 import { readdir } from 'fs-extra';
@@ -72,13 +73,23 @@ export interface MyInterface {
   };
 }
 export function getTime1(...args: any) {
-  return remote("path/to/file", "getTime1", args);
+  const [] = args;
+  const argsObject = {};
+  return isomorRemote("path/to/file", "getTime1", args, argsObject);
 }
 export function getTime2(...args: any) {
-  return remote("path/to/file", "getTime2", args);
+  const [input] = args;
+  const argsObject = {
+    input
+  };
+  return isomorRemote("path/to/file", "getTime2", args, argsObject);
 }
 export const getTime3 = (...args: any) => {
-  return remote("path/to/file", "getTime3", args);
+  const [hello] = args;
+  const argsObject = {
+    hello
+  };
+  return isomorRemote("path/to/file", "getTime3", args, argsObject);
 };
 
 @Injectable()
@@ -91,7 +102,11 @@ export class CatsService extends CatsService__deco_export__ {
   }
 
   async findAll(...args: any) {
-    return remote("path/to/file", "findAll", args, "CatsService");
+    const [id] = args;
+    const argsObject = {
+      id
+    };
+    return isomorRemote("path/to/file", "findAll", args, argsObject, "CatsService");
   }
 
 }

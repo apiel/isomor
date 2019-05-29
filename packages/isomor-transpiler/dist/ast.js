@@ -45,5 +45,12 @@ if (process.env.TEST_AST) {
         `);
         result(node);
     }
+    else if (['argsObject', 'all'].includes(process.env.TEST_AST)) {
+        const node = parse(`
+            const [input1, input2] = args;
+            const argsObject = { input1, input2 };
+        `);
+        result(node);
+    }
 }
 //# sourceMappingURL=ast.js.map

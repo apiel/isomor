@@ -4,6 +4,9 @@ const ast_1 = require("../ast");
 const transformClass_1 = require("./transformClass");
 const code_1 = require("../code");
 const util_1 = require("util");
+jest.mock('./utils/getArgs', () => ({
+    getArgs: jest.fn().mockReturnValue(['id']),
+}));
 jest.mock('../code', () => ({
     getCodeType: jest.fn().mockReturnValue('getCodeTypeMock'),
     getCodeMethod: jest.fn().mockReturnValue({
@@ -23,9 +26,9 @@ jest.mock('../code', () => ({
         params: [],
     }),
 }));
+const withTypes = true;
+const path = 'path/to/somewhere';
 const transformClassFromCode = (source, noDecorator = false) => {
-    const withTypes = true;
-    const path = 'path/to/somewhere';
     const { program } = ast_1.parse(source);
     const body = transformClass_1.transformClass(program.body[0], path, withTypes, noDecorator);
     program.body = util_1.isArray(body) ? body : [body];
@@ -67,8 +70,7 @@ export class Post extends Post__deco_export__ {
                 findAll(id: string): Cat[] {
                     return this.cats;
                 }
-
-                }`;
+            }`;
         const noDecorator = true;
         expect(transformClassFromCode(code, noDecorator)).toBe(`class CatsService__deco_export__ extends Hello {}
 
@@ -77,6 +79,7 @@ export class CatsService extends CatsService__deco_export__ {
 
 }`);
         expect(code_1.getCodeMethod).toHaveBeenCalledTimes(1);
+        expect(code_1.getCodeMethod).toHaveBeenCalledWith(path, 'findAll', 'CatsService', ['id'], withTypes);
     });
     it('should not transform class when no noDecorator but dont provide @isomor', () => {
         const code = `@Injectable()
@@ -90,13 +93,12 @@ export class CatsService extends CatsService__deco_export__ {
     });
     it('should transform class for isomor', () => {
         const code = `@Injectable()
-                @isomor
-                export class CatsService extends Hello {
+            @isomor
+            export class CatsService extends Hello {
                 findAll(id: string): Cat[] {
                     return this.cats;
                 }
-
-                }`;
+            }`;
         expect(transformClassFromCode(code)).toBe(`@Injectable()
 @isomor
 class CatsService__deco_export__ extends Hello {}

@@ -2,9 +2,6 @@
 
 - look at stdlib.com or lambda function and think about an isomor version just to generate API without frontend.
 
-- rename remote to isomorRemote
-- transformNode refactoring
-
 - vscode extension
     - handle delete and move file
     - automatically publish when new isomor-transpiler using ~~asure or travis~~? or manually trigger...

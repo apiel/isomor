@@ -10,6 +10,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const axios_1 = require("axios");
 const urlPrefix = '/isomor';
+function getJsonSchemaFileName(path, name) {
+    return `${path}.${name}.json`;
+}
+exports.getJsonSchemaFileName = getJsonSchemaFileName;
 function getUrl(path, funcName, classname) {
     const url = classname
         ? `${urlPrefix}/${path}/${classname}/${funcName}`
@@ -25,9 +29,6 @@ function isomorRemote(path, funcName, args, argsObject, classname) {
     });
 }
 exports.isomorRemote = isomorRemote;
-function isomorValidate(params, path, funcName, classname) {
-}
-exports.isomorValidate = isomorValidate;
 function isomorShare(constructor) {
 }
 exports.isomorShare = isomorShare;

@@ -8,6 +8,13 @@ import axios from 'axios';
 
 const urlPrefix = '/isomor'; // http://127.0.0.1:3000/
 
+export function getJsonSchemaFileName(
+    path: string,
+    name: string,
+) {
+    return `${path}.${name}.json`;
+}
+
 export function getUrl(
     path: string,
     funcName: string,

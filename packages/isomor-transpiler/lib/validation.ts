@@ -2,6 +2,7 @@ import { exec, ChildProcess } from 'child_process';
 import { warn, info, error } from 'logol';
 import { join } from 'path';
 import { outputJSON } from 'fs-extra';
+import { getJsonSchemaFileName } from 'isomor';
 
 import { getOptions } from './build';
 
@@ -45,7 +46,8 @@ function run() {
                 warn(stderr);
             }
             // console.log(`stdout: ${stdout}`);
-            const jsonFile = join(jsonSchemaFolder, `${path}.${name}.json`);
+            const jsonSchemaFileName = getJsonSchemaFileName(path, name);
+            const jsonFile = join(jsonSchemaFolder, jsonSchemaFileName);
             await outputJSON(jsonFile, JSON.parse(stdout), { spaces: 4 });
             info(`JSON schema generation finished for ${name} in ${srcFilePath}`);
             process = null;

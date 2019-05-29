@@ -12,6 +12,7 @@ const child_process_1 = require("child_process");
 const logol_1 = require("logol");
 const path_1 = require("path");
 const fs_extra_1 = require("fs-extra");
+const isomor_1 = require("isomor");
 const build_1 = require("./build");
 const queueList = [];
 let process;
@@ -37,7 +38,8 @@ function run() {
             if (stderr) {
                 logol_1.warn(stderr);
             }
-            const jsonFile = path_1.join(jsonSchemaFolder, `${path}.${name}.json`);
+            const jsonSchemaFileName = isomor_1.getJsonSchemaFileName(path, name);
+            const jsonFile = path_1.join(jsonSchemaFolder, jsonSchemaFileName);
             yield fs_extra_1.outputJSON(jsonFile, JSON.parse(stdout), { spaces: 4 });
             logol_1.info(`JSON schema generation finished for ${name} in ${srcFilePath}`);
             process = null;

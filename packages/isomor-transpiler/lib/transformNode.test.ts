@@ -72,19 +72,7 @@ function shouldNotBeTranspiled() {
             expect(getCodeType).toHaveBeenCalledWith('MyType');
         });
 
-        it('should transform interface with noServerImport=false', () => {
-            const { newNode, node } = transformNodeTest(`
-export interface MyInterface {
-    foo: CpuInfo;
-    bar: {
-        child: CpuInfo;
-    };
-}          `);
-            expect(newNode).toEqual(node);
-            expect(transformInterface).toHaveBeenCalledTimes(0);
-        });
-
-        it('should transform interface with noServerImport=true', () => {
+        it('should transform interface', () => {
             const noServerImport = true;
             const { newNode, node } = transformNodeTest(`
 export interface MyInterface {
@@ -94,7 +82,7 @@ export interface MyInterface {
     };
 }          `, noServerImport);
             expect(newNode).toEqual('TransformInterface');
-            expect(transformInterface).toHaveBeenCalledWith(node);
+            expect(transformInterface).toHaveBeenCalledWith(node, noServerImport);
         });
 
         it('should transform function', () => {

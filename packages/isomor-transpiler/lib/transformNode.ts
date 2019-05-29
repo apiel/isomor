@@ -20,14 +20,8 @@ export function transformNode(
         } else if (node.declaration.type === 'TSTypeAliasDeclaration') {
             return getCodeType(node.declaration.id.name); // lets create a transformType
         } else if (node.declaration.type === 'TSInterfaceDeclaration') {
-            // console.log('TSInterfaceDeclaration', JsonAst(node));
-            if (noServerImport) { // lets move this in transformInterface
-                return transformInterface(node);
-            } else {
-                return node;
-            }
+            return transformInterface(node, noServerImport);
         } else if (node.declaration.type === 'FunctionDeclaration') {
-            // console.log('FunctionDeclaration', JsonAst(node));
             return transformFunc(node.declaration, path, withTypes);
         } else if (node.declaration.type === 'VariableDeclaration') {
             return transformArrowFunc(node.declaration, path, withTypes);

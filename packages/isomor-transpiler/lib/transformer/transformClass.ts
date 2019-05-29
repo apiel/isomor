@@ -1,8 +1,6 @@
 import { getCodeMethod, getCodeConstructor } from '../code';
-import { ExportNamedDeclaration } from '../ast';
-import { JsonAst, Identifier } from '../ast';
-import { ClassDeclaration } from '@babel/types';
-import { warn } from 'logol';
+import { ExportNamedDeclaration, ClassDeclaration } from '../ast';
+import { getArgs } from './utils/getArgs';
 
 export function transformClass(
     root: ExportNamedDeclaration,
@@ -30,15 +28,7 @@ export function transformClass(
                 if (name === 'constructor') {
                     (root as any).declaration.body.body[index] = getCodeConstructor(withTypes);
                 } else {
-                    // need to move this in util file
-                    const paramRoot = (root as any).declaration.body.body[index];
-                    const params = paramRoot.params.filter(({ type }) => type === 'Identifier') as Identifier[];
-                    let args = params.map((param) => param.name);
-                    if (params.length !== paramRoot.params.length) {
-                        warn('TransformFunc support only Identifier as params');
-                        args = [];
-                    } // need to move this in util file
-
+                    const args = getArgs((root as any).declaration.body.body[index]);
                     (root as any).declaration.body.body[index] = getCodeMethod(path, name, className, args, withTypes);
                 }
             } else if (node.type !== 'ClassProperty') {

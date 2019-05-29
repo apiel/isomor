@@ -1,7 +1,6 @@
-import { warn } from 'logol';
-
 import { getCodeFunc } from '../code';
-import { FunctionDeclaration, Identifier } from '../ast';
+import { FunctionDeclaration } from '../ast';
+import { getArgs } from './utils/getArgs';
 
 export function transformFunc(
     root: FunctionDeclaration,
@@ -9,11 +8,6 @@ export function transformFunc(
     withTypes: boolean,
 ) {
     const { name } = root.id;
-    const params = root.params.filter(({ type }) => type === 'Identifier') as Identifier[];
-    let args = params.map((node) => node.name);
-    if (params.length !== root.params.length) {
-        warn('TransformFunc support only Identifier as params');
-        args = [];
-    }
+    const args = getArgs(root);
     return getCodeFunc(path, name, args, withTypes);
 }

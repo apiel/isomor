@@ -6,6 +6,9 @@ export {
     FunctionDeclaration,
     VariableDeclaration,
     Identifier,
+    ClassMethod,
+    ClassDeclaration,
+    ArrowFunctionExpression,
 } from '@babel/types';
 
 import { parse as parseBabel } from '@babel/parser';

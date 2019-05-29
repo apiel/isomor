@@ -1,5 +1,7 @@
 ### ToDo
 
+- look at stdlib.com or lambda function and think about an isomor version just to generate API without frontend.
+
 - rename remote to isomorRemote
 - transformNode refactoring
 

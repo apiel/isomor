@@ -1213,7 +1213,7 @@ glob-parent@^5.0.0:
   dependencies:
     is-glob "^4.0.1"
 
-glob@^7.1.1, glob@^7.1.2, glob@^7.1.3:
+glob@^7.1.1, glob@^7.1.2, glob@^7.1.3, glob@~7.1.4:
   version "7.1.4"
   resolved "https://registry.yarnpkg.com/glob/-/glob-7.1.4.tgz#aa608a2f6c577ad357e1ae5a5c26d9a8d1969255"
   dependencies:
@@ -1532,13 +1532,22 @@ isobject@^3.0.0, isobject@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/isobject/-/isobject-3.0.1.tgz#4e431e92b11a9731636aa1f9c8d1ccbcfdab78df"
 
-isomor-core@^0.12.0:
-  version "0.12.0"
-  resolved "https://registry.yarnpkg.com/isomor-core/-/isomor-core-0.12.0.tgz#7c7968a3f0f63ff443c7097f9c139adbf736c570"
+isomor-core@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/isomor-core/-/isomor-core-1.0.2.tgz#31866672c70418b58cef5fb1d04f213c13bdba8a"
   dependencies:
     fs-extra "^8.0.1"
     glob "^7.1.3"
     typescript "^3.2.4"
+
+isomor-json-schema-generator@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/isomor-json-schema-generator/-/isomor-json-schema-generator-1.0.2.tgz#e5f5796c1e8491cecfe4649e7ba25994abf141ac"
+  dependencies:
+    commander "~2.20.0"
+    glob "~7.1.4"
+    json-stable-stringify "^1.0.1"
+    typescript "~3.4.5"
 
 isstream@~0.1.2:
   version "0.1.2"
@@ -1970,6 +1979,12 @@ json-schema@0.2.3:
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/json-schema/-/json-schema-0.2.3.tgz#b480c892e59a2f05954ce727bd3f2a4e882f9e13"
 
+json-stable-stringify@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/json-stable-stringify/-/json-stable-stringify-1.0.1.tgz#9a759d39c5f2ff503fd5300646ed445f88c4f9af"
+  dependencies:
+    jsonify "~0.0.0"
+
 json-stringify-safe@~5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/json-stringify-safe/-/json-stringify-safe-5.0.1.tgz#1296a2d58fd45f19a0f6ce01d65701e2c735b6eb"
@@ -1985,6 +2000,10 @@ jsonfile@^4.0.0:
   resolved "https://registry.yarnpkg.com/jsonfile/-/jsonfile-4.0.0.tgz#8771aae0799b64076b76640fca058f9c10e33ecb"
   optionalDependencies:
     graceful-fs "^4.1.6"
+
+jsonify@~0.0.0:
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/jsonify/-/jsonify-0.0.0.tgz#2c74b6ee41d93ca51b7b5aaee8f503631d252a73"
 
 jsprim@^1.2.2:
   version "1.4.1"
@@ -3191,7 +3210,7 @@ type-check@~0.3.2:
   dependencies:
     prelude-ls "~1.1.2"
 
-typescript@^3.2.4, typescript@^3.4.1, typescript@^3.4.3:
+typescript@^3.2.4, typescript@^3.4.1, typescript@^3.4.3, typescript@~3.4.5:
   version "3.4.5"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.4.5.tgz#2d2618d10bb566572b8d7aad5180d84257d70a99"
 

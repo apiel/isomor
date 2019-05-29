@@ -5,6 +5,8 @@ import { parse, generate, JsonAst } from './ast';
 
 import transform from './transform';
 
+jest.mock('./validation');
+
 const codeSource = `
 import { Injectable } from '@nestjs/common'; // > import { Injectable } from '@angular/core';
 import { readdir } from 'fs-extra';

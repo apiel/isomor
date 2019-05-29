@@ -14,7 +14,7 @@ export function transformArrowFunc(
         && declaration.id.type === 'Identifier'
     ) {
         const { name } = declaration.id;
-        const args = getArgs(declaration.init);
+        const args = getArgs(declaration.init, path, name);
         return getCodeArrowFunc(path, name, args, withTypes);
     }
 }

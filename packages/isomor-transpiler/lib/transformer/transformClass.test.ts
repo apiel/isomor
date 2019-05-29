@@ -5,6 +5,10 @@ import { getCodeMethod, getCodeConstructor } from '../code';
 import { JsonAst } from '../ast';
 import { isArray } from 'util';
 
+jest.mock('./utils/getArgs', () => ({
+    getArgs: jest.fn().mockReturnValue(['id']),
+}));
+
 jest.mock('../code', () => ({
     getCodeType: jest.fn().mockReturnValue('getCodeTypeMock'),
     getCodeMethod: jest.fn().mockReturnValue({

@@ -4,6 +4,12 @@
 
 The server generate automatically the API documentation and make it available using swagger UI at http://localhost:3005/api-docs/
 
+#### API validation
+
+Isomor validate each incoming request to the server base on the types of the parameters of the function call.
+
+> **Note:** Generating the validation schema can take some time. You can deactivate by setting the environment variable `JSON_SCHEMA_FOLDER` to `""`.
+
 #### Startup script
 
 The server can call a script when it is starting. Just create a file in `src-isomor/server/startup/index.ts` exporting as default the function to call. The server will call this function at startup, passing as parameter the express server. This can be useful to setup some custom middleware or to simply initialise some library, like an ORM.

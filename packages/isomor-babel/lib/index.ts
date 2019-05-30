@@ -9,7 +9,7 @@ export default function() {
     const visitor: Visitor = {
         Program(path, { filename }: any) {
             const fileName = parse(filename).name;
-            path.node.body = transpiler(path.node.body as any, fileName, withTypes) as any;
+            path.node.body = transpiler(path.node.body as any, 'pathToFile?', fileName, withTypes) as any;
         },
     };
 

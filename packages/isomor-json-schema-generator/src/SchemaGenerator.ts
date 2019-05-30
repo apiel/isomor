@@ -49,14 +49,10 @@ export class SchemaGenerator {
 
         if (this.prioritizedFiles.length) {
             for (const sourceFile of this.prioritizedFiles) {
-                console.log("sourcefile", sourceFile.fileName);
-                // console.log("source", sourceFile);
                 this.inspectNode(sourceFile, typeChecker, this.allTypes);
             }
             this.prioritizedFiles = [];
         }
-
-        console.log('lol', fullName, this.allTypes.has(fullName));
 
         if (this.allTypes.has(fullName)) {
             return this.allTypes.get(fullName)!;
@@ -64,13 +60,10 @@ export class SchemaGenerator {
 
         if (this.unprioritizedFiles.length) {
             for (const sourceFile of this.unprioritizedFiles) {
-                // console.log("sourcefile", sourceFile.fileName);
                 this.inspectNode(sourceFile, typeChecker, this.allTypes);
             }
             this.unprioritizedFiles = [];
         }
-
-        // console.log('lol2', fullName, this.allTypes.has(fullName));
 
         if (this.allTypes.has(fullName)) {
             return this.allTypes.get(fullName)!;
@@ -79,15 +72,6 @@ export class SchemaGenerator {
         throw new NoRootTypeError(fullName);
     }
     private inspectNode(node: ts.Node, typeChecker: ts.TypeChecker, allTypes: Map<string, ts.Node>): void {
-        // if (node.kind === ts.SyntaxKind.MethodDeclaration
-        //     && (node as any).name.escapedText === "uptime") {
-        //     console.log(
-        //         "MethodDeclaration",
-        //         // (node as any).parameters,
-        //         !this.isExportType(node) && node.kind !== ts.SyntaxKind.MethodDeclaration,
-        //         this.isGenericType(node as ts.TypeAliasDeclaration),
-        //     );
-        // }
         if (
             node.kind === ts.SyntaxKind.InterfaceDeclaration ||
             node.kind === ts.SyntaxKind.EnumDeclaration ||
@@ -101,10 +85,8 @@ export class SchemaGenerator {
             } else if (this.isGenericType(node as ts.TypeAliasDeclaration)) {
                 return;
             }
-            // console.log("k", this.getFullName(node, typeChecker));
             allTypes.set(this.getFullName(node, typeChecker), node);
         } else {
-            // console.log("'subnode'");
             ts.forEachChild(node, (subnode) => this.inspectNode(subnode, typeChecker, allTypes));
         }
     }

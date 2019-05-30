@@ -4,3 +4,6 @@ yarn dev --path /home/alex/dev/node/pkg/isomor/packages/example/ng-nest/src-isom
 
 yarn dev --path /home/alex/dev/node/pkg/isomor/packages/example/react/src-isomor/server/data.ts --type getList
 
+yarn dev --path /home/alex/dev/node/pkg/isomor/packages/example/ng-nest/src-isomor/server/api.service.ts --type ApiService.uptime
+
+

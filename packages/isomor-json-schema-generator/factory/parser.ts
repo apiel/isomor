@@ -39,7 +39,6 @@ import { UndefinedTypeNodeParser } from "../src/NodeParser/UndefinedTypeNodePars
 import { UnionNodeParser } from "../src/NodeParser/UnionNodeParser";
 import { SubNodeParser } from "../src/SubNodeParser";
 import { TopRefNodeParser } from "../src/TopRefNodeParser";
-import { MethodTypeNodeParser } from "../src/NodeParser/MethodTypeNodeParser";
 
 export function createParser(program: ts.Program, config: Config): NodeParser {
     const typeChecker = program.getTypeChecker();
@@ -67,7 +66,6 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
     }
 
     chainNodeParser
-        .addNodeParser(new MethodTypeNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new FuncTypeNodeParser(typeChecker, chainNodeParser))
 
         .addNodeParser(new StringTypeNodeParser())

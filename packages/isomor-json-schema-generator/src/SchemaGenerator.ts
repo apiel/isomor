@@ -50,6 +50,7 @@ export class SchemaGenerator {
         if (this.prioritizedFiles.length) {
             for (const sourceFile of this.prioritizedFiles) {
                 console.log("sourcefile", sourceFile.fileName);
+                // console.log("source", sourceFile);
                 this.inspectNode(sourceFile, typeChecker, this.allTypes);
             }
             this.prioritizedFiles = [];
@@ -69,7 +70,7 @@ export class SchemaGenerator {
             this.unprioritizedFiles = [];
         }
 
-        console.log('lol2', fullName, this.allTypes.has(fullName));
+        // console.log('lol2', fullName, this.allTypes.has(fullName));
 
         if (this.allTypes.has(fullName)) {
             return this.allTypes.get(fullName)!;
@@ -100,9 +101,10 @@ export class SchemaGenerator {
             } else if (this.isGenericType(node as ts.TypeAliasDeclaration)) {
                 return;
             }
-            if (this.getFullName(node, typeChecker) === "uptime") console.log("k", this.getFullName(node, typeChecker));
+            // console.log("k", this.getFullName(node, typeChecker));
             allTypes.set(this.getFullName(node, typeChecker), node);
         } else {
+            // console.log("'subnode'");
             ts.forEachChild(node, (subnode) => this.inspectNode(subnode, typeChecker, allTypes));
         }
     }

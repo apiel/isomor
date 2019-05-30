@@ -12,9 +12,10 @@ export class FuncTypeNodeParser implements SubNodeParser {
     ) {
     }
 
-    public supportsNode(node: ts.FunctionDeclaration | ts.ArrowFunction): boolean {
+    public supportsNode(node: ts.FunctionDeclaration | ts.ArrowFunction | ts.MethodDeclaration): boolean {
         return node.kind === ts.SyntaxKind.FunctionDeclaration
-            || node.kind === ts.SyntaxKind.ArrowFunction;
+            || node.kind === ts.SyntaxKind.ArrowFunction
+            || node.kind === ts.SyntaxKind.MethodDeclaration;
     }
     public createType(node: ts.FunctionDeclaration, context: Context): BaseType {
         return new ObjectType(

@@ -4,9 +4,7 @@ const ast_1 = require("../ast");
 const transformClass_1 = require("./transformClass");
 const code_1 = require("../code");
 const util_1 = require("util");
-jest.mock('./utils/getArgs', () => ({
-    getArgs: jest.fn().mockReturnValue(['id']),
-}));
+jest.mock('../validation');
 jest.mock('../code', () => ({
     getCodeType: jest.fn().mockReturnValue('getCodeTypeMock'),
     getCodeMethod: jest.fn().mockReturnValue({
@@ -80,7 +78,7 @@ export class CatsService extends CatsService__deco_export__ {
 
 }`);
         expect(code_1.getCodeMethod).toHaveBeenCalledTimes(1);
-        expect(code_1.getCodeMethod).toHaveBeenCalledWith(path, 'findAll', 'CatsService', ['id'], withTypes);
+        expect(code_1.getCodeMethod).toHaveBeenCalledWith(path, 'findAll', 'CatsService', withTypes);
     });
     it('should not transform class when no noDecorator but dont provide @isomor', () => {
         const code = `@Injectable()

@@ -43,7 +43,7 @@ function getCodeImport() {
     };
 }
 exports.getCodeImport = getCodeImport;
-function getCodeFunc(fileName, name, args, withTypes) {
+function getCodeFunc(fileName, name, withTypes) {
     return {
         type: 'ExportNamedDeclaration',
         declaration: {
@@ -53,12 +53,12 @@ function getCodeFunc(fileName, name, args, withTypes) {
                 name,
             },
             params: getParams(withTypes),
-            body: getBody(fileName, name, args),
+            body: getBody(fileName, name),
         },
     };
 }
 exports.getCodeFunc = getCodeFunc;
-function getCodeArrowFunc(fileName, name, args, withTypes) {
+function getCodeArrowFunc(fileName, name, withTypes) {
     return {
         type: 'ExportNamedDeclaration',
         declaration: {
@@ -73,7 +73,7 @@ function getCodeArrowFunc(fileName, name, args, withTypes) {
                     init: {
                         type: 'ArrowFunctionExpression',
                         params: getParams(withTypes),
-                        body: getBody(fileName, name, args),
+                        body: getBody(fileName, name),
                     },
                 },
             ],
@@ -100,71 +100,12 @@ function getTypeAny(withTypes) {
         },
     } : {};
 }
-function getBody(fileName, name, args, className) {
+function getBody(fileName, name, className) {
     return {
         type: 'BlockStatement',
         body: [
-            getBodyArgs(args),
-            getBodyArgsObject(args),
             getBodyRemote(fileName, name, className),
         ],
-    };
-}
-function getBodyArgs(args) {
-    return {
-        type: 'VariableDeclaration',
-        declarations: [
-            {
-                type: 'VariableDeclarator',
-                id: {
-                    type: 'ArrayPattern',
-                    elements: args.map(name => ({
-                        type: 'Identifier',
-                        name,
-                    })),
-                },
-                init: {
-                    type: 'Identifier',
-                    name: 'args',
-                },
-            },
-        ],
-        kind: 'const',
-    };
-}
-function getBodyArgsObject(args) {
-    return {
-        type: 'VariableDeclaration',
-        declarations: [
-            {
-                type: 'VariableDeclarator',
-                id: {
-                    type: 'Identifier',
-                    name: 'argsObject',
-                },
-                init: {
-                    type: 'ObjectExpression',
-                    properties: args.map(name => ({
-                        type: 'ObjectProperty',
-                        method: false,
-                        key: {
-                            type: 'Identifier',
-                            name,
-                        },
-                        computed: false,
-                        shorthand: true,
-                        value: {
-                            type: 'Identifier',
-                            name,
-                        },
-                        extra: {
-                            shorthand: true,
-                        },
-                    })),
-                },
-            },
-        ],
-        kind: 'const',
     };
 }
 function getBodyRemote(fileName, name, className) {
@@ -189,10 +130,6 @@ function getBodyRemote(fileName, name, className) {
                     type: 'Identifier',
                     name: 'args',
                 },
-                {
-                    type: 'Identifier',
-                    name: 'argsObject',
-                },
                 ...(className ? [{
                         type: 'StringLiteral',
                         value: className,
@@ -201,7 +138,7 @@ function getBodyRemote(fileName, name, className) {
         },
     };
 }
-function getCodeMethod(fileName, name, className, args, withTypes) {
+function getCodeMethod(fileName, name, className, withTypes) {
     return {
         type: 'ClassMethod',
         static: false,
@@ -211,7 +148,7 @@ function getCodeMethod(fileName, name, className, args, withTypes) {
         },
         async: true,
         params: getParams(withTypes),
-        body: getBody(fileName, name, args, className),
+        body: getBody(fileName, name, className),
     };
 }
 exports.getCodeMethod = getCodeMethod;

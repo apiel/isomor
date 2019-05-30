@@ -3,55 +3,29 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const ast_1 = require("./ast");
 const code_1 = require("./code");
 exports.codeTranspiledFunc = `export function getTime(...args: any) {
-  const [input1, input2] = args;
-  const argsObject = {
-    input1,
-    input2
-  };
-  return isomorRemote("path/to/file", "getTime", args, argsObject);
+  return isomorRemote("path/to/file", "getTime", args);
 }`;
 exports.codeTranspiledFuncNoType = `export function getTime(...args) {
-  const [input1, input2] = args;
-  const argsObject = {
-    input1,
-    input2
-  };
-  return isomorRemote("path/to/file", "getTime", args, argsObject);
+  return isomorRemote("path/to/file", "getTime", args);
 }`;
 exports.codeTranspiledArrowFunc = `export const getTime = (...args: any) => {
-  const [input1, input2] = args;
-  const argsObject = {
-    input1,
-    input2
-  };
-  return isomorRemote("path/to/file", "getTime", args, argsObject);
+  return isomorRemote("path/to/file", "getTime", args);
 };`;
 exports.codeTranspiledArrowFuncNoType = `export const getTime = (...args) => {
-  const [input1, input2] = args;
-  const argsObject = {
-    input1,
-    input2
-  };
-  return isomorRemote("path/to/file", "getTime", args, argsObject);
+  return isomorRemote("path/to/file", "getTime", args);
 };`;
 exports.codeTranspiledClass = `async getTime(...args: any) {
-  const [input1, input2] = args;
-  const argsObject = {
-    input1,
-    input2
-  };
-  return isomorRemote("path/to/file", "getTime", args, argsObject, "CatsService");
+  return isomorRemote("path/to/file", "getTime", args, "CatsService");
 }`;
 describe('code', () => {
     const path = 'path/to/file';
     const fnName = 'getTime';
     const className = 'CatsService';
     const typeName = 'MyType';
-    const args = ['input1', 'input2'];
     describe('code/getCodeMethod()', () => {
         it('should generate method for isomor', () => {
             const withType = true;
-            const { code } = ast_1.generate(code_1.getCodeMethod(path, fnName, className, args, withType));
+            const { code } = ast_1.generate(code_1.getCodeMethod(path, fnName, className, withType));
             expect(code).toEqual(exports.codeTranspiledClass);
         });
     });
@@ -79,24 +53,24 @@ describe('code', () => {
     describe('code/getCodeFunc()', () => {
         it('should generate function for isomor', () => {
             const withType = true;
-            const { code } = ast_1.generate(code_1.getCodeFunc(path, fnName, args, withType));
+            const { code } = ast_1.generate(code_1.getCodeFunc(path, fnName, withType));
             expect(code).toEqual(exports.codeTranspiledFunc);
         });
         it('should generate function for isomor without type', () => {
             const withType = false;
-            const { code } = ast_1.generate(code_1.getCodeFunc(path, fnName, args, withType));
+            const { code } = ast_1.generate(code_1.getCodeFunc(path, fnName, withType));
             expect(code).toEqual(exports.codeTranspiledFuncNoType);
         });
     });
     describe('code/getCodeArrowFunc()', () => {
         it('should generate function for isomor', () => {
             const withType = true;
-            const { code } = ast_1.generate(code_1.getCodeArrowFunc(path, fnName, args, withType));
+            const { code } = ast_1.generate(code_1.getCodeArrowFunc(path, fnName, withType));
             expect(code).toEqual(exports.codeTranspiledArrowFunc);
         });
         it('should generate function for isomor without type', () => {
             const withType = false;
-            const { code } = ast_1.generate(code_1.getCodeArrowFunc(path, fnName, args, withType));
+            const { code } = ast_1.generate(code_1.getCodeArrowFunc(path, fnName, withType));
             expect(code).toEqual(exports.codeTranspiledArrowFuncNoType);
         });
     });

@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const code_1 = require("../code");
-const getArgs_1 = require("./utils/getArgs");
+const validation_1 = require("../validation");
 function transformClass(root, srcFilePath, path, withTypes, noDecorator) {
     if (root.declaration.type === 'ClassDeclaration') {
         if (checkIfClassImplementInterface(root.declaration, 'IsomorShare')) {
@@ -22,8 +22,8 @@ function transformClass(root, srcFilePath, path, withTypes, noDecorator) {
                     root.declaration.body.body[index] = code_1.getCodeConstructor(withTypes);
                 }
                 else {
-                    const args = getArgs_1.getArgs(root.declaration.body.body[index], srcFilePath, path, name, className);
-                    root.declaration.body.body[index] = code_1.getCodeMethod(path, name, className, args, withTypes);
+                    validation_1.setValidator(root.declaration.body.body[index], srcFilePath, path, name, className);
+                    root.declaration.body.body[index] = code_1.getCodeMethod(path, name, className, withTypes);
                 }
             }
             else if (node.type !== 'ClassProperty') {

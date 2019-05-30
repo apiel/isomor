@@ -1,28 +1,23 @@
 {
-    "$ref": "#/definitions/setColor",
-    "$schema": "http://json-schema.org/draft-06/schema#",
-    "definitions": {
-        "setColor": {
-            "additionalProperties": false,
-            "properties": {
-                "abc": {
-                    "maxItems": 0,
-                    "minItems": 0,
-                    "type": "array"
+    "args": [
+        "color"
+    ],
+    "schema": {
+        "$ref": "#/definitions/setColor",
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "definitions": {
+            "setColor": {
+                "additionalProperties": false,
+                "properties": {
+                    "color": {
+                        "type": "string"
+                    }
                 },
-                "color": {
-                    "type": "string"
-                },
-                "yo": {
-                    "type": "number"
-                }
-            },
-            "required": [
-                "color",
-                "yo",
-                "abc"
-            ],
-            "type": "object"
+                "required": [
+                    "color"
+                ],
+                "type": "object"
+            }
         }
     }
 }

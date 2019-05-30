@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const code_1 = require("../code");
-const getArgs_1 = require("./utils/getArgs");
+const validation_1 = require("../validation");
 function transformArrowFunc(root, srcFilePath, path, withTypes) {
     const { declarations } = root;
     const declaration = declarations[0];
@@ -9,8 +9,8 @@ function transformArrowFunc(root, srcFilePath, path, withTypes) {
         && declaration.init.type === 'ArrowFunctionExpression'
         && declaration.id.type === 'Identifier') {
         const { name } = declaration.id;
-        const args = getArgs_1.getArgs(declaration.init, srcFilePath, path, name);
-        return code_1.getCodeArrowFunc(path, name, args, withTypes);
+        validation_1.setValidator(declaration.init, srcFilePath, path, name);
+        return code_1.getCodeArrowFunc(path, name, withTypes);
     }
 }
 exports.transformArrowFunc = transformArrowFunc;

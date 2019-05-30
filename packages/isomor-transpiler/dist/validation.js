@@ -16,6 +16,25 @@ const isomor_1 = require("isomor");
 const build_1 = require("./build");
 const queueList = [];
 let process;
+function setValidator(paramRoot, srcFilePath, path, name, className) {
+    let args = paramRoot.params.map((param) => {
+        if (param.type === 'Identifier') {
+            return param.name;
+        }
+        else if (param.type === 'AssignmentPattern' && param.left.type === 'Identifier') {
+            return param.left.name;
+        }
+    }).filter(param => param);
+    if (args.length !== paramRoot.params.length) {
+        logol_1.warn('TransformFunc support only Identifier as params', srcFilePath, name);
+        args = [];
+    }
+    else {
+        pushToQueue(args, srcFilePath, path, name, className);
+    }
+    return args;
+}
+exports.setValidator = setValidator;
 function pushToQueue(args, srcFilePath, path, name, className) {
     const { jsonSchemaFolder } = build_1.getOptions();
     if (args.length && jsonSchemaFolder && jsonSchemaFolder.length) {
@@ -28,7 +47,7 @@ exports.pushToQueue = pushToQueue;
 function run() {
     if (!process && queueList.length) {
         const { jsonSchemaFolder } = build_1.getOptions();
-        const { name, srcFilePath, path } = queueList.pop();
+        const { name, srcFilePath, path, args } = queueList.pop();
         const command = `isomor-json-schema-generator --path ${srcFilePath} --type ${name}`;
         logol_1.info(`Start JSON schema generation for ${name} in ${srcFilePath} (might take few seconds)`);
         process = child_process_1.exec(command, (err, stdout, stderr) => __awaiter(this, void 0, void 0, function* () {
@@ -40,7 +59,11 @@ function run() {
             }
             const jsonSchemaFileName = isomor_1.getJsonSchemaFileName(path, name);
             const jsonFile = path_1.join(jsonSchemaFolder, jsonSchemaFileName);
-            yield fs_extra_1.outputJSON(jsonFile, JSON.parse(stdout), { spaces: 4 });
+            const data = {
+                args,
+                schema: JSON.parse(stdout),
+            };
+            yield fs_extra_1.outputJSON(jsonFile, data, { spaces: 4 });
             logol_1.info(`JSON schema generation finished for ${name} in ${srcFilePath}`);
             process = null;
             run();

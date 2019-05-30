@@ -64,8 +64,11 @@ export function pushToQueue(
 function run() {
     if (!process && queueList.length) {
         const { jsonSchemaFolder } = getOptions();
-        const { name, srcFilePath, path, args } = queueList.pop();
-        const command = `isomor-json-schema-generator --path ${srcFilePath} --type ${name}`;
+        const { name, srcFilePath, path, args, className } = queueList.pop();
+        console.log('args', args, name, srcFilePath);
+        const command = className
+            ? `isomor-json-schema-generator --path ${srcFilePath} --type ${className}.${name}`
+            : `isomor-json-schema-generator --path ${srcFilePath} --type ${name}`;
         info(`Start JSON schema generation for ${name} in ${srcFilePath} (might take few seconds)`);
         process = exec(command, async (err, stdout, stderr) => {
             if (err) {
@@ -75,7 +78,7 @@ function run() {
                 warn(stderr);
             }
             // console.log(`stdout: ${stdout}`);
-            const jsonSchemaFileName = getJsonSchemaFileName(path, name);
+            const jsonSchemaFileName = getJsonSchemaFileName(path, name, className);
             const jsonFile = join(jsonSchemaFolder, jsonSchemaFileName);
             const data: ValidationSchema = {
                 args,

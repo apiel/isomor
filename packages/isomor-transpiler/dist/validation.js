@@ -47,8 +47,11 @@ exports.pushToQueue = pushToQueue;
 function run() {
     if (!process && queueList.length) {
         const { jsonSchemaFolder } = build_1.getOptions();
-        const { name, srcFilePath, path, args } = queueList.pop();
-        const command = `isomor-json-schema-generator --path ${srcFilePath} --type ${name}`;
+        const { name, srcFilePath, path, args, className } = queueList.pop();
+        console.log('args', args, name, srcFilePath);
+        const command = className
+            ? `isomor-json-schema-generator --path ${srcFilePath} --type ${className}.${name}`
+            : `isomor-json-schema-generator --path ${srcFilePath} --type ${name}`;
         logol_1.info(`Start JSON schema generation for ${name} in ${srcFilePath} (might take few seconds)`);
         process = child_process_1.exec(command, (err, stdout, stderr) => __awaiter(this, void 0, void 0, function* () {
             if (err) {
@@ -57,7 +60,7 @@ function run() {
             if (stderr) {
                 logol_1.warn(stderr);
             }
-            const jsonSchemaFileName = isomor_1.getJsonSchemaFileName(path, name);
+            const jsonSchemaFileName = isomor_1.getJsonSchemaFileName(path, name, className);
             const jsonFile = path_1.join(jsonSchemaFolder, jsonSchemaFileName);
             const data = {
                 args,

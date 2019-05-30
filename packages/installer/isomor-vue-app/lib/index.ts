@@ -67,7 +67,8 @@ async function start({ srcFolder, distAppFolder, serverFolder }: Options) {
         writeJSONSync(join(projectDirectory, 'package.json'), pkg);
 
         info('Install packages...');
-        writeFileSync('cmd', `cd ${projectDirectory} && yarn add isomor vue-async-cache && yarn add run-screen nodemon --dev`);
+        writeFileSync('cmd', `cd ${projectDirectory} && yarn add isomor vue-async-cache && \
+            yarn add run-screen nodemon isomor-transpiler isomor-server --dev`);
         await shell('bash', ['cmd']);
         unlinkSync('cmd');
 

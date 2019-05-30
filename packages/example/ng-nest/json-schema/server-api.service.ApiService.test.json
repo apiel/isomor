@@ -1,0 +1,18 @@
+{
+    "args": [
+        "req"
+    ],
+    "schema": {
+        "$ref": "#/definitions/ApiService.test",
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "definitions": {
+            "ApiService.test": {
+                "additionalProperties": false,
+                "properties": {
+                    "req": {}
+                },
+                "type": "object"
+            }
+        }
+    }
+}

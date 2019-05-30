@@ -48,7 +48,6 @@ function run() {
     if (!process && queueList.length) {
         const { jsonSchemaFolder } = build_1.getOptions();
         const { name, srcFilePath, path, args, className } = queueList.pop();
-        console.log('args', args, name, srcFilePath);
         const command = className
             ? `isomor-json-schema-generator --path ${srcFilePath} --type ${className}.${name}`
             : `isomor-json-schema-generator --path ${srcFilePath} --type ${name}`;

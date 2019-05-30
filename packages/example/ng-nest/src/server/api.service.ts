@@ -1,4 +1,4 @@
-import { remote } from "isomor";
+import { isomorRemote } from "isomor";
 import { Injectable } from '@angular/core';
 // > import { Injectable } from '@angular/core';
 import { isomor } from 'isomor';
@@ -13,11 +13,11 @@ export class ApiService extends ApiService__deco_export__ {
   }
 
   async uptime(...args: any) {
-    return remote("server-api.service", "uptime", args, "ApiService");
+    return isomorRemote("server-api.service", "uptime", args, "ApiService");
   }
 
   async test(...args: any) {
-    return remote("server-api.service", "test", args, "ApiService");
+    return isomorRemote("server-api.service", "test", args, "ApiService");
   }
 
 }

@@ -2,6 +2,7 @@
 
 - npx isomor (should rename isomor to isomor-lib ?)
 - yarn <> npm
+- isomor-transpiler isomor-server --dev necessary in installer
 
 - look at stdlib.com or lambda function and think about an isomor version just to generate API without frontend.
 

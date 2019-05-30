@@ -1,0 +1,11 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "definitions": {
+        "MyObject": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "Some description here"
+        }
+    },
+    "$ref": "#/definitions/MyObject"
+}

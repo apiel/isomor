@@ -1,0 +1,24 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "definitions": {
+        "MyType": {
+            "type": "object",
+            "properties": {
+                "a": {
+                    "not": {}
+                },
+                "b": {
+                    "type": "null"
+                },
+                "c": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "b"
+            ],
+            "additionalProperties": false
+        }
+    },
+    "$ref": "#/definitions/MyType"
+}

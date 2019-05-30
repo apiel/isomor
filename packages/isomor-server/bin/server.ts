@@ -23,6 +23,7 @@ import { join } from 'path';
 interface Options {
     distServerFolder: string;
     serverFolder: string;
+    jsonSchemaFolder: string;
     port: number;
     staticFolder: string | null;
     startupFile: string;
@@ -81,6 +82,7 @@ start({
     port: process.env.PORT ? parseInt(process.env.PORT, 10) : 3005,
     staticFolder: process.env.STATIC_FOLDER || null,
     serverFolder: process.env.SERVER_FOLDER || '/server',
+    jsonSchemaFolder: process.env.JSON_SCHEMA_FOLDER || './json-schema',
     startupFile: process.env.STARTUP_FILE || join('startup', 'index.js'),
     noDecorator: process.env.NO_DECORATOR === 'true',
 });

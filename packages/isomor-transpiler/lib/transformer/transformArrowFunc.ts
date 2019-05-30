@@ -1,6 +1,6 @@
 import { getCodeArrowFunc } from '../code';
 import { VariableDeclaration } from '../ast';
-import { getArgs } from './utils/getArgs';
+import { setValidator } from '../validation';
 
 export function transformArrowFunc(
     root: VariableDeclaration,
@@ -15,7 +15,7 @@ export function transformArrowFunc(
         && declaration.id.type === 'Identifier'
     ) {
         const { name } = declaration.id;
-        const args = getArgs(declaration.init, srcFilePath, path, name);
-        return getCodeArrowFunc(path, name, args, withTypes);
+        setValidator(declaration.init, srcFilePath, path, name);
+        return getCodeArrowFunc(path, name, withTypes);
     }
 }

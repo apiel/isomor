@@ -5,9 +5,7 @@ import { getCodeMethod, getCodeConstructor } from '../code';
 import { JsonAst } from '../ast';
 import { isArray } from 'util';
 
-jest.mock('./utils/getArgs', () => ({
-    getArgs: jest.fn().mockReturnValue(['id']),
-}));
+jest.mock('../validation');
 
 jest.mock('../code', () => ({
     getCodeType: jest.fn().mockReturnValue('getCodeTypeMock'),
@@ -97,7 +95,7 @@ export class CatsService extends CatsService__deco_export__ {
 }`,
         );
         expect(getCodeMethod).toHaveBeenCalledTimes(1); // called with?
-        expect(getCodeMethod).toHaveBeenCalledWith(path, 'findAll', 'CatsService', ['id'], withTypes);
+        expect(getCodeMethod).toHaveBeenCalledWith(path, 'findAll', 'CatsService', withTypes);
     });
     // -----------------
     it('should not transform class when no noDecorator but dont provide @isomor', () => {

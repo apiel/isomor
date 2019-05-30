@@ -1,6 +1,6 @@
 import { getCodeMethod, getCodeConstructor } from '../code';
 import { ExportNamedDeclaration, ClassDeclaration } from '../ast';
-import { getArgs } from './utils/getArgs';
+import { setValidator } from '../validation';
 
 export function transformClass(
     root: ExportNamedDeclaration,
@@ -29,8 +29,8 @@ export function transformClass(
                 if (name === 'constructor') {
                     (root as any).declaration.body.body[index] = getCodeConstructor(withTypes);
                 } else {
-                    const args = getArgs((root as any).declaration.body.body[index], srcFilePath, path, name, className);
-                    (root as any).declaration.body.body[index] = getCodeMethod(path, name, className, args, withTypes);
+                    setValidator((root as any).declaration.body.body[index], srcFilePath, path, name, className);
+                    (root as any).declaration.body.body[index] = getCodeMethod(path, name, className, withTypes);
                 }
             } else if (node.type !== 'ClassProperty') {
                 delete (root as any).declaration.body.body[index];

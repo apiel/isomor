@@ -5,6 +5,9 @@ import { outputJSON } from 'fs-extra';
 import { getJsonSchemaFileName } from 'isomor';
 
 import { getOptions } from './build';
+import { JsonAst, FunctionDeclaration, ClassMethod, ArrowFunctionExpression } from './ast';
+
+type RootParams = FunctionDeclaration | ClassMethod | ArrowFunctionExpression;
 
 interface Queue {
     args: string[];
@@ -16,6 +19,31 @@ interface Queue {
 
 const queueList: Queue[] = [];
 let process: ChildProcess;
+
+export function setValidator(
+    paramRoot: RootParams,
+    srcFilePath: string,
+    path: string,
+    name: string,
+    className?: string,
+) {
+    let args = paramRoot.params.map((param) => {
+        if (param.type === 'Identifier') {
+            return param.name;
+        } else if (param.type === 'AssignmentPattern' && param.left.type === 'Identifier') {
+            return param.left.name;
+        }
+    }).filter(param => param);
+    if (args.length !== paramRoot.params.length) {
+        // need to work on that to support as well ...
+        warn('TransformFunc support only Identifier as params', srcFilePath, name);
+        // console.log('paramRoot', JsonAst(paramRoot));
+        args = [];
+    } else {
+        pushToQueue(args, srcFilePath, path, name, className);
+    }
+    return args;
+}
 
 export function pushToQueue(
     args: string[],

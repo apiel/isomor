@@ -5,12 +5,22 @@
         "setColor": {
             "additionalProperties": false,
             "properties": {
+                "abc": {
+                    "maxItems": 0,
+                    "minItems": 0,
+                    "type": "array"
+                },
                 "color": {
                     "type": "string"
+                },
+                "yo": {
+                    "type": "number"
                 }
             },
             "required": [
-                "color"
+                "color",
+                "yo",
+                "abc"
             ],
             "type": "object"
         }

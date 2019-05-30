@@ -1,8 +1,11 @@
 ### ToDo
 
+- npx isomor (should rename isomor to isomor-lib ?)
+- yarn <> npm
+
 - look at stdlib.com or lambda function and think about an isomor version just to generate API without frontend.
 
-- unit test getArgs and validate
+- unit test validator
 
 - vscode extension
     - handle delete and move file

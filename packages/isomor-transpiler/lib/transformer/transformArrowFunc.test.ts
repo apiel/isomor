@@ -2,11 +2,9 @@ import { parse } from '../ast';
 
 import { transformArrowFunc } from './transformArrowFunc';
 import { getCodeArrowFunc } from '../code';
-import { getArgs } from './utils/getArgs';
+import { setValidator } from '../validation';
 
-jest.mock('./utils/getArgs', () => ({
-    getArgs: jest.fn().mockReturnValue(['input1', 'input2']),
-}));
+jest.mock('../validation');
 
 jest.mock('../code', () => ({
     getCodeArrowFunc: jest.fn().mockReturnValue('getCodeArrowFuncMock'),
@@ -27,7 +25,7 @@ describe('transformFunc()', () => {
         }`);
         const node = transformArrowFunc((program.body[0] as any).declaration, srcFilePath, path, withTypes);
         expect(node).toEqual('getCodeArrowFuncMock');
-        expect(getCodeArrowFunc).toHaveBeenCalledWith(path, 'getTime', ['input1', 'input2'], withTypes);
-        expect(getArgs).toBeCalledWith((program.body[0] as any).declaration.declarations[0].init, srcFilePath, path, 'getTime');
+        expect(getCodeArrowFunc).toHaveBeenCalledWith(path, 'getTime', withTypes);
+        expect(setValidator).toBeCalledWith((program.body[0] as any).declaration.declarations[0].init, srcFilePath, path, 'getTime');
     });
 });

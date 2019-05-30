@@ -11,7 +11,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const isomor_core_1 = require("isomor-core");
 const util_1 = require("util");
 const entrypoint_1 = require("./entrypoint");
-function useIsomor(app, distServerFolder, serverFolder, noDecorator = false) {
+function useIsomor(app, distServerFolder, serverFolder, jsonSchemaFolder, noDecorator = false) {
     return __awaiter(this, void 0, void 0, function* () {
         const files = yield isomor_core_1.getFiles(distServerFolder, serverFolder);
         return files.map(file => {
@@ -20,8 +20,8 @@ function useIsomor(app, distServerFolder, serverFolder, noDecorator = false) {
                 .filter(name => util_1.isFunction(functions[name]))
                 .map(name => {
                 const isClass = /^\s*class/.test(functions[name].toString());
-                return isClass ? entrypoint_1.getClassEntrypoints(app, file, name, noDecorator)
-                    : [entrypoint_1.getEntrypoint(app, file, functions[name], name)];
+                return isClass ? entrypoint_1.getClassEntrypoints(app, file, name, jsonSchemaFolder, noDecorator)
+                    : [entrypoint_1.getEntrypoint(app, file, functions[name], name, jsonSchemaFolder)];
             }).flat();
         }).flat();
     });

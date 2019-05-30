@@ -1,8 +1,11 @@
 import * as express from 'express';
-import { getPathForUrl } from 'isomor-core';
-import { isIsomorClass, getUrl } from 'isomor';
+import { getPathForUrl, ValidationSchema } from 'isomor-core';
+import { isIsomorClass, getUrl, getJsonSchemaFileName } from 'isomor';
 import { join } from 'path';
 import { isFunction } from 'util';
+import { pathExistsSync, readJSONSync } from 'fs-extra';
+import * as Ajv from 'ajv';
+
 import { getInstance } from './startup';
 
 export interface Context {
@@ -19,14 +22,49 @@ function getEntrypointPath(file: string, name: string, classname?: string) {
     return getUrl(getPathForUrl(file), name, classname);
 }
 
+function loadValidation( // might want to switch to async
+    path: string,
+    name: string,
+    jsonSchemaFolder: string,
+    classname?: string,
+): ValidationSchema {
+    if (jsonSchemaFolder && jsonSchemaFolder.length) {
+        const jsonSchemaFile = getJsonSchemaFileName(path, name, classname);
+        const jsonSchemaPath = join(jsonSchemaFolder, jsonSchemaFile);
+        if (pathExistsSync(jsonSchemaPath)) {
+            return readJSONSync(jsonSchemaPath);
+        }
+    }
+}
+
+function validateArgs(
+    validationSchema: ValidationSchema,
+    args: any[],
+) {
+    if (validationSchema) {
+        if (args.length > validationSchema.args.length) {
+            throw(new Error(`Too much arguments provided. Expected: ${validationSchema.args.join(', ')}.`));
+        }
+        const argsObject = {};
+        args.forEach((value, index) => argsObject[validationSchema.args[index]] = value);
+        const ajv = new Ajv();
+        const valid = ajv.validate(validationSchema.schema, argsObject);
+        if (!valid) {
+            throw(new Error(`Invalid argument format: ${ajv.errorsText()}.`));
+        }
+    }
+}
+
 export function getEntrypoint(
     app: express.Express,
     file: string,
     fn: any,
     name: string,
+    jsonSchemaFolder: string,
     classname?: string,
 ): Entrypoint {
     const path = getEntrypointPath(file, name, classname);
+    const validationSchema = loadValidation(getPathForUrl(file), name, jsonSchemaFolder, classname);
     app.use(path, async (
         req: express.Request,
         res: express.Response,
@@ -35,6 +73,7 @@ export function getEntrypoint(
         try {
             const ctx: Context = {req, res};
             const args = (req.body && req.body.args) || [];
+            validateArgs(validationSchema, args);
             const result = await fn.call(ctx, ...args, req, res);
             return res.send({ result });
         } catch (error) {
@@ -50,6 +89,7 @@ export function getClassEntrypoints(
     app: express.Express,
     file: string,
     classname: string,
+    jsonSchemaFolder: string,
     noDecorator: boolean,
 ): Entrypoint[] {
     if (!noDecorator && !isIsomorClass(classname)) {
@@ -58,7 +98,7 @@ export function getClassEntrypoints(
         const obj = getInstance()(classname);
         return Object.getOwnPropertyNames(Object.getPrototypeOf(obj))
             .filter(name => isFunction(obj[name]) && name !== 'constructor')
-            .map(name => getEntrypoint(app, file, obj[name].bind(obj), name, classname));
+            .map(name => getEntrypoint(app, file, obj[name].bind(obj), name, jsonSchemaFolder, classname));
     }
     return [];
 }

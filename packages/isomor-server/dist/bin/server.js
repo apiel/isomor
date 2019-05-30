@@ -26,10 +26,22 @@ const swagger_ui_express_1 = require("swagger-ui-express");
 const morgan = require("morgan");
 const lib_1 = require("../lib");
 const path_1 = require("path");
+function getOptions() {
+    return {
+        distServerFolder: process.env.DIST_SERVER_FOLDER || './dist-server',
+        port: process.env.PORT ? parseInt(process.env.PORT, 10) : 3005,
+        staticFolder: process.env.STATIC_FOLDER || null,
+        serverFolder: process.env.SERVER_FOLDER || '/server',
+        jsonSchemaFolder: process.env.JSON_SCHEMA_FOLDER || './json-schema',
+        startupFile: process.env.STARTUP_FILE || path_1.join('startup', 'index.js'),
+        noDecorator: process.env.NO_DECORATOR === 'true',
+    };
+}
+exports.getOptions = getOptions;
 const API_DOCS = '/api-docs';
-function start(options) {
+function start() {
     return __awaiter(this, void 0, void 0, function* () {
-        const { distServerFolder, port, staticFolder, serverFolder, startupFile, noDecorator } = options;
+        const { distServerFolder, port, staticFolder, serverFolder, startupFile, noDecorator, jsonSchemaFolder } = getOptions();
         logol_1.info('Starting server.');
         const app = express();
         app.use(bodyParser.json());
@@ -38,7 +50,7 @@ function start(options) {
             stream: { write: (str) => logol_1.log(str.trim()) },
         }));
         yield lib_1.startup(app, distServerFolder, serverFolder, startupFile, logol_1.info);
-        const endpoints = yield lib_1.useIsomor(app, distServerFolder, serverFolder, noDecorator);
+        const endpoints = yield lib_1.useIsomor(app, distServerFolder, serverFolder, jsonSchemaFolder, noDecorator);
         logol_1.info(`Created endpoints:`, endpoints.map(({ path }) => path));
         app.use(API_DOCS, swagger_ui_express_1.serve, swagger_ui_express_1.setup(yield lib_1.getApiDoc(endpoints)));
         if (staticFolder) {
@@ -58,12 +70,5 @@ function start(options) {
         });
     });
 }
-start({
-    distServerFolder: process.env.DIST_SERVER_FOLDER || './dist-server',
-    port: process.env.PORT ? parseInt(process.env.PORT, 10) : 3005,
-    staticFolder: process.env.STATIC_FOLDER || null,
-    serverFolder: process.env.SERVER_FOLDER || '/server',
-    startupFile: process.env.STARTUP_FILE || path_1.join('startup', 'index.js'),
-    noDecorator: process.env.NO_DECORATOR === 'true',
-});
+start();
 //# sourceMappingURL=server.js.map

@@ -7,6 +7,7 @@ export async function useIsomor(
     app: express.Express,
     distServerFolder: string,
     serverFolder: string,
+    jsonSchemaFolder: string,
     noDecorator: boolean = false,
 ): Promise<Entrypoint[]> {
     const files = await getFiles(distServerFolder, serverFolder);
@@ -16,8 +17,8 @@ export async function useIsomor(
             .filter(name => isFunction(functions[name]))
             .map(name => {
                 const isClass = /^\s*class/.test(functions[name].toString());
-                return isClass ? getClassEntrypoints(app, file, name, noDecorator)
-                    : [getEntrypoint(app, file, functions[name], name)];
+                return isClass ? getClassEntrypoints(app, file, name, jsonSchemaFolder, noDecorator)
+                    : [getEntrypoint(app, file, functions[name], name, jsonSchemaFolder)];
             }) as any).flat();
     }) as any).flat();
 }

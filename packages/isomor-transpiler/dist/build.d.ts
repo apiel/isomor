@@ -1,5 +1,6 @@
 import transform from './transform';
 export default transform;
+export { ValidationSchema } from './validation';
 export interface Options {
     srcFolder: string;
     distAppFolder: string;

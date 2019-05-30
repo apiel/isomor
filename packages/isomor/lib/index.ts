@@ -11,8 +11,9 @@ const urlPrefix = '/isomor'; // http://127.0.0.1:3000/
 export function getJsonSchemaFileName(
     path: string,
     name: string,
+    className?: string,
 ) {
-    return `${path}.${name}.json`;
+    return className ?  `${path}.${className}.${name}.json` : `${path}.${name}.json`;
 }
 
 export function getUrl(
@@ -31,7 +32,6 @@ export async function isomorRemote(
     path: string,
     funcName: string,
     args: any,
-    argsObject: object,
     classname?: string,
 ): Promise<any> {
     const url = getUrl(path, funcName, classname);

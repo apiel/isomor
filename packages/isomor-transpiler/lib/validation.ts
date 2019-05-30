@@ -3,6 +3,7 @@ import { warn, info, error } from 'logol';
 import { join } from 'path';
 import { outputJSON } from 'fs-extra';
 import { getJsonSchemaFileName } from 'isomor';
+import { ValidationSchema } from 'isomor-core';
 
 import { getOptions } from './build';
 import { JsonAst, FunctionDeclaration, ClassMethod, ArrowFunctionExpression } from './ast';
@@ -76,7 +77,7 @@ function run() {
             // console.log(`stdout: ${stdout}`);
             const jsonSchemaFileName = getJsonSchemaFileName(path, name);
             const jsonFile = join(jsonSchemaFolder, jsonSchemaFileName);
-            const data = {
+            const data: ValidationSchema = {
                 args,
                 schema: JSON.parse(stdout),
             };

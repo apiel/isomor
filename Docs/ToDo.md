@@ -7,6 +7,11 @@
 
 - unit test validator
 
+- cleanup path => url, json ...
+- should we make loadValidation async?
+- try to use tsc --watch for the server instead of nodemon
+- might need to move stuff in isomor-core instead to load transpiler and server between each other
+
 - vscode extension
     - handle delete and move file
     - automatically publish when new isomor-transpiler using ~~asure or travis~~? or manually trigger...

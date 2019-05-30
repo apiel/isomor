@@ -1,9 +1,14 @@
 import { pathExists } from 'fs-extra';
-import { join, extname, resolve } from 'path';
+import { join, extname } from 'path';
 import * as Glob from 'glob';
 import { promisify } from 'util';
 
 const glob = promisify(Glob);
+
+export interface ValidationSchema {
+    args: string[];
+    schema: any;
+}
 
 export function getFilesPattern(
     folderToSearch: string,

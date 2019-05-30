@@ -10,8 +10,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const axios_1 = require("axios");
 const urlPrefix = '/isomor';
-function getJsonSchemaFileName(path, name) {
-    return `${path}.${name}.json`;
+function getJsonSchemaFileName(path, name, className) {
+    return className ? `${path}.${className}.${name}.json` : `${path}.${name}.json`;
 }
 exports.getJsonSchemaFileName = getJsonSchemaFileName;
 function getUrl(path, funcName, classname) {
@@ -21,7 +21,7 @@ function getUrl(path, funcName, classname) {
     return url;
 }
 exports.getUrl = getUrl;
-function isomorRemote(path, funcName, args, argsObject, classname) {
+function isomorRemote(path, funcName, args, classname) {
     return __awaiter(this, void 0, void 0, function* () {
         const url = getUrl(path, funcName, classname);
         const { data: { result } } = yield axios_1.default.post(url, { args });

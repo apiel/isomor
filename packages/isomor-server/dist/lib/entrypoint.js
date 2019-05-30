@@ -35,6 +35,7 @@ function validateArgs(validationSchema, args) {
         const argsObject = {};
         args.forEach((value, index) => argsObject[validationSchema.args[index]] = value);
         const ajv = new Ajv();
+        ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-06.json'));
         const valid = ajv.validate(validationSchema.schema, argsObject);
         if (!valid) {
             throw (new Error(`Invalid argument format: ${ajv.errorsText()}.`));

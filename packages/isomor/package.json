@@ -1,6 +1,6 @@
 {
     "name": "isomor",
-    "version": "1.1.1",
+    "version": "1.2.0",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "author": "Alexandre Piel <alexandre.piel@gmail.com>",
@@ -32,8 +32,8 @@
     },
     "dependencies": {
         "axios": "^0.19.0",
-        "isomor-server": "^1.1.1",
-        "isomor-transpiler": "^1.1.1",
+        "isomor-server": "^1.2.0",
+        "isomor-transpiler": "^1.2.0",
         "typescript": "^3.5.1"
     },
     "devDependencies": {

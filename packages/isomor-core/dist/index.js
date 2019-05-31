@@ -13,6 +13,10 @@ const path_1 = require("path");
 const Glob = require("glob");
 const util_1 = require("util");
 const glob = util_1.promisify(Glob);
+function getJsonSchemaFileName(path, name, className) {
+    return className ? `${path}.${className}.${name}.json` : `${path}.${name}.json`;
+}
+exports.getJsonSchemaFileName = getJsonSchemaFileName;
 function getFilesPattern(folderToSearch) {
     return path_1.join('**', folderToSearch, '*');
 }

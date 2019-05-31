@@ -10,6 +10,14 @@ export interface ValidationSchema {
     schema: any;
 }
 
+export function getJsonSchemaFileName(
+    path: string,
+    name: string,
+    className?: string,
+) {
+    return className ?  `${path}.${className}.${name}.json` : `${path}.${name}.json`;
+}
+
 export function getFilesPattern(
     folderToSearch: string,
 ): string {

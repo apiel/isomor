@@ -1,6 +1,6 @@
 import * as express from 'express';
-import { getPathForUrl, ValidationSchema } from 'isomor-core';
-import { isIsomorClass, getUrl, getJsonSchemaFileName } from 'isomor';
+import { getPathForUrl, ValidationSchema, getJsonSchemaFileName } from 'isomor-core';
+import { isIsomorClass, getUrl } from 'isomor';
 import { join } from 'path';
 import { isFunction } from 'util';
 import { pathExistsSync, readJSONSync } from 'fs-extra';

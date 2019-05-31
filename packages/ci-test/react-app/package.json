@@ -25,7 +25,7 @@
     "serv:build": "rimraf ./dist-server && tsc -p tsconfig.server.json",
     "serv": "rimraf ./dist-server && tsc -p tsconfig.server.json && isomor-server",
     "serv:dev": "nodemon --watch 'src-isomor/**/server/**/*' -e ts,tsx --exec 'yarn serv'",
-    "serv:prod": "yarn isomor:build && STATIC_FOLDER=./build yarn serv",
+    "serv:prod": "NO_VALIDATION=true yarn isomor:build && STATIC_FOLDER=./build yarn serv",
     "prod": "yarn build && yarn serv:prod",
     "dev": "run-screen 'yarn isomor:build:dev' 'yarn serv:dev' 'yarn start'",
     "code": "run-screen 'yarn isomor:build' 'yarn serv:dev' 'yarn start'",

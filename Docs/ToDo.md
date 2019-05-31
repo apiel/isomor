@@ -1,7 +1,6 @@
 ### ToDo
 
-- npx isomor (should rename isomor to isomor-lib ?)
-- yarn <> npm
+- npx isomor (should rename isomor to isomor-lib or isomor-frontend?)
 - fix angular issue
 - swagger add params? and format?
     - might validate endpoint using swagger?

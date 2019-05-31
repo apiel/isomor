@@ -55,7 +55,7 @@ async function start({ srcFolder, distAppFolder, serverFolder }: Options) {
         info('Install packages...');
         writeFileSync('cmd', `cd ${projectDirectory} && \
             yarn add isomor react-async-cache @nestjs/common @nestjs/core && \
-            yarn add run-screen nodemon isomor-transpiler isomor-server --dev`);
+            yarn add run-screen nodemon isomor-transpiler isomor-server yarn --dev`);
         await shell('bash', ['cmd']);
         unlinkSync('cmd');
 

@@ -10,7 +10,11 @@
     "url": "https://github.com/apiel/isomor"
   },
   "devDependencies": {
+    "@types/inquirer": "^6.0.3",
     "docsify-cli": "^4.3.0",
     "lerna": "^3.13.1"
+  },
+  "dependencies": {
+    "inquirer": "^6.3.1"
   }
 }

@@ -20,7 +20,7 @@ function getEntrypointPath(file, name, classname) {
 }
 function loadValidation(path, name, jsonSchemaFolder, classname) {
     if (jsonSchemaFolder && jsonSchemaFolder.length) {
-        const jsonSchemaFile = isomor_1.getJsonSchemaFileName(path, name, classname);
+        const jsonSchemaFile = isomor_core_1.getJsonSchemaFileName(path, name, classname);
         const jsonSchemaPath = path_1.join(jsonSchemaFolder, jsonSchemaFile);
         if (fs_extra_1.pathExistsSync(jsonSchemaPath)) {
             return fs_extra_1.readJSONSync(jsonSchemaPath);

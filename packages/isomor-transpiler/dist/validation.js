@@ -35,9 +35,12 @@ function setValidator(paramRoot, srcFilePath, path, name, className) {
     return args;
 }
 exports.setValidator = setValidator;
+function validationIsActive() {
+    const { jsonSchemaFolder, noValidation } = build_1.getOptions();
+    return !noValidation && jsonSchemaFolder && jsonSchemaFolder.length;
+}
 function pushToQueue(args, srcFilePath, path, name, className) {
-    const { jsonSchemaFolder } = build_1.getOptions();
-    if (args.length && jsonSchemaFolder && jsonSchemaFolder.length) {
+    if (args.length && validationIsActive()) {
         logol_1.info(`Queue JSON schema generation for ${name} in ${srcFilePath}`);
         queueList.push({ args, srcFilePath, path, name, className });
         run();

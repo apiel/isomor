@@ -46,6 +46,11 @@ export function setValidator(
     return args;
 }
 
+function validationIsActive() {
+    const { jsonSchemaFolder, noValidation } = getOptions();
+    return !noValidation && jsonSchemaFolder && jsonSchemaFolder.length;
+}
+
 export function pushToQueue(
     args: string[],
     srcFilePath: string,
@@ -53,8 +58,7 @@ export function pushToQueue(
     name: string,
     className: string | undefined,
 ) {
-    const { jsonSchemaFolder } = getOptions();
-    if (args.length && jsonSchemaFolder && jsonSchemaFolder.length) {
+    if (args.length && validationIsActive()) {
         info(`Queue JSON schema generation for ${name} in ${srcFilePath}`);
         queueList.push({ args, srcFilePath, path, name, className });
         run();

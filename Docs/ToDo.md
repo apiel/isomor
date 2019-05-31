@@ -1,10 +1,8 @@
 ### ToDo
 
-- env var: validation=false
-    - yarn demo
-- fix angular issue
 - npx isomor (should rename isomor to isomor-lib ?)
 - yarn <> npm
+- fix angular issue
 - swagger add params? and format?
     - might validate endpoint using swagger?
 - isomor-transpiler isomor-server --dev necessary in installer

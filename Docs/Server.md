@@ -8,7 +8,7 @@ The server generate automatically the API documentation and make it available us
 
 Isomor validate each incoming request to the server base on the types of the parameters of the function call.
 
-> **Note:** Generating the validation schema can take some time. You can deactivate by setting the environment variable `JSON_SCHEMA_FOLDER` to `""`.
+> **Note:** Generating the validation schema can take some time. You can deactivate by setting the environment variable `NO_VALIDATION=true`.
 
 #### Startup script
 

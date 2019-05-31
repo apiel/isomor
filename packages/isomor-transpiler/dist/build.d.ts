@@ -5,6 +5,7 @@ export interface Options {
     distAppFolder: string;
     serverFolder: string;
     jsonSchemaFolder: string;
+    noValidation: boolean;
     withTypes: boolean;
     watchMode: boolean;
     noServerImport: boolean;

@@ -22,7 +22,7 @@
   "dependencies": {
     "core-js": "^2.6.5",
     "fs-extra": "^8.0.1",
-    "isomor-client": "^2.0.0",
+    "isomor": "^2.0.0",
     "vue": "^2.6.10",
     "vue-async-cache": "^0.7.0",
     "vue-class-component": "^7.0.2",

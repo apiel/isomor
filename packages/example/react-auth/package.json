@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "express-jwt": "^5.3.1",
-    "isomor-client": "^2.0.0",
+    "isomor": "^2.0.0",
     "jsonwebtoken": "^8.5.1",
     "md5": "^2.2.1",
     "react": "^16.8.6",

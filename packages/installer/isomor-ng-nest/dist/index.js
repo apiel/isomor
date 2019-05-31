@@ -42,7 +42,7 @@ function start({ srcFolder, distAppFolder, serverFolder }) {
             logol_1.info('Install packages...');
             fs_extra_1.writeFileSync('cmd', `cd ${projectDirectory} && \
             yarn add isomor react-async-cache @nestjs/common @nestjs/core && \
-            yarn add run-screen nodemon isomor-transpiler isomor-server --dev`);
+            yarn add run-screen nodemon isomor-transpiler isomor-server yarn --dev`);
             yield shell('bash', ['cmd']);
             fs_extra_1.unlinkSync('cmd');
             logol_1.info('Copy example component');

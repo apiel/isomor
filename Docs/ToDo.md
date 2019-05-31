@@ -2,10 +2,12 @@
 
 - fix axios
 - env var: validation=false
-- swagger add params? and format?
-    - might validate endpoint using swagger?
+    - yarn demo
+- fix angular issue
 - npx isomor (should rename isomor to isomor-lib ?)
 - yarn <> npm
+- swagger add params? and format?
+    - might validate endpoint using swagger?
 - isomor-transpiler isomor-server --dev necessary in installer
 
 - look at stdlib.com or lambda function and think about an isomor version just to generate API without frontend.
@@ -56,3 +58,44 @@
 
 
 - isomor-rendering, pre-rendering caching... out of scope, so maybe not do it!
+
+
+
+
+
+- to fix
+ERR { Error: Command failed: isomor-json-schema-generator --path src-isomor/server/api.service.ts --type ApiService.test
+home/alex/dev/node/test/my-app/node_modules/@types/selenium-webdriver/http.d.ts(24,14): error TS2583: Cannot find name 'Map'. Do you need to change your target library? Try changing the `lib` compiler option to es2015 or later.
+home/alex/dev/node/test/my-app/node_modules/@types/selenium-webdriver/http.d.ts(48,14): error TS2583: Cannot find name 'Map'. Do you need to change your target library? Try changing the `lib` compiler option to es2015 or later.
+home/alex/dev/node/test/my-app/node_modules/@types/selenium-webdriver/remote.d.ts(139,29): error TS2583: Cannot find name 'Map'. Do you need to change your target library? Try changing the `lib` compiler option to es2015 or later.
+home/alex/dev/node/test/my-app/node_modules/rxjs/internal/Observable.d.ts(89,59): error TS2585: 'Promise' only refers to a type, but is being used as a value here. Do you need to change your target library? Try changing the `lib` compiler option to es2015 or later.
+
+    at ChildProcess.exithandler (child_process.js:297:12)
+    at ChildProcess.emit (events.js:197:13)
+    at maybeClose (internal/child_process.js:984:16)
+    at Process.ChildProcess._handle.onexit (internal/child_process.js:265:5)
+  killed: false,
+  code: 1,
+  signal: null,
+  cmd:
+   'isomor-json-schema-generator --path src-isomor/server/api.service.ts --type ApiService.test' }
+• warn home/alex/dev/node/test/my-app/node_modules/@types/selenium-webdriver/http.d.ts(24,14): error TS2583: Cannot find name 'Map'. Do you need to change your target library? Try changing the `lib` compiler option to es2015 or later.
+home/alex/dev/node/test/my-app/node_modules/@types/selenium-webdriver/http.d.ts(48,14): error TS2583: Cannot find name 'Map'. Do you need to change your target library? Try changing the `lib` compiler option to es2015 or later.
+home/alex/dev/node/test/my-app/node_modules/@types/selenium-webdriver/remote.d.ts(139,29): error TS2583: Cannot find name 'Map'. Do you need to change your target library? Try changing the `lib` compiler option to es2015 or later.
+home/alex/dev/node/test/my-app/node_modules/rxjs/internal/Observable.d.ts(89,59): error TS2585: 'Promise' only refers to a type, but is being used as a value here. Do you need to change your target library? Try changing the `lib` compiler option to es2015 or later.
+
+(node:10297) UnhandledPromiseRejectionWarning: SyntaxError: Unexpected end of JSON input
+    at JSON.parse (<anonymous>)
+    at /home/alex/dev/node/test/my-app/node_modules/isomor-transpiler/dist/validation.js:66:30
+    at Generator.next (<anonymous>)
+    at /home/alex/dev/node/test/my-app/node_modules/isomor-transpiler/dist/validation.js:7:71
+    at new Promise (<anonymous>)
+    at __awaiter (/home/alex/dev/node/test/my-app/node_modules/isomor-transpiler/dist/validation.js:3:12)
+    at child_process_1.exec (/home/alex/dev/node/test/my-app/node_modules/isomor-transpiler/dist/validation.js:55:74)
+    at ChildProcess.exithandler (child_process.js:304:5)
+    at ChildProcess.emit (events.js:197:13)
+    at maybeClose (internal/child_process.js:984:16)
+(node:10297) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). (rejection id: 1)
+(node:10297) [DEP0018] DeprecationWarning: Unhandled promise rejections are deprecated. In the future, promise rejections that are not handled will terminate the Node.js process with a non-zero exit code.
+
+

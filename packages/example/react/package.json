@@ -44,7 +44,7 @@
     "react-async-cache": "^0.7.0",
     "react-dom": "^16.8.6",
     "react-scripts": "3.0.1",
-    "typescript": "^3.4.1"
+    "typescript": "^3.5.1"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
@@ -52,14 +52,14 @@
     "@types/fs-extra": "^7.0.0",
     "@types/jest": "24.0.13",
     "@types/md5": "^2.1.33",
-    "@types/node": "^12.0.2",
-    "@types/react": "16.8.17",
+    "@types/node": "^12.0.4",
+    "@types/react": "16.8.19",
     "@types/react-dom": "16.8.4",
     "isomor-server": "^1.1.1",
     "isomor-transpiler": "^1.1.1",
-    "nodemon": "^1.18.10",
+    "nodemon": "^1.19.1",
     "rimraf": "^2.6.3",
     "run-screen": "^0.5.3",
-    "ts-node": "^8.0.3"
+    "ts-node": "^8.2.0"
   }
 }

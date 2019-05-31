@@ -22,7 +22,7 @@
     "dependencies": {
         "fs-extra": "^8.0.1",
         "glob": "^7.1.3",
-        "typescript": "^3.2.4"
+        "typescript": "^3.5.1"
     },
     "devDependencies": {
         "@types/fs-extra": "^7.0.0",
@@ -32,7 +32,7 @@
         "jest": "^24.7.1",
         "rimraf": "^2.6.3",
         "ts-jest": "^24.0.2",
-        "tslint": "^5.12.1"
+        "tslint": "^5.17.0"
     },
     "gitHead": "0923f691f955096048aa5e657145f3d2cada920a"
 }

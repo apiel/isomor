@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -8,37 +9,74 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const axios_1 = require("axios");
-const urlPrefix = '/isomor';
-function getJsonSchemaFileName(path, name, className) {
-    return className ? `${path}.${className}.${name}.json` : `${path}.${name}.json`;
-}
-exports.getJsonSchemaFileName = getJsonSchemaFileName;
-function getUrl(path, funcName, classname) {
-    const url = classname
-        ? `${urlPrefix}/${path}/${classname}/${funcName}`
-        : `${urlPrefix}/${path}/${funcName}`;
-    return url;
-}
-exports.getUrl = getUrl;
-function isomorRemote(path, funcName, args, classname) {
+const inquirer_1 = require("inquirer");
+const child_process_1 = require("child_process");
+const chalk_1 = require("chalk");
+const REACT = 'React';
+const NG = 'Angular + Nest';
+const VUE = 'Vue';
+function start() {
     return __awaiter(this, void 0, void 0, function* () {
-        const url = getUrl(path, funcName, classname);
-        const { data: { result } } = yield axios_1.default.post(url, { args });
-        return result;
+        const { framework, name } = yield inquirer_1.prompt([
+            {
+                type: 'input',
+                name: 'name',
+                message: 'Enter the name of your project:',
+                default: () => 'my-app',
+            },
+            {
+                type: 'list',
+                name: 'framework',
+                message: 'Select which library you want to use?',
+                choices: [
+                    REACT,
+                    VUE,
+                    NG,
+                ],
+            },
+        ]);
+        if (framework === REACT) {
+            yield shell('npx', ['isomor-react-app', name]);
+        }
+        else if (framework === NG) {
+            yield shell('npx', ['isomor-ng-nest', name]);
+        }
+        else if (framework === VUE) {
+            yield shell('npx', ['isomor-vue-app', name]);
+        }
+        process.exit();
     });
 }
-exports.isomorRemote = isomorRemote;
-function isomorShare(constructor) {
+function shell(command, args) {
+    return new Promise((resolve) => {
+        let cmd = child_process_1.spawn(command, args, {
+            env: Object.assign({ FORCE_COLOR: 'true', COLUMNS: process.stdout.columns.toString(), LINES: process.stdout.rows.toString() }, process.env),
+        });
+        cmd.stdout.on('data', data => {
+            process.stdout.write(data);
+        });
+        cmd.stderr.on('data', data => {
+            const dataStr = data.toString();
+            if (dataStr.indexOf('warning') === 0) {
+                process.stdout.write(chalk_1.default.yellow('warming') + dataStr.substring(7));
+            }
+            else {
+                process.stdout.write(chalk_1.default.red(data.toString()));
+            }
+        });
+        process.stdin.setEncoding('ascii');
+        process.stdin.setRawMode(true);
+        process.stdin.resume();
+        process.stdin.on('data', (key) => {
+            if (key === '\u0003') {
+                process.exit();
+            }
+            if (cmd) {
+                cmd.stdin.write(key);
+            }
+        });
+        cmd.on('close', () => { cmd = null; resolve(); });
+    });
 }
-exports.isomorShare = isomorShare;
-const isomorDecorators = [];
-function isomor(constructor) {
-    isomorDecorators.push(constructor.name);
-}
-exports.isomor = isomor;
-function isIsomorClass(name) {
-    return isomorDecorators.includes(name);
-}
-exports.isIsomorClass = isIsomorClass;
+start();
 //# sourceMappingURL=index.js.map

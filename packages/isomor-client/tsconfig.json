@@ -9,11 +9,10 @@
       "removeComments": true,
       "emitDecoratorMetadata": true,
       "experimentalDecorators": true,
-      "allowSyntheticDefaultImports": true,
       "target": "es6",
       "sourceMap": true,
       "outDir": "./dist",
       "baseUrl": "./"
     },
-    "exclude": ["node_modules", "example"]
+    "exclude": ["node_modules", "src"]
   }

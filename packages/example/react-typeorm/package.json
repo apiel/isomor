@@ -38,7 +38,7 @@
   },
   "dependencies": {
     "fs-extra": "^8.0.1",
-    "isomor": "^1.2.0",
+    "isomor-client": "^1.2.0",
     "md5": "^2.2.1",
     "react": "^16.8.6",
     "react-async-cache": "^0.7.0",

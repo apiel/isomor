@@ -1,15 +1,12 @@
 {
-    "name": "isomor",
+    "name": "isomor-client",
     "version": "1.2.1",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
     "author": "Alexandre Piel <alexandre.piel@gmail.com>",
-    "license": "MIT",
-    "bin": "dist/index.js",
     "description": "Isomor unify the frontend and the backend by generating automatically the API",
+    "license": "MIT",
     "homepage": "https://apiel.github.io/isomor/",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/apiel/isomor"
-    },
     "engines": {
         "node": ">=11"
     },
@@ -23,22 +20,26 @@
         "nest",
         "server"
     ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/apiel/isomor"
+    },
     "scripts": {
-        "prepublishOnly": "cp ../../README.md . && yarn build",
-        "start": "ts-node bin/index.ts",
+        "prepublishOnly": "cp ../../Readme.sub.md ./README.md && yarn build",
         "prebuild": "rm -rf dist/",
-        "build": "tsc -p tsconfig.json && chmod +x dist/index.js",
+        "build": "tsc -p tsconfig.json",
         "lint": "tslint -p tsconfig.json -c tslint.json"
     },
     "dependencies": {
-        "chalk": "^2.4.2",
-        "inquirer": "^6.3.1",
+        "axios": "^0.19.0",
+        "isomor-server": "^1.2.0",
+        "isomor-transpiler": "^1.2.1",
         "typescript": "^3.5.1"
     },
     "devDependencies": {
-        "@types/chalk": "^2.2.0",
-        "@types/inquirer": "^6.0.3",
-        "ts-node": "^8.2.0",
+        "@types/axios": "^0.14.0",
+        "@types/rimraf": "^2.0.2",
+        "rimraf": "^2.6.3",
         "tslint": "^5.17.0"
     },
     "gitHead": "0923f691f955096048aa5e657145f3d2cada920a"

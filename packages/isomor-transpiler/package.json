@@ -1,6 +1,6 @@
 {
     "name": "isomor-transpiler",
-    "version": "2.0.0",
+    "version": "1.3.0",
     "main": "dist/build.js",
     "types": "dist/build.d.ts",
     "author": "Alexandre Piel <alexandre.piel@gmail.com>",

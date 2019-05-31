@@ -1,6 +1,6 @@
 {
   "name": "isomor-example-ng-nest",
-  "version": "2.0.0",
+  "version": "1.3.0",
   "scripts": {
     "isomor:build": "isomor-transpiler",
     "isomor:build:dev": "WATCH=true isomor-transpiler",

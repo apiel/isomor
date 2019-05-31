@@ -1,6 +1,5 @@
 ### ToDo
 
-- fix axios
 - env var: validation=false
     - yarn demo
 - fix angular issue

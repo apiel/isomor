@@ -1,6 +1,5 @@
 ### ToDo
 
-- move getJsonSchemaFileName to core
 - fix angular issue
 - swagger add params? and format?
     - might validate endpoint using swagger?

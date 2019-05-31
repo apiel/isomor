@@ -19,11 +19,16 @@
         "sourceMap": true,
         "pretty": true,
         "watch": false,
-        "typeRoots": ["node_modules/@types"],
+        "typeRoots": [
+            "node_modules/@types"
+        ],
         "sourceRoot": "src",
         "outDir": "dist",
         "incremental": true
     },
+    "lib": [
+        "es2017"
+    ],
     "files": [
         "ts-json-schema-generator.ts",
         "index.ts"

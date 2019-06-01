@@ -6,9 +6,7 @@ The server generate automatically the API documentation and make it available us
 
 #### API validation
 
-Isomor validate each incoming request to the server base on the types of the parameters of the function call.
-
-> **Note:** Generating the validation schema can take some time. You can deactivate by setting the environment variable `NO_VALIDATION=true`.
+Isomor can validate each incoming request to the server base on the types of the parameters of the function call. To generate the schema validation call the command `yarn isomor:build:validation`.
 
 #### Startup script
 

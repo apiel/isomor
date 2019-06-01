@@ -1,8 +1,7 @@
 ### ToDo
 
-- dont make validation part of the dev process
+- should we generate VALIDATION only manually?
 
-- fix angular issue
 - swagger add params? and format?
     - might validate endpoint using swagger?
 - isomor-transpiler isomor-server --dev necessary in installer

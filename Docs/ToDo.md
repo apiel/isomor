@@ -1,6 +1,9 @@
 ### ToDo
 
 - dont make validation part of the dev process
+    - by default validation is false but could be activated with VALIDATION=true
+    - then there would be a specific command to generate validation
+        - isomor:build:validation
 
 - fix angular issue
 - swagger add params? and format?
@@ -51,69 +54,3 @@
   - it might be possible to do something like isomor without transpiler, just by using dependency injection. Maybe something like that https://www.npmjs.com/package/inversify . The library could easily inject different script depending if it is on the server or on the client. The downside of this would be that you have to change your way of coding, at least for people from react and vuejs.
 
 - think about https://keepachangelog.com/en/1.0.0/ CHANGELOG.md
-
-
-
-- isomor-rendering, pre-rendering caching... out of scope, so maybe not do it!
-
-
-
-
-
-- to fix
-ERR { Error: Command failed: isomor-json-schema-generator --path src-isomor/server/api.service.ts --type ApiService.test
-home/alex/dev/node/test/my-app/node_modules/@types/selenium-webdriver/http.d.ts(24,14): error TS2583: Cannot find name 'Map'. Do you need to change your target library? Try changing the `lib` compiler option to es2015 or later.
-home/alex/dev/node/test/my-app/node_modules/@types/selenium-webdriver/http.d.ts(48,14): error TS2583: Cannot find name 'Map'. Do you need to change your target library? Try changing the `lib` compiler option to es2015 or later.
-home/alex/dev/node/test/my-app/node_modules/@types/selenium-webdriver/remote.d.ts(139,29): error TS2583: Cannot find name 'Map'. Do you need to change your target library? Try changing the `lib` compiler option to es2015 or later.
-home/alex/dev/node/test/my-app/node_modules/rxjs/internal/Observable.d.ts(89,59): error TS2585: 'Promise' only refers to a type, but is being used as a value here. Do you need to change your target library? Try changing the `lib` compiler option to es2015 or later.
-
-    at ChildProcess.exithandler (child_process.js:297:12)
-    at ChildProcess.emit (events.js:197:13)
-    at maybeClose (internal/child_process.js:984:16)
-    at Process.ChildProcess._handle.onexit (internal/child_process.js:265:5)
-  killed: false,
-  code: 1,
-  signal: null,
-  cmd:
-   'isomor-json-schema-generator --path src-isomor/server/api.service.ts --type ApiService.test' }
-• warn home/alex/dev/node/test/my-app/node_modules/@types/selenium-webdriver/http.d.ts(24,14): error TS2583: Cannot find name 'Map'. Do you need to change your target library? Try changing the `lib` compiler option to es2015 or later.
-home/alex/dev/node/test/my-app/node_modules/@types/selenium-webdriver/http.d.ts(48,14): error TS2583: Cannot find name 'Map'. Do you need to change your target library? Try changing the `lib` compiler option to es2015 or later.
-home/alex/dev/node/test/my-app/node_modules/@types/selenium-webdriver/remote.d.ts(139,29): error TS2583: Cannot find name 'Map'. Do you need to change your target library? Try changing the `lib` compiler option to es2015 or later.
-home/alex/dev/node/test/my-app/node_modules/rxjs/internal/Observable.d.ts(89,59): error TS2585: 'Promise' only refers to a type, but is being used as a value here. Do you need to change your target library? Try changing the `lib` compiler option to es2015 or later.
-
-(node:10297) UnhandledPromiseRejectionWarning: SyntaxError: Unexpected end of JSON input
-    at JSON.parse (<anonymous>)
-    at /home/alex/dev/node/test/my-app/node_modules/isomor-transpiler/dist/validation.js:66:30
-    at Generator.next (<anonymous>)
-    at /home/alex/dev/node/test/my-app/node_modules/isomor-transpiler/dist/validation.js:7:71
-    at new Promise (<anonymous>)
-    at __awaiter (/home/alex/dev/node/test/my-app/node_modules/isomor-transpiler/dist/validation.js:3:12)
-    at child_process_1.exec (/home/alex/dev/node/test/my-app/node_modules/isomor-transpiler/dist/validation.js:55:74)
-    at ChildProcess.exithandler (child_process.js:304:5)
-    at ChildProcess.emit (events.js:197:13)
-    at maybeClose (internal/child_process.js:984:16)
-(node:10297) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). (rejection id: 1)
-(node:10297) [DEP0018] DeprecationWarning: Unhandled promise rejections are deprecated. In the future, promise rejections that are not handled will terminate the Node.js process with a non-zero exit code.
-
-
-- To Fix
-
-npx isomor-react-app my-app
-cd my-app
-yarn dev
-
-// edit file uptime/server/uptime.ts
-
-• info File uptime/server/uptime.ts has been changed
-(node:12020) UnhandledPromiseRejectionWarning: TypeError: anymatch_1.default is not a function
-    at Object.<anonymous> (/home/alex/dev/node/test/react-app/node_modules/isomor-transpiler/dist/build.js:85:27)
-    at Generator.next (<anonymous>)
-    at /home/alex/dev/node/test/react-app/node_modules/isomor-transpiler/dist/build.js:7:71
-    at new Promise (<anonymous>)
-    at __awaiter (/home/alex/dev/node/test/react-app/node_modules/isomor-transpiler/dist/build.js:3:12)
-    at /home/alex/dev/node/test/react-app/node_modules/isomor-transpiler/dist/build.js:81:48
-    at Timeout.setTimeout [as _onTimeout] (/home/alex/dev/node/test/react-app/node_modules/isomor-transpiler/dist/build.js:129:60)
-    at listOnTimeout (timers.js:327:15)
-    at processTimers (timers.js:271:5)
-(node:12020) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). (rejection id: 1)
-(node:12020) [DEP0018] DeprecationWarning: Unhandled promise rejections are deprecated. In the future, promise rejections that are not handled will terminate the Node.js process with a non-zero exit code.

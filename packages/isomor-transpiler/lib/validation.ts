@@ -46,8 +46,8 @@ export function setValidator(
 }
 
 function validationIsActive() {
-    const { jsonSchemaFolder, noValidation } = getOptions();
-    return !noValidation && jsonSchemaFolder && jsonSchemaFolder.length;
+    const { jsonSchemaFolder, validation } = getOptions();
+    return validation && jsonSchemaFolder && jsonSchemaFolder.length;
 }
 
 export function pushToQueue(

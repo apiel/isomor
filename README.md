@@ -46,7 +46,7 @@ cd packages/examples/react
 # for VueJs
 # cd packages/examples/vue
 yarn
-yarn demo
+yarn prod
 ```
 Open http://127.0.0.1:3005/
 

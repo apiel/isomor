@@ -94,3 +94,24 @@ home/alex/dev/node/test/my-app/node_modules/rxjs/internal/Observable.d.ts(89,59)
 (node:10297) [DEP0018] DeprecationWarning: Unhandled promise rejections are deprecated. In the future, promise rejections that are not handled will terminate the Node.js process with a non-zero exit code.
 
 
+- To Fix
+
+npx isomor-react-app my-app
+cd my-app
+yarn dev
+
+// edit file uptime/server/uptime.ts
+
+• info File uptime/server/uptime.ts has been changed
+(node:12020) UnhandledPromiseRejectionWarning: TypeError: anymatch_1.default is not a function
+    at Object.<anonymous> (/home/alex/dev/node/test/react-app/node_modules/isomor-transpiler/dist/build.js:85:27)
+    at Generator.next (<anonymous>)
+    at /home/alex/dev/node/test/react-app/node_modules/isomor-transpiler/dist/build.js:7:71
+    at new Promise (<anonymous>)
+    at __awaiter (/home/alex/dev/node/test/react-app/node_modules/isomor-transpiler/dist/build.js:3:12)
+    at /home/alex/dev/node/test/react-app/node_modules/isomor-transpiler/dist/build.js:81:48
+    at Timeout.setTimeout [as _onTimeout] (/home/alex/dev/node/test/react-app/node_modules/isomor-transpiler/dist/build.js:129:60)
+    at listOnTimeout (timers.js:327:15)
+    at processTimers (timers.js:271:5)
+(node:12020) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). (rejection id: 1)
+(node:12020) [DEP0018] DeprecationWarning: Unhandled promise rejections are deprecated. In the future, promise rejections that are not handled will terminate the Node.js process with a non-zero exit code.

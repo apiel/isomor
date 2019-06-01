@@ -9,10 +9,12 @@ import {
     getFilesPattern,
 } from 'isomor-core';
 import { watch } from 'chokidar';
-import anymatch from 'anymatch';
-import { parse, generate } from './ast';
 
+import { parse, generate } from './ast';
 import transform from './transform';
+
+// import anymatch from 'anymatch'; // ts issues https://github.com/micromatch/anymatch/issues/29
+const anymatch = require('anymatch'); // tslint:disable-line
 
 export default transform;
 

@@ -18,7 +18,7 @@
         "commander": "~2.20.0",
         "glob": "~7.1.4",
         "json-stable-stringify": "^1.0.1",
-        "typescript": "~3.4.5"
+        "typescript": "~3.5.1"
     },
     "devDependencies": {
         "@types/glob": "^7.1.1",

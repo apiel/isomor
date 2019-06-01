@@ -1,6 +1,6 @@
 {
   "name": "ci-test-react-app",
-  "version": "1.3.4",
+  "version": "1.3.5",
   "engines": {
     "node": ">=11"
   },
@@ -11,7 +11,7 @@
     "@types/react": "16.8.17",
     "@types/react-dom": "16.8.4",
     "fs-extra": "^8.0.1",
-    "isomor": "^1.3.4",
+    "isomor": "^1.3.5",
     "react": "^16.8.6",
     "react-async-cache": "^0.7.0",
     "react-dom": "^16.8.6",

@@ -1,5 +1,7 @@
 ### ToDo
 
+- dont make validation part of the dev process
+
 - fix angular issue
 - swagger add params? and format?
     - might validate endpoint using swagger?

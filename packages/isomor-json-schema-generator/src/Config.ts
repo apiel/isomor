@@ -1,5 +1,4 @@
 export interface PartialConfig {
-
     expose: "all" | "none" | "export";
     topRef: boolean;
     jsDoc: "none" | "extended" | "basic";
@@ -12,6 +11,7 @@ export interface PartialConfig {
 export interface Config extends PartialConfig {
     path: string;
     type: string;
+    tsconfig: string;
 }
 
 export const DEFAULT_CONFIG: PartialConfig = {

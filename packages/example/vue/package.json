@@ -1,6 +1,6 @@
 {
   "name": "isomor-example-vue",
-  "version": "1.3.3",
+  "version": "1.3.4",
   "private": true,
   "engines": {
     "node": ">=11"
@@ -22,7 +22,7 @@
   "dependencies": {
     "core-js": "^2.6.5",
     "fs-extra": "^8.0.1",
-    "isomor": "^1.3.3",
+    "isomor": "^1.3.4",
     "vue": "^2.6.10",
     "vue-async-cache": "^0.7.0",
     "vue-class-component": "^7.0.2",

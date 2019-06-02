@@ -2,8 +2,9 @@
 
 - should we generate VALIDATION only manually?
 
-- swagger add params? and format?
-    - might validate endpoint using swagger?
+- swagger add params? and format? -> doesnt really work since args is an array
+    - https://json-schema.org/understanding-json-schema/reference/array.html#tuple-validation
+    -> maybe we should use as well this for json shcema
 - isomor-transpiler isomor-server --dev necessary in installer
 
 - look at stdlib.com or lambda function and think about an isomor version just to generate API without frontend.

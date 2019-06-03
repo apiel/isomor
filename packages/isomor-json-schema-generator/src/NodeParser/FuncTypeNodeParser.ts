@@ -1,8 +1,10 @@
 import * as ts from "typescript";
 import { Context, NodeParser } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
+import { ArrayType } from "../Type/ArrayType";
 import { BaseType } from "../Type/BaseType";
 import { OptionalType } from "../Type/OptionalType";
+import { RestType } from "../Type/RestType";
 import { TupleType } from "../Type/TupleType";
 
 export class FuncTypeNodeParser implements SubNodeParser {
@@ -23,7 +25,9 @@ export class FuncTypeNodeParser implements SubNodeParser {
                             // console.log("item", item);
                             // what if item.type does not exist?
                             const type = this.childNodeParser.createType(item.type!, context);
-                            return item.questionToken ? new OptionalType(type) : type;
+                            return item.dotDotDotToken
+                                ? new RestType(new ArrayType(type))
+                                : (item.questionToken ? new OptionalType(type) : type);
                         });
         // console.log("types", types);
         return new TupleType(types);

@@ -6,6 +6,7 @@ import { ObjectProperty, ObjectType } from "../Type/ObjectType";
 import { getKey } from "../Utils/nodeKey";
 import { TupleType } from "../Type/TupleType";
 import { referenceHidden } from "../Utils/isHidden";
+import { OptionalType } from "../Type/OptionalType";
 
 export class FuncTypeNodeParser implements SubNodeParser {
     public constructor(
@@ -23,10 +24,11 @@ export class FuncTypeNodeParser implements SubNodeParser {
     public createType(node: ts.FunctionDeclaration, context: Context): BaseType {
         const types = node.parameters
                         .map((item) => {
-                            // console.log('item', item);
-                            return this.childNodeParser.createType(item.type as any, context);
+                            // console.log("item", item);
+                            const type = this.childNodeParser.createType(item.type as any, context);
+                            return item.questionToken ? new OptionalType(type) : type;
                         });
-        console.log("types", types);
+        // console.log("types", types);
         return new TupleType(types);
     }
 

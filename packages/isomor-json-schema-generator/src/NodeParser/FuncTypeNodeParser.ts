@@ -4,6 +4,8 @@ import { SubNodeParser } from "../SubNodeParser";
 import { BaseType } from "../Type/BaseType";
 import { ObjectProperty, ObjectType } from "../Type/ObjectType";
 import { getKey } from "../Utils/nodeKey";
+import { TupleType } from "../Type/TupleType";
+import { referenceHidden } from "../Utils/isHidden";
 
 export class FuncTypeNodeParser implements SubNodeParser {
     public constructor(
@@ -17,14 +19,25 @@ export class FuncTypeNodeParser implements SubNodeParser {
             || node.kind === ts.SyntaxKind.ArrowFunction
             || node.kind === ts.SyntaxKind.MethodDeclaration;
     }
+
     public createType(node: ts.FunctionDeclaration, context: Context): BaseType {
-        return new ObjectType(
-            this.getTypeId(node, context),
-            [],
-            this.getParameters(node, context),
-            false,
-        );
+        const types = node.parameters
+                        .map((item) => {
+                            // console.log('item', item);
+                            return this.childNodeParser.createType(item.type as any, context);
+                        });
+        console.log("types", types);
+        return new TupleType(types);
     }
+
+    // public createType(node: ts.FunctionDeclaration, context: Context): BaseType {
+    //     return new ObjectType(
+    //         this.getTypeId(node, context),
+    //         [],
+    //         this.getParameters(node, context),
+    //         false,
+    //     );
+    // }
 
     private getParameters(node: ts.FunctionDeclaration | ts.ArrowFunction, context: Context): ObjectProperty[] {
         return node.parameters.map(paramNode => {

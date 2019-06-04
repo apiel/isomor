@@ -1,9 +1,13 @@
 {
     "args": [
-        "input"
+        "a",
+        "b",
+        "c",
+        "d",
+        "yo"
     ],
     "schema": {
-        "$ref": "#/definitions/getList",
+        "$ref": "#/definitions/test",
         "$schema": "http://json-schema.org/draft-06/schema#",
         "definitions": {
             "GetListInput": {
@@ -18,14 +22,26 @@
                 ],
                 "type": "object"
             },
-            "getList": {
+            "test": {
+                "additionalItems": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
                 "items": [
                     {
+                        "type": "string"
+                    },
+                    {
                         "$ref": "#/definitions/GetListInput"
-                    }
+                    },
+                    {
+                        "type": "number"
+                    },
+                    {}
                 ],
-                "maxItems": 1,
-                "minItems": 1,
+                "minItems": 2,
                 "type": "array"
             }
         }

@@ -7,16 +7,14 @@
         "$schema": "http://json-schema.org/draft-06/schema#",
         "definitions": {
             "setColor": {
-                "additionalProperties": false,
-                "properties": {
-                    "color": {
+                "items": [
+                    {
                         "type": "string"
                     }
-                },
-                "required": [
-                    "color"
                 ],
-                "type": "object"
+                "maxItems": 1,
+                "minItems": 1,
+                "type": "array"
             }
         }
     }

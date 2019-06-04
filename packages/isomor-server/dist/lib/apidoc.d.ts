@@ -6,17 +6,6 @@ export declare function getApiDoc(endpoints: Entrypoint[]): Promise<{
         version: string;
     };
     paths: {};
-    definitions: {
-        Args: {
-            type: string;
-            required: string[];
-            properties: {
-                args: {
-                    type: string;
-                    example: any[];
-                };
-            };
-        };
-    };
+    definitions: {};
     consumes: string[];
 }>;

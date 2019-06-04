@@ -8,6 +8,7 @@ const glob = promisify(Glob);
 export interface ValidationSchema {
     args: string[];
     schema: any;
+    name: string;
 }
 
 export function getJsonSchemaFileName(

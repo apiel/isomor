@@ -52,7 +52,7 @@ function getEntrypoint(app, file, fn, name, jsonSchemaFolder, classname) {
             next(error);
         }
     }));
-    return { path, file };
+    return { path, file, validationSchema };
 }
 exports.getEntrypoint = getEntrypoint;
 function getClassEntrypoints(app, file, classname, jsonSchemaFolder, noDecorator) {

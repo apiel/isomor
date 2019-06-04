@@ -4,10 +4,14 @@ export async function getApiDoc(
     endpoints: Entrypoint[],
 ) {
     const paths = {};
+    let definitions = {};
 
-    // need to fix swagger
-
-    endpoints.forEach(({ file, path }) => {
+    endpoints.forEach(({ file, path, validationSchema }) => {
+        let $ref: string;
+        if (validationSchema && validationSchema.schema) {
+            $ref =  validationSchema.schema.$ref;
+            definitions = { ...definitions, ...validationSchema.schema.definitions };
+        }
         paths[path] = {
             post: {
                 operationId: `${file}-${path}`,
@@ -23,7 +27,16 @@ export async function getApiDoc(
                         description: 'Function arguments',
                         required: true,
                         schema: {
-                            $ref: '#/definitions/Args',
+                            type: 'object',
+                            required: [
+                                'args',
+                            ],
+                            properties: {
+                                args: $ref ? { $ref } : {
+                                    type: 'array',
+                                    example: [],
+                                },
+                            },
                         },
                     },
                 ],
@@ -45,20 +58,7 @@ export async function getApiDoc(
             version: 'API',
         },
         paths,
-        definitions: {
-            Args: {
-                type: 'object',
-                required: [
-                    'args',
-                ],
-                properties: {
-                    args: {
-                        type: 'array',
-                        example: [],
-                    },
-                },
-            },
-        },
+        definitions,
         consumes: [
             'application/json',
         ],

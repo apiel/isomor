@@ -1,6 +1,7 @@
 export interface ValidationSchema {
     args: string[];
     schema: any;
+    name: string;
 }
 export declare function getJsonSchemaFileName(path: string, name: string, className?: string): string;
 export declare function getFilesPattern(folderToSearch: string): string;

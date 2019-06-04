@@ -16,6 +16,7 @@ export interface Context {
 export interface Entrypoint {
     path: string;
     file: string;
+    validationSchema: ValidationSchema;
 }
 
 function getEntrypointPath(file: string, name: string, classname?: string) {
@@ -76,7 +77,7 @@ export function getEntrypoint(
             next(error);
         }
     });
-    return { path, file };
+    return { path, file, validationSchema };
 }
 
 // should getInstance be async?

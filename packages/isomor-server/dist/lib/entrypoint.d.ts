@@ -1,4 +1,5 @@
 import * as express from 'express';
+import { ValidationSchema } from 'isomor-core';
 export interface Context {
     req: express.Request;
     res: express.Response;
@@ -6,6 +7,7 @@ export interface Context {
 export interface Entrypoint {
     path: string;
     file: string;
+    validationSchema: ValidationSchema;
 }
 export declare function getEntrypoint(app: express.Express, file: string, fn: any, name: string, jsonSchemaFolder: string, classname?: string): Entrypoint;
 export declare function getClassEntrypoints(app: express.Express, file: string, classname: string, jsonSchemaFolder: string, noDecorator: boolean): Entrypoint[];

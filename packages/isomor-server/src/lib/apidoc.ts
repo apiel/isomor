@@ -8,8 +8,10 @@ export async function getApiDoc(
 
     endpoints.forEach(({ file, path, validationSchema }) => {
         let $ref: string;
+        let $schema: string;
         if (validationSchema && validationSchema.schema) {
             $ref =  validationSchema.schema.$ref;
+            $schema =  validationSchema.schema.$schema;
             definitions = { ...definitions, ...validationSchema.schema.definitions };
         }
         paths[path] = {
@@ -32,7 +34,7 @@ export async function getApiDoc(
                                 'args',
                             ],
                             properties: {
-                                args: $ref ? { $ref } : {
+                                args: $ref ? { $ref, $schema } : {
                                     type: 'array',
                                     example: [],
                                 },

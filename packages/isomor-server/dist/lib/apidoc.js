@@ -14,8 +14,10 @@ function getApiDoc(endpoints) {
         let definitions = {};
         endpoints.forEach(({ file, path, validationSchema }) => {
             let $ref;
+            let $schema;
             if (validationSchema && validationSchema.schema) {
                 $ref = validationSchema.schema.$ref;
+                $schema = validationSchema.schema.$schema;
                 definitions = Object.assign({}, definitions, validationSchema.schema.definitions);
             }
             paths[path] = {
@@ -38,7 +40,7 @@ function getApiDoc(endpoints) {
                                     'args',
                                 ],
                                 properties: {
-                                    args: $ref ? { $ref } : {
+                                    args: $ref ? { $ref, $schema } : {
                                         type: 'array',
                                         example: [],
                                     },

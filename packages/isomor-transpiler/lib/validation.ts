@@ -27,21 +27,21 @@ export function setValidator(
     name: string,
     className?: string,
 ) {
-    let args = paramRoot.params.map((param) => {
+    const args = paramRoot.params.map((param) => {
         if (param.type === 'Identifier') {
             return param.name;
         } else if (param.type === 'AssignmentPattern' && param.left.type === 'Identifier') {
             return param.left.name;
+        } else if (param.type === 'RestElement' && param.argument.type === 'Identifier') {
+            return param.argument.name;
         }
     }).filter(param => param);
     if (args.length !== paramRoot.params.length) {
-        // need to work on that to support as well ...
-        warn('TransformFunc support only Identifier as params', srcFilePath, name);
+        warn('Validatormight not recognize one of your params type. \
+            Please report the warning at https://github.com/apiel/isomor/issues', srcFilePath, name);
         // console.log('paramRoot', JsonAst(paramRoot));
-        args = [];
-    } else {
-        pushToQueue(args, srcFilePath, path, name, className);
     }
+    pushToQueue(args, srcFilePath, path, name, className);
     return args;
 }
 
@@ -69,10 +69,10 @@ function run() {
         const { jsonSchemaFolder } = getOptions();
         const { name, srcFilePath, path, args, className } = queueList.pop();
         // console.log('args', args, name, srcFilePath);
-        const command = className
-            ? `isomor-json-schema-generator --path ${srcFilePath} --type ${className}.${name}`
-            : `isomor-json-schema-generator --path ${srcFilePath} --type ${name}`;
+        const typeName = className ? `${className}.${name}` : name;
+        const command = `isomor-json-schema-generator --path ${srcFilePath} --type ${typeName}`;
         info(`Start JSON schema generation for ${name} in ${srcFilePath} (might take few seconds)`);
+        // console.log('command', command);
         process = exec(command, async (err, stdout, stderr) => {
             if (err) {
                 error(err);
@@ -80,15 +80,20 @@ function run() {
             if (stderr) {
                 warn(stderr);
             }
-            // console.log(`stdout: ${stdout}`);
-            const jsonSchemaFileName = getJsonSchemaFileName(path, name, className);
-            const jsonFile = join(jsonSchemaFolder, jsonSchemaFileName);
-            const data: ValidationSchema = {
-                args,
-                schema: JSON.parse(stdout),
-            };
-            await outputJSON(jsonFile, data, { spaces: 4 });
-            info(`JSON schema generation finished for ${name} in ${srcFilePath}`);
+            if (stdout && stdout.length) {
+                // console.log(`stdout: ${stdout}`);
+                const jsonSchemaFileName = getJsonSchemaFileName(path, name, className);
+                const jsonFile = join(jsonSchemaFolder, jsonSchemaFileName);
+                const data: ValidationSchema = {
+                    args,
+                    schema: JSON.parse(stdout),
+                    name: typeName,
+                };
+                await outputJSON(jsonFile, data, { spaces: 4 });
+                info(`JSON schema generation finished for ${name} in ${srcFilePath}`);
+            } else {
+                warn(`JSON schema generation empty for ${name} in ${srcFilePath}`);
+            }
             process = null;
             run();
         });

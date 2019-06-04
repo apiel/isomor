@@ -17,21 +17,22 @@ const build_1 = require("./build");
 const queueList = [];
 let process;
 function setValidator(paramRoot, srcFilePath, path, name, className) {
-    let args = paramRoot.params.map((param) => {
+    const args = paramRoot.params.map((param) => {
         if (param.type === 'Identifier') {
             return param.name;
         }
         else if (param.type === 'AssignmentPattern' && param.left.type === 'Identifier') {
             return param.left.name;
         }
+        else if (param.type === 'RestElement' && param.argument.type === 'Identifier') {
+            return param.argument.name;
+        }
     }).filter(param => param);
     if (args.length !== paramRoot.params.length) {
-        logol_1.warn('TransformFunc support only Identifier as params', srcFilePath, name);
-        args = [];
+        logol_1.warn('Validatormight not recognize one of your params type. \
+            Please report the warning at https://github.com/apiel/isomor/issues', srcFilePath, name);
     }
-    else {
-        pushToQueue(args, srcFilePath, path, name, className);
-    }
+    pushToQueue(args, srcFilePath, path, name, className);
     return args;
 }
 exports.setValidator = setValidator;
@@ -51,9 +52,8 @@ function run() {
     if (!process && queueList.length) {
         const { jsonSchemaFolder } = build_1.getOptions();
         const { name, srcFilePath, path, args, className } = queueList.pop();
-        const command = className
-            ? `isomor-json-schema-generator --path ${srcFilePath} --type ${className}.${name}`
-            : `isomor-json-schema-generator --path ${srcFilePath} --type ${name}`;
+        const typeName = className ? `${className}.${name}` : name;
+        const command = `isomor-json-schema-generator --path ${srcFilePath} --type ${typeName}`;
         logol_1.info(`Start JSON schema generation for ${name} in ${srcFilePath} (might take few seconds)`);
         process = child_process_1.exec(command, (err, stdout, stderr) => __awaiter(this, void 0, void 0, function* () {
             if (err) {
@@ -62,14 +62,20 @@ function run() {
             if (stderr) {
                 logol_1.warn(stderr);
             }
-            const jsonSchemaFileName = isomor_core_1.getJsonSchemaFileName(path, name, className);
-            const jsonFile = path_1.join(jsonSchemaFolder, jsonSchemaFileName);
-            const data = {
-                args,
-                schema: JSON.parse(stdout),
-            };
-            yield fs_extra_1.outputJSON(jsonFile, data, { spaces: 4 });
-            logol_1.info(`JSON schema generation finished for ${name} in ${srcFilePath}`);
+            if (stdout && stdout.length) {
+                const jsonSchemaFileName = isomor_core_1.getJsonSchemaFileName(path, name, className);
+                const jsonFile = path_1.join(jsonSchemaFolder, jsonSchemaFileName);
+                const data = {
+                    args,
+                    schema: JSON.parse(stdout),
+                    name: typeName,
+                };
+                yield fs_extra_1.outputJSON(jsonFile, data, { spaces: 4 });
+                logol_1.info(`JSON schema generation finished for ${name} in ${srcFilePath}`);
+            }
+            else {
+                logol_1.warn(`JSON schema generation empty for ${name} in ${srcFilePath}`);
+            }
             process = null;
             run();
         }));

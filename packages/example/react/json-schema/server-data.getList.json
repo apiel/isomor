@@ -19,17 +19,16 @@
                 "type": "object"
             },
             "getList": {
-                "additionalProperties": false,
-                "properties": {
-                    "input": {
+                "items": [
+                    {
                         "$ref": "#/definitions/GetListInput"
                     }
-                },
-                "required": [
-                    "input"
                 ],
-                "type": "object"
+                "maxItems": 1,
+                "minItems": 1,
+                "type": "array"
             }
         }
-    }
+    },
+    "name": "getList"
 }

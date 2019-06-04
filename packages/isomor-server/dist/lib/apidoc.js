@@ -11,7 +11,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 function getApiDoc(endpoints) {
     return __awaiter(this, void 0, void 0, function* () {
         const paths = {};
-        endpoints.forEach(({ file, path }) => {
+        let definitions = {};
+        endpoints.forEach(({ file, path, validationSchema }) => {
+            let $ref;
+            let $schema;
+            if (validationSchema && validationSchema.schema) {
+                $ref = validationSchema.schema.$ref;
+                $schema = validationSchema.schema.$schema;
+                definitions = Object.assign({}, definitions, validationSchema.schema.definitions);
+            }
             paths[path] = {
                 post: {
                     operationId: `${file}-${path}`,
@@ -27,7 +35,16 @@ function getApiDoc(endpoints) {
                             description: 'Function arguments',
                             required: true,
                             schema: {
-                                $ref: '#/definitions/Args',
+                                type: 'object',
+                                required: [
+                                    'args',
+                                ],
+                                properties: {
+                                    args: $ref ? { $ref, $schema } : {
+                                        type: 'array',
+                                        example: [],
+                                    },
+                                },
                             },
                         },
                     ],
@@ -49,20 +66,7 @@ function getApiDoc(endpoints) {
                 version: 'API',
             },
             paths,
-            definitions: {
-                Args: {
-                    type: 'object',
-                    required: [
-                        'args',
-                    ],
-                    properties: {
-                        args: {
-                            type: 'array',
-                            example: [],
-                        },
-                    },
-                },
-            },
+            definitions,
             consumes: [
                 'application/json',
             ],

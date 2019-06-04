@@ -66,7 +66,7 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
     }
 
     chainNodeParser
-        .addNodeParser(new FuncTypeNodeParser(typeChecker, chainNodeParser))
+        .addNodeParser(new FuncTypeNodeParser(chainNodeParser))
 
         .addNodeParser(new StringTypeNodeParser())
         .addNodeParser(new NumberTypeNodeParser())

@@ -42,14 +42,9 @@ function validateArgs(
     args: any[],
 ) {
     if (validationSchema) {
-        if (args.length > validationSchema.args.length) {
-            throw(new Error(`Too much arguments provided. Expected: ${validationSchema.args.join(', ')}.`));
-        }
-        const argsObject = {};
-        args.forEach((value, index) => argsObject[validationSchema.args[index]] = value);
         const ajv = new Ajv();
         ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-06.json'));
-        const valid = ajv.validate(validationSchema.schema, argsObject);
+        const valid = ajv.validate(validationSchema.schema, args);
         if (!valid) {
             throw(new Error(`Invalid argument format: ${ajv.errorsText()}.`));
         }

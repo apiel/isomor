@@ -1,20 +1,23 @@
-
 {
-    "compilerOptions": {
-      "types": [
-        "jest",
-        "node"
-      ],
-      "module": "commonjs",
-      "declaration": true,
-      "removeComments": true,
-      "emitDecoratorMetadata": true,
-      "experimentalDecorators": true,
-      "allowSyntheticDefaultImports": true,
-      "target": "es6",
-      "sourceMap": true,
-      "outDir": "./dist",
-      "baseUrl": "./"
-    },
-    "exclude": ["node_modules", "src", "src-isomor"]
-  }
+  "compilerOptions": {
+    "types": [
+      "jest",
+      "node"
+    ],
+    "module": "commonjs",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "es6",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./"
+  },
+  "exclude": [
+    "node_modules",
+    "src",
+    "src-isomor"
+  ]
+}

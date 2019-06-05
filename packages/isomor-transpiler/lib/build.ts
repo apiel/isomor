@@ -1,4 +1,5 @@
 import { info, warn } from 'logol';
+import * as findUp from 'find-up';
 import { readFile, outputFile, emptyDir, copy, unlink } from 'fs-extra';
 import { join } from 'path';
 import debug from 'debug';
@@ -31,8 +32,25 @@ export interface Options {
 }
 
 export function getOptions(): Options {
+    const srcFolder = process.env.SRC_FOLDER || './src-isomor';
+
+    // move this to pkgName function to cache pkg
+    let pkgName = 'root';
+    if (process.env.PKG_NAME) {
+        pkgName = process.env.PKG_NAME;
+    } else {
+        const found = findUp.sync('package.json', { cwd: srcFolder });
+        if (found) {
+            const pkg = require(found);
+            if (pkg.name) {
+                pkgName = pkg.name;
+            }
+        }
+    }
+    info('[', pkgName, ']');
+
     return {
-        srcFolder: process.env.SRC_FOLDER || './src-isomor',
+        srcFolder,
         distAppFolder: process.env.DIST_APP_FOLDER || './src',
         serverFolder: process.env.SERVER_FOLDER || '/server',
         jsonSchemaFolder: process.env.JSON_SCHEMA_FOLDER || './json-schema',

@@ -1,8 +1,10 @@
 ### ToDo
 
+- think about to make lib component including isomor frontend and server
+
 - look at stdlib.com or lambda function and think about an isomor version just to generate API without frontend.
 
-- think about to make lib component including isomor frontend and server
+- svelte wait for typescript support -> https://github.com/sveltejs/svelte/issues/1639
 
 - should we generate VALIDATION only manually?
 

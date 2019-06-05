@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const logol_1 = require("logol");
+const findUp = require("find-up");
 const fs_extra_1 = require("fs-extra");
 const path_1 = require("path");
 const debug_1 = require("debug");
@@ -19,8 +20,23 @@ const transform_1 = require("./transform");
 const anymatch = require('anymatch');
 exports.default = transform_1.default;
 function getOptions() {
+    const srcFolder = process.env.SRC_FOLDER || './src-isomor';
+    let pkgName = 'root';
+    if (process.env.PKG_NAME) {
+        pkgName = process.env.PKG_NAME;
+    }
+    else {
+        const found = findUp.sync('package.json', { cwd: srcFolder });
+        if (found) {
+            const pkg = require(found);
+            if (pkg.name) {
+                pkgName = pkg.name;
+            }
+        }
+    }
+    logol_1.info('[', pkgName, ']');
     return {
-        srcFolder: process.env.SRC_FOLDER || './src-isomor',
+        srcFolder,
         distAppFolder: process.env.DIST_APP_FOLDER || './src',
         serverFolder: process.env.SERVER_FOLDER || '/server',
         jsonSchemaFolder: process.env.JSON_SCHEMA_FOLDER || './json-schema',

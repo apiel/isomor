@@ -27,7 +27,7 @@ describe('transformFunc()', () => {
         }`);
         const node = transformArrowFunc((program.body[0] as any).declaration, srcFilePath, path, pkgName, withTypes);
         expect(node).toEqual('getCodeArrowFuncMock');
-        expect(getCodeArrowFunc).toHaveBeenCalledWith(path, 'getTime', withTypes);
+        expect(getCodeArrowFunc).toHaveBeenCalledWith(path, pkgName, 'getTime', withTypes);
         expect(setValidator).toBeCalledWith((program.body[0] as any).declaration.declarations[0].init, srcFilePath, path, 'getTime');
     });
 });

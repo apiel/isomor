@@ -45,7 +45,7 @@ export function getCodeImport() {
     } as any as Statement; // need to try to remove any
 }
 
-export function getCodeFunc(fileName: string, name: string, withTypes: boolean) {
+export function getCodeFunc(fileName: string, pkgName: string, name: string, withTypes: boolean) {
     return {
         type: 'ExportNamedDeclaration',
         declaration: {
@@ -55,12 +55,12 @@ export function getCodeFunc(fileName: string, name: string, withTypes: boolean) 
                 name,
             },
             params: getParams(withTypes),
-            body: getBody(fileName, name),
+            body: getBody(fileName, pkgName, name),
         },
     } as Statement;
 }
 
-export function getCodeArrowFunc(fileName: string, name: string, withTypes: boolean) {
+export function getCodeArrowFunc(fileName: string, pkgName: string, name: string, withTypes: boolean) {
     return {
         type: 'ExportNamedDeclaration',
         declaration: {
@@ -75,7 +75,7 @@ export function getCodeArrowFunc(fileName: string, name: string, withTypes: bool
                     init: {
                         type: 'ArrowFunctionExpression',
                         params: getParams(withTypes),
-                        body: getBody(fileName, name),
+                        body: getBody(fileName, pkgName, name),
                     },
                 },
             ],
@@ -110,16 +110,16 @@ function getTypeAny(withTypes: boolean) {
     } : {};
 }
 
-function getBody(fileName: string, name: string, className?: string) {
+function getBody(fileName: string, pkgName: string, name: string, className?: string) {
     return {
         type: 'BlockStatement',
         body: [
-            getBodyRemote(fileName, name, className),
+            getBodyRemote(fileName, pkgName, name, className),
         ],
     };
 }
 
-function getBodyRemote(fileName: string, name: string, className?: string) {
+function getBodyRemote(fileName: string, pkgName: string, name: string, className?: string) {
     return {
         type: 'ReturnStatement',
         argument: {
@@ -150,7 +150,7 @@ function getBodyRemote(fileName: string, name: string, className?: string) {
     };
 }
 
-export function getCodeMethod(fileName: string, name: string, className: string, withTypes: boolean) {
+export function getCodeMethod(fileName: string, pkgName: string, name: string, className: string, withTypes: boolean) {
     return {
         type: 'ClassMethod',
         static: false,
@@ -160,7 +160,7 @@ export function getCodeMethod(fileName: string, name: string, className: string,
         },
         async: true,
         params: getParams(withTypes),
-        body: getBody(fileName, name, className),
+        body: getBody(fileName, pkgName, name, className),
     } as any as Statement;
 }
 

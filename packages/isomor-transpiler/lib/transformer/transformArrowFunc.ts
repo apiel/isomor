@@ -17,6 +17,6 @@ export function transformArrowFunc(
     ) {
         const { name } = declaration.id;
         setValidator(declaration.init, srcFilePath, path, name);
-        return getCodeArrowFunc(path, name, withTypes);
+        return getCodeArrowFunc(path, pkgName, name, withTypes);
     }
 }

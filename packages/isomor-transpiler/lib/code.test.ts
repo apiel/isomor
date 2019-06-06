@@ -32,11 +32,12 @@ describe('code', () => {
     const fnName = 'getTime';
     const className = 'CatsService';
     const typeName = 'MyType';
+    const pkgName = 'root';
 
     describe('code/getCodeMethod()', () => {
         it('should generate method for isomor', () => {
             const withType = true;
-            const { code } = generate(getCodeMethod(path, fnName, className, withType) as any);
+            const { code } = generate(getCodeMethod(path, pkgName, fnName, className, withType) as any);
             expect(code).toEqual(codeTranspiledClass);
         });
     });
@@ -70,13 +71,13 @@ describe('code', () => {
     describe('code/getCodeFunc()', () => {
         it('should generate function for isomor', () => {
             const withType = true;
-            const { code } = generate(getCodeFunc(path, fnName, withType) as any);
+            const { code } = generate(getCodeFunc(path, pkgName, fnName, withType) as any);
             expect(code).toEqual(codeTranspiledFunc);
         });
 
         it('should generate function for isomor without type', () => {
             const withType = false;
-            const { code } = generate(getCodeFunc(path, fnName, withType) as any);
+            const { code } = generate(getCodeFunc(path, pkgName, fnName, withType) as any);
             expect(code).toEqual(codeTranspiledFuncNoType);
         });
     });
@@ -84,13 +85,13 @@ describe('code', () => {
     describe('code/getCodeArrowFunc()', () => {
         it('should generate function for isomor', () => {
             const withType = true;
-            const { code } = generate(getCodeArrowFunc(path, fnName, withType) as any);
+            const { code } = generate(getCodeArrowFunc(path, pkgName, fnName, withType) as any);
             expect(code).toEqual(codeTranspiledArrowFunc);
         });
 
         it('should generate function for isomor without type', () => {
             const withType = false;
-            const { code } = generate(getCodeArrowFunc(path, fnName, withType) as any);
+            const { code } = generate(getCodeArrowFunc(path, pkgName, fnName, withType) as any);
             expect(code).toEqual(codeTranspiledArrowFuncNoType);
         });
     });

@@ -26,7 +26,7 @@ describe('transformFunc()', () => {
         }`);
         const node = transformFunc((program.body[0] as any).declaration, srcFilePath, path, pkgName, withTypes);
         expect(node).toEqual('getCodeFuncMock');
-        expect(getCodeFunc).toHaveBeenCalledWith(path, 'getTime', withTypes);
+        expect(getCodeFunc).toHaveBeenCalledWith(path, pkgName, 'getTime', withTypes);
         expect(setValidator).toBeCalledWith((program.body[0] as any).declaration, srcFilePath, path, 'getTime');
     });
 });

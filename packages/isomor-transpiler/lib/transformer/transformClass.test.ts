@@ -96,7 +96,7 @@ export class CatsService extends CatsService__deco_export__ {
 }`,
         );
         expect(getCodeMethod).toHaveBeenCalledTimes(1); // called with?
-        expect(getCodeMethod).toHaveBeenCalledWith(path, 'findAll', 'CatsService', withTypes);
+        expect(getCodeMethod).toHaveBeenCalledWith(path, pkgName, 'findAll', 'CatsService', withTypes);
     });
     // -----------------
     it('should not transform class when no noDecorator but dont provide @isomor', () => {

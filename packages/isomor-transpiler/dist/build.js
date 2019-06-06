@@ -19,33 +19,37 @@ const ast_1 = require("./ast");
 const transform_1 = require("./transform");
 const anymatch = require('anymatch');
 exports.default = transform_1.default;
+let optionsCache;
 function getOptions() {
-    const srcFolder = process.env.SRC_FOLDER || './src-isomor';
-    let pkgName = 'root';
-    if (process.env.PKG_NAME) {
-        pkgName = process.env.PKG_NAME;
-    }
-    else {
-        const found = findUp.sync('package.json', { cwd: srcFolder });
-        if (found) {
-            const pkg = require(found);
-            if (pkg.name) {
-                pkgName = pkg.name;
+    if (!optionsCache) {
+        const srcFolder = process.env.SRC_FOLDER || './src-isomor';
+        let pkgName = 'root';
+        if (process.env.PKG_NAME) {
+            pkgName = process.env.PKG_NAME;
+        }
+        else {
+            const found = findUp.sync('package.json', { cwd: srcFolder });
+            if (found) {
+                const pkg = require(found);
+                if (pkg.name) {
+                    pkgName = pkg.name;
+                }
             }
         }
+        logol_1.info('[', pkgName, ']');
+        optionsCache = {
+            srcFolder,
+            distAppFolder: process.env.DIST_APP_FOLDER || './src',
+            serverFolder: process.env.SERVER_FOLDER || '/server',
+            jsonSchemaFolder: process.env.JSON_SCHEMA_FOLDER || './json-schema',
+            noValidation: process.env.NO_VALIDATION === 'true',
+            withTypes: process.env.NO_TYPES !== 'true',
+            watchMode: process.env.WATCH === 'true',
+            noServerImport: process.env.NO_SERVER_IMPORT === 'true',
+            noDecorator: process.env.NO_DECORATOR === 'true',
+        };
     }
-    logol_1.info('[', pkgName, ']');
-    return {
-        srcFolder,
-        distAppFolder: process.env.DIST_APP_FOLDER || './src',
-        serverFolder: process.env.SERVER_FOLDER || '/server',
-        jsonSchemaFolder: process.env.JSON_SCHEMA_FOLDER || './json-schema',
-        noValidation: process.env.NO_VALIDATION === 'true',
-        withTypes: process.env.NO_TYPES !== 'true',
-        watchMode: process.env.WATCH === 'true',
-        noServerImport: process.env.NO_SERVER_IMPORT === 'true',
-        noDecorator: process.env.NO_DECORATOR === 'true',
-    };
+    return optionsCache;
 }
 exports.getOptions = getOptions;
 function getCode(options, srcFilePath, path, content) {

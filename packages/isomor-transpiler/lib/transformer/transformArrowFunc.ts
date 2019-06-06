@@ -6,6 +6,7 @@ export function transformArrowFunc(
     root: VariableDeclaration,
     srcFilePath: string,
     path: string,
+    pkgName: string,
     withTypes: boolean,
 ) {
     const { declarations } = root;

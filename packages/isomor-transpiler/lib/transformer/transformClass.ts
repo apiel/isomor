@@ -6,6 +6,7 @@ export function transformClass(
     root: ExportNamedDeclaration,
     srcFilePath: string,
     path: string,
+    pkgName: string,
     withTypes: boolean,
     noDecorator: boolean,
 ) {

@@ -12,6 +12,7 @@ export function transformNode(
     node: Statement,
     srcFilePath: string,
     path: string,
+    pkgName: string,
     withTypes: boolean,
     noServerImport: boolean,
     noDecorator: boolean,
@@ -24,11 +25,11 @@ export function transformNode(
         } else if (node.declaration.type === 'TSInterfaceDeclaration') {
             return transformInterface(node, noServerImport);
         } else if (node.declaration.type === 'FunctionDeclaration') {
-            return transformFunc(node.declaration, srcFilePath, path, withTypes);
+            return transformFunc(node.declaration, srcFilePath, path, pkgName, withTypes);
         } else if (node.declaration.type === 'VariableDeclaration') {
-            return transformArrowFunc(node.declaration, srcFilePath, path, withTypes);
+            return transformArrowFunc(node.declaration, srcFilePath, path, pkgName, withTypes);
         } else if (node.declaration.type === 'ClassDeclaration') {
-            return transformClass(node, srcFilePath, path, withTypes, noDecorator);
+            return transformClass(node, srcFilePath, path, pkgName, withTypes, noDecorator);
         }
     } else if (node.type === 'ImportDeclaration') {
         return transformImport(node, noServerImport);

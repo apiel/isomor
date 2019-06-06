@@ -1,7 +1,6 @@
 import { parse } from './ast';
 
 import { transformNode } from './transformNode';
-import { getCodeType } from './code';
 import { transformClass } from './transformer/transformClass';
 import { transformImport } from './transformer/transformImport';
 import { transformInterface } from './transformer/transformInterface';
@@ -41,6 +40,7 @@ jest.mock('./transformer/transformType', () => ({
 const srcFilePath = 'src-isomor/path/to/file';
 const path = 'path-to-file';
 const withTypes = true;
+const pkgName = 'root';
 describe('transform', () => {
     beforeEach(() => {
         jest.clearAllMocks();
@@ -94,7 +94,7 @@ export function getTime1(): Promise<string[]> {
 }
             `);
             expect(newNode).toEqual('TransformFunc');
-            expect(transformFunc).toHaveBeenCalledWith((node as any).declaration, srcFilePath, path, withTypes);
+            expect(transformFunc).toHaveBeenCalledWith((node as any).declaration, srcFilePath, path, pkgName, withTypes);
         });
 
         it('should transform async function', () => {
@@ -104,7 +104,7 @@ export async function getTime1(): Promise<string[]> {
 }
             `);
             expect(newNode).toEqual('TransformFunc');
-            expect(transformFunc).toHaveBeenCalledWith((node as any).declaration, srcFilePath, path, withTypes);
+            expect(transformFunc).toHaveBeenCalledWith((node as any).declaration, srcFilePath, path, pkgName, withTypes);
         });
 
         it('should transform arrow function', () => {
@@ -114,7 +114,7 @@ export const getTime1 = async (hello: string) => {
 };
             `);
             expect(newNode).toEqual('TransformArrowFunc');
-            expect(transformArrowFunc).toHaveBeenCalledWith((node as any).declaration, srcFilePath, path, withTypes);
+            expect(transformArrowFunc).toHaveBeenCalledWith((node as any).declaration, srcFilePath, path, pkgName, withTypes);
         });
 
         it('should transform class', () => {
@@ -124,7 +124,7 @@ export const getTime1 = async (hello: string) => {
 export class MyClass {
 }          `, noServerImport, noDecorator);
             expect(newNode).toEqual('TransformClass');
-            expect(transformClass).toHaveBeenCalledWith(node, srcFilePath, path, withTypes, noDecorator);
+            expect(transformClass).toHaveBeenCalledWith(node, srcFilePath, path, pkgName, withTypes, noDecorator);
         });
     });
 });
@@ -136,7 +136,7 @@ function transformNodeTest(
 ) {
     const { program } = parse(code);
     const node = program.body[0];
-    const newNode = transformNode(node, srcFilePath, path, withTypes, noServerImport, noDecorator);
+    const newNode = transformNode(node, srcFilePath, path, pkgName, withTypes, noServerImport, noDecorator);
 
     return { node, newNode };
 }

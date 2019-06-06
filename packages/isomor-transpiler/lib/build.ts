@@ -20,6 +20,7 @@ const anymatch = require('anymatch'); // tslint:disable-line
 export default transform;
 
 export interface Options {
+    pkgName: string;
     srcFolder: string;
     distAppFolder: string;
     serverFolder: string;
@@ -31,41 +32,47 @@ export interface Options {
     noDecorator: boolean;
 }
 
-export function getOptions(): Options {
-    const srcFolder = process.env.SRC_FOLDER || './src-isomor';
+let optionsCache: Options;
 
-    // move this to pkgName function to cache pkg
-    let pkgName = 'root';
-    if (process.env.PKG_NAME) {
-        pkgName = process.env.PKG_NAME;
-    } else {
-        const found = findUp.sync('package.json', { cwd: srcFolder });
-        if (found) {
-            const pkg = require(found);
-            if (pkg.name) {
-                pkgName = pkg.name;
+export function getOptions(): Options {
+    if (!optionsCache) {
+        const srcFolder = process.env.SRC_FOLDER || './src-isomor';
+
+        // move this to pkgName function to cache pkg
+        let pkgName = 'root';
+        if (process.env.PKG_NAME) {
+            pkgName = process.env.PKG_NAME;
+        } else {
+            const found = findUp.sync('package.json', { cwd: srcFolder });
+            if (found) {
+                const pkg = require(found);
+                if (pkg.name) {
+                    pkgName = pkg.name;
+                }
             }
         }
-    }
-    info('[', pkgName, ']');
+        info('[', pkgName, ']');
 
-    return {
-        srcFolder,
-        distAppFolder: process.env.DIST_APP_FOLDER || './src',
-        serverFolder: process.env.SERVER_FOLDER || '/server',
-        jsonSchemaFolder: process.env.JSON_SCHEMA_FOLDER || './json-schema',
-        noValidation: process.env.NO_VALIDATION === 'true',
-        withTypes: process.env.NO_TYPES !== 'true',
-        watchMode: process.env.WATCH === 'true',
-        noServerImport: process.env.NO_SERVER_IMPORT === 'true',
-        noDecorator: process.env.NO_DECORATOR === 'true',
-    };
+        optionsCache = {
+            pkgName,
+            srcFolder,
+            distAppFolder: process.env.DIST_APP_FOLDER || './src',
+            serverFolder: process.env.SERVER_FOLDER || '/server',
+            jsonSchemaFolder: process.env.JSON_SCHEMA_FOLDER || './json-schema',
+            noValidation: process.env.NO_VALIDATION === 'true',
+            withTypes: process.env.NO_TYPES !== 'true',
+            watchMode: process.env.WATCH === 'true',
+            noServerImport: process.env.NO_SERVER_IMPORT === 'true',
+            noDecorator: process.env.NO_DECORATOR === 'true',
+        };
+    }
+    return optionsCache;
 }
 
 function getCode(options: Options, srcFilePath: string, path: string, content: string) {
-    const { withTypes, noServerImport, noDecorator } = options;
+    const { withTypes, noServerImport, noDecorator, pkgName } = options;
     const { program } = parse(content);
-    program.body = transform(program.body, srcFilePath, path, withTypes, noServerImport, noDecorator);
+    program.body = transform(program.body, srcFilePath, path, pkgName, withTypes, noServerImport, noDecorator);
     const { code } = generate(program as any);
 
     return code;

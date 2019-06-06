@@ -1,6 +1,6 @@
 {
     "name": "isomor-vue-app",
-    "version": "1.3.0",
+    "version": "1.4.1",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "author": "Alexandre Piel <alexandre.piel@gmail.com>",
@@ -40,7 +40,7 @@
         "@types/chalk": "^2.2.0",
         "@types/fs-extra": "^7.0.0",
         "@types/minimist": "^1.2.0",
-        "@types/node": "^12.0.4",
+        "@types/node": "^12.0.5",
         "@types/rimraf": "^2.0.2",
         "rimraf": "^2.6.3",
         "tslint": "^5.17.0"

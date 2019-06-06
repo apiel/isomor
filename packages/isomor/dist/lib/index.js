@@ -10,16 +10,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const axios_1 = require("axios");
 const urlPrefix = '/isomor';
-function getUrl(path, funcName, classname) {
+function getUrl(path, pkgname, funcName, classname) {
     const url = classname
-        ? `${urlPrefix}/${path}/${classname}/${funcName}`
-        : `${urlPrefix}/${path}/${funcName}`;
+        ? `${urlPrefix}/${pkgname}/${path}/${classname}/${funcName}`
+        : `${urlPrefix}/${pkgname}/${path}/${funcName}`;
     return url;
 }
 exports.getUrl = getUrl;
-function isomorRemote(path, funcName, args, classname) {
+function isomorRemote(path, pkgname, funcName, args, classname) {
     return __awaiter(this, void 0, void 0, function* () {
-        const url = getUrl(path, funcName, classname);
+        const url = getUrl(path, pkgname, funcName, classname);
         const { data: { result } } = yield axios_1.default.post(url, { args });
         return result;
     });

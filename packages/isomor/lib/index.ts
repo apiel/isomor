@@ -10,23 +10,25 @@ const urlPrefix = '/isomor'; // http://127.0.0.1:3000/
 
 export function getUrl(
     path: string,
+    pkgname: string,
     funcName: string,
     classname?: string,
 ): string {
     const url = classname
-        ? `${urlPrefix}/${path}/${classname}/${funcName}`
-        : `${urlPrefix}/${path}/${funcName}`;
+        ? `${urlPrefix}/${pkgname}/${path}/${classname}/${funcName}`
+        : `${urlPrefix}/${pkgname}/${path}/${funcName}`;
 
     return url;
 }
 
 export async function isomorRemote(
     path: string,
+    pkgname: string,
     funcName: string,
     args: any,
     classname?: string,
 ): Promise<any> {
-    const url = getUrl(path, funcName, classname);
+    const url = getUrl(path, pkgname, funcName, classname);
     const { data: { result } } = await axios.post(url, { args });
     return result;
 }

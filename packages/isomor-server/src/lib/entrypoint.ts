@@ -19,8 +19,8 @@ export interface Entrypoint {
     validationSchema: ValidationSchema;
 }
 
-function getEntrypointPath(file: string, name: string, classname?: string) {
-    return getUrl(getPathForUrl(file), name, classname);
+function getEntrypointPath(file: string, pkgName: string, name: string, classname?: string) {
+    return getUrl(getPathForUrl(file), pkgName, name, classname);
 }
 
 function loadValidation( // might want to switch to async
@@ -60,7 +60,8 @@ export function getEntrypoint(
     jsonSchemaFolder: string,
     classname?: string,
 ): Entrypoint {
-    const path = getEntrypointPath(file, name, classname);
+    // need to get pkgName
+    const path = getEntrypointPath(file, 'root', name, classname);
     const validationSchema = loadValidation(getPathForUrl(file), name, jsonSchemaFolder, classname);
     app.use(path, async (
         req: express.Request,

@@ -4,27 +4,27 @@ import { getCodeImport, getCodeFunc, getCodeArrowFunc, getCodeType, getCodeMetho
 
 export const codeTranspiledFunc =
 `export function getTime(...args: any) {
-  return isomorRemote("path/to/file", "getTime", args);
+  return isomorRemote("path/to/file", "root", "getTime", args);
 }`;
 
 export const codeTranspiledFuncNoType =
 `export function getTime(...args) {
-  return isomorRemote("path/to/file", "getTime", args);
+  return isomorRemote("path/to/file", "root", "getTime", args);
 }`;
 
 export const codeTranspiledArrowFunc =
 `export const getTime = (...args: any) => {
-  return isomorRemote("path/to/file", "getTime", args);
+  return isomorRemote("path/to/file", "root", "getTime", args);
 };`;
 
 export const codeTranspiledArrowFuncNoType =
 `export const getTime = (...args) => {
-  return isomorRemote("path/to/file", "getTime", args);
+  return isomorRemote("path/to/file", "root", "getTime", args);
 };`;
 
 export const codeTranspiledClass =
 `async getTime(...args: any) {
-  return isomorRemote("path/to/file", "getTime", args, "CatsService");
+  return isomorRemote("path/to/file", "root", "getTime", args, "CatsService");
 }`;
 
 describe('code', () => {

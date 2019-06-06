@@ -135,6 +135,10 @@ function getBodyRemote(fileName: string, pkgName: string, name: string, classNam
                 },
                 {
                     type: 'StringLiteral',
+                    value: pkgName,
+                },
+                {
+                    type: 'StringLiteral',
                     value: name,
                 },
                 {

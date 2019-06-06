@@ -81,13 +81,13 @@ export interface MyInterface {
   };
 }
 export function getTime1(...args: any) {
-  return isomorRemote("path-to-file", "getTime1", args);
+  return isomorRemote("path-to-file", "root", "getTime1", args);
 }
 export function getTime2(...args: any) {
-  return isomorRemote("path-to-file", "getTime2", args);
+  return isomorRemote("path-to-file", "root", "getTime2", args);
 }
 export const getTime3 = (...args: any) => {
-  return isomorRemote("path-to-file", "getTime3", args);
+  return isomorRemote("path-to-file", "root", "getTime3", args);
 };
 
 @Injectable()
@@ -100,7 +100,7 @@ export class CatsService extends CatsService__deco_export__ {
   }
 
   async findAll(...args: any) {
-    return isomorRemote("path-to-file", "findAll", args, "CatsService");
+    return isomorRemote("path-to-file", "root", "findAll", args, "CatsService");
   }
 
 }

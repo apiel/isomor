@@ -55,13 +55,13 @@ function validateArgs(
 export function getEntrypoint(
     app: express.Express,
     file: string,
+    pkgName: string,
     fn: any,
     name: string,
     jsonSchemaFolder: string,
     classname?: string,
 ): Entrypoint {
-    // need to get pkgName
-    const path = getEntrypointPath(file, 'root', name, classname);
+    const path = getEntrypointPath(file, pkgName, name, classname);
     const validationSchema = loadValidation(getPathForUrl(file), name, jsonSchemaFolder, classname);
     app.use(path, async (
         req: express.Request,
@@ -86,6 +86,7 @@ export function getEntrypoint(
 export function getClassEntrypoints(
     app: express.Express,
     file: string,
+    pkgName: string,
     classname: string,
     jsonSchemaFolder: string,
     noDecorator: boolean,
@@ -96,7 +97,7 @@ export function getClassEntrypoints(
         const obj = getInstance()(classname);
         return Object.getOwnPropertyNames(Object.getPrototypeOf(obj))
             .filter(name => isFunction(obj[name]) && name !== 'constructor')
-            .map(name => getEntrypoint(app, file, obj[name].bind(obj), name, jsonSchemaFolder, classname));
+            .map(name => getEntrypoint(app, file, pkgName, obj[name].bind(obj), name, jsonSchemaFolder, classname));
     }
     return [];
 }

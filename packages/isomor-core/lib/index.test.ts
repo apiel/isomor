@@ -1,4 +1,4 @@
-import { getFilesPattern, getPathForUrl, getFiles, getFolders } from '.';
+import { getFilesPattern, getPathForUrl, getFiles, getFolders, getJsonSchemaFileName } from '.';
 import { outputFile, remove } from 'fs-extra';
 import { join } from 'path';
 
@@ -30,6 +30,15 @@ function destroyTests() {
 describe('index', () => {
     afterEach(async () => {
         await destroyTests();
+    });
+
+    describe('getJsonSchemaFileName()', () => {
+        it('should return json validation file name', () => {
+            expect(getJsonSchemaFileName('path', 'name'))
+                .toEqual(`path.name.json`);
+            expect(getJsonSchemaFileName('path', 'name', 'className'))
+                .toEqual(`path.className.name.json`);
+        });
     });
 
     describe('getFilesPattern()', () => {

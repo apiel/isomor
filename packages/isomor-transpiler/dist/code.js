@@ -43,7 +43,7 @@ function getCodeImport() {
     };
 }
 exports.getCodeImport = getCodeImport;
-function getCodeFunc(fileName, name, withTypes) {
+function getCodeFunc(fileName, pkgName, name, withTypes) {
     return {
         type: 'ExportNamedDeclaration',
         declaration: {
@@ -53,12 +53,12 @@ function getCodeFunc(fileName, name, withTypes) {
                 name,
             },
             params: getParams(withTypes),
-            body: getBody(fileName, name),
+            body: getBody(fileName, pkgName, name),
         },
     };
 }
 exports.getCodeFunc = getCodeFunc;
-function getCodeArrowFunc(fileName, name, withTypes) {
+function getCodeArrowFunc(fileName, pkgName, name, withTypes) {
     return {
         type: 'ExportNamedDeclaration',
         declaration: {
@@ -73,7 +73,7 @@ function getCodeArrowFunc(fileName, name, withTypes) {
                     init: {
                         type: 'ArrowFunctionExpression',
                         params: getParams(withTypes),
-                        body: getBody(fileName, name),
+                        body: getBody(fileName, pkgName, name),
                     },
                 },
             ],
@@ -100,15 +100,15 @@ function getTypeAny(withTypes) {
         },
     } : {};
 }
-function getBody(fileName, name, className) {
+function getBody(fileName, pkgName, name, className) {
     return {
         type: 'BlockStatement',
         body: [
-            getBodyRemote(fileName, name, className),
+            getBodyRemote(fileName, pkgName, name, className),
         ],
     };
 }
-function getBodyRemote(fileName, name, className) {
+function getBodyRemote(fileName, pkgName, name, className) {
     return {
         type: 'ReturnStatement',
         argument: {
@@ -121,6 +121,10 @@ function getBodyRemote(fileName, name, className) {
                 {
                     type: 'StringLiteral',
                     value: fileName,
+                },
+                {
+                    type: 'StringLiteral',
+                    value: pkgName,
                 },
                 {
                     type: 'StringLiteral',
@@ -138,7 +142,7 @@ function getBodyRemote(fileName, name, className) {
         },
     };
 }
-function getCodeMethod(fileName, name, className, withTypes) {
+function getCodeMethod(fileName, pkgName, name, className, withTypes) {
     return {
         type: 'ClassMethod',
         static: false,
@@ -148,7 +152,7 @@ function getCodeMethod(fileName, name, className, withTypes) {
         },
         async: true,
         params: getParams(withTypes),
-        body: getBody(fileName, name, className),
+        body: getBody(fileName, pkgName, name, className),
     };
 }
 exports.getCodeMethod = getCodeMethod;

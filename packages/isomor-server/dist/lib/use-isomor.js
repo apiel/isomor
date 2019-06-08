@@ -13,6 +13,7 @@ const util_1 = require("util");
 const entrypoint_1 = require("./entrypoint");
 function useIsomor(app, distServerFolder, serverFolder, jsonSchemaFolder, noDecorator = false) {
     return __awaiter(this, void 0, void 0, function* () {
+        const pkgName = isomor_core_1.getPkgName(distServerFolder);
         const files = yield isomor_core_1.getFiles(distServerFolder, serverFolder);
         return files.map(file => {
             const functions = entrypoint_1.getFunctions(distServerFolder, file);
@@ -20,8 +21,8 @@ function useIsomor(app, distServerFolder, serverFolder, jsonSchemaFolder, noDeco
                 .filter(name => util_1.isFunction(functions[name]))
                 .map(name => {
                 const isClass = /^\s*class/.test(functions[name].toString());
-                return isClass ? entrypoint_1.getClassEntrypoints(app, file, name, jsonSchemaFolder, noDecorator)
-                    : [entrypoint_1.getEntrypoint(app, file, functions[name], name, jsonSchemaFolder)];
+                return isClass ? entrypoint_1.getClassEntrypoints(app, file, pkgName, name, jsonSchemaFolder, noDecorator)
+                    : [entrypoint_1.getEntrypoint(app, file, pkgName, functions[name], name, jsonSchemaFolder)];
             }).flat();
         }).flat();
     });

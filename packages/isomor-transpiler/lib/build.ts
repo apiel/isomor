@@ -8,6 +8,7 @@ import {
     getFolders,
     getPathForUrl,
     getFilesPattern,
+    getPkgName,
 } from 'isomor-core';
 import { watch } from 'chokidar';
 
@@ -37,20 +38,7 @@ let optionsCache: Options;
 export function getOptions(): Options {
     if (!optionsCache) {
         const srcFolder = process.env.SRC_FOLDER || './src-isomor';
-
-        // move this to pkgName function to cache pkg
-        let pkgName = 'root';
-        if (process.env.PKG_NAME) {
-            pkgName = process.env.PKG_NAME;
-        } else {
-            const found = findUp.sync('package.json', { cwd: srcFolder });
-            if (found) {
-                const pkg = require(found);
-                if (pkg.name) {
-                    pkgName = pkg.name;
-                }
-            }
-        }
+        const pkgName = getPkgName(srcFolder);
         info('[', pkgName, ']');
 
         optionsCache = {

@@ -12,6 +12,7 @@ const fs_extra_1 = require("fs-extra");
 const path_1 = require("path");
 const Glob = require("glob");
 const util_1 = require("util");
+const findUp = require("find-up");
 const glob = util_1.promisify(Glob);
 function getJsonSchemaFileName(path, name, className) {
     return className ? `${path}.${className}.${name}.json` : `${path}.${name}.json`;
@@ -51,4 +52,21 @@ function getPathForUrl(path) {
     return path.replace(/\//g, '-').slice(0, len).replace(/^-|-$/g, '');
 }
 exports.getPathForUrl = getPathForUrl;
+function getPkgName(cwd) {
+    let pkgName = 'root';
+    if (process.env.PKG_NAME) {
+        pkgName = process.env.PKG_NAME;
+    }
+    else {
+        const found = findUp.sync('package.json', { cwd });
+        if (found) {
+            const pkg = require(found);
+            if (pkg.name) {
+                pkgName = pkg.name;
+            }
+        }
+    }
+    return pkgName;
+}
+exports.getPkgName = getPkgName;
 //# sourceMappingURL=index.js.map

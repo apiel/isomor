@@ -32,6 +32,14 @@ describe('index', () => {
     afterEach(() => __awaiter(this, void 0, void 0, function* () {
         yield destroyTests();
     }));
+    describe('getJsonSchemaFileName()', () => {
+        it('should return json validation file name', () => {
+            expect(_1.getJsonSchemaFileName('path', 'name'))
+                .toEqual(`path.name.json`);
+            expect(_1.getJsonSchemaFileName('path', 'name', 'className'))
+                .toEqual(`path.className.name.json`);
+        });
+    });
     describe('getFilesPattern()', () => {
         it('should return search pattern', () => {
             expect(_1.getFilesPattern(folderToSearch))

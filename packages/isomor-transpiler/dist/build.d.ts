@@ -1,6 +1,7 @@
 import transform from './transform';
 export default transform;
 export interface Options {
+    pkgName: string;
     srcFolder: string;
     distAppFolder: string;
     serverFolder: string;

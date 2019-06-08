@@ -9,7 +9,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const logol_1 = require("logol");
-const findUp = require("find-up");
 const fs_extra_1 = require("fs-extra");
 const path_1 = require("path");
 const debug_1 = require("debug");
@@ -23,21 +22,10 @@ let optionsCache;
 function getOptions() {
     if (!optionsCache) {
         const srcFolder = process.env.SRC_FOLDER || './src-isomor';
-        let pkgName = 'root';
-        if (process.env.PKG_NAME) {
-            pkgName = process.env.PKG_NAME;
-        }
-        else {
-            const found = findUp.sync('package.json', { cwd: srcFolder });
-            if (found) {
-                const pkg = require(found);
-                if (pkg.name) {
-                    pkgName = pkg.name;
-                }
-            }
-        }
+        const pkgName = isomor_core_1.getPkgName(srcFolder);
         logol_1.info('[', pkgName, ']');
         optionsCache = {
+            pkgName,
             srcFolder,
             distAppFolder: process.env.DIST_APP_FOLDER || './src',
             serverFolder: process.env.SERVER_FOLDER || '/server',
@@ -53,9 +41,9 @@ function getOptions() {
 }
 exports.getOptions = getOptions;
 function getCode(options, srcFilePath, path, content) {
-    const { withTypes, noServerImport, noDecorator } = options;
+    const { withTypes, noServerImport, noDecorator, pkgName } = options;
     const { program } = ast_1.parse(content);
-    program.body = transform_1.default(program.body, srcFilePath, path, withTypes, noServerImport, noDecorator);
+    program.body = transform_1.default(program.body, srcFilePath, path, pkgName, withTypes, noServerImport, noDecorator);
     const { code } = ast_1.generate(program);
     return code;
 }

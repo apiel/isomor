@@ -2,6 +2,7 @@ import { pathExists } from 'fs-extra';
 import { join, extname } from 'path';
 import * as Glob from 'glob';
 import { promisify } from 'util';
+import * as findUp from 'find-up';
 
 const glob = promisify(Glob);
 
@@ -55,4 +56,20 @@ export async function getFolders(
 export function getPathForUrl(path: string) {
     const len = path.length - extname(path).length;
     return path.replace(/\//g, '-').slice(0, len).replace(/^-|-$/g, '');
+}
+
+export function getPkgName(cwd: string) {
+    let pkgName = 'root';
+    if (process.env.PKG_NAME) {
+        pkgName = process.env.PKG_NAME;
+    } else {
+        const found = findUp.sync('package.json', { cwd });
+        if (found) {
+            const pkg = require(found);
+            if (pkg.name) {
+                pkgName = pkg.name;
+            }
+        }
+    }
+    return pkgName;
 }

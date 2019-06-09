@@ -24,24 +24,13 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const swagger_ui_express_1 = require("swagger-ui-express");
 const morgan = require("morgan");
+const isomor_core_1 = require("isomor-core");
 const lib_1 = require("../lib");
 const path_1 = require("path");
-function getOptions() {
-    return {
-        distServerFolder: process.env.DIST_SERVER_FOLDER || './dist-server',
-        port: process.env.PORT ? parseInt(process.env.PORT, 10) : 3005,
-        staticFolder: process.env.STATIC_FOLDER || null,
-        serverFolder: process.env.SERVER_FOLDER || '/server',
-        jsonSchemaFolder: process.env.JSON_SCHEMA_FOLDER || './json-schema',
-        startupFile: process.env.STARTUP_FILE || path_1.join('startup', 'index.js'),
-        noDecorator: process.env.NO_DECORATOR === 'true',
-    };
-}
-exports.getOptions = getOptions;
 const API_DOCS = '/api-docs';
 function start() {
     return __awaiter(this, void 0, void 0, function* () {
-        const { distServerFolder, port, staticFolder, serverFolder, startupFile, noDecorator, jsonSchemaFolder } = getOptions();
+        const { distServerFolder, port, staticFolder, serverFolder, startupFile, noDecorator, jsonSchemaFolder } = isomor_core_1.getOptions();
         logol_1.info('Starting server.');
         const app = express();
         app.use(bodyParser.json());

@@ -4,6 +4,8 @@ import * as Glob from 'glob';
 import { promisify } from 'util';
 import * as findUp from 'find-up';
 
+export { getOptions, Options } from './config';
+
 const glob = promisify(Glob);
 
 export interface ValidationSchema {

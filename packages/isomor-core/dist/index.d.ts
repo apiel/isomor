@@ -1,3 +1,4 @@
+export { getOptions, Options } from './config';
 export interface ValidationSchema {
     args: string[];
     schema: any;

@@ -1,5 +1,4 @@
 import { info, warn } from 'logol';
-import * as findUp from 'find-up';
 import { readFile, outputFile, emptyDir, copy, unlink } from 'fs-extra';
 import { join } from 'path';
 import debug from 'debug';
@@ -8,9 +7,10 @@ import {
     getFolders,
     getPathForUrl,
     getFilesPattern,
-    getPkgName,
+    getOptions,
 } from 'isomor-core';
 import { watch } from 'chokidar';
+import { Options } from 'isomor-core';
 
 import { parse, generate } from './ast';
 import transform from './transform';
@@ -19,43 +19,6 @@ import transform from './transform';
 const anymatch = require('anymatch'); // tslint:disable-line
 
 export default transform;
-
-export interface Options {
-    pkgName: string;
-    srcFolder: string;
-    distAppFolder: string;
-    serverFolder: string;
-    jsonSchemaFolder: string;
-    noValidation: boolean;
-    withTypes: boolean;
-    watchMode: boolean;
-    noServerImport: boolean;
-    noDecorator: boolean;
-}
-
-let optionsCache: Options;
-
-export function getOptions(): Options {
-    if (!optionsCache) {
-        const srcFolder = process.env.SRC_FOLDER || './src-isomor';
-        const pkgName = getPkgName(srcFolder);
-        info('[', pkgName, ']');
-
-        optionsCache = {
-            pkgName,
-            srcFolder,
-            distAppFolder: process.env.DIST_APP_FOLDER || './src',
-            serverFolder: process.env.SERVER_FOLDER || '/server',
-            jsonSchemaFolder: process.env.JSON_SCHEMA_FOLDER || './json-schema',
-            noValidation: process.env.NO_VALIDATION === 'true',
-            withTypes: process.env.NO_TYPES !== 'true',
-            watchMode: process.env.WATCH === 'true',
-            noServerImport: process.env.NO_SERVER_IMPORT === 'true',
-            noDecorator: process.env.NO_DECORATOR === 'true',
-        };
-    }
-    return optionsCache;
-}
 
 function getCode(options: Options, srcFilePath: string, path: string, content: string) {
     const { withTypes, noServerImport, noDecorator, pkgName } = options;
@@ -93,10 +56,11 @@ async function prepare(options: Options) {
     await Promise.all(folders.map(folder => emptyDir(join(distAppFolder, folder))));
 }
 
-export async function build(options: Options) {
+export async function build() {
+    const options: Options = getOptions();
     await prepare(options);
 
-    info('Start transpiling');
+    info('Start transpiling', options.pkgName);
 
     const { srcFolder, serverFolder } = options;
     const files = await getFiles(srcFolder, serverFolder);

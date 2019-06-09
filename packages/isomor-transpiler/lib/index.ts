@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { build, getOptions } from './build';
+import { build } from './build';
 
 const pkg = require('../package.json'); // tslint:disable-line
 require('please-upgrade-node')(pkg, {  // tslint:disable-line
@@ -12,4 +12,4 @@ require('please-upgrade-node')(pkg, {  // tslint:disable-line
     `,
 });
 
-build(getOptions());
+build();

@@ -18,28 +18,6 @@ const ast_1 = require("./ast");
 const transform_1 = require("./transform");
 const anymatch = require('anymatch');
 exports.default = transform_1.default;
-let optionsCache;
-function getOptions() {
-    if (!optionsCache) {
-        const srcFolder = process.env.SRC_FOLDER || './src-isomor';
-        const pkgName = isomor_core_1.getPkgName(srcFolder);
-        logol_1.info('[', pkgName, ']');
-        optionsCache = {
-            pkgName,
-            srcFolder,
-            distAppFolder: process.env.DIST_APP_FOLDER || './src',
-            serverFolder: process.env.SERVER_FOLDER || '/server',
-            jsonSchemaFolder: process.env.JSON_SCHEMA_FOLDER || './json-schema',
-            noValidation: process.env.NO_VALIDATION === 'true',
-            withTypes: process.env.NO_TYPES !== 'true',
-            watchMode: process.env.WATCH === 'true',
-            noServerImport: process.env.NO_SERVER_IMPORT === 'true',
-            noDecorator: process.env.NO_DECORATOR === 'true',
-        };
-    }
-    return optionsCache;
-}
-exports.getOptions = getOptions;
 function getCode(options, srcFilePath, path, content) {
     const { withTypes, noServerImport, noDecorator, pkgName } = options;
     const { program } = ast_1.parse(content);
@@ -71,10 +49,11 @@ function prepare(options) {
         yield Promise.all(folders.map(folder => fs_extra_1.emptyDir(path_1.join(distAppFolder, folder))));
     });
 }
-function build(options) {
+function build() {
     return __awaiter(this, void 0, void 0, function* () {
+        const options = isomor_core_1.getOptions();
         yield prepare(options);
-        logol_1.info('Start transpiling');
+        logol_1.info('Start transpiling', options.pkgName);
         const { srcFolder, serverFolder } = options;
         const files = yield isomor_core_1.getFiles(srcFolder, serverFolder);
         logol_1.info(`Found ${files.length} file(s).`);

@@ -13,7 +13,6 @@ const logol_1 = require("logol");
 const path_1 = require("path");
 const fs_extra_1 = require("fs-extra");
 const isomor_core_1 = require("isomor-core");
-const build_1 = require("./build");
 const queueList = [];
 let process;
 function setValidator(paramRoot, srcFilePath, path, name, className) {
@@ -37,7 +36,7 @@ function setValidator(paramRoot, srcFilePath, path, name, className) {
 }
 exports.setValidator = setValidator;
 function validationIsActive() {
-    const { jsonSchemaFolder, noValidation } = build_1.getOptions();
+    const { jsonSchemaFolder, noValidation } = isomor_core_1.getOptions();
     return !noValidation && jsonSchemaFolder && jsonSchemaFolder.length;
 }
 function pushToQueue(args, srcFilePath, path, name, className) {
@@ -50,7 +49,7 @@ function pushToQueue(args, srcFilePath, path, name, className) {
 exports.pushToQueue = pushToQueue;
 function run() {
     if (!process && queueList.length) {
-        const { jsonSchemaFolder } = build_1.getOptions();
+        const { jsonSchemaFolder } = isomor_core_1.getOptions();
         const { name, srcFilePath, path, args, className } = queueList.pop();
         const typeName = className ? `${className}.${name}` : name;
         const command = `isomor-json-schema-generator --path ${srcFilePath} --type ${typeName}`;

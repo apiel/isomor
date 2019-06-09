@@ -13,6 +13,8 @@ const path_1 = require("path");
 const Glob = require("glob");
 const util_1 = require("util");
 const findUp = require("find-up");
+var config_1 = require("./config");
+exports.getOptions = config_1.getOptions;
 const glob = util_1.promisify(Glob);
 function getJsonSchemaFileName(path, name, className) {
     return className ? `${path}.${className}.${name}.json` : `${path}.${name}.json`;

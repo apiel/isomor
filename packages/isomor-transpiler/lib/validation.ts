@@ -2,9 +2,8 @@ import { exec, ChildProcess } from 'child_process';
 import { warn, info, error } from 'logol';
 import { join } from 'path';
 import { outputJSON } from 'fs-extra';
-import { ValidationSchema, getJsonSchemaFileName } from 'isomor-core';
+import { ValidationSchema, getJsonSchemaFileName, getOptions } from 'isomor-core';
 
-import { getOptions } from './build';
 import { JsonAst, FunctionDeclaration, ClassMethod, ArrowFunctionExpression } from './ast';
 
 type RootParams = FunctionDeclaration | ClassMethod | ArrowFunctionExpression;

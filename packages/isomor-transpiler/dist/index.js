@@ -11,5 +11,5 @@ require('please-upgrade-node')(pkg, {
     └─────────────────────────────────────────────────────────┘
     `,
 });
-build_1.build(build_1.getOptions());
+build_1.build();
 //# sourceMappingURL=index.js.map

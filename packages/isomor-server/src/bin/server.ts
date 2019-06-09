@@ -16,31 +16,10 @@ import * as bodyParser from 'body-parser';
 import * as cookieParser from 'cookie-parser';
 import { setup, serve } from 'swagger-ui-express';
 import * as morgan from 'morgan';
+import { getOptions } from 'isomor-core';
 
 import { useIsomor, startup, getApiDoc } from '../lib';
 import { join } from 'path';
-
-interface Options {
-    distServerFolder: string;
-    serverFolder: string;
-    jsonSchemaFolder: string;
-    port: number;
-    staticFolder: string | null;
-    startupFile: string;
-    noDecorator: boolean;
-}
-
-export function getOptions(): Options {
-    return {
-        distServerFolder: process.env.DIST_SERVER_FOLDER || './dist-server',
-        port: process.env.PORT ? parseInt(process.env.PORT, 10) : 3005,
-        staticFolder: process.env.STATIC_FOLDER || null,
-        serverFolder: process.env.SERVER_FOLDER || '/server',
-        jsonSchemaFolder: process.env.JSON_SCHEMA_FOLDER || './json-schema',
-        startupFile: process.env.STARTUP_FILE || join('startup', 'index.js'),
-        noDecorator: process.env.NO_DECORATOR === 'true',
-    };
-}
 
 const API_DOCS = '/api-docs';
 

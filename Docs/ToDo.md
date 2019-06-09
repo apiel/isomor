@@ -1,5 +1,7 @@
 ### ToDo
 
+- Doc config file isomor.env
+
 - think about to make lib component including isomor frontend and server
 
 - look at stdlib.com or lambda function and think about an isomor version just to generate API without frontend.

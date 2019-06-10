@@ -1,37 +1,32 @@
 ### ToDo
 
 - Doc config file isomor.env
+- update vscode ext
 
 - think about to make lib component including isomor frontend and server
 
 - look at stdlib.com or lambda function and think about an isomor version just to generate API without frontend.
+    -> microservice where server can call another server
+
+
+- unit test validator
+- try to use tsc --watch for the server instead of nodemon
+
 
 - svelte wait for typescript support -> https://github.com/sveltejs/svelte/issues/1639
 
 - should we generate VALIDATION only manually?
 
-- swagger add params? and format? -> doesnt really work since args is an array
-    - https://json-schema.org/understanding-json-schema/reference/array.html#tuple-validation
-    -> maybe we should use as well this for json shcema
-
 - is isomor-server isomor-transpiler --dev necessary in installer?
-
-- unit test validator
 
 - cleanup path => url, json ...
 - should we make loadValidation async?
-- try to use tsc --watch for the server instead of nodemon
-- might need to move stuff in isomor-core instead to load transpiler and server between each other
 
 - vscode extension
     - handle delete and move file
     - automatically publish when new isomor-transpiler using ~~asure or travis~~? or manually trigger...
 
 - make a pure Ts/js example without react, vue, ...
-
-- improve server
-    - test
-    - doc: available methods for api doc, useIsomor...
 
 - isomor-NG > nest + angular
     - travis

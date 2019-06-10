@@ -21,7 +21,7 @@ function getJsonSchemaFileName(path, name, className) {
 }
 exports.getJsonSchemaFileName = getJsonSchemaFileName;
 function getFilesPattern(folderToSearch) {
-    return path_1.join('**', folderToSearch, '*');
+    return process.env.FILES_PATTERN || path_1.join('**', folderToSearch, '*');
 }
 exports.getFilesPattern = getFilesPattern;
 function getFiles(rootFolder, folderToSearch) {

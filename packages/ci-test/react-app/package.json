@@ -7,8 +7,8 @@
   "private": true,
   "dependencies": {
     "@types/jest": "^24.0.13",
-    "@types/node": "12.0.2",
-    "@types/react": "16.8.17",
+    "@types/node": "12.0.8",
+    "@types/react": "16.8.19",
     "@types/react-dom": "16.8.4",
     "fs-extra": "^8.0.1",
     "isomor": "^1.5.2",
@@ -17,7 +17,7 @@
     "react-dom": "^16.8.6",
     "react-scripts": "3.0.1",
     "run-screen": "^0.5.3",
-    "typescript": "3.4.5"
+    "typescript": "3.5.1"
   },
   "scripts": {
     "isomor:build": "isomor-transpiler",
@@ -53,9 +53,9 @@
   "devDependencies": {
     "@types/fs-extra": "^7.0.0",
     "@types/jest-environment-puppeteer": "^4.0.0",
-    "jest-puppeteer": "^4.1.1",
-    "nodemon": "^1.18.11",
-    "puppeteer": "^1.16.0",
+    "jest-puppeteer": "^4.2.0",
+    "nodemon": "^1.19.1",
+    "puppeteer": "^1.17.0",
     "run-screen": "^0.5.2"
   }
 }

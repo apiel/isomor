@@ -4,6 +4,7 @@
 - update vscode ext
 
 - think about to make lib component including isomor frontend and server
+    -> need to glob in node_module for isomor file
 
 - look at stdlib.com or lambda function and think about an isomor version just to generate API without frontend.
     -> microservice where server can call another server

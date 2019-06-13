@@ -49,9 +49,8 @@ function prepare(options) {
         yield Promise.all(folders.map(folder => fs_extra_1.emptyDir(path_1.join(distAppFolder, folder))));
     });
 }
-function build() {
+function build(options) {
     return __awaiter(this, void 0, void 0, function* () {
-        const options = isomor_core_1.getOptions();
         yield prepare(options);
         logol_1.info('Start transpiling', options.pkgName);
         const { srcFolder, serverFolder } = options;

@@ -7,7 +7,6 @@ import {
     getFolders,
     getPathForUrl,
     getFilesPattern,
-    getOptions,
 } from 'isomor-core';
 import { watch } from 'chokidar';
 import { Options } from 'isomor-core';
@@ -56,8 +55,7 @@ async function prepare(options: Options) {
     await Promise.all(folders.map(folder => emptyDir(join(distAppFolder, folder))));
 }
 
-export async function build() {
-    const options: Options = getOptions();
+export async function build(options: Options) {
     await prepare(options);
 
     info('Start transpiling', options.pkgName);

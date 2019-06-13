@@ -1,7 +1,9 @@
 ### ToDo
 
 - Doc config file isomor.env
+
 - update vscode ext
+    -> vscode ext should find the isomor-transpiler module
 
 - think about to make lib component including isomor frontend and server
     -> need to glob in node_module for isomor file

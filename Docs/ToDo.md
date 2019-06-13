@@ -9,10 +9,9 @@
 - look at stdlib.com or lambda function and think about an isomor version just to generate API without frontend.
     -> microservice where server can call another server
 
+- context -> https://www.npmjs.com/package/continuation-local-storage
 
 - unit test validator
-- try to use tsc --watch for the server instead of nodemon
-
 
 - svelte wait for typescript support -> https://github.com/sveltejs/svelte/issues/1639
 

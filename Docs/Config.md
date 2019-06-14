@@ -12,7 +12,7 @@ The default configuration should be most of the time the right one for implement
 
 `JSON_SCHEMA_FOLDER` destination path where the json schema files are saved for validation of the endpoints, default `./json-schema`
 
-`FILES_PATTERN` file pattern to transpile.
+`FILES_PATTERN` file pattern to server files.
 
 #### Transpiler
 

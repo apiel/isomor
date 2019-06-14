@@ -1,17 +1,10 @@
 ### ToDo
 
-- noValidation: process.env.NO_VALIDATION === 'true', ??
-
-- Doc config file isomor.env
-
 - update vscode ext
     -> vscode ext should find the isomor-transpiler module
 
 - think about to make lib component including isomor frontend and server
     -> need to glob in node_module for isomor file
-
-- look at stdlib.com or lambda function and think about an isomor version just to generate API without frontend.
-    -> microservice where server can call another server
 
 - context -> https://www.npmjs.com/package/continuation-local-storage
 
@@ -25,6 +18,14 @@
 
 - cleanup path => url, json ...
 - should we make loadValidation async?
+
+- look at stdlib.com or lambda function and think about an isomor version just to generate API without frontend.
+    -> microservice where server can call another server
+        does it really make sense? why to use microservice?
+            -> different stack, isomor is only TS, so doesnt apply
+            -> separate concern, all opposite of isomor
+            -> to split work on big project, does it really make sense then to have a single project
+            -> performance/scaling > this might be the only reason to use it with isomor
 
 - vscode extension
     - handle delete and move file
@@ -45,13 +46,6 @@
 - provide some test-case example, unit test and integration test
 
 - example web components, stencil js: stencil is still not stable
-
-- **base on params types of server function generate validation on endpoint**
-  - https://www.npmjs.com/package/ts-json-schema-generator
-  - https://www.npmjs.com/package/typescript-json-schema
-  - the problem is those library use tsc and it is very slow to bootstrap since tsc need to load all dependency unlike babel (this is also why we should prefer using babel instead of tsc for transpiler)
-  - to use this library, we would have to build the json schema in a separate process/task in parallel of transpiling
-  - other option would be to implement similar lib with babel (too much work!)
 
 - isomor-inject
   - it might be possible to do something like isomor without transpiler, just by using dependency injection. Maybe something like that https://www.npmjs.com/package/inversify . The library could easily inject different script depending if it is on the server or on the client. The downside of this would be that you have to change your way of coding, at least for people from react and vuejs.

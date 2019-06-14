@@ -1,5 +1,7 @@
 ### ToDo
 
+- noValidation: process.env.NO_VALIDATION === 'true', ??
+
 - Doc config file isomor.env
 
 - update vscode ext

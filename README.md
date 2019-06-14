@@ -87,4 +87,5 @@ Click [here](Docs/getting-started/Angular.md) to see how to use isomor with Angu
   * [Shared class](Docs/Shared-class.md)
   * [TypeORM](Docs/TypeORM.md)
   * [Server](Docs/Server.md)
+  * [Config](Docs/Config.md)
   * [Babel](Docs/Babel.md)

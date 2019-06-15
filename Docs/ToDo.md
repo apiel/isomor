@@ -1,5 +1,7 @@
 ### ToDo
 
+- give more info about how it work
+
 - update vscode ext
     -> vscode ext should find the isomor-transpiler module
 

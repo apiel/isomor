@@ -120,7 +120,9 @@ function shell(command: string, args?: ReadonlyArray<string>) {
         });
 
         process.stdin.setEncoding('ascii');
-        process.stdin.setRawMode(true);
+        if (process.stdin.setRawMode) {
+            process.stdin.setRawMode(true);
+        }
         process.stdin.resume();
         process.stdin.on('data', (key) => {
             if (key === '\u0003') { process.exit(); } // we might have to kill child process as well

@@ -34,13 +34,13 @@ script:
 ## REACT
 ##
 
-  - ls ${BASE}
-  - ls ${BASE}/ci-test
-  - ls ${BASE}/ci-test/react-app
-  - cd ${BASE}/ci-test/react-app
-  - yarn isomor:build
-  - CI=false yarn build
-  - yarn test # instead to have this /test/react, we could inject e2e test in the react version of isomor-react-app
+  # - ls ${BASE}
+  # - ls ${BASE}/ci-test
+  # - ls ${BASE}/ci-test/react-app
+  # - cd ${BASE}/ci-test/react-app
+  # - yarn isomor:build
+  # - CI=false yarn build
+  # - yarn test # instead to have this /test/react, we could inject e2e test in the react version of isomor-react-app
 
   - cd ${BASE}/example/react
   - DIST_SERVER_FOLDER=${BASE}/example/react/dist-server yarn demo 2> yarn.prod.log &

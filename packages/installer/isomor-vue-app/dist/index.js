@@ -75,7 +75,7 @@ function start({ srcFolder, distAppFolder, serverFolder }) {
 function shell(command, args) {
     return new Promise((resolve) => {
         let cmd = child_process_1.spawn(command, args, {
-            env: Object.assign({ FORCE_COLOR: 'true', COLUMNS: process.stdout.columns.toString(), LINES: process.stdout.rows.toString() }, process.env),
+            env: Object.assign({ FORCE_COLOR: 'true', COLUMNS: process.env.COLUMNS || process.stdout.columns.toString(), LINES: process.env.LINES || process.stdout.rows.toString() }, process.env),
         });
         cmd.stdout.on('data', data => {
             process.stdout.write(data);

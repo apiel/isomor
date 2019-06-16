@@ -14,6 +14,8 @@ cd my-app
 yarn dev
 ```
 
+Your app is now running on http://localhost:8080/
+
 Finish, you are ready to code :-)
 
 > **Note: `src-isomor` folder is where you will be coding** instead of `src`.

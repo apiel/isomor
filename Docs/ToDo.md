@@ -2,6 +2,8 @@
 
 - give more info about how it work
 
+- we could put in travis npx isomor...
+
 - update vscode ext
     -> vscode ext should find the isomor-transpiler module
 

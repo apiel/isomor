@@ -90,7 +90,9 @@ function shell(command, args) {
             }
         });
         process.stdin.setEncoding('ascii');
-        process.stdin.setRawMode(true);
+        if (process.stdin.setRawMode) {
+            process.stdin.setRawMode(true);
+        }
         process.stdin.resume();
         process.stdin.on('data', (key) => {
             if (key === '\u0003') {

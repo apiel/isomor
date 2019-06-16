@@ -1,4 +1,4 @@
-### configuration
+### Configuration
 
 The default configuration should be most of the time the right one for implementing an application with isomor. In case you still need to use some custom configuration, you can use environmnet variable. You can either pass the variable directly from the command line or you can use a dotenv file `isomor.env` in the root of your project.
 

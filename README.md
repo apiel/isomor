@@ -82,7 +82,7 @@ Click [here](Docs/getting-started/Angular.md) to see how to use isomor with Angu
 
 ## Advanced guides
 
-  * [VScode](Docs/VScode.md)
+  <!-- * [VScode](Docs/VScode.md) -->
   * [Request / Response context](Docs/ReqResCtx.md)
   * [Shared class](Docs/Shared-class.md)
   * [TypeORM](Docs/TypeORM.md)

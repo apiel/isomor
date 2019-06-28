@@ -351,6 +351,12 @@
   dependencies:
     "@types/node" "*"
 
+"@types/fs-extra@^8.0.0":
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/@types/fs-extra/-/fs-extra-8.0.0.tgz#d3e2c313ca29f95059f198dd60d1f774642d4b25"
+  dependencies:
+    "@types/node" "*"
+
 "@types/glob@*":
   version "7.1.1"
   resolved "https://registry.yarnpkg.com/@types/glob/-/glob-7.1.1.tgz#aa59a1c6e3fbc421e07ccd31a944c30eba521575"
@@ -380,9 +386,9 @@
   version "20.0.1"
   resolved "https://registry.yarnpkg.com/@types/jest-diff/-/jest-diff-20.0.1.tgz#35cc15b9c4f30a18ef21852e255fdb02f6d59b89"
 
-"@types/jest@^24.0.13":
-  version "24.0.13"
-  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-24.0.13.tgz#10f50b64cb05fb02411fbba49e9042a3a11da3f9"
+"@types/jest@^24.0.15":
+  version "24.0.15"
+  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-24.0.15.tgz#6c42d5af7fe3b44ffff7cc65de7bf741e8fa427f"
   dependencies:
     "@types/jest-diff" "*"
 
@@ -404,13 +410,13 @@
   version "12.0.0"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-12.0.0.tgz#d11813b9c0ff8aaca29f04cbc12817f4c7d656e5"
 
+"@types/node@^12.0.10":
+  version "12.0.10"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.0.10.tgz#51babf9c7deadd5343620055fc8aff7995c8b031"
+
 "@types/node@^12.0.2":
   version "12.0.4"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-12.0.4.tgz#46832183115c904410c275e34cf9403992999c32"
-
-"@types/node@^12.0.8":
-  version "12.0.8"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.0.8.tgz#551466be11b2adc3f3d47156758f610bd9f6b1d8"
 
 "@types/range-parser@*":
   version "1.2.3"
@@ -1418,6 +1424,14 @@ fs-extra@^8.0.1:
     jsonfile "^4.0.0"
     universalify "^0.1.0"
 
+fs-extra@^8.1.0:
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-8.1.0.tgz#49d43c45a88cd9677668cb7be1b46efdb8d2e1c0"
+  dependencies:
+    graceful-fs "^4.2.0"
+    jsonfile "^4.0.0"
+    universalify "^0.1.0"
+
 fs-minipass@^1.2.5:
   version "1.2.5"
   resolved "https://registry.yarnpkg.com/fs-minipass/-/fs-minipass-1.2.5.tgz#06c277218454ec288df77ada54a03b8702aacb9d"
@@ -1500,6 +1514,10 @@ globals@^11.1.0:
 graceful-fs@^4.1.11, graceful-fs@^4.1.15, graceful-fs@^4.1.2, graceful-fs@^4.1.6:
   version "4.1.15"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.1.15.tgz#ffb703e1066e8a0eeaa4c8b80ba9253eeefbfb00"
+
+graceful-fs@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.0.tgz#8d8fdc73977cb04104721cb53666c1ca64cd328b"
 
 growly@^1.3.0:
   version "1.3.0"
@@ -1841,9 +1859,9 @@ isobject@^3.0.0, isobject@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/isobject/-/isobject-3.0.1.tgz#4e431e92b11a9731636aa1f9c8d1ccbcfdab78df"
 
-isomor-core@^1.5.2:
-  version "1.5.2"
-  resolved "https://registry.yarnpkg.com/isomor-core/-/isomor-core-1.5.2.tgz#92fea4317b80cf2abb51435c550034738f30edde"
+isomor-core@^1.5.3:
+  version "1.5.3"
+  resolved "https://registry.yarnpkg.com/isomor-core/-/isomor-core-1.5.3.tgz#c3b3ec6e3ecaf076b70edc3e3b216213da28d1f1"
   dependencies:
     dotenv "^8.0.0"
     find-up "^4.0.0"
@@ -1862,9 +1880,9 @@ isomor-json-schema-generator@^1.4.0:
     json-stable-stringify "^1.0.1"
     typescript "~3.5.1"
 
-isomor-server@^1.5.2:
-  version "1.5.2"
-  resolved "https://registry.yarnpkg.com/isomor-server/-/isomor-server-1.5.2.tgz#a3188aad7e0b062023e59ecd20bc8009a82f68aa"
+isomor-server@^1.5.3:
+  version "1.5.3"
+  resolved "https://registry.yarnpkg.com/isomor-server/-/isomor-server-1.5.3.tgz#26a1b07694b5c4f21ddac1acc1fd3833562bba93"
   dependencies:
     "@types/fs-extra" "^7.0.0"
     "@types/morgan" "^1.7.35"
@@ -1873,17 +1891,17 @@ isomor-server@^1.5.2:
     cookie-parser "^1.4.4"
     express "^4.17.1"
     fs-extra "^8.0.1"
-    isomor "^1.5.2"
-    isomor-core "^1.5.2"
+    isomor "^1.5.3"
+    isomor-core "^1.5.3"
     logol "^0.0.3"
     morgan "^1.9.1"
     please-upgrade-node "^3.1.1"
     swagger-ui-express "^4.0.6"
     typescript "^3.5.1"
 
-isomor-transpiler@^1.5.2:
-  version "1.5.2"
-  resolved "https://registry.yarnpkg.com/isomor-transpiler/-/isomor-transpiler-1.5.2.tgz#700005cc909b67ddad4472b1f6efc6ec01a01d95"
+isomor-transpiler@^1.5.4:
+  version "1.5.4"
+  resolved "https://registry.yarnpkg.com/isomor-transpiler/-/isomor-transpiler-1.5.4.tgz#6a521f7f62855ba721a1969df7f45004c1a6d19a"
   dependencies:
     "@babel/generator" "^7.4.0"
     "@babel/parser" "^7.4.5"
@@ -1893,8 +1911,8 @@ isomor-transpiler@^1.5.2:
     chokidar "^3.0.1"
     debug "^4.1.1"
     fs-extra "^8.0.1"
-    isomor "^1.5.2"
-    isomor-core "^1.5.2"
+    isomor "^1.5.4"
+    isomor-core "^1.5.3"
     isomor-json-schema-generator "^1.4.0"
     logol "^0.0.3"
     please-upgrade-node "^3.1.1"
@@ -1902,15 +1920,15 @@ isomor-transpiler@^1.5.2:
     ts-node "^8.2.0"
     typescript "^3.5.1"
 
-isomor@^1.5.2:
-  version "1.5.2"
-  resolved "https://registry.yarnpkg.com/isomor/-/isomor-1.5.2.tgz#66b9f1760a3360f4a50eb4fb21281e178f6776d7"
+isomor@^1.5.3, isomor@^1.5.4:
+  version "1.5.4"
+  resolved "https://registry.yarnpkg.com/isomor/-/isomor-1.5.4.tgz#4e4401a9a996ccc726d717b6b118cc377fa7cd02"
   dependencies:
     axios "^0.19.0"
     chalk "^2.4.2"
     inquirer "^6.3.1"
-    isomor-server "^1.5.2"
-    isomor-transpiler "^1.5.2"
+    isomor-server "^1.5.3"
+    isomor-transpiler "^1.5.4"
     typescript "^3.5.1"
 
 isstream@~0.1.2:
@@ -3712,13 +3730,23 @@ ts-node@^8.2.0:
     source-map-support "^0.5.6"
     yn "^3.0.0"
 
+ts-node@^8.3.0:
+  version "8.3.0"
+  resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-8.3.0.tgz#e4059618411371924a1fb5f3b125915f324efb57"
+  dependencies:
+    arg "^4.1.0"
+    diff "^4.0.1"
+    make-error "^1.1.1"
+    source-map-support "^0.5.6"
+    yn "^3.0.0"
+
 tslib@^1.8.0, tslib@^1.8.1, tslib@^1.9.0:
   version "1.9.3"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.9.3.tgz#d7e4dd79245d85428c4d7e4822a79917954ca286"
 
-tslint@^5.17.0:
-  version "5.17.0"
-  resolved "https://registry.yarnpkg.com/tslint/-/tslint-5.17.0.tgz#f9f0ce2011d8e90debaa6e9b4975f24cd16852b8"
+tslint@^5.18.0:
+  version "5.18.0"
+  resolved "https://registry.yarnpkg.com/tslint/-/tslint-5.18.0.tgz#f61a6ddcf372344ac5e41708095bbf043a147ac6"
   dependencies:
     "@babel/code-frame" "^7.0.0"
     builtin-modules "^1.1.1"
@@ -3770,6 +3798,10 @@ typescript@^3.4.1:
 typescript@^3.5.1, typescript@~3.5.1:
   version "3.5.1"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.5.1.tgz#ba72a6a600b2158139c5dd8850f700e231464202"
+
+typescript@^3.5.2:
+  version "3.5.2"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.5.2.tgz#a09e1dc69bc9551cadf17dba10ee42cf55e5d56c"
 
 uglify-js@^3.1.4:
   version "3.5.11"

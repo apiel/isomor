@@ -12,9 +12,9 @@
   "devDependencies": {
     "@types/inquirer": "^6.0.3",
     "docsify-cli": "^4.3.0",
-    "lerna": "^3.15.0"
+    "lerna": "^3.16.4"
   },
   "dependencies": {
-    "inquirer": "^6.4.1"
+    "inquirer": "^6.5.0"
   }
 }

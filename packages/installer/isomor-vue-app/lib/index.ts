@@ -14,7 +14,6 @@ import { join } from 'path';
 import { spawn } from 'child_process';
 import chalk from 'chalk';
 import * as minimist from 'minimist';
-import * as execa from 'execa';
 
 interface Options {
     srcFolder: string;
@@ -98,38 +97,11 @@ async function start({ srcFolder, distAppFolder, serverFolder }: Options) {
     }
 }
 
-// to be deprecated when we fix shell
-async function sh(cmd: string) {
-    return new Promise((resolve, reject) => {
-        require('child_process').exec(cmd, (err, stdout, stderr) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve({ stdout, stderr });
-            }
-        });
-    });
-}
-
-async function exe(command: string, args?: ReadonlyArray<string>) {
-    const child = execa(command, args, {
-        env: {
-            // FORCE_COLOR: 'true',
-            COLUMNS: process.env.COLUMNS || process.stdout.columns.toString(),
-            LINES: process.env.LINES || process.stdout.rows.toString(),
-            ...process.env,
-        },
-    });
-    child.stdout.pipe(process.stdout);
-    child.stderr.pipe(process.stderr);
-    return child;
-}
-
 function shell(command: string, args?: ReadonlyArray<string>) {
     return new Promise((resolve) => {
         let cmd = spawn(command, args, {
             env: {
-                // FORCE_COLOR: 'true',
+                // FORCE_COLOR: 'true', // this seem to be problematic
                 COLUMNS: process.env.COLUMNS || process.stdout.columns.toString(),
                 LINES: process.env.LINES || process.stdout.rows.toString(),
                 ...process.env,

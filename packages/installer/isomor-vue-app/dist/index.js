@@ -32,8 +32,8 @@ function start({ srcFolder, distAppFolder, serverFolder }) {
                 yield shell('npx', ['@vue/cli', 'create', projectName]);
             }
             else {
-                const vuePreset = fs_extra_1.readJSONSync(path_1.join(__dirname, '..', 'vue-preset.json'));
-                yield shell('npx', ['@vue/cli', 'create', projectName, '-i', JSON.stringify(vuePreset)]);
+                yield shell('npx', ['@vue/cli', 'create', projectName, '-i',
+                    `'{"useConfigFiles":true,"plugins":{"@vue/cli-plugin-babel":{},"@vue/cli-plugin-typescript":{"classComponent":true,"useTsWithBabel":true}}}'`]);
             }
             logol_1.info('Copy tsconfig.server.json');
             fs_extra_1.copySync(path_1.join(__dirname, '..', 'tsconfig.server.json'), path_1.join(projectDirectory, 'tsconfig.server.json'));

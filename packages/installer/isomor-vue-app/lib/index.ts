@@ -27,19 +27,21 @@ async function start({ srcFolder, distAppFolder, serverFolder }: Options) {
         const { _: [projectName] } = minimist(process.argv.slice(2));
         const projectDirectory = join(process.cwd(), projectName);
         info('Install VueJs in', projectDirectory);
-        info('Wait a little bit... we are loading Vue cli');
+        info('Wait a little bit... we are loading Vue');
         if (!projectDirectory) {
             warn(`Please provide the project name, e.g: npx isomor-vue-app my-app`);
             return;
         }
 
-        if (process.env.MANUAL === 'true') {
-            info('For the moment the installer work only for TypeScript. Please select TypeScript :-)');
-            await shell('npx', ['@vue/cli', 'create', projectName]);
-        } else {
-            await shell('npx', ['@vue/cli', 'create', projectName, '-i',
-            `'{"useConfigFiles":true,"plugins":{"@vue/cli-plugin-babel":{},"@vue/cli-plugin-typescript":{"classComponent":true,"useTsWithBabel":true}}}'`]); // tslint:disable-line
-        }
+        // if (process.env.MANUAL === 'true') {
+        //     info('For the moment the installer work only for TypeScript. Please select TypeScript :-)');
+        //     await shell('npx', ['@vue/cli', 'create', projectName]);
+        // } else {
+        //     await shell('npx', ['@vue/cli', 'create', projectName, '-i',
+        //     `{"useConfigFiles":true,"plugins":{"@vue/cli-plugin-babel":{},"@vue/cli-plugin-typescript":{"classComponent":true,"useTsWithBabel":true}}}`]); // tslint:disable-line
+        // }
+        // use instead sh till we fix shell
+        await sh(`npx @vue/cli create ${projectName} -i '{"useConfigFiles":true,"plugins":{"@vue/cli-plugin-babel":{},"@vue/cli-plugin-typescript":{"classComponent":true,"useTsWithBabel":true}}}'`); // tslint:disable-line
 
         info('Copy tsconfig.server.json');
         copySync(
@@ -95,6 +97,19 @@ async function start({ srcFolder, distAppFolder, serverFolder }: Options) {
         error(err);
         process.exit(1);
     }
+}
+
+// to be deprecated when we fix shell
+async function sh(cmd: string) {
+    return new Promise((resolve, reject) => {
+        require('child_process').exec(cmd, (err, stdout, stderr) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve({ stdout, stderr });
+            }
+        });
+    });
 }
 
 function shell(command: string, args?: ReadonlyArray<string>) {

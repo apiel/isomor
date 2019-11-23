@@ -14,6 +14,7 @@ import { join } from 'path';
 import { spawn } from 'child_process';
 import chalk from 'chalk';
 import * as minimist from 'minimist';
+import * as execa from 'execa';
 
 interface Options {
     srcFolder: string;
@@ -33,15 +34,13 @@ async function start({ srcFolder, distAppFolder, serverFolder }: Options) {
             return;
         }
 
-        // if (process.env.MANUAL === 'true') {
-        //     info('For the moment the installer work only for TypeScript. Please select TypeScript :-)');
-        //     await shell('npx', ['@vue/cli', 'create', projectName]);
-        // } else {
-        //     await shell('npx', ['@vue/cli', 'create', projectName, '-i',
-        //     `{"useConfigFiles":true,"plugins":{"@vue/cli-plugin-babel":{},"@vue/cli-plugin-typescript":{"classComponent":true,"useTsWithBabel":true}}}`]); // tslint:disable-line
-        // }
-        // use instead sh till we fix shell
-        await sh(`npx @vue/cli create ${projectName} -i '{"useConfigFiles":true,"plugins":{"@vue/cli-plugin-babel":{},"@vue/cli-plugin-typescript":{"classComponent":true,"useTsWithBabel":true}}}'`); // tslint:disable-line
+        if (process.env.MANUAL === 'true') {
+            info('For the moment the installer work only for TypeScript. Please select TypeScript :-)');
+            await shell('npx', ['@vue/cli', 'create', projectName]);
+        } else {
+            await shell('npx', ['@vue/cli', 'create', projectName, '-i',
+            `{"useConfigFiles":true,"plugins":{"@vue/cli-plugin-babel":{},"@vue/cli-plugin-typescript":{"classComponent":true,"useTsWithBabel":true}}}`]); // tslint:disable-line
+        }
 
         info('Copy tsconfig.server.json');
         copySync(
@@ -112,11 +111,25 @@ async function sh(cmd: string) {
     });
 }
 
+async function exe(command: string, args?: ReadonlyArray<string>) {
+    const child = execa(command, args, {
+        env: {
+            // FORCE_COLOR: 'true',
+            COLUMNS: process.env.COLUMNS || process.stdout.columns.toString(),
+            LINES: process.env.LINES || process.stdout.rows.toString(),
+            ...process.env,
+        },
+    });
+    child.stdout.pipe(process.stdout);
+    child.stderr.pipe(process.stderr);
+    return child;
+}
+
 function shell(command: string, args?: ReadonlyArray<string>) {
     return new Promise((resolve) => {
         let cmd = spawn(command, args, {
             env: {
-                FORCE_COLOR: 'true',
+                // FORCE_COLOR: 'true',
                 COLUMNS: process.env.COLUMNS || process.stdout.columns.toString(),
                 LINES: process.env.LINES || process.stdout.rows.toString(),
                 ...process.env,

@@ -1,5 +1,7 @@
 ### ToDo
 
+- remove all async cache stuff
+
 - give more info about how it work
 
 - we could put in travis npx isomor...

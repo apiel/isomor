@@ -27,7 +27,14 @@ function start({ srcFolder, distAppFolder, serverFolder }) {
                 logol_1.warn(`Please provide the project name, e.g: npx isomor-vue-app my-app`);
                 return;
             }
-            yield sh(`npx @vue/cli create ${projectName} -i '{"useConfigFiles":true,"plugins":{"@vue/cli-plugin-babel":{},"@vue/cli-plugin-typescript":{"classComponent":true,"useTsWithBabel":true}}}'`);
+            if (process.env.MANUAL === 'true') {
+                logol_1.info('For the moment the installer work only for TypeScript. Please select TypeScript :-)');
+                yield shell('npx', ['@vue/cli', 'create', projectName]);
+            }
+            else {
+                yield shell('npx', ['@vue/cli', 'create', projectName, '-i',
+                    `{"useConfigFiles":true,"plugins":{"@vue/cli-plugin-babel":{},"@vue/cli-plugin-typescript":{"classComponent":true,"useTsWithBabel":true}}}`]);
+            }
             logol_1.info('Copy tsconfig.server.json');
             fs_extra_1.copySync(path_1.join(__dirname, '..', 'tsconfig.server.json'), path_1.join(projectDirectory, 'tsconfig.server.json'));
             logol_1.info('Copy vue.config.js');
@@ -65,24 +72,10 @@ function start({ srcFolder, distAppFolder, serverFolder }) {
         }
     });
 }
-function sh(cmd) {
-    return __awaiter(this, void 0, void 0, function* () {
-        return new Promise((resolve, reject) => {
-            require('child_process').exec(cmd, (err, stdout, stderr) => {
-                if (err) {
-                    reject(err);
-                }
-                else {
-                    resolve({ stdout, stderr });
-                }
-            });
-        });
-    });
-}
 function shell(command, args) {
     return new Promise((resolve) => {
         let cmd = child_process_1.spawn(command, args, {
-            env: Object.assign({ FORCE_COLOR: 'true', COLUMNS: process.env.COLUMNS || process.stdout.columns.toString(), LINES: process.env.LINES || process.stdout.rows.toString() }, process.env),
+            env: Object.assign({ COLUMNS: process.env.COLUMNS || process.stdout.columns.toString(), LINES: process.env.LINES || process.stdout.rows.toString() }, process.env),
         });
         cmd.stdout.on('data', data => {
             process.stdout.write(data);

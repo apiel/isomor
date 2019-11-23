@@ -37,8 +37,8 @@ async function start({ srcFolder, distAppFolder, serverFolder }: Options) {
             info('For the moment the installer work only for TypeScript. Please select TypeScript :-)');
             await shell('npx', ['@vue/cli', 'create', projectName]);
         } else {
-            const vuePreset = readJSONSync(join(__dirname, '..', 'vue-preset.json'));
-            await shell('npx', ['@vue/cli', 'create', projectName, '-i', JSON.stringify(vuePreset)]);
+            await shell('npx', ['@vue/cli', 'create', projectName, '-i',
+            `'{"useConfigFiles":true,"plugins":{"@vue/cli-plugin-babel":{},"@vue/cli-plugin-typescript":{"classComponent":true,"useTsWithBabel":true}}}'`]); // tslint:disable-line
         }
 
         info('Copy tsconfig.server.json');

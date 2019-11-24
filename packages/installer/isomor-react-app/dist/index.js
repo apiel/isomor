@@ -14,7 +14,7 @@ const logol_1 = require("logol");
 const fs_extra_1 = require("fs-extra");
 const path_1 = require("path");
 const child_process_1 = require("child_process");
-const chalk_1 = require("chalk");
+const chalk = require("chalk");
 const minimist = require("minimist");
 function start({ srcFolder, distAppFolder, serverFolder }) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -59,7 +59,7 @@ function start({ srcFolder, distAppFolder, serverFolder }) {
                 + `\n\n/src\n`;
             fs_extra_1.writeFileSync(path_1.join(projectDirectory, '.gitignore'), gitingore);
             logol_1.success(`Ready to code :-)`);
-            console.log(chalk_1.default.bold(chalk_1.default.yellow('Important: ')), chalk_1.default.blue(`edit you code in ${chalk_1.default.bold(srcFolder)}`), `instead of ${distAppFolder}`);
+            console.log(chalk.bold(chalk.yellow('Important: ')), chalk.blue(`edit you code in ${chalk.bold(srcFolder)}`), `instead of ${distAppFolder}`);
         }
         catch (err) {
             logol_1.error(err);
@@ -71,15 +71,15 @@ function shell(command, args) {
     return new Promise((resolve) => {
         const cmd = child_process_1.spawn(command, args);
         cmd.stdout.on('data', data => {
-            process.stdout.write(chalk_1.default.gray(data.toString()));
+            process.stdout.write(chalk.gray(data.toString()));
         });
         cmd.stderr.on('data', data => {
             const dataStr = data.toString();
             if (dataStr.indexOf('warning') === 0) {
-                process.stdout.write(chalk_1.default.yellow('warming') + dataStr.substring(7));
+                process.stdout.write(chalk.yellow('warming') + dataStr.substring(7));
             }
             else {
-                process.stdout.write(chalk_1.default.red(data.toString()));
+                process.stdout.write(chalk.red(data.toString()));
             }
         });
         cmd.on('close', resolve);

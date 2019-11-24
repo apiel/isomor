@@ -87,4 +87,4 @@ Find examples in the folder `packages/examples`, for React, VueJS and as well An
   * [TypeORM](Docs/TypeORM.md)
   * [Server](Docs/Server.md)
   * [Config](Docs/Config.md)
-  * [Babel](Docs/Babel.md)
+  <!-- * [Babel](Docs/Babel.md) -->

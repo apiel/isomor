@@ -6,6 +6,9 @@
 
 - we could put in travis npx isomor...
 
+- clarify:
+    - react getting start after: Ok, now we have everything, normally we should now be able to transpile and start
+
 - start to build some pkg...
 
 - update vscode ext

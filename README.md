@@ -24,7 +24,7 @@ import { getServerUptime } from './server/uptime';
 
 export const Uptime = () => {
     const [uptime, setUptime] = React.useState<number>();
-    React.useEffect(async () => setUptime(await getServerUptime()), []);
+    React.useEffect(() => { getServerUptime().then(setUptime); }, []);
     return (
         <p><b>Server uptime:</b> { uptime || 'loading...' }</p>
     );

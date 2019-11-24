@@ -1,0 +1,22 @@
+{
+    "args": [
+        "color"
+    ],
+    "schema": {
+        "$ref": "#/definitions/setColor",
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "definitions": {
+            "setColor": {
+                "items": [
+                    {
+                        "type": "string"
+                    }
+                ],
+                "maxItems": 1,
+                "minItems": 1,
+                "type": "array"
+            }
+        }
+    },
+    "name": "setColor"
+}

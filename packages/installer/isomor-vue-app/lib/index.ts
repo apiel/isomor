@@ -125,7 +125,7 @@ function shell(command: string, args?: ReadonlyArray<string>) {
         }
         process.stdin.resume();
         process.stdin.on('data', (key) => {
-            if (key === '\u0003') { process.exit(); } // we might have to kill child process as well
+            if ((key as any) === '\u0003') { process.exit(); } // we might have to kill child process as well
             if (cmd) { cmd.stdin.write(key); }
         });
         cmd.on('close', () => { cmd = null; resolve(); });

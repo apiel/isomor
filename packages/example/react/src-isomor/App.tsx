@@ -4,10 +4,10 @@ import './App.css';
 import { getList } from './server/data';
 import { GetListInput } from './server/getList.input';
 import { Stats } from './status/stats';
-import { TwoColumn } from './TwoColumn';
 import { Auth } from './auth/auth';
 import { ErrorExample } from './error/ErrorExample';
-import { ErrorExample2 } from './error/ErrorExample2';
+import { Time } from './status/time';
+import { Color } from './color/color';
 
 const App = () => {
   const [list, setList] = React.useState<string[]>([]);
@@ -28,10 +28,10 @@ const App = () => {
               }
             </ul>
             <button onClick={load}>load again</button>
-            <TwoColumn />
+            <Time />
+            <Color />
             <Stats />
             <ErrorExample />
-            <ErrorExample2 />
           </div>
       </div>
   );

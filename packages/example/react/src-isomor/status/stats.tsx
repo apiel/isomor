@@ -1,6 +1,5 @@
 import React from 'react';
 import { getStatus, Status } from './server/getStatus';
-import { CpuInfo } from 'os';
 
 export const Stats = () => {
   const [status, setStatus] = React.useState<Status>();

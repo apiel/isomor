@@ -1,16 +1,17 @@
 import React from 'react';
-import { useAsyncCacheWatch } from 'react-async-cache';
 
-import { getTime } from './server/getTime';
+import { getTime, ServerTime } from './server/getTime';
 
 export const Time = () => {
-  // look at timeUTC.tsx using useAsyncCacheEffect taking care of useEffect
-  const { call, response } = useAsyncCacheWatch(getTime);
-  React.useEffect(() => { call(); }, []);
+  const [serverTime, setServerTime] = React.useState<ServerTime>();
+  const load = async () => {
+    setServerTime(await getTime());
+  }
+  React.useEffect(() => { load(); }, []);
   return (
     <div>
-      {!response ? <p>Loading...</p> : (
-        <p><b>Server time:</b> {response.time} <button onClick={call}>reload</button></p>
+      {!serverTime ? <p>Loading...</p> : (
+        <p><b>Server time:</b> {serverTime.time} <button onClick={load}>reload</button></p>
       )}
     </div>
   );

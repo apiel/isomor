@@ -12,7 +12,7 @@ import {
 } from 'fs-extra';
 import { join } from 'path';
 import { spawn } from 'child_process';
-import chalk from 'chalk';
+import * as chalk from 'chalk';
 import * as minimist from 'minimist';
 
 interface Options {

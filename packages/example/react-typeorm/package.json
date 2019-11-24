@@ -1,7 +1,7 @@
 {
   "name": "isomor-example-react-typeorm",
   "private": true,
-  "version": "1.6.3",
+  "version": "1.7.3",
   "repository": {
     "type": "git",
     "url": "https://github.com/apiel/isomor"

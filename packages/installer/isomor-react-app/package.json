@@ -29,21 +29,21 @@
         "lint": "tslint -p tsconfig.json -c tslint.json"
     },
     "dependencies": {
-        "chalk": "^2.4.2",
+        "chalk": "^3.0.0",
         "fs-extra": "^8.1.0",
         "logol": "^0.0.3",
         "minimist": "^1.2.0",
-        "ts-node": "^8.3.0",
-        "typescript": "^3.5.3"
+        "ts-node": "^8.5.2",
+        "typescript": "^3.7.2"
     },
     "devDependencies": {
         "@types/chalk": "^2.2.0",
-        "@types/fs-extra": "^8.0.0",
+        "@types/fs-extra": "^8.0.1",
         "@types/minimist": "^1.2.0",
-        "@types/node": "^12.6.8",
-        "@types/rimraf": "^2.0.2",
-        "rimraf": "^2.6.3",
-        "tslint": "^5.18.0"
+        "@types/node": "^12.12.12",
+        "@types/rimraf": "^2.0.3",
+        "rimraf": "^3.0.0",
+        "tslint": "^5.20.1"
     },
     "gitHead": "2e27759c9ca2587c2bde419df16da27d864ab782"
 }

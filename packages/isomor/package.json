@@ -34,18 +34,18 @@
     },
     "dependencies": {
         "axios": "^0.19.0",
-        "chalk": "^2.4.2",
-        "inquirer": "^6.5.0",
+        "chalk": "^3.0.0",
+        "inquirer": "^7.0.0",
         "isomor-server": "^1.6.3",
         "isomor-transpiler": "^1.6.3",
-        "typescript": "^3.5.3"
+        "typescript": "^3.7.2"
     },
     "devDependencies": {
         "@types/axios": "^0.14.0",
         "@types/chalk": "^2.2.0",
-        "@types/inquirer": "^6.0.3",
-        "ts-node": "^8.3.0",
-        "tslint": "^5.18.0"
+        "@types/inquirer": "^6.5.0",
+        "ts-node": "^8.5.2",
+        "tslint": "^5.20.1"
     },
     "gitHead": "2e27759c9ca2587c2bde419df16da27d864ab782"
 }

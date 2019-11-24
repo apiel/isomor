@@ -41,15 +41,10 @@ function start({ srcFolder, distAppFolder, serverFolder }) {
             pkg.scripts = Object.assign({}, pkgExample.scripts, pkg.scripts);
             fs_extra_1.writeJSONSync(path_1.join(projectDirectory, 'package.json'), pkg);
             logol_1.info('Install packages...');
-            fs_extra_1.writeFileSync('cmd', `cd ${projectDirectory} && yarn add isomor react-async-cache && \
+            fs_extra_1.writeFileSync('cmd', `cd ${projectDirectory} && \
             yarn add run-screen nodemon isomor-transpiler isomor-server  yarn --dev`);
             yield shell('bash', ['cmd']);
             fs_extra_1.unlinkSync('cmd');
-            logol_1.info('Setup react-async-cache in <App />');
-            const index = `import { AsyncCacheProvider } from 'react-async-cache';\n`
-                + fs_extra_1.readFileSync(path_1.join(projectDirectory, srcFolder, 'index.tsx')).toString();
-            const newIndex = index.replace(/\<App \/\>/g, '(<AsyncCacheProvider><App /></AsyncCacheProvider>)');
-            fs_extra_1.writeFileSync(path_1.join(projectDirectory, srcFolder, 'index.tsx'), newIndex);
             logol_1.info('Create empty server/data.ts');
             fs_extra_1.outputFileSync(path_1.join(projectDirectory, srcFolder, serverFolder, 'data.ts'), ``);
             logol_1.info('Copy example component');

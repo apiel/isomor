@@ -734,7 +734,7 @@ is-promise@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/is-promise/-/is-promise-2.1.0.tgz#79a2a9ece7f096e80f36d2b2f3bc16c1ff4bf3fa"
 
-isomor-core@^1.6.3:
+isomor-core@^1.6.3, isomor-core@^1.8.2:
   version "1.6.3"
   resolved "https://registry.yarnpkg.com/isomor-core/-/isomor-core-1.6.3.tgz#c54e7d3b21c7462d23a6d355c6b04091317af20f"
   dependencies:
@@ -795,7 +795,7 @@ isomor-transpiler@^1.6.3:
     ts-node "^8.3.0"
     typescript "^3.5.3"
 
-isomor@^1.6.3:
+isomor@^1.6.3, isomor@^1.8.2:
   version "1.6.3"
   resolved "https://registry.yarnpkg.com/isomor/-/isomor-1.6.3.tgz#039d479b5247970ddc32ac9771ccc9c01e8fb11f"
   dependencies:

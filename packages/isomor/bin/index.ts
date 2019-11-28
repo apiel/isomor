@@ -2,7 +2,7 @@
 
 import { prompt } from 'inquirer';
 import { spawn } from 'child_process';
-import chalk from 'chalk';
+import * as chalk from 'chalk';
 
 const REACT = 'React';
 const NG = 'Angular + Nest';

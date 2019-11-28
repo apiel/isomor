@@ -12,7 +12,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const inquirer_1 = require("inquirer");
 const child_process_1 = require("child_process");
-const chalk_1 = require("chalk");
+const chalk = require("chalk");
 const REACT = 'React';
 const NG = 'Angular + Nest';
 const VUE = 'Vue';
@@ -59,10 +59,10 @@ function shell(command, args) {
         cmd.stderr.on('data', data => {
             const dataStr = data.toString();
             if (dataStr.indexOf('warning') === 0) {
-                process.stdout.write(chalk_1.default.yellow('warming') + dataStr.substring(7));
+                process.stdout.write(chalk.yellow('warming') + dataStr.substring(7));
             }
             else {
-                process.stdout.write(chalk_1.default.red(data.toString()));
+                process.stdout.write(chalk.red(data.toString()));
             }
         });
         process.stdin.setEncoding('ascii');

@@ -1,5 +1,6 @@
 * [Introduction](/?id=isomor)
 * [Example](/?id=example)
+* [Why Isomor](Docs/Why.md)
 * Getting started
     * [React](Docs/getting-started/React)
     * [VueJs](Docs/getting-started/Vue)

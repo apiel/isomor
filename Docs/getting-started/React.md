@@ -15,6 +15,7 @@ yarn dev
 Finish, you are ready to code :-)
 
 > **Note: `src-isomor` folder is where you will be coding** instead of `src`.
+> **Note:** `yarn dev` is running the transpiler, the backend and the frontend in watch mode. It is using the npm library [run-screen](https://www.npmjs.com/package/run-screen) to start those processes in parallel. You can switch from one process to the other by pressing `TAB`
 
 ### Start coding
 
@@ -72,28 +73,3 @@ const App = () => {
 export default App;
 ```
 Here we are using hook instead of class component but you can find an example in the repo  `packages/examples/react/src-isomor/App.tsx` using class.
-
-Ok, now we have everything, normally we should now be able to transpile and start.
-
-First let's run the server:
-
-```bash
-yarn serv
-```
-
-You should get something like:
-
-```bash
-[19:55:35] Starting server.
-[19:55:35] Created endpoints: [ '/isomor/server-data/getList' ]
-[19:55:35] Server listening on port 3005!
-```
-
-The server is running on port `3005` and previously we setup a proxy in `package.json` to this port (for dev purpose only).
-
-Now let's start the app:
-
-```bash
-yarn isomor:build
-yarn start
-```

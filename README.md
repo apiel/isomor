@@ -75,7 +75,7 @@ or in dev mode:
 yarn dev
 ```
 
-> **Note:** `yarn dev` is using the npm library [run-screen](https://www.npmjs.com/package/run-screen) to start processes in parallel
+> **Note:** `yarn dev` is running the transpiler, the backend and the frontend in watch mode. It is using the npm library [run-screen](https://www.npmjs.com/package/run-screen) to start those processes in parallel. You can switch from one process to the other by pressing `TAB`
 
 Find examples in the folder `packages/examples`, for React, VueJS and as well Angular + NestJs.
 

@@ -7,16 +7,11 @@
         -> just need to use `axios.get` if no args
     + finally would be great to provide a cache example, with varnish?
 
-- remove all async cache stuff
+- Add in doc, why did I build isomor
 
 - give more info about how it work
 
 - we could put in travis npx isomor...
-
-- clarify:
-    - react getting start after: Ok, now we have everything, normally we should now be able to transpile and start
-
-- start to build some pkg...
 
 - update vscode ext
     -> vscode ext should find the isomor-transpiler module

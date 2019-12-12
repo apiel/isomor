@@ -1,5 +1,12 @@
 ### ToDo
 
+- use GET method when possible
+    + done. server endpoint accept any method but need to update APIdoc
+        -> getApiDoc, just need to return GET is no args
+    + done. in client, all query are abstracted by `isomorRemote`
+        -> just need to use `axios.get` if no args
+    + finally would be great to provide a cache example, with varnish?
+
 - remove all async cache stuff
 
 - give more info about how it work

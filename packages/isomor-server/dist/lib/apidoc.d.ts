@@ -1,5 +1,5 @@
 import { Entrypoint } from '.';
-export declare function getApiDoc(endpoints: Entrypoint[]): Promise<{
+export declare function getApiDoc(endpoints: Entrypoint[]): {
     swagger: string;
     info: {
         title: string;
@@ -8,4 +8,4 @@ export declare function getApiDoc(endpoints: Entrypoint[]): Promise<{
     paths: {};
     definitions: {};
     consumes: string[];
-}>;
+};

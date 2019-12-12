@@ -41,7 +41,7 @@ async function start() {
     const endpoints = await useIsomor(app, distServerFolder, serverFolder, jsonSchemaFolder, noDecorator);
     info(`Created endpoints:`, endpoints.map(({ path }) => path));
 
-    app.use(API_DOCS, serve, setup(await getApiDoc(endpoints)));
+    app.use(API_DOCS, serve, setup(getApiDoc(endpoints)));
 
     if (staticFolder) {
         info('Add static folder', staticFolder);

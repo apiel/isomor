@@ -1,6 +1,6 @@
 import { Entrypoint } from '.';
 
-export async function getApiDoc(
+export function getApiDoc(
     endpoints: Entrypoint[],
 ) {
     const paths = {};
@@ -10,47 +10,13 @@ export async function getApiDoc(
         let $ref: string;
         let $schema: string;
         if (validationSchema && validationSchema.schema) {
-            $ref =  validationSchema.schema.$ref;
-            $schema =  validationSchema.schema.$schema;
+            $ref = validationSchema.schema.$ref;
+            $schema = validationSchema.schema.$schema;
             definitions = { ...definitions, ...validationSchema.schema.definitions };
         }
         paths[path] = {
-            post: {
-                operationId: `${file}-${path}`,
-                summary: file,
-                tags: [file],
-                produces: [
-                    'application/json',
-                ],
-                parameters: [
-                    {
-                        name: 'args',
-                        in: 'body',
-                        description: 'Function arguments',
-                        required: true,
-                        schema: {
-                            type: 'object',
-                            required: [
-                                'args',
-                            ],
-                            properties: {
-                                args: $ref ? { $ref, $schema } : {
-                                    type: 'array',
-                                    example: [],
-                                },
-                            },
-                        },
-                    },
-                ],
-                responses: {
-                    200: {
-                        description: '200 response',
-                        examples: {
-                            'application/json': '{}',
-                        },
-                    },
-                },
-            },
+            post: { ...getEntrypointDoc(file, path), ...getParametersDoc($ref, $schema) },
+            get: getEntrypointDoc(file, path),
         };
     });
     return {
@@ -66,3 +32,49 @@ export async function getApiDoc(
         ],
     };
 }
+
+const getParametersDoc = (
+    $ref: string,
+    $schema: string,
+) => ({
+    parameters: [
+        {
+            name: 'args',
+            in: 'body',
+            description: 'Function arguments',
+            required: true,
+            schema: {
+                type: 'object',
+                required: [
+                    'args',
+                ],
+                properties: {
+                    args: $ref ? { $ref, $schema } : {
+                        type: 'array',
+                        example: [],
+                    },
+                },
+            },
+        },
+    ],
+});
+
+const getEntrypointDoc = (
+    file: string,
+    path: string,
+) => ({
+    operationId: `${file}-${path}`,
+    summary: file,
+    tags: [file],
+    produces: [
+        'application/json',
+    ],
+    responses: {
+        200: {
+            description: '200 response',
+            examples: {
+                'application/json': '{}',
+            },
+        },
+    },
+});

@@ -4,7 +4,7 @@
  * dont like it!
  */
 
-import axios from 'axios';
+import axios, { Method } from 'axios';
 
 const urlPrefix = '/isomor'; // http://127.0.0.1:3000/
 
@@ -25,11 +25,16 @@ export async function isomorRemote(
     path: string,
     pkgname: string,
     funcName: string,
-    args: any,
+    args: [],
     classname?: string,
 ): Promise<any> {
     const url = getUrl(path, pkgname, funcName, classname);
-    const { data: { result } } = await axios.post(url, { args });
+    const { data: { result } } = await axios.request({
+        url,
+        ...(args.length
+            ? { method: 'POST', data: { args } }
+            : { method: 'GET' }),
+    });
     return result;
 }
 

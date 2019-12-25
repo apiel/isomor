@@ -1,6 +1,6 @@
 {
     "name": "isomor",
-    "version": "1.9.0",
+    "version": "1.10.1",
     "author": "Alexandre Piel <alexandre.piel@gmail.com>",
     "license": "MIT",
     "main": "dist/lib/index.js",
@@ -36,8 +36,8 @@
         "axios": "^0.19.0",
         "chalk": "^3.0.0",
         "inquirer": "^7.0.0",
-        "isomor-server": "^1.9.0",
-        "isomor-transpiler": "^1.9.0",
+        "isomor-server": "^1.10.1",
+        "isomor-transpiler": "^1.10.1",
         "typescript": "^3.7.2"
     },
     "devDependencies": {
@@ -47,5 +47,5 @@
         "ts-node": "^8.5.2",
         "tslint": "^5.20.1"
     },
-    "gitHead": "a0f5a7c623c8381c8e30d53ce52b2d9967f2e5bd"
+    "gitHead": "8e44701737995ea3b1c6b3000d57533e77d05483"
 }

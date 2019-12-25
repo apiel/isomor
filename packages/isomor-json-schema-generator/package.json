@@ -1,6 +1,6 @@
 {
     "name": "isomor-json-schema-generator",
-    "version": "1.4.0",
+    "version": "1.10.1",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "author": "Alexandre Piel <alexandre.piel@gmail.com>",
@@ -75,5 +75,5 @@
         "collectCoverage": false,
         "testEnvironment": "node"
     },
-    "gitHead": "d367874c51a8e76e761660d2e5eefdce5f5d9373"
+    "gitHead": "8e44701737995ea3b1c6b3000d57533e77d05483"
 }

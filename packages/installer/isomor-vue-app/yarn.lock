@@ -56,9 +56,9 @@
   version "12.0.0"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-12.0.0.tgz#d11813b9c0ff8aaca29f04cbc12817f4c7d656e5"
 
-"@types/node@^12.12.12":
-  version "12.12.12"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.12.12.tgz#529bc3e73dbb35dd9e90b0a1c83606a9d3264bdb"
+"@types/node@^13.1.1":
+  version "13.1.1"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-13.1.1.tgz#6d11a8c2d58405b3db9388ab740106cbfa64c3c9"
 
 "@types/rimraf@^2.0.3":
   version "2.0.3"
@@ -240,9 +240,9 @@ inherits@2:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.3.tgz#633c2c83e3da42a502f52466022480f4208261de"
 
-isomor-core@^1.11.0:
-  version "1.11.0"
-  resolved "https://registry.yarnpkg.com/isomor-core/-/isomor-core-1.11.0.tgz#383c69ed949aef1acd1d133198586d8eacf01adb"
+isomor-core@^1.12.0:
+  version "1.12.0"
+  resolved "https://registry.yarnpkg.com/isomor-core/-/isomor-core-1.12.0.tgz#624a6d294b0ac68d21de37c5c15f783c0706a70d"
   dependencies:
     dotenv "^8.2.0"
     find-up "^4.1.0"
@@ -391,9 +391,9 @@ supports-color@^7.1.0:
   dependencies:
     has-flag "^4.0.0"
 
-ts-node@^8.5.2:
-  version "8.5.2"
-  resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-8.5.2.tgz#434f6c893bafe501a30b32ac94ee36809ba2adce"
+ts-node@^8.5.4:
+  version "8.5.4"
+  resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-8.5.4.tgz#a152add11fa19c221d0b48962c210cf467262ab2"
   dependencies:
     arg "^4.1.0"
     diff "^4.0.1"
@@ -436,6 +436,10 @@ typescript@^3.4.1:
 typescript@^3.7.2:
   version "3.7.2"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.7.2.tgz#27e489b95fa5909445e9fef5ee48d81697ad18fb"
+
+typescript@^3.7.4:
+  version "3.7.4"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.7.4.tgz#1743a5ec5fef6a1fa9f3e4708e33c81c73876c19"
 
 universalify@^0.1.0:
   version "0.1.2"

@@ -35,14 +35,14 @@
         "logol": "^0.0.3",
         "minimist": "^1.2.0",
         "please-upgrade-node": "^3.2.0",
-        "ts-node": "^8.5.2",
-        "typescript": "^3.7.2"
+        "ts-node": "^8.5.4",
+        "typescript": "^3.7.4"
     },
     "devDependencies": {
         "@types/chalk": "^2.2.0",
         "@types/fs-extra": "^8.0.1",
         "@types/minimist": "^1.2.0",
-        "@types/node": "^12.12.12",
+        "@types/node": "^13.1.1",
         "@types/rimraf": "^2.0.3",
         "rimraf": "^3.0.0",
         "tslint": "^5.20.1"

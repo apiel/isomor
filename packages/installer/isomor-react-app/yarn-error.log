@@ -15,7 +15,7 @@ Platform:
 
 npm manifest: 
   {
-      "name": "isomor-vue-app",
+      "name": "isomor-react-app",
       "version": "1.12.0",
       "main": "dist/index.js",
       "types": "dist/index.d.ts",
@@ -26,19 +26,19 @@ npm manifest:
           "type": "git",
           "url": "https://github.com/apiel/isomor"
       },
-      "keywords": [
-          "isomorphic",
-          "typescript",
-          "vue",
-          "server"
-      ],
       "engines": {
           "node": ">=11"
       },
+      "keywords": [
+          "isomorphic",
+          "typescript",
+          "react",
+          "server"
+      ],
       "scripts": {
           "test-example": "rm -rf my-app && yarn start my-app && cd my-app && yarn dev",
-          "test-in-docker": "docker build . -t test-isomor-vue-app && docker rmi test-isomor-vue-app",
-          "prepublishOnly": "cp ../../../Readme.sub.md ./README.md && cp ../../example/vue/tsconfig.server.json . && cp ../../example/vue/package.json ./package-copy.json && yarn build",
+          "test-in-docker": "docker build . -t test-isomor-react-app && docker rmi test-isomor-react-app",
+          "prepublishOnly": "cp ../../../Readme.sub.md ./README.md && cp ../../example/react/tsconfig.server.json . && cp ../../example/react/package.json ./package-copy.json && yarn build",
           "start": "ts-node lib/index.ts",
           "prebuild": "rm -rf dist/",
           "build": "tsc -p tsconfig.json && chmod +x dist/index.js",
@@ -522,4 +522,4 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/yn/-/yn-3.1.0.tgz#fcbe2db63610361afcc5eb9e0ac91e976d046114"
 
 Trace: 
-  Error: ENOENT: no such file or directory, copyfile '/home/alex/.cache/yarn/v1/npm-glob-7.1.6-141f33b81a7c2492e125594307480c46679278a6/LICENSE' -> '/home/alex/dev/node/pkg/isomor/packages/installer/isomor-vue-app/node_modules/isomor-core/node_modules/glob/LICENSE'
+  Error: ENOENT: no such file or directory, copyfile '/home/alex/.cache/yarn/v1/npm-glob-7.1.6-141f33b81a7c2492e125594307480c46679278a6/README.md' -> '/home/alex/dev/node/pkg/isomor/packages/installer/isomor-react-app/node_modules/isomor-core/node_modules/glob/README.md'

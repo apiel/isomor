@@ -10,8 +10,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const pkg = require('../package.json');
-require('please-upgrade-node')(pkg, {
+const packageJson = require('../package.json');
+require('please-upgrade-node')(packageJson, {
     message: (v) => `
     ┌────────────────────────────────────────────────────────┐
     │  isomor-server requires at least version ${v} of Node.   │
@@ -25,6 +25,7 @@ const path_1 = require("path");
 const child_process_1 = require("child_process");
 const chalk = require("chalk");
 const minimist = require("minimist");
+const isomor_core_1 = require("isomor-core");
 function start({ srcFolder, distAppFolder, serverFolder }) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -106,9 +107,5 @@ function shell(command, args) {
         cmd.on('close', resolve);
     });
 }
-start({
-    srcFolder: process.env.SRC_FOLDER || './src-isomor',
-    distAppFolder: process.env.DIST_APP_FOLDER || './src',
-    serverFolder: process.env.SERVER_FOLDER || '/server',
-});
+start(isomor_core_1.getOptions());
 //# sourceMappingURL=index.js.map

@@ -10,6 +10,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const pkg = require('../package.json');
+require('please-upgrade-node')(pkg, {
+    message: (v) => `
+    ┌────────────────────────────────────────────────────────┐
+    │  isomor-server requires at least version ${v} of Node.   │
+    │                     Please upgrade.                    │
+    └────────────────────────────────────────────────────────┘
+    `,
+});
 const logol_1 = require("logol");
 const fs_extra_1 = require("fs-extra");
 const path_1 = require("path");
@@ -95,7 +104,7 @@ function shell(command, args) {
             process.stdin.setRawMode(true);
         }
         process.stdin.resume();
-        process.stdin.on('data', (key: any) => {
+        process.stdin.on('data', (key) => {
             if (key === '\u0003') {
                 process.exit();
             }

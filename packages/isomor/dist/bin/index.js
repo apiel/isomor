@@ -69,7 +69,7 @@ function shell(command, args) {
         process.stdin.setRawMode(true);
         process.stdin.resume();
         process.stdin.on('data', (key) => {
-            if (key === '\u0003': any) {
+            if (key === '\u0003') {
                 process.exit();
             }
             if (cmd) {

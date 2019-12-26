@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-const pkg = require('../package.json'); // tslint:disable-line
-require('please-upgrade-node')(pkg, {  // tslint:disable-line
+const packageJson = require('../package.json'); // tslint:disable-line
+require('please-upgrade-node')(packageJson, {  // tslint:disable-line
     message: (v: string) => `
     ┌────────────────────────────────────────────────────────┐
     │  isomor-server requires at least version ${v} of Node.   │
@@ -24,6 +24,7 @@ import { join } from 'path';
 import { spawn } from 'child_process';
 import * as chalk from 'chalk';
 import * as minimist from 'minimist';
+import { getOptions } from 'isomor-core';
 
 interface Options {
     srcFolder: string;
@@ -115,8 +116,4 @@ function shell(command: string, args?: ReadonlyArray<string>) {
     });
 }
 
-start({
-    srcFolder: process.env.SRC_FOLDER || './src-isomor',
-    distAppFolder: process.env.DIST_APP_FOLDER || './src',
-    serverFolder: process.env.SERVER_FOLDER || '/server',
-});
+start(getOptions());

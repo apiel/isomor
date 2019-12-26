@@ -1,6 +1,6 @@
 {
   "name": "isomor-example-ng-nest",
-  "version": "1.10.0",
+  "version": "1.11.0",
   "scripts": {
     "isomor:build": "isomor-transpiler",
     "isomor:build:dev": "WATCH=true isomor-transpiler",
@@ -31,7 +31,7 @@
     "@nestjs/common": "^6.2.3",
     "@nestjs/core": "^6.2.3",
     "core-js": "^3.1.0",
-    "isomor": "^1.10.0",
+    "isomor": "^1.11.0",
     "rxjs": "~6.5.2",
     "tslib": "^1.9.0",
     "zone.js": "~0.9.1"
@@ -45,8 +45,8 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^12.0.2",
     "codelyzer": "~5.0.1",
-    "isomor-server": "^1.10.0",
-    "isomor-transpiler": "^1.10.0",
+    "isomor-server": "^1.11.0",
+    "isomor-transpiler": "^1.11.0",
     "jasmine-core": "~3.4.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~4.1.0",

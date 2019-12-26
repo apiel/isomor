@@ -33,26 +33,26 @@ export function getOptions(): Options {
     if (!optionsCache) {
         config({ path: 'isomor.env' }); // should we find-up?
 
-        const srcFolder = process.env.SRC_FOLDER || './src-isomor';
+        const srcFolder = process.env.ISOMOR_SRC_FOLDER || './src-isomor';
         const pkgName = getPkgName(srcFolder);
 
         optionsCache = {
             pkgName,
-            distAppFolder: process.env.DIST_APP_FOLDER || './src',
-            serverFolder: process.env.SERVER_FOLDER || '/server',
-            jsonSchemaFolder: process.env.JSON_SCHEMA_FOLDER || './json-schema',
+            distAppFolder: process.env.ISOMOR_DIST_APP_FOLDER || './src',
+            serverFolder: process.env.ISOMOR_SERVER_FOLDER || '/server',
+            jsonSchemaFolder: process.env.ISOMOR_JSON_SCHEMA_FOLDER || './json-schema',
             // transpiler
             srcFolder,
-            noValidation: process.env.NO_VALIDATION === 'true',
-            withTypes: process.env.NO_TYPES !== 'true',
-            watchMode: process.env.WATCH === 'true',
-            noServerImport: process.env.NO_SERVER_IMPORT === 'true',
-            noDecorator: process.env.NO_DECORATOR === 'true',
+            noValidation: process.env.ISOMOR_NO_VALIDATION === 'true',
+            withTypes: process.env.ISOMOR_NO_TYPES !== 'true',
+            watchMode: process.env.ISOMOR_WATCH === 'true',
+            noServerImport: process.env.ISOMOR_NO_SERVER_IMPORT === 'true',
+            noDecorator: process.env.ISOMOR_NO_DECORATOR === 'true',
             // server
-            distServerFolder: process.env.DIST_SERVER_FOLDER || './dist-server',
-            port: process.env.PORT ? parseInt(process.env.PORT, 10) : 3005,
-            staticFolder: process.env.STATIC_FOLDER || null,
-            startupFile: process.env.STARTUP_FILE || join('startup', 'index.js'),
+            distServerFolder: process.env.ISOMOR_DIST_SERVER_FOLDER || './dist-server',
+            port: process.env.ISOMOR_PORT ? parseInt(process.env.ISOMOR_PORT, 10) : 3005,
+            staticFolder: process.env.ISOMOR_STATIC_FOLDER || null,
+            startupFile: process.env.ISOMOR_STARTUP_FILE || join('startup', 'index.js'),
         };
     }
     return optionsCache;

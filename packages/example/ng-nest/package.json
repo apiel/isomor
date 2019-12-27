@@ -3,11 +3,11 @@
   "version": "1.12.1",
   "scripts": {
     "isomor:build": "isomor-transpiler",
-    "isomor:build:dev": "WATCH=true isomor-transpiler",
+    "isomor:build:dev": "ISOMOR_WATCH=true isomor-transpiler",
     "serv:build": "rimraf ./dist-server && tsc -p tsconfig.server.json",
     "serv": "rimraf ./dist-server && tsc -p tsconfig.server.json && isomor-server",
     "serv:dev": "nodemon --watch 'src-isomor/**/server/**/*' -e ts,tsx --exec 'yarn serv'",
-    "serv:prod": "STATIC_FOLDER=./build yarn serv",
+    "serv:prod": "ISOMOR_STATIC_FOLDER=./build yarn serv",
     "prod": "yarn isomor:build && yarn build && yarn serv:prod",
     "dev": "run-screen 'yarn isomor:build:dev' 'yarn serv:dev' 'yarn start'",
     "code": "run-screen 'yarn isomor:build' 'yarn serv:dev' 'yarn start'",

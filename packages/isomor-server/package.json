@@ -15,7 +15,7 @@
     },
     "scripts": {
         "prepublishOnly": "cp ../../Readme.sub.md ./README.md && yarn build",
-        "start-example": "DIST_SERVER_FOLDER=../example/react/dist-server yarn start",
+        "start-example": "ISOMOR_DIST_SERVER_FOLDER=../example/react/dist-server yarn start",
         "start": "ts-node src/bin/server.ts",
         "prebuild": "rm -rf dist/",
         "build": "tsc -p tsconfig.json && chmod +x dist/bin/server.js",

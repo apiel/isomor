@@ -43,8 +43,8 @@ script:
   # - yarn test # instead to have this /test/react, we could inject e2e test in the react version of isomor-react-app
 
   - cd ${BASE}/example/react
-  # - ISOMOR_DIST_SERVER_FOLDER=${BASE}/example/react/dist-server yarn demo 2> yarn.prod.log &
-  - cd ${BASE}/example/react && yarn demo 2> yarn.prod.log &
+  - ISOMOR_DIST_SERVER_FOLDER=${BASE}/example/react/dist-server yarn demo 2> yarn.prod.log &
+  # - cd ${BASE}/example/react && yarn demo 2> yarn.prod.log &
   - sleep 30 # should use wait-on lib instead to sleep
   - cat yarn.prod.log
   - curl http://127.0.0.1:3005/
@@ -65,8 +65,8 @@ script:
 ##
 
   - cd ${BASE}/example/vue
-  # - ISOMOR_DIST_SERVER_FOLDER=${BASE}/example/vue/dist-server yarn demo 2> yarn.prod.log &
-  - cd ${BASE}/example/vue && yarn demo 2> yarn.prod.log &
+  - ISOMOR_DIST_SERVER_FOLDER=${BASE}/example/vue/dist-server yarn demo 2> yarn.prod.log &
+  # - cd ${BASE}/example/vue && yarn demo 2> yarn.prod.log &
   - sleep 30 # should use wait-on lib instead to sleep
   - cat yarn.prod.log
   - curl http://127.0.0.1:3005/

@@ -70,7 +70,7 @@ function getClassEntrypoints(app, file, pkgName, classname, jsonSchemaFolder, no
 }
 exports.getClassEntrypoints = getClassEntrypoints;
 function getFunctions(distServerFolder, file) {
-    const filepath = require.resolve(path_1.join(process.cwd(), distServerFolder, file));
+    const filepath = require.resolve(path_1.join(distServerFolder, file), { paths: [process.cwd()] });
     delete require.cache[filepath];
     const functions = require(filepath);
     return functions;

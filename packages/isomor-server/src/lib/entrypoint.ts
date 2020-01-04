@@ -104,7 +104,9 @@ export function getClassEntrypoints(
 
 export function getFunctions(distServerFolder: string, file: string) {
     const filepath = require.resolve(
-        join(process.cwd(), distServerFolder, file),
+        // join(process.cwd(), distServerFolder, file),
+        join(distServerFolder, file),
+        { paths: [process.cwd()] },
     );
     delete require.cache[filepath];
     const functions = require(filepath);

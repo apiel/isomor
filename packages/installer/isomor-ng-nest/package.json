@@ -1,6 +1,6 @@
 {
     "name": "isomor-ng-nest",
-    "version": "1.12.2",
+    "version": "1.12.3",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "author": "Alexandre Piel <alexandre.piel@gmail.com>",

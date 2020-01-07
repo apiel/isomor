@@ -69,8 +69,16 @@ function getClassEntrypoints(app, file, pkgName, classname, jsonSchemaFolder, no
     return [];
 }
 exports.getClassEntrypoints = getClassEntrypoints;
+function getFilePath(distServerFolder, file) {
+    try {
+        return require.resolve(path_1.join(distServerFolder, file), { paths: [process.cwd()] });
+    }
+    catch (error) {
+        return require.resolve(path_1.join(process.cwd(), distServerFolder, file));
+    }
+}
 function getFunctions(distServerFolder, file) {
-    const filepath = require.resolve(path_1.join(distServerFolder, file), { paths: [process.cwd()] });
+    const filepath = getFilePath(distServerFolder, file);
     delete require.cache[filepath];
     const functions = require(filepath);
     return functions;

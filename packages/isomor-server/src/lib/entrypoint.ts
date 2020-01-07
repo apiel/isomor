@@ -47,7 +47,7 @@ function validateArgs(
         ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-06.json'));
         const valid = ajv.validate(validationSchema.schema, args);
         if (!valid) {
-            throw(new Error(`Invalid argument format: ${ajv.errorsText()}.`));
+            throw (new Error(`Invalid argument format: ${ajv.errorsText()}.`));
         }
     }
 }
@@ -69,7 +69,7 @@ export function getEntrypoint(
         next: express.NextFunction,
     ) => {
         try {
-            const ctx: Context = {req, res};
+            const ctx: Context = { req, res };
             const args = (req.body && req.body.args) || [];
             validateArgs(validationSchema, args);
             const result = await fn.call(ctx, ...args, req, res);
@@ -102,12 +102,21 @@ export function getClassEntrypoints(
     return [];
 }
 
+function getFilePath(distServerFolder: string, file: string) {
+    try {
+        return require.resolve(
+            join(distServerFolder, file),
+            { paths: [process.cwd()] },
+        );
+    } catch (error) {
+        return require.resolve(
+            join(process.cwd(), distServerFolder, file),
+        );
+    }
+}
+
 export function getFunctions(distServerFolder: string, file: string) {
-    const filepath = require.resolve(
-        // join(process.cwd(), distServerFolder, file),
-        join(distServerFolder, file),
-        { paths: [process.cwd()] },
-    );
+    const filepath = getFilePath(distServerFolder, file);
     delete require.cache[filepath];
     const functions = require(filepath);
 

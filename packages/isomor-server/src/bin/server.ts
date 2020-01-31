@@ -11,6 +11,7 @@ require('please-upgrade-node')(pkg, {  // tslint:disable-line
 });
 
 import { info, error, success, log } from 'logol';
+import * as logger from 'logol';
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import * as cookieParser from 'cookie-parser';
@@ -18,7 +19,7 @@ import { setup, serve } from 'swagger-ui-express';
 import * as morgan from 'morgan';
 import { getOptions } from 'isomor-core';
 
-import { useIsomor, startup, getApiDoc } from '../lib';
+import { useIsomor, startup, getApiDoc, useIsomorWs } from '../lib';
 import { join } from 'path';
 
 const API_DOCS = '/api-docs';
@@ -38,10 +39,10 @@ async function start() {
 
     await startup(app, distServerFolder, serverFolder, startupFile, info);
 
-    const endpoints = await useIsomor(app, distServerFolder, serverFolder, jsonSchemaFolder, noDecorator);
-    info(`Created endpoints:`, endpoints.map(({ path }) => path));
+    const routes = await useIsomor(app, distServerFolder, serverFolder, jsonSchemaFolder, noDecorator);
+    info(`Created endpoints:`, routes.map(({ path }) => path));
 
-    app.use(API_DOCS, serve, setup(getApiDoc(endpoints)));
+    app.use(API_DOCS, serve, setup(getApiDoc(routes)));
 
     if (staticFolder) {
         info('Add static folder', staticFolder);
@@ -63,10 +64,12 @@ async function start() {
         res.status(500).send(err.message);
     });
 
-    app.listen(port, () => {
+    const server = app.listen(port, () => {
         success(`Server listening on port ${port}!`);
         info(`Find API documentation at http://127.0.0.1:${port}${API_DOCS}`);
     });
+
+    useIsomorWs(routes, server, logger);
 }
 
 start();

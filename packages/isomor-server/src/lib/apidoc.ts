@@ -1,7 +1,7 @@
-import { Entrypoint } from '.';
+import { Route } from '.';
 
 export function getApiDoc(
-    endpoints: Entrypoint[],
+    endpoints: Route[],
 ) {
     const paths = {};
     let definitions = {};

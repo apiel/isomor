@@ -1,5 +1,8 @@
 ### ToDo
 
+- implement websocket
+    https://github.com/websockets/ws/issues/473
+
 - use GET method when possible
     + done. server endpoint accept any method but need to update APIdoc
         -> getApiDoc, just need to return GET is no args

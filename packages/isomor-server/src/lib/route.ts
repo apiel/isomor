@@ -4,22 +4,17 @@ import { isIsomorClass, getUrl } from 'isomor';
 import { join } from 'path';
 import { isFunction } from 'util';
 import { pathExistsSync, readJSONSync } from 'fs-extra';
-import * as Ajv from 'ajv';
 
 import { getInstance } from './startup';
 
-export interface Context {
-    req: express.Request;
-    res: express.Response;
-}
-
-export interface Entrypoint {
+export interface Route {
     path: string;
     file: string;
     validationSchema: ValidationSchema;
+    fn: any;
 }
 
-function getEntrypointPath(file: string, pkgName: string, name: string, classname?: string) {
+function getRoutePath(file: string, pkgName: string, name: string, classname?: string) {
     return getUrl(getPathForUrl(file), pkgName, name, classname);
 }
 
@@ -38,66 +33,35 @@ function loadValidation( // might want to switch to async
     }
 }
 
-function validateArgs(
-    validationSchema: ValidationSchema,
-    args: any[],
-) {
-    if (validationSchema) {
-        const ajv = new Ajv();
-        ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-06.json'));
-        const valid = ajv.validate(validationSchema.schema, args);
-        if (!valid) {
-            throw (new Error(`Invalid argument format: ${ajv.errorsText()}.`));
-        }
-    }
-}
-
-export function getEntrypoint(
-    app: express.Express,
+export function getRoute(
     file: string,
     pkgName: string,
     fn: any,
     name: string,
     jsonSchemaFolder: string,
     classname?: string,
-): Entrypoint {
-    const path = getEntrypointPath(file, pkgName, name, classname);
+): Route {
+    const path = getRoutePath(file, pkgName, name, classname);
     const validationSchema = loadValidation(getPathForUrl(file), name, jsonSchemaFolder, classname);
-    app.use(path, async (
-        req: express.Request,
-        res: express.Response,
-        next: express.NextFunction,
-    ) => {
-        try {
-            const ctx: Context = { req, res };
-            const args = (req.body && req.body.args) || [];
-            validateArgs(validationSchema, args);
-            const result = await fn.call(ctx, ...args, req, res);
-            return res.send({ result });
-        } catch (error) {
-            next(error);
-        }
-    });
-    return { path, file, validationSchema };
+    return { path, file, validationSchema, fn };
 }
 
 // should getInstance be async?
 // normally class instantiation should be sync.
-export function getClassEntrypoints(
-    app: express.Express,
+export function getClassRoutes(
     file: string,
     pkgName: string,
     classname: string,
     jsonSchemaFolder: string,
     noDecorator: boolean,
-): Entrypoint[] {
+): Route[] {
     if (!noDecorator && !isIsomorClass(classname)) {
         return [];
     } else if (getInstance()) {
         const obj = getInstance()(classname);
         return Object.getOwnPropertyNames(Object.getPrototypeOf(obj))
             .filter(name => isFunction(obj[name]) && name !== 'constructor')
-            .map(name => getEntrypoint(app, file, pkgName, obj[name].bind(obj), name, jsonSchemaFolder, classname));
+            .map(name => getRoute(file, pkgName, obj[name].bind(obj), name, jsonSchemaFolder, classname));
     }
     return [];
 }

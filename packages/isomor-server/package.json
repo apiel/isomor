@@ -24,6 +24,7 @@
     "dependencies": {
         "@types/fs-extra": "^8.0.1",
         "@types/morgan": "^1.7.37",
+        "@types/ws": "^7.2.1",
         "ajv": "^6.10.2",
         "body-parser": "^1.18.3",
         "cookie-parser": "^1.4.4",
@@ -35,7 +36,8 @@
         "morgan": "^1.9.1",
         "please-upgrade-node": "^3.2.0",
         "swagger-ui-express": "^4.1.2",
-        "typescript": "^3.7.4"
+        "typescript": "^3.7.4",
+        "ws": "^7.2.1"
     },
     "devDependencies": {
         "@types/ajv": "^1.0.0",

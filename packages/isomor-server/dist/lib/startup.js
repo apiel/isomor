@@ -12,13 +12,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const path_1 = require("path");
 const util_1 = require("util");
 const fs_1 = require("fs");
+const utils_1 = require("./utils");
 let startupImport;
 exports.getInstance = () => startupImport && startupImport.getInstance;
 function loadStartupImport(distServerFolder, serverFolder, startupFile, info) {
     return __awaiter(this, void 0, void 0, function* () {
         const path = path_1.join(distServerFolder, serverFolder, startupFile);
         if (yield util_1.promisify(fs_1.exists)(path)) {
-            const filepath = require.resolve(path, { paths: [process.cwd()] });
+            const filepath = utils_1.getFullPath(path);
             startupImport = require(filepath);
             if (info) {
                 info('Startup file loaded.');

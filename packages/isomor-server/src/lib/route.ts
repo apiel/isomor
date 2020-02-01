@@ -11,6 +11,7 @@ import { isFunction } from 'util';
 import { pathExistsSync, readJSONSync } from 'fs-extra';
 
 import { getInstance } from './startup';
+import { getFullPath } from './utils';
 
 export interface Route {
     path: string;
@@ -109,21 +110,8 @@ export function getClassRoutes(
     return [];
 }
 
-function getFilePath(distServerFolder: string, file: string) {
-    try {
-        return require.resolve(
-            join(distServerFolder, file),
-            { paths: [process.cwd()] },
-        );
-    } catch (error) {
-        return require.resolve(
-            join(process.cwd(), distServerFolder, file),
-        );
-    }
-}
-
 export function getFunctions(distServerFolder: string, file: string) {
-    const filepath = getFilePath(distServerFolder, file);
+    const filepath = getFullPath(join(distServerFolder, file));
     delete require.cache[filepath];
     const functions = require(filepath);
 

@@ -1,4 +1,5 @@
 import { ValidationSchema } from 'isomor-core';
+import { join } from 'path';
 import * as Ajv from 'ajv';
 
 export function validateArgs(
@@ -12,5 +13,15 @@ export function validateArgs(
         if (!valid) {
             throw (new Error(`Invalid argument format: ${ajv.errorsText()}.`));
         }
+    }
+}
+
+export function getFullPath(file: string) {
+    try {
+        return require.resolve(file, { paths: [process.cwd()] });
+    } catch (error) {
+        return require.resolve(
+            join(process.cwd(), file),
+        );
     }
 }

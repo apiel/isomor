@@ -2,6 +2,7 @@ import * as express from 'express';
 import { join } from 'path';
 import { promisify } from 'util';
 import { exists } from 'fs';
+import { getFullPath } from './utils';
 
 let startupImport: any;
 
@@ -15,7 +16,7 @@ export async function loadStartupImport(
 ) {
     const path = join(distServerFolder, serverFolder, startupFile);
     if (await promisify(exists)(path)) {
-        const filepath = require.resolve(path, { paths: [process.cwd()] });
+        const filepath = getFullPath(path);
         startupImport = require(filepath);
         if (info) {
             info('Startup file loaded.');

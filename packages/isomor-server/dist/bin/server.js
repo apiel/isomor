@@ -20,6 +20,7 @@ require('please-upgrade-node')(pkg, {
     `,
 });
 const logol_1 = require("logol");
+const logger = require("logol");
 const express = require("express");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
@@ -40,9 +41,10 @@ function start() {
             stream: { write: (str) => logol_1.log(str.trim()) },
         }));
         yield lib_1.startup(app, distServerFolder, serverFolder, startupFile, logol_1.info);
-        const endpoints = yield lib_1.useIsomor(app, distServerFolder, serverFolder, jsonSchemaFolder, noDecorator);
-        logol_1.info(`Created endpoints:`, endpoints.map(({ path }) => path));
-        app.use(API_DOCS, swagger_ui_express_1.serve, swagger_ui_express_1.setup(lib_1.getApiDoc(endpoints)));
+        const routes = yield lib_1.getIsomorRoutes(serverFolder, distServerFolder, jsonSchemaFolder, noDecorator);
+        lib_1.useIsomorHttp(app, routes);
+        logol_1.info(`Created endpoints:`, routes.map(({ path }) => path));
+        app.use(API_DOCS, swagger_ui_express_1.serve, swagger_ui_express_1.setup(lib_1.getApiDoc(routes)));
         if (staticFolder) {
             logol_1.info('Add static folder', staticFolder);
             app.use(express.static(staticFolder));
@@ -54,10 +56,11 @@ function start() {
             logol_1.error(err);
             res.status(500).send(err.message);
         });
-        app.listen(port, () => {
+        const server = app.listen(port, () => {
             logol_1.success(`Server listening on port ${port}!`);
             logol_1.info(`Find API documentation at http://127.0.0.1:${port}${API_DOCS}`);
         });
+        lib_1.useIsomorWs(routes, server, logger);
     });
 }
 start();

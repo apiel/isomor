@@ -54,7 +54,7 @@ async function apiAction(
     logger?: Logger,
 ) {
     const { id, path, args } = data;
-    logger?.log(`WS ${path}`);
+    logger?.log(`WS req ${path}`);
     if (routesIndex[path]) {
         const { validationSchema, fn, isClass } = routesIndex[path];
         try {
@@ -64,10 +64,16 @@ async function apiAction(
             const result = isClass
                 ? await fn.call(...args, req, ws, push)
                 : await fn(ctx, ...args);
-            ws.send(JSON.stringify({ action: 'API_RES', id, result }));
+            const msg = JSON.stringify({ action: 'API_RES', id, result });
+            ws.send(msg);
+            logger?.log(`WS 200 ${path}`);
+            // console.log('msg', msg);
         } catch (error) {
             ws.send(JSON.stringify({ action: 'API_ERR', id, error }));
+            logger?.log(`WS 500 ${path}`, error);
         }
+    } else {
+        logger?.log(`WS 404 ${path}`);
     }
 }
 

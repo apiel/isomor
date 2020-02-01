@@ -14,9 +14,34 @@ const isomor_1 = require("isomor");
 const path_1 = require("path");
 const util_1 = require("util");
 const fs_extra_1 = require("fs-extra");
-const Ajv = require("ajv");
 const startup_1 = require("./startup");
-function getEntrypointPath(file, pkgName, name, classname) {
+const utils_1 = require("./utils");
+function getIsomorRoutes(serverFolder, distServerFolder, jsonSchemaFolder, noDecorator) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const pkgName = isomor_core_1.getPkgName(distServerFolder);
+        const fnNames = yield getFunctionNames(serverFolder, distServerFolder);
+        const routes = fnNames.map(({ file, isClass, name, fn }) => isClass
+            ? getClassRoutes(file, pkgName, name, jsonSchemaFolder, noDecorator)
+            : [getRoute(file, pkgName, fn, name, jsonSchemaFolder)]);
+        return routes.flat();
+    });
+}
+exports.getIsomorRoutes = getIsomorRoutes;
+function getFunctionNames(serverFolder, distServerFolder) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const files = yield isomor_core_1.getFiles(distServerFolder, serverFolder);
+        return files.map(file => {
+            const functions = getFunctions(distServerFolder, file);
+            return Object.keys(functions)
+                .filter(name => util_1.isFunction(functions[name]))
+                .map(name => {
+                const isClass = /^\s*class/.test(functions[name].toString());
+                return { file, isClass, name, fn: functions[name] };
+            }).flat();
+        }).flat();
+    });
+}
+function getRoutePath(file, pkgName, name, classname) {
     return isomor_1.getUrl(isomor_core_1.getPathForUrl(file), pkgName, name, classname);
 }
 function loadValidation(path, name, jsonSchemaFolder, classname) {
@@ -28,35 +53,13 @@ function loadValidation(path, name, jsonSchemaFolder, classname) {
         }
     }
 }
-function validateArgs(validationSchema, args) {
-    if (validationSchema) {
-        const ajv = new Ajv();
-        ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-06.json'));
-        const valid = ajv.validate(validationSchema.schema, args);
-        if (!valid) {
-            throw (new Error(`Invalid argument format: ${ajv.errorsText()}.`));
-        }
-    }
-}
-function getEntrypoint(app, file, pkgName, fn, name, jsonSchemaFolder, classname) {
-    const path = getEntrypointPath(file, pkgName, name, classname);
+function getRoute(file, pkgName, fn, name, jsonSchemaFolder, classname) {
+    const path = getRoutePath(file, pkgName, name, classname);
     const validationSchema = loadValidation(isomor_core_1.getPathForUrl(file), name, jsonSchemaFolder, classname);
-    app.use(path, (req, res, next) => __awaiter(this, void 0, void 0, function* () {
-        try {
-            const ctx = { req, res };
-            const args = (req.body && req.body.args) || [];
-            validateArgs(validationSchema, args);
-            const result = yield fn.call(ctx, ...args, req, res);
-            return res.send({ result });
-        }
-        catch (error) {
-            next(error);
-        }
-    }));
-    return { path, file, validationSchema };
+    return { path, file, validationSchema, fn, isClass: !!classname };
 }
-exports.getEntrypoint = getEntrypoint;
-function getClassEntrypoints(app, file, pkgName, classname, jsonSchemaFolder, noDecorator) {
+exports.getRoute = getRoute;
+function getClassRoutes(file, pkgName, classname, jsonSchemaFolder, noDecorator) {
     if (!noDecorator && !isomor_1.isIsomorClass(classname)) {
         return [];
     }
@@ -64,24 +67,16 @@ function getClassEntrypoints(app, file, pkgName, classname, jsonSchemaFolder, no
         const obj = startup_1.getInstance()(classname);
         return Object.getOwnPropertyNames(Object.getPrototypeOf(obj))
             .filter(name => util_1.isFunction(obj[name]) && name !== 'constructor')
-            .map(name => getEntrypoint(app, file, pkgName, obj[name].bind(obj), name, jsonSchemaFolder, classname));
+            .map(name => getRoute(file, pkgName, obj[name].bind(obj), name, jsonSchemaFolder, classname));
     }
     return [];
 }
-exports.getClassEntrypoints = getClassEntrypoints;
-function getFilePath(distServerFolder, file) {
-    try {
-        return require.resolve(path_1.join(distServerFolder, file), { paths: [process.cwd()] });
-    }
-    catch (error) {
-        return require.resolve(path_1.join(process.cwd(), distServerFolder, file));
-    }
-}
+exports.getClassRoutes = getClassRoutes;
 function getFunctions(distServerFolder, file) {
-    const filepath = getFilePath(distServerFolder, file);
+    const filepath = utils_1.getFullPath(path_1.join(distServerFolder, file));
     delete require.cache[filepath];
     const functions = require(filepath);
     return functions;
 }
 exports.getFunctions = getFunctions;
-//# sourceMappingURL=entrypoint.js.map
+//# sourceMappingURL=route.js.map

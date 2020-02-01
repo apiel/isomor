@@ -14,7 +14,7 @@ let ws;
 const reqQueue = {};
 let wsReady = false;
 function openWS() {
-    ws = new WebSocket(`ws://127.0.0.1:3005`);
+    ws = new WebSocket(`ws://127.0.0.1:3005/isomor`);
     ws.onopen = () => {
         wsReady = true;
     };

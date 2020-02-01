@@ -10,7 +10,7 @@ Since the version 2, isomor support WebSocket as transportation protocol. Using 
 
 As for the [HTTP context](Docs/ReqResCtx.md), you can also access the context from the WebSocket containing the incoming request message and the socket instance:
 
-```
+```ts
 export interface WsContext {
     req: IncomingMessage;
     ws: WebSocket;

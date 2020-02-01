@@ -12,6 +12,7 @@ export default function transform(
     body: Statement[],
     srcFilePath: string,
     path: string,
+    wsReg: RegExp | null = null,
     pkgName: string = 'root',
     withTypes: boolean = true,
     noServerImport: boolean = false,
@@ -19,7 +20,7 @@ export default function transform(
 ) {
     let newBody = [getCodeImport()];
     body.forEach((node) => {
-        const newNode = transformNode(node, srcFilePath, path, pkgName, withTypes, noServerImport, noDecorator);
+        const newNode = transformNode(node, srcFilePath, wsReg, path, pkgName, withTypes, noServerImport, noDecorator);
         if (newNode) {
             if (isArray(newNode)) {
                 newBody = [...newBody, ...newNode];

@@ -31,6 +31,7 @@ const withTypes = true;
 const srcFilePath = 'src-isomor/path/to/file';
 const path = 'path-to-file';
 const pkgName = 'root';
+const wsReg = null;
 
 const transformClassFromCode = (
     source: string,
@@ -38,7 +39,7 @@ const transformClassFromCode = (
 ): string => {
     const { program } = parse(source);
     // console.log('JsonAst', JsonAst(program.body[0]));
-    const body = transformClass(program.body[0] as any, srcFilePath, path, pkgName, withTypes, noDecorator);
+    const body = transformClass(program.body[0] as any, srcFilePath, wsReg, path, pkgName, withTypes, noDecorator);
     program.body = isArray(body) ? body : [body];
     // console.log('JsonAst2', JsonAst(program.body[0]));
     const { code } = generate(program as any);
@@ -96,7 +97,7 @@ export class CatsService extends CatsService__deco_export__ {
 }`,
         );
         expect(getCodeMethod).toHaveBeenCalledTimes(1); // called with?
-        expect(getCodeMethod).toHaveBeenCalledWith(path, pkgName, 'findAll', 'CatsService', withTypes);
+        expect(getCodeMethod).toHaveBeenCalledWith(wsReg, path, pkgName, 'findAll', 'CatsService', withTypes);
     });
     // -----------------
     it('should not transform class when no noDecorator but dont provide @isomor', () => {

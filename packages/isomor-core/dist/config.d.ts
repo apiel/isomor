@@ -18,5 +18,8 @@ export interface ServerOptions {
     startupFile: string;
     distServerFolder: string;
 }
-export declare type Options = CommonOptions & TranspilerOptions & ServerOptions;
+export interface WsOptions {
+    wsReg: RegExp | null;
+}
+export declare type Options = CommonOptions & TranspilerOptions & ServerOptions & WsOptions;
 export declare function getOptions(): Options;

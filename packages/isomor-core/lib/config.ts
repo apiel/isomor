@@ -25,7 +25,11 @@ export interface ServerOptions {
     distServerFolder: string;
 }
 
-export type Options = CommonOptions & TranspilerOptions & ServerOptions;
+export interface WsOptions {
+    wsReg: RegExp | null; // RegExp matching the function name to use WebSocket instead of Http
+}
+
+export type Options = CommonOptions & TranspilerOptions & ServerOptions & WsOptions;
 
 let optionsCache: Options;
 
@@ -53,6 +57,8 @@ export function getOptions(): Options {
             port: process.env.ISOMOR_PORT ? parseInt(process.env.ISOMOR_PORT, 10) : 3005,
             staticFolder: process.env.ISOMOR_STATIC_FOLDER || null,
             startupFile: process.env.ISOMOR_STARTUP_FILE || join('startup', 'index.js'),
+            // WsOptions
+            wsReg: process.env.ISOMOR_WS ? new RegExp(process.env.ISOMOR_WS) : null,
         };
     }
     return optionsCache;

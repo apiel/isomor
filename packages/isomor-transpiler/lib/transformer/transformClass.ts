@@ -5,6 +5,7 @@ import { setValidator } from '../validation';
 export function transformClass(
     root: ExportNamedDeclaration,
     srcFilePath: string,
+    wsReg: RegExp | null,
     path: string,
     pkgName: string,
     withTypes: boolean,
@@ -31,7 +32,7 @@ export function transformClass(
                     (root as any).declaration.body.body[index] = getCodeConstructor(withTypes);
                 } else {
                     setValidator((root as any).declaration.body.body[index], srcFilePath, path, name, className);
-                    (root as any).declaration.body.body[index] = getCodeMethod(path, pkgName, name, className, withTypes);
+                    (root as any).declaration.body.body[index] = getCodeMethod(wsReg, path, pkgName, name, className, withTypes);
                 }
             } else if (node.type !== 'ClassProperty') {
                 delete (root as any).declaration.body.body[index];

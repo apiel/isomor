@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const remoteWs_1 = require("./remoteWs");
+const remoteHttp_1 = require("./remoteHttp");
 const urlPrefix = '/isomor';
 function getUrl(path, pkgname, funcName, classname) {
     const url = classname
@@ -9,8 +10,11 @@ function getUrl(path, pkgname, funcName, classname) {
     return url;
 }
 exports.getUrl = getUrl;
-function isomorRemote(path, pkgname, funcName, args, classname) {
-    return remoteWs_1.isomorRemoteWs(path, pkgname, funcName, args, classname);
+function isomorRemote(protocol, path, pkgname, funcName, args, classname) {
+    if (protocol === 'ws') {
+        return remoteWs_1.isomorRemoteWs(path, pkgname, funcName, args, classname);
+    }
+    return remoteHttp_1.isomorRemoteHttp(path, pkgname, funcName, args, classname);
 }
 exports.isomorRemote = isomorRemote;
 function isomorShare(constructor) {

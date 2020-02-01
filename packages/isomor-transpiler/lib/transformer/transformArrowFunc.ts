@@ -5,6 +5,7 @@ import { setValidator } from '../validation';
 export function transformArrowFunc(
     root: VariableDeclaration,
     srcFilePath: string,
+    wsReg: RegExp | null,
     path: string,
     pkgName: string,
     withTypes: boolean,
@@ -17,6 +18,6 @@ export function transformArrowFunc(
     ) {
         const { name } = declaration.id;
         setValidator(declaration.init, srcFilePath, path, name);
-        return getCodeArrowFunc(path, pkgName, name, withTypes);
+        return getCodeArrowFunc(wsReg, path, pkgName, name, withTypes);
     }
 }

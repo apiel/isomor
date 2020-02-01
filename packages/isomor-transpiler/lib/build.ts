@@ -20,9 +20,9 @@ const anymatch = require('anymatch'); // tslint:disable-line
 export default transform;
 
 function getCode(options: Options, srcFilePath: string, path: string, content: string) {
-    const { withTypes, noServerImport, noDecorator, pkgName } = options;
+    const { withTypes, noServerImport, noDecorator, pkgName, wsReg } = options;
     const { program } = parse(content);
-    program.body = transform(program.body, srcFilePath, path, pkgName, withTypes, noServerImport, noDecorator);
+    program.body = transform(program.body, srcFilePath, path, wsReg, pkgName, withTypes, noServerImport, noDecorator);
     const { code } = generate(program as any);
 
     return code;

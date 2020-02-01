@@ -24,6 +24,7 @@ function getOptions() {
             port: process.env.ISOMOR_PORT ? parseInt(process.env.ISOMOR_PORT, 10) : 3005,
             staticFolder: process.env.ISOMOR_STATIC_FOLDER || null,
             startupFile: process.env.ISOMOR_STARTUP_FILE || path_1.join('startup', 'index.js'),
+            wsReg: process.env.ISOMOR_WS ? new RegExp(process.env.ISOMOR_WS) : null,
         };
     }
     return optionsCache;

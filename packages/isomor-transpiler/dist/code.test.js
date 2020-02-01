@@ -3,19 +3,22 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const ast_1 = require("./ast");
 const code_1 = require("./code");
 exports.codeTranspiledFunc = `export function getTime(...args: any) {
-  return isomorRemote("path/to/file", "root", "getTime", args);
+  return isomorRemote("http", "path/to/file", "root", "getTime", args);
+}`;
+exports.codeTranspiledFuncForWs = `export function getTime(...args: any) {
+  return isomorRemote("ws", "path/to/file", "root", "getTime", args);
 }`;
 exports.codeTranspiledFuncNoType = `export function getTime(...args) {
-  return isomorRemote("path/to/file", "root", "getTime", args);
+  return isomorRemote("http", "path/to/file", "root", "getTime", args);
 }`;
 exports.codeTranspiledArrowFunc = `export const getTime = (...args: any) => {
-  return isomorRemote("path/to/file", "root", "getTime", args);
+  return isomorRemote("http", "path/to/file", "root", "getTime", args);
 };`;
 exports.codeTranspiledArrowFuncNoType = `export const getTime = (...args) => {
-  return isomorRemote("path/to/file", "root", "getTime", args);
+  return isomorRemote("http", "path/to/file", "root", "getTime", args);
 };`;
 exports.codeTranspiledClass = `async getTime(...args: any) {
-  return isomorRemote("path/to/file", "root", "getTime", args, "CatsService");
+  return isomorRemote("http", "path/to/file", "root", "getTime", args, "CatsService");
 }`;
 describe('code', () => {
     const path = 'path/to/file';
@@ -23,10 +26,11 @@ describe('code', () => {
     const className = 'CatsService';
     const typeName = 'MyType';
     const pkgName = 'root';
+    const wsReg = null;
     describe('code/getCodeMethod()', () => {
         it('should generate method for isomor', () => {
             const withType = true;
-            const { code } = ast_1.generate(code_1.getCodeMethod(path, pkgName, fnName, className, withType));
+            const { code } = ast_1.generate(code_1.getCodeMethod(wsReg, path, pkgName, fnName, className, withType));
             expect(code).toEqual(exports.codeTranspiledClass);
         });
     });
@@ -54,24 +58,42 @@ describe('code', () => {
     describe('code/getCodeFunc()', () => {
         it('should generate function for isomor', () => {
             const withType = true;
-            const { code } = ast_1.generate(code_1.getCodeFunc(path, pkgName, fnName, withType));
+            const { code } = ast_1.generate(code_1.getCodeFunc(wsReg, path, pkgName, fnName, withType));
             expect(code).toEqual(exports.codeTranspiledFunc);
         });
         it('should generate function for isomor without type', () => {
             const withType = false;
-            const { code } = ast_1.generate(code_1.getCodeFunc(path, pkgName, fnName, withType));
+            const { code } = ast_1.generate(code_1.getCodeFunc(wsReg, path, pkgName, fnName, withType));
             expect(code).toEqual(exports.codeTranspiledFuncNoType);
+        });
+        it('should generate function for isomor with websocket', () => {
+            const withType = true;
+            const websocketReg = new RegExp('.*');
+            const { code } = ast_1.generate(code_1.getCodeFunc(websocketReg, path, pkgName, fnName, withType));
+            expect(code).toEqual(exports.codeTranspiledFuncForWs);
+        });
+        it('should generate function for isomor with websocket for function name', () => {
+            const withType = true;
+            const websocketReg = new RegExp('getTime');
+            const { code } = ast_1.generate(code_1.getCodeFunc(websocketReg, path, pkgName, fnName, withType));
+            expect(code).toEqual(exports.codeTranspiledFuncForWs);
+        });
+        it('should generate function for isomor with http since ws regex doesnt match', () => {
+            const withType = true;
+            const websocketReg = new RegExp('getTimes');
+            const { code } = ast_1.generate(code_1.getCodeFunc(websocketReg, path, pkgName, fnName, withType));
+            expect(code).toEqual(exports.codeTranspiledFunc);
         });
     });
     describe('code/getCodeArrowFunc()', () => {
         it('should generate function for isomor', () => {
             const withType = true;
-            const { code } = ast_1.generate(code_1.getCodeArrowFunc(path, pkgName, fnName, withType));
+            const { code } = ast_1.generate(code_1.getCodeArrowFunc(wsReg, path, pkgName, fnName, withType));
             expect(code).toEqual(exports.codeTranspiledArrowFunc);
         });
         it('should generate function for isomor without type', () => {
             const withType = false;
-            const { code } = ast_1.generate(code_1.getCodeArrowFunc(path, pkgName, fnName, withType));
+            const { code } = ast_1.generate(code_1.getCodeArrowFunc(wsReg, path, pkgName, fnName, withType));
             expect(code).toEqual(exports.codeTranspiledArrowFuncNoType);
         });
     });

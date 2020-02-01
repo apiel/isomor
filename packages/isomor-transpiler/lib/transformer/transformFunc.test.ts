@@ -16,6 +16,8 @@ const srcFilePath = 'src-isomor/path/to/file';
 const path = 'path-to-file';
 const withTypes = true;
 const pkgName = 'root';
+const wsReg = null;
+
 describe('transformFunc()', () => {
     beforeEach(() => {
         jest.clearAllMocks();
@@ -24,9 +26,9 @@ describe('transformFunc()', () => {
         const { program } = parse(`export function getTime(input1: string, input2: number): Promise<string[]> {
             return readdir('./');
         }`);
-        const node = transformFunc((program.body[0] as any).declaration, srcFilePath, path, pkgName, withTypes);
+        const node = transformFunc((program.body[0] as any).declaration, srcFilePath, wsReg, path, pkgName, withTypes);
         expect(node).toEqual('getCodeFuncMock');
-        expect(getCodeFunc).toHaveBeenCalledWith(path, pkgName, 'getTime', withTypes);
+        expect(getCodeFunc).toHaveBeenCalledWith(wsReg, path, pkgName, 'getTime', withTypes);
         expect(setValidator).toBeCalledWith((program.body[0] as any).declaration, srcFilePath, path, 'getTime');
     });
 });

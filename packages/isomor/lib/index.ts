@@ -22,14 +22,17 @@ export function getUrl(
 }
 
 export function isomorRemote(
+    protocol: string,
     path: string,
     pkgname: string,
     funcName: string,
     args: [],
     classname?: string,
 ): Promise<any> {
-    // return isomorRemoteHttp(path, pkgname, funcName, args, classname);
-    return isomorRemoteWs(path, pkgname, funcName, args, classname);
+    if (protocol === 'ws') {
+        return isomorRemoteWs(path, pkgname, funcName, args, classname);
+    }
+    return isomorRemoteHttp(path, pkgname, funcName, args, classname);
 }
 
 export type IsomorShare = any;

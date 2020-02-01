@@ -2,7 +2,7 @@ import * as WebSocket from 'ws';
 import { Route } from './route';
 import { Server, IncomingMessage } from 'http';
 import { isString } from 'util';
-import { validateArgs } from './use-isomor';
+import { validateArgs } from './utils';
 
 export interface WsContext {
     req: IncomingMessage;
@@ -56,12 +56,14 @@ async function apiAction(
     const { id, path, args } = data;
     logger?.log(`WS ${path}`);
     if (routesIndex[path]) {
-        const { validationSchema, fn } = routesIndex[path];
+        const { validationSchema, fn, isClass } = routesIndex[path];
         try {
             const push = (payload: any) => ws.send(JSON.stringify({ action: 'PUSH', id, payload }));
             const ctx: WsContext = { req, ws, push };
             validateArgs(validationSchema, args);
-            const result = await fn.call(ctx, ...args, req, ws);
+            const result = isClass
+                ? await fn.call(...args, req, ws, push)
+                : await fn(ctx, ...args);
             ws.send(JSON.stringify({ action: 'API_RES', id, result }));
         } catch (error) {
             ws.send(JSON.stringify({ action: 'API_ERR', id, error }));

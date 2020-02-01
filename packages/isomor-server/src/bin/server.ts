@@ -19,7 +19,7 @@ import { setup, serve } from 'swagger-ui-express';
 import * as morgan from 'morgan';
 import { getOptions } from 'isomor-core';
 
-import { useIsomor, startup, getApiDoc, useIsomorWs } from '../lib';
+import { useIsomorHttp, startup, getApiDoc, useIsomorWs, getIsomorRoutes } from '../lib';
 import { join } from 'path';
 
 const API_DOCS = '/api-docs';
@@ -39,7 +39,8 @@ async function start() {
 
     await startup(app, distServerFolder, serverFolder, startupFile, info);
 
-    const routes = await useIsomor(app, distServerFolder, serverFolder, jsonSchemaFolder, noDecorator);
+    const routes = await getIsomorRoutes(serverFolder, distServerFolder, jsonSchemaFolder, noDecorator);
+    useIsomorHttp(app, routes);
     info(`Created endpoints:`, routes.map(({ path }) => path));
 
     app.use(API_DOCS, serve, setup(getApiDoc(routes)));

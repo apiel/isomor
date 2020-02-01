@@ -1,5 +1,10 @@
-import * as express from 'express';
-import { getPathForUrl, ValidationSchema, getJsonSchemaFileName } from 'isomor-core';
+import {
+    getPathForUrl,
+    ValidationSchema,
+    getJsonSchemaFileName,
+    getPkgName,
+    getFiles,
+} from 'isomor-core';
 import { isIsomorClass, getUrl } from 'isomor';
 import { join } from 'path';
 import { isFunction } from 'util';
@@ -12,6 +17,44 @@ export interface Route {
     file: string;
     validationSchema: ValidationSchema;
     fn: any;
+    isClass: boolean;
+}
+
+export async function getIsomorRoutes(
+    serverFolder: string,
+    distServerFolder: string,
+    jsonSchemaFolder: string,
+    noDecorator: boolean,
+): Promise<Route[]> {
+    const pkgName = getPkgName(distServerFolder);
+    const fnNames = await getFunctionNames(serverFolder, distServerFolder);
+    const routes = fnNames.map(({ file, isClass, name, fn }) => isClass
+        ? getClassRoutes(file, pkgName, name, jsonSchemaFolder, noDecorator)
+        : [getRoute(file, pkgName, fn, name, jsonSchemaFolder)]);
+    return routes.flat();
+}
+
+interface FunctionName {
+    file: string;
+    isClass: boolean;
+    name: string;
+    fn: () => any;
+}
+async function getFunctionNames(
+    serverFolder: string,
+    distServerFolder: string,
+): Promise<FunctionName[]> {
+    const files = await getFiles(distServerFolder, serverFolder);
+
+    return files.map(file => {
+        const functions = getFunctions(distServerFolder, file);
+        return Object.keys(functions)
+            .filter(name => isFunction(functions[name]))
+            .map(name => {
+                const isClass = /^\s*class/.test(functions[name].toString());
+                return { file, isClass, name, fn: functions[name] };
+            }).flat();
+    }).flat();
 }
 
 function getRoutePath(file: string, pkgName: string, name: string, classname?: string) {
@@ -43,7 +86,7 @@ export function getRoute(
 ): Route {
     const path = getRoutePath(file, pkgName, name, classname);
     const validationSchema = loadValidation(getPathForUrl(file), name, jsonSchemaFolder, classname);
-    return { path, file, validationSchema, fn };
+    return { path, file, validationSchema, fn, isClass: !!classname };
 }
 
 // should getInstance be async?

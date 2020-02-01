@@ -32,7 +32,7 @@ function useIsomorWs(routes, server, logger) {
 }
 exports.useIsomorWs = useIsomorWs;
 function apiAction(routesIndex, req, ws, data, logger) {
-    var _a, _b, _c, _d;
+    var _a, _b, _c, _d, _e;
     return __awaiter(this, void 0, void 0, function* () {
         const { id, path, args } = data;
         (_a = logger) === null || _a === void 0 ? void 0 : _a.log(`WS req ${path}`);
@@ -50,12 +50,12 @@ function apiAction(routesIndex, req, ws, data, logger) {
                 (_b = logger) === null || _b === void 0 ? void 0 : _b.log(`WS 200 ${path}`);
             }
             catch (error) {
-                ws.send(JSON.stringify({ action: 'API_ERR', id, error }));
-                (_c = logger) === null || _c === void 0 ? void 0 : _c.log(`WS 500 ${path}`, error);
+                ws.send(JSON.stringify({ action: 'API_ERR', id, error: (_c = error) === null || _c === void 0 ? void 0 : _c.message }));
+                (_d = logger) === null || _d === void 0 ? void 0 : _d.log(`WS 500 ${path}`, error);
             }
         }
         else {
-            (_d = logger) === null || _d === void 0 ? void 0 : _d.log(`WS 404 ${path}`);
+            (_e = logger) === null || _e === void 0 ? void 0 : _e.log(`WS 404 ${path}`);
         }
     });
 }

@@ -55,14 +55,6 @@ async function start() {
         );
     }
 
-    // app.use('/', async (
-    //     req: express.Request,
-    //     res: express.Response,
-    //     next: express.NextFunction,
-    // ) => {
-    //     res.send('Isomor');
-    // });
-
     app.use((
         err: Error,
         req: express.Request,

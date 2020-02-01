@@ -69,7 +69,7 @@ async function apiAction(
             logger?.log(`WS 200 ${path}`);
             // console.log('msg', msg);
         } catch (error) {
-            ws.send(JSON.stringify({ action: 'API_ERR', id, error }));
+            ws.send(JSON.stringify({ action: 'API_ERR', id, error: error?.message }));
             logger?.log(`WS 500 ${path}`, error);
         }
     } else {

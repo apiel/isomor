@@ -35,8 +35,6 @@ export async function setAuth(): Promise<string> {
 
 Find an example of authentication using JWT [here](https://github.com/apiel/isomor/tree/master/packages/example/react-auth).
 
-> **Note:** isomor pass as well `req` and `res` as last parameter of the function. So you could as well get the request and response like `export async function getAuth(req?: Context.req, res?: Context.res): Promise<string> { ... }`
-
 ### Class
 
 To access the `req` and `res` inside a method of a class, it is not possible to use `this.req` and `this.res` else multiple methods would share the same context. But you can still access the context from the method parameters:
@@ -50,3 +48,5 @@ export class ApiService {
   }
 }
 ```
+
+In method, isomor pass `req` and `res` as last parameter of the function.

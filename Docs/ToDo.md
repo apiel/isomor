@@ -2,6 +2,7 @@
 
 - implement websocket
     https://github.com/websockets/ws/issues/473
+    think about a caching system
 
 - use GET method when possible
     + done. server endpoint accept any method but need to update APIdoc

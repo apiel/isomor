@@ -37,3 +37,7 @@ The default configuration should be most of the time the right one for implement
 `ISOMOR_STATIC_FOLDER` path to static folder, default `null`
 
 `ISOMOR_STARTUP_FILE` path to startup file, default `startup/index.js`,
+
+#### WebSocket
+
+`ISOMOR_WS` RegExp matching the function name to use WebSocket instead of Http, `.*` to use only WebSocket.

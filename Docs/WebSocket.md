@@ -20,7 +20,7 @@ export interface WsContext {
 
 Use this context in the same way you would do for HTTP: [Request / Response context](Docs/ReqResCtx.md)
 
-### React
+<!-- ### React
 
 In order to be able to use WebSocket in dev mode, you need to update the proxy settings. First, remove the proxy parameter from `package.json`. Then, install `http-proxy-middleware` using Yarn:
 
@@ -40,7 +40,7 @@ module.exports = function (app) {
 };
 ```
 
-For more details, [see React documentation](https://create-react-app.dev/docs/proxying-api-requests-in-development/#configuring-the-proxy-manually).
+For more details, [see React documentation](https://create-react-app.dev/docs/proxying-api-requests-in-development/#configuring-the-proxy-manually). -->
 
 ### Push
 

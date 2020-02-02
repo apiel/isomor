@@ -11,7 +11,6 @@ let wsReady = false;
 
 function openWS() {
     // ws = new WebSocket(`ws://${location.host}/isomor-ws`);
-    // ws = new WebSocket(`ws://${location.host}/isomor`);
     ws = new WebSocket(`ws://127.0.0.1:3005`);
     ws.onopen = () => {
         // console.log('WS connection established');

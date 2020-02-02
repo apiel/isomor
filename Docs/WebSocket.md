@@ -44,7 +44,7 @@ For more details, [see React documentation](https://create-react-app.dev/docs/pr
 
 ### Push
 
-WebSocket provide full-duplex communication, so you can push data from the server to the client. The context share a `push` function to send data to the server. Example of server function:
+WebSocket provide full-duplex communication, so you can push data from the server to the client. `WsContext` share a `push` function to send data to the server. Example of server function:
 
 ```ts
 // This function will send the server time every second

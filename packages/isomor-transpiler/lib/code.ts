@@ -1,5 +1,18 @@
 import { Statement } from './ast';
 
+interface BodyRemote {
+    wsReg: RegExp | null;
+    path: string;
+    pkgName: string;
+    name: string;
+    className?: string;
+}
+
+export interface CodeFunc {
+    withTypes: boolean;
+    bodyParams: BodyRemote;
+}
+
 export function getCodeType(name: string) {
     return {
         type: 'ExportNamedDeclaration',
@@ -45,34 +58,28 @@ export function getCodeImport() {
     } as any as Statement; // need to try to remove any
 }
 
-export function getCodeFunc(
-    wsReg: RegExp | null,
-    fileName: string,
-    pkgName: string,
-    name: string,
-    withTypes: boolean,
-) {
+export function getCodeFunc({
+    bodyParams,
+    withTypes,
+}: CodeFunc) {
     return {
         type: 'ExportNamedDeclaration',
         declaration: {
             type: 'FunctionDeclaration',
             id: {
                 type: 'Identifier',
-                name,
+                name: bodyParams.name,
             },
             params: getParams(withTypes),
-            body: getBody(wsReg, fileName, pkgName, name),
+            body: getBody(bodyParams),
         },
-    } as Statement;
+    } as any as Statement;
 }
 
-export function getCodeArrowFunc(
-    wsReg: RegExp | null,
-    fileName: string,
-    pkgName: string,
-    name: string,
-    withTypes: boolean,
-) {
+export function getCodeArrowFunc({
+    bodyParams,
+    withTypes,
+}: CodeFunc) {
     return {
         type: 'ExportNamedDeclaration',
         declaration: {
@@ -82,18 +89,18 @@ export function getCodeArrowFunc(
                     type: 'VariableDeclarator',
                     id: {
                         type: 'Identifier',
-                        name,
+                        name: bodyParams.name,
                     },
                     init: {
                         type: 'ArrowFunctionExpression',
                         params: getParams(withTypes),
-                        body: getBody(wsReg, fileName, pkgName, name),
+                        body: getBody(bodyParams),
                     },
                 },
             ],
             kind: 'const',
         },
-    } as Statement;
+    } as any as Statement;
 }
 
 // arguments => (...args)
@@ -122,28 +129,22 @@ function getTypeAny(withTypes: boolean) {
     } : {};
 }
 
-function getBody(
-    wsReg: RegExp | null,
-    fileName: string,
-    pkgName: string,
-    name: string,
-    className?: string,
-) {
+function getBody(bodyRemote: BodyRemote) {
     return {
         type: 'BlockStatement',
         body: [
-            getBodyRemote(wsReg, fileName, pkgName, name, className),
+            getBodyRemote(bodyRemote),
         ],
     };
 }
 
-function getBodyRemote(
-    wsReg: RegExp | null,
-    fileName: string,
-    pkgName: string,
-    name: string,
-    className?: string,
-) {
+function getBodyRemote({
+    wsReg,
+    path,
+    pkgName,
+    name,
+    className,
+}: BodyRemote) {
     const protocol = wsReg?.test(name) ? 'ws' : 'http';
     return {
         type: 'ReturnStatement',
@@ -160,7 +161,7 @@ function getBodyRemote(
                 },
                 {
                     type: 'StringLiteral',
-                    value: fileName,
+                    value: path,
                 },
                 {
                     type: 'StringLiteral',
@@ -183,24 +184,20 @@ function getBodyRemote(
     };
 }
 
-export function getCodeMethod(
-    wsReg: RegExp | null,
-    fileName: string,
-    pkgName: string,
-    name: string,
-    className: string,
-    withTypes: boolean,
-) {
+export function getCodeMethod({
+    bodyParams,
+    withTypes,
+}: CodeFunc) {
     return {
         type: 'ClassMethod',
         static: false,
         key: {
             type: 'Identifier',
-            name,
+            name: bodyParams.name,
         },
         async: true,
         params: getParams(withTypes),
-        body: getBody(wsReg, fileName, pkgName, name, className),
+        body: getBody(bodyParams),
     } as any as Statement;
 }
 

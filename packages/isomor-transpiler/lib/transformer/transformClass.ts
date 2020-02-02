@@ -8,9 +8,8 @@ export function transformClass(
     {
         srcFilePath,
         path,
-        wsReg,
-        pkgName,
         withTypes,
+        ...bodyParams
     }: FnOptions,
     noDecorator: boolean,
 ) {
@@ -35,7 +34,10 @@ export function transformClass(
                     (root as any).declaration.body.body[index] = getCodeConstructor(withTypes);
                 } else {
                     setValidator((root as any).declaration.body.body[index], srcFilePath, path, name, className);
-                    (root as any).declaration.body.body[index] = getCodeMethod(wsReg, path, pkgName, name, className, withTypes);
+                    (root as any).declaration.body.body[index] = getCodeMethod({
+                        withTypes,
+                        bodyParams: { path, name, className, ...bodyParams },
+                    });
                 }
             } else if (node.type !== 'ClassProperty') {
                 delete (root as any).declaration.body.body[index];

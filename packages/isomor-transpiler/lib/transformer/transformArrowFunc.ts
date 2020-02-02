@@ -8,9 +8,8 @@ export function transformArrowFunc(
     {
         srcFilePath,
         path,
-        wsReg,
-        pkgName,
         withTypes,
+        ...bodyParams
     }: FnOptions,
 ) {
     const { declarations } = root;
@@ -21,6 +20,9 @@ export function transformArrowFunc(
     ) {
         const { name } = declaration.id;
         setValidator(declaration.init, srcFilePath, path, name);
-        return getCodeArrowFunc(wsReg, path, pkgName, name, withTypes);
+        return getCodeArrowFunc({
+            withTypes,
+            bodyParams: { path, name, ...bodyParams },
+        });
     }
 }

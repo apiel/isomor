@@ -28,7 +28,7 @@ describe('transformFunc()', () => {
         }`);
         const node = transformFunc((program.body[0] as any).declaration, { srcFilePath, wsReg, path, pkgName, withTypes });
         expect(node).toEqual('getCodeFuncMock');
-        expect(getCodeFunc).toHaveBeenCalledWith(wsReg, path, pkgName, 'getTime', withTypes);
+        expect(getCodeFunc).toHaveBeenCalledWith({ bodyParams: { wsReg, path, pkgName, name: 'getTime'}, withTypes});
         expect(setValidator).toBeCalledWith((program.body[0] as any).declaration, srcFilePath, path, 'getTime');
     });
 });

@@ -8,12 +8,14 @@ export function transformFunc(
     {
         srcFilePath,
         path,
-        wsReg,
-        pkgName,
         withTypes,
+        ...bodyParams
     }: FnOptions,
 ) {
     const { name } = root.id;
     setValidator(root, srcFilePath, path, name);
-    return getCodeFunc(wsReg, path, pkgName, name, withTypes);
+    return getCodeFunc({
+        withTypes,
+        bodyParams: { path, name, ...bodyParams },
+    });
 }

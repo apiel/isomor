@@ -28,7 +28,7 @@ describe('transformFunc()', () => {
         }`);
         const node = transformArrowFunc((program.body[0] as any).declaration, { srcFilePath, wsReg, path, pkgName, withTypes });
         expect(node).toEqual('getCodeArrowFuncMock');
-        expect(getCodeArrowFunc).toHaveBeenCalledWith(wsReg, path, pkgName, 'getTime', withTypes);
+        expect(getCodeArrowFunc).toHaveBeenCalledWith({ bodyParams: { wsReg, path, pkgName, name: 'getTime'}, withTypes});
         expect(setValidator).toBeCalledWith((program.body[0] as any).declaration.declarations[0].init, srcFilePath, path, 'getTime');
     });
 });

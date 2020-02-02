@@ -1,2 +1,3 @@
 import { FunctionDeclaration } from '../ast';
-export declare function transformFunc(root: FunctionDeclaration, srcFilePath: string, wsReg: RegExp | null, path: string, pkgName: string, withTypes: boolean): import("@babel/types").Statement;
+import { FnOptions } from 'lib/transformNode';
+export declare function transformFunc(root: FunctionDeclaration, { srcFilePath, path, withTypes, ...bodyParams }: FnOptions): import("@babel/types").Statement;

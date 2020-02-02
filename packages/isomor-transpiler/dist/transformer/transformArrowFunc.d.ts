@@ -1,2 +1,3 @@
 import { VariableDeclaration } from '../ast';
-export declare function transformArrowFunc(root: VariableDeclaration, srcFilePath: string, wsReg: RegExp | null, path: string, pkgName: string, withTypes: boolean): import("@babel/types").Statement;
+import { FnOptions } from 'lib/transformNode';
+export declare function transformArrowFunc(root: VariableDeclaration, { srcFilePath, path, withTypes, ...bodyParams }: FnOptions): import("@babel/types").Statement;

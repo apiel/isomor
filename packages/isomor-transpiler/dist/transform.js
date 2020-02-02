@@ -5,10 +5,10 @@ const code_1 = require("./code");
 const transformNode_1 = require("./transformNode");
 const util_1 = require("util");
 const debug = debug_1.default('isomor-transpiler:transform');
-function transform(body, srcFilePath, path, wsReg = null, pkgName = 'root', withTypes = true, noServerImport = false, noDecorator = false) {
+function transform(body, fnOptions, noServerImport = false, noDecorator = false) {
     let newBody = [code_1.getCodeImport()];
     body.forEach((node) => {
-        const newNode = transformNode_1.transformNode(node, srcFilePath, wsReg, path, pkgName, withTypes, noServerImport, noDecorator);
+        const newNode = transformNode_1.transformNode(node, fnOptions, noServerImport, noDecorator);
         if (newNode) {
             if (util_1.isArray(newNode)) {
                 newBody = [...newBody, ...newNode];

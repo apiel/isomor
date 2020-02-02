@@ -22,9 +22,9 @@ describe('transformFunc()', () => {
         const { program } = ast_1.parse(`export const getTime = (input1: string, input2: number): Promise<string[]> => {
             return readdir('./');
         }`);
-        const node = transformArrowFunc_1.transformArrowFunc(program.body[0].declaration, srcFilePath, wsReg, path, pkgName, withTypes);
+        const node = transformArrowFunc_1.transformArrowFunc(program.body[0].declaration, { srcFilePath, wsReg, path, pkgName, withTypes });
         expect(node).toEqual('getCodeArrowFuncMock');
-        expect(code_1.getCodeArrowFunc).toHaveBeenCalledWith(wsReg, path, pkgName, 'getTime', withTypes);
+        expect(code_1.getCodeArrowFunc).toHaveBeenCalledWith({ bodyParams: { wsReg, path, pkgName, name: 'getTime' }, withTypes });
         expect(validation_1.setValidator).toBeCalledWith(program.body[0].declaration.declarations[0].init, srcFilePath, path, 'getTime');
     });
 });

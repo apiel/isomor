@@ -22,7 +22,7 @@ exports.default = transform_1.default;
 function getCode(options, srcFilePath, path, content) {
     const { withTypes, noServerImport, noDecorator, pkgName, wsReg } = options;
     const { program } = ast_1.parse(content);
-    program.body = transform_1.default(program.body, srcFilePath, path, wsReg, pkgName, withTypes, noServerImport, noDecorator);
+    program.body = transform_1.default(program.body, { srcFilePath, path, wsReg, pkgName, withTypes }, noServerImport, noDecorator);
     const { code } = ast_1.generate(program);
     return code;
 }

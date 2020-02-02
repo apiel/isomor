@@ -31,7 +31,7 @@ const pkgName = 'root';
 const wsReg = null;
 const transformClassFromCode = (source, noDecorator = false) => {
     const { program } = ast_1.parse(source);
-    const body = transformClass_1.transformClass(program.body[0], srcFilePath, wsReg, path, pkgName, withTypes, noDecorator);
+    const body = transformClass_1.transformClass(program.body[0], { srcFilePath, wsReg, path, pkgName, withTypes }, noDecorator);
     program.body = util_1.isArray(body) ? body : [body];
     const { code } = ast_1.generate(program);
     return code;
@@ -80,7 +80,10 @@ export class CatsService extends CatsService__deco_export__ {
 
 }`);
         expect(code_1.getCodeMethod).toHaveBeenCalledTimes(1);
-        expect(code_1.getCodeMethod).toHaveBeenCalledWith(wsReg, path, pkgName, 'findAll', 'CatsService', withTypes);
+        expect(code_1.getCodeMethod).toHaveBeenCalledWith({
+            withTypes,
+            bodyParams: { wsReg, path, pkgName, name: 'findAll', className: 'CatsService' },
+        });
     });
     it('should not transform class when no noDecorator but dont provide @isomor', () => {
         const code = `@Injectable()

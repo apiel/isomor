@@ -7,7 +7,7 @@ const transformExport_1 = require("./transformer/transformExport");
 const transformFunc_1 = require("./transformer/transformFunc");
 const transformArrowFunc_1 = require("./transformer/transformArrowFunc");
 const transformType_1 = require("./transformer/transformType");
-function transformNode(node, srcFilePath, wsReg, path, pkgName, withTypes, noServerImport, noDecorator) {
+function transformNode(node, fnOptions, noServerImport, noDecorator) {
     if (node.type === 'ExportNamedDeclaration') {
         if (!node.declaration) {
             return transformExport_1.transformExport(node, noServerImport);
@@ -19,13 +19,13 @@ function transformNode(node, srcFilePath, wsReg, path, pkgName, withTypes, noSer
             return transformInterface_1.transformInterface(node, noServerImport);
         }
         else if (node.declaration.type === 'FunctionDeclaration') {
-            return transformFunc_1.transformFunc(node.declaration, srcFilePath, wsReg, path, pkgName, withTypes);
+            return transformFunc_1.transformFunc(node.declaration, fnOptions);
         }
         else if (node.declaration.type === 'VariableDeclaration') {
-            return transformArrowFunc_1.transformArrowFunc(node.declaration, srcFilePath, wsReg, path, pkgName, withTypes);
+            return transformArrowFunc_1.transformArrowFunc(node.declaration, fnOptions);
         }
         else if (node.declaration.type === 'ClassDeclaration') {
-            return transformClass_1.transformClass(node, srcFilePath, wsReg, path, pkgName, withTypes, noDecorator);
+            return transformClass_1.transformClass(node, fnOptions, noDecorator);
         }
     }
     else if (node.type === 'ImportDeclaration') {

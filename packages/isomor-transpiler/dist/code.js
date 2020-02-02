@@ -43,22 +43,22 @@ function getCodeImport() {
     };
 }
 exports.getCodeImport = getCodeImport;
-function getCodeFunc(wsReg, fileName, pkgName, name, withTypes) {
+function getCodeFunc({ bodyParams, withTypes, }) {
     return {
         type: 'ExportNamedDeclaration',
         declaration: {
             type: 'FunctionDeclaration',
             id: {
                 type: 'Identifier',
-                name,
+                name: bodyParams.name,
             },
             params: getParams(withTypes),
-            body: getBody(wsReg, fileName, pkgName, name),
+            body: getBody(bodyParams),
         },
     };
 }
 exports.getCodeFunc = getCodeFunc;
-function getCodeArrowFunc(wsReg, fileName, pkgName, name, withTypes) {
+function getCodeArrowFunc({ bodyParams, withTypes, }) {
     return {
         type: 'ExportNamedDeclaration',
         declaration: {
@@ -68,12 +68,12 @@ function getCodeArrowFunc(wsReg, fileName, pkgName, name, withTypes) {
                     type: 'VariableDeclarator',
                     id: {
                         type: 'Identifier',
-                        name,
+                        name: bodyParams.name,
                     },
                     init: {
                         type: 'ArrowFunctionExpression',
                         params: getParams(withTypes),
-                        body: getBody(wsReg, fileName, pkgName, name),
+                        body: getBody(bodyParams),
                     },
                 },
             ],
@@ -100,15 +100,15 @@ function getTypeAny(withTypes) {
         },
     } : {};
 }
-function getBody(wsReg, fileName, pkgName, name, className) {
+function getBody(bodyRemote) {
     return {
         type: 'BlockStatement',
         body: [
-            getBodyRemote(wsReg, fileName, pkgName, name, className),
+            getBodyRemote(bodyRemote),
         ],
     };
 }
-function getBodyRemote(wsReg, fileName, pkgName, name, className) {
+function getBodyRemote({ wsReg, path, pkgName, name, className, }) {
     var _a;
     const protocol = ((_a = wsReg) === null || _a === void 0 ? void 0 : _a.test(name)) ? 'ws' : 'http';
     return {
@@ -126,7 +126,7 @@ function getBodyRemote(wsReg, fileName, pkgName, name, className) {
                 },
                 {
                     type: 'StringLiteral',
-                    value: fileName,
+                    value: path,
                 },
                 {
                     type: 'StringLiteral',
@@ -148,17 +148,17 @@ function getBodyRemote(wsReg, fileName, pkgName, name, className) {
         },
     };
 }
-function getCodeMethod(wsReg, fileName, pkgName, name, className, withTypes) {
+function getCodeMethod({ bodyParams, withTypes, }) {
     return {
         type: 'ClassMethod',
         static: false,
         key: {
             type: 'Identifier',
-            name,
+            name: bodyParams.name,
         },
         async: true,
         params: getParams(withTypes),
-        body: getBody(wsReg, fileName, pkgName, name, className),
+        body: getBody(bodyParams),
     };
 }
 exports.getCodeMethod = getCodeMethod;

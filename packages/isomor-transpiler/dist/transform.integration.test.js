@@ -108,7 +108,13 @@ describe('transform', () => {
     describe('transform/transform()', () => {
         it('should isomor code for e2e', () => {
             const { program } = ast_1.parse(codeSource);
-            program.body = transform_1.default(program.body, srcFilePath, path);
+            program.body = transform_1.default(program.body, {
+                srcFilePath,
+                path,
+                wsReg: null,
+                pkgName: 'root',
+                withTypes: true,
+            });
             const { code } = ast_1.generate(program);
             expect(code).toEqual(codeTranspiled);
         });

@@ -1,2 +1,3 @@
+import { FnOptions } from './transformNode';
 import { Statement } from './ast';
-export default function transform(body: Statement[], srcFilePath: string, path: string, wsReg?: RegExp | null, pkgName?: string, withTypes?: boolean, noServerImport?: boolean, noDecorator?: boolean): Statement[];
+export default function transform(body: Statement[], fnOptions: FnOptions, noServerImport?: boolean, noDecorator?: boolean): Statement[];

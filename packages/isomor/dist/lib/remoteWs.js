@@ -17,7 +17,7 @@ let subId = 0;
 const subscribedFunctions = {};
 let wsReady = false;
 function openWS() {
-    ws = new WebSocket(`ws://127.0.0.1:3005/isomor`);
+    ws = new WebSocket(`ws://127.0.0.1:3005`);
     ws.onopen = () => {
         wsReady = true;
     };

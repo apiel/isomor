@@ -14,6 +14,7 @@ As for the [HTTP context](Docs/ReqResCtx.md), you can also access the context fr
 export interface WsContext {
     req: IncomingMessage;
     ws: WebSocket;
+    push: (payload: any) => void;
 }
 ```
 
@@ -40,3 +41,43 @@ module.exports = function (app) {
 ```
 
 For more details, [see React documentation](https://create-react-app.dev/docs/proxying-api-requests-in-development/#configuring-the-proxy-manually).
+
+### Push
+
+WebSocket provide full-duplex communication, so you can push data from the server to the client. The context share a `push` function to send data to the server. Example of server function:
+
+```ts
+// This function will send the server time every second
+export async function pushTime(): Promise<void> {
+    const { push }: WsContext = this;
+    setInterval(() => push((new Date()).toLocaleString()), 1000);
+}
+```
+
+On the client, you need to subscrib to the pushed messages sent from the server:
+
+```ts
+import React from 'react';
+import { subscrib, unsubscrib } from 'isomor';
+import { pushTime } from './server/time';
+
+export const Time = () => {
+  const [serverTime, setServerTime] = React.useState<string>();
+  React.useEffect(() => {
+    // subscrib to push request and set the received data in the serverTime
+    const key = subscrib((payload) => setServerTime(payload));
+    pushTime();
+    return () => {
+      // don't forget to unsubscrib when the component unmount
+      unsubscrib(key);
+    }
+  }, []);
+  return (
+    <div>
+      {!serverTime ? <p>Loading...</p> : (
+        <p><b>Server time:</b> {serverTime}</p>
+      )}
+    </div>
+  );
+}
+```

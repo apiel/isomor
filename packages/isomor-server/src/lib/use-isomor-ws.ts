@@ -62,8 +62,8 @@ async function apiAction(
             const ctx: WsContext = { req, ws, push };
             validateArgs(validationSchema, args);
             const result = isClass
-                ? await fn.call(...args, req, ws, push)
-                : await fn(ctx, ...args);
+                ? await fn(...args, req, ws, push)
+                : await fn.call(ctx, ...args);
             const msg = JSON.stringify({ action: 'API_RES', id, result });
             ws.send(msg);
             logger?.log(`WS 200 ${path}`);

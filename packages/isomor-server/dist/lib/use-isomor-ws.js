@@ -43,8 +43,8 @@ function apiAction(routesIndex, req, ws, data, logger) {
                 const ctx = { req, ws, push };
                 utils_1.validateArgs(validationSchema, args);
                 const result = isClass
-                    ? yield fn.call(...args, req, ws, push)
-                    : yield fn(ctx, ...args);
+                    ? yield fn(...args, req, ws, push)
+                    : yield fn.call(ctx, ...args);
                 const msg = JSON.stringify({ action: 'API_RES', id, result });
                 ws.send(msg);
                 (_b = logger) === null || _b === void 0 ? void 0 : _b.log(`WS 200 ${path}`);

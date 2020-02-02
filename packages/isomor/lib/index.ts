@@ -3,8 +3,9 @@
  * even if it's just for types, some library like angular
  * dont like it!
  */
-import { isomorRemoteWs } from './remoteWs';
 import { isomorRemoteHttp } from './remoteHttp';
+import { isomorRemoteWs } from './remoteWs';
+export { subscrib, unsubscrib, SubscribFn } from './remoteWs';
 
 const urlPrefix = '/isomor'; // http://127.0.0.1:3000/
 

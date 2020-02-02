@@ -24,6 +24,7 @@ function getColor() {
 exports.getColor = getColor;
 function setColor(color = 'green') {
     return __awaiter(this, void 0, void 0, function* () {
+        console.log('setColor', { color });
         fs_extra_1.outputFile(FILE_COLOR, color);
         return color;
     });

@@ -1,3 +1,4 @@
+export { subscrib, unsubscrib, SubscribFn } from './remoteWs';
 export declare function getUrl(path: string, pkgname: string, funcName: string, classname?: string): string;
 export declare function isomorRemote(protocol: string, path: string, pkgname: string, funcName: string, args: [], classname?: string): Promise<any>;
 export declare type IsomorShare = any;

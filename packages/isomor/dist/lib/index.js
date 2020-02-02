@@ -1,7 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const remoteWs_1 = require("./remoteWs");
 const remoteHttp_1 = require("./remoteHttp");
+const remoteWs_1 = require("./remoteWs");
+var remoteWs_2 = require("./remoteWs");
+exports.subscrib = remoteWs_2.subscrib;
+exports.unsubscrib = remoteWs_2.unsubscrib;
 const urlPrefix = '/isomor';
 function getUrl(path, pkgname, funcName, classname) {
     const url = classname

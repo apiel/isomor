@@ -9,8 +9,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+let timer;
 function getTime() {
     return __awaiter(this, void 0, void 0, function* () {
+        if (this.push) {
+            const { push } = this;
+            clearInterval(timer);
+            timer = setInterval(() => push({ time: (new Date()).toLocaleString() }), 1000);
+        }
         return { time: (new Date()).toLocaleString() };
     });
 }

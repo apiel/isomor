@@ -1,4 +1,5 @@
 import React from 'react';
+import { subscrib, unsubscrib } from 'isomor';
 
 import { getTime, ServerTime } from './server/getTime';
 
@@ -7,7 +8,15 @@ export const Time = () => {
   const load = async () => {
     setServerTime(await getTime());
   }
-  React.useEffect(() => { load(); }, []);
+  React.useEffect(() => {
+    load();
+    // if websocket protocol used, let subscrib to update automatically the time
+    const key = subscrib(setServerTime);
+    return () => {
+      // don't forget to unsubscrib when the component unmount
+      unsubscrib(key);
+    }
+  }, []);
   return (
     <div>
       {!serverTime ? <p>Loading...</p> : (

@@ -22,8 +22,8 @@ export function useIsomorHttp(
                 const args = (req.body && req.body.args) || [];
                 validateArgs(validationSchema, args);
                 const result = isClass
-                    ? await fn.call(...args, req, res)
-                    : await fn(ctx, ...args);
+                    ? await fn(...args, req, res)
+                    : await fn.call(ctx, ...args);
                 return res.send({ result });
             } catch (error) {
                 next(error);

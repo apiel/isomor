@@ -18,8 +18,8 @@ function useIsomorHttp(app, routes) {
                 const args = (req.body && req.body.args) || [];
                 utils_1.validateArgs(validationSchema, args);
                 const result = isClass
-                    ? yield fn.call(...args, req, res)
-                    : yield fn(ctx, ...args);
+                    ? yield fn(...args, req, res)
+                    : yield fn.call(ctx, ...args);
                 return res.send({ result });
             }
             catch (error) {

@@ -1,11 +1,17 @@
 import { getUrl } from '.';
 
+export type SubscribFn = (payload: any) => void;
+
 let ws: WebSocket;
+let reqId = 0;
 const reqQueue = {};
+let subId = 0;
+const subscribedFunctions: { [key: number]: SubscribFn } = {};
 let wsReady = false;
+
 function openWS() {
-    ws = new WebSocket(`ws://${location.host}/isomor`);
-    // ws = new WebSocket(`ws://127.0.0.1:3005/isomor`);
+    // ws = new WebSocket(`ws://${location.host}/isomor`);
+    ws = new WebSocket(`ws://127.0.0.1:3005/isomor`);
     ws.onopen = () => {
         // console.log('WS connection established');
         wsReady = true;
@@ -16,13 +22,18 @@ function openWS() {
         ws = null;
         // we could try to re-connect?
     };
+    // ToDo create a type definition for each action
     ws.onmessage = (msgEv) => {
         // console.log('WS msg', msgEv);
         const data = JSON.parse(msgEv.data);
         if (data.action === 'API_RES') {
             reqQueue[data.id]?.resolve(data.result);
+            delete (reqQueue[data.id]);
         } else if (data.action === 'API_ERR') {
             reqQueue[data.id]?.reject(data.error);
+            delete (reqQueue[data.id]);
+        } else if (data.action === 'PUSH') {
+            Object.values(subscribedFunctions).forEach(fn => fn(data.payload));
         }
     };
 }
@@ -43,7 +54,6 @@ function checkWs(resolve: (value?: unknown) => void) {
     setTimeout(() => checkWs(resolve), 100);
 }
 
-let reqId = 0;
 export async function isomorRemoteWs(
     path: string,
     pkgname: string,
@@ -63,4 +73,15 @@ export async function isomorRemoteWs(
             args,
         }));
     });
+}
+
+export function subscrib(fn: SubscribFn) {
+    const key = subId++;
+    subscribedFunctions[key] = fn;
+
+    return key;
+}
+
+export function unsubscrib(key: number) {
+    delete subscribedFunctions[key];
 }

@@ -1,506 +1,517 @@
-0 silly argv { _: [ 'publish' ],
-0 silly argv   composed: 'publish',
-0 silly argv   lernaVersion: '3.13.4',
-0 silly argv   '$0': '/usr/local/bin/lerna' }
-1 notice cli v3.13.4
+0 silly argv {
+0 silly argv   _: [ 'bootstrap' ],
+0 silly argv   lernaVersion: '3.16.4',
+0 silly argv   '$0': '/usr/local/bin/lerna'
+0 silly argv }
+1 notice cli v3.16.4
 2 verbose rootPath /home/alex/dev/node/pkg/isomor
-3 verbose session e6f7cf23f2f0d2f3
-4 verbose user-agent lerna/3.13.4/node@v11.10.1+x64 (linux)
-5 silly argv { _: [ 'publish' ], composed: 'publish', lernaVersion: '3.13.4' }
-6 verbose rootPath /home/alex/dev/node/pkg/isomor
-7 info current version 0.9.0
-8 silly isAnythingCommitted
-9 verbose isAnythingCommitted 1
-10 silly currentBranch
-11 verbose currentBranch master
-12 silly remoteBranchExists
-13 silly isBehindUpstream
-14 silly isBehindUpstream master is behind origin/master by 0 commit(s) and ahead by 0
-15 silly hasTags
-16 verbose hasTags true
-17 silly git-describe.sync "v0.9.0-3-g66dd7ad" => {"lastTagName":"v0.9.0","lastVersion":"v0.9.0","refCount":"3","sha":"66dd7ad","isDirty":false}
-18 info Looking for changed packages since v0.9.0
-19 silly checking diff packages/isomor-babel
-20 silly no diff found in isomor-babel
-21 silly checking diff packages/isomor-core
-22 silly no diff found in isomor-core
-23 silly checking diff packages/isomor-react-app
-24 silly found diff in packages/isomor-react-app/package-copy.json
-25 verbose filtered diff [ 'packages/isomor-react-app/package-copy.json' ]
-26 silly checking diff packages/isomor-server
-27 silly no diff found in isomor-server
-28 silly checking diff packages/isomor-transpiler
-29 silly found diff in packages/isomor-transpiler/dist/build.d.ts
-29 silly found diff in packages/isomor-transpiler/dist/build.js
-29 silly found diff in packages/isomor-transpiler/dist/build.js.map
-29 silly found diff in packages/isomor-transpiler/dist/index.d.ts
-29 silly found diff in packages/isomor-transpiler/dist/index.js
-29 silly found diff in packages/isomor-transpiler/dist/index.js.map
-29 silly found diff in packages/isomor-transpiler/dist/transformNode.test.js
-29 silly found diff in packages/isomor-transpiler/dist/transformNode.test.js.map
-29 silly found diff in packages/isomor-transpiler/dist/transformer.test.js
-29 silly found diff in packages/isomor-transpiler/dist/transformer.test.js.map
-29 silly found diff in packages/isomor-transpiler/lib/build.ts
-29 silly found diff in packages/isomor-transpiler/lib/index.ts
-29 silly found diff in packages/isomor-transpiler/lib/transformNode.test.ts
-29 silly found diff in packages/isomor-transpiler/lib/transformer.test.ts
-29 silly found diff in packages/isomor-transpiler/package.json
-30 verbose filtered diff [ 'packages/isomor-transpiler/dist/build.d.ts',
-30 verbose filtered diff   'packages/isomor-transpiler/dist/build.js',
-30 verbose filtered diff   'packages/isomor-transpiler/dist/build.js.map',
-30 verbose filtered diff   'packages/isomor-transpiler/dist/index.d.ts',
-30 verbose filtered diff   'packages/isomor-transpiler/dist/index.js',
-30 verbose filtered diff   'packages/isomor-transpiler/dist/index.js.map',
-30 verbose filtered diff   'packages/isomor-transpiler/dist/transformNode.test.js',
-30 verbose filtered diff   'packages/isomor-transpiler/dist/transformNode.test.js.map',
-30 verbose filtered diff   'packages/isomor-transpiler/dist/transformer.test.js',
-30 verbose filtered diff   'packages/isomor-transpiler/dist/transformer.test.js.map',
-30 verbose filtered diff   'packages/isomor-transpiler/lib/build.ts',
-30 verbose filtered diff   'packages/isomor-transpiler/lib/index.ts',
-30 verbose filtered diff   'packages/isomor-transpiler/lib/transformNode.test.ts',
-30 verbose filtered diff   'packages/isomor-transpiler/lib/transformer.test.ts',
-30 verbose filtered diff   'packages/isomor-transpiler/package.json' ]
-31 silly checking diff packages/isomor-vue-app
-32 silly found diff in packages/isomor-vue-app/package-copy.json
-33 verbose filtered diff [ 'packages/isomor-vue-app/package-copy.json' ]
-34 silly checking diff packages/isomor
-35 silly no diff found in isomor
-36 silly checking diff packages/ci-test/react-app
-37 silly no diff found in ci-test-react-app
-38 silly checking diff packages/example/react-typeorm
-39 silly no diff found in isomor-example-react-typeorm
-40 silly checking diff packages/example/react-validator
-41 silly no diff found in isomor-example-react-validator
-42 silly checking diff packages/example/react
-43 silly no diff found in isomor-example-react
-44 silly checking diff packages/example/vue
-45 silly no diff found in isomor-example-vue
-46 verbose updated isomor-babel
-47 verbose updated isomor-react-app
-48 verbose updated isomor-transpiler
-49 verbose updated isomor-vue-app
-50 verbose updated isomor
-51 verbose updated ci-test-react-app
-52 verbose updated isomor-example-react-typeorm
-53 verbose updated isomor-example-react-validator
-54 verbose updated isomor-example-react
-55 verbose git-describe undefined => "v0.9.0-3-g66dd7ad"
-56 silly git-describe parsed => {"lastTagName":"v0.9.0","lastVersion":"v0.9.0","refCount":"3","sha":"66dd7ad","isDirty":false}
-57 silly batched [ PackageGraphNode {
-57 silly batched     name: 'isomor-react-app',
-57 silly batched     externalDependencies:
-57 silly batched      Map {
-57 silly batched        '@types/chalk' => [Object],
-57 silly batched        '@types/fs-extra' => [Object],
-57 silly batched        '@types/minimist' => [Object],
-57 silly batched        '@types/node' => [Object],
-57 silly batched        '@types/rimraf' => [Object],
-57 silly batched        'rimraf' => [Object],
-57 silly batched        'tslint' => [Object],
-57 silly batched        'chalk' => [Object],
-57 silly batched        'fs-extra' => [Object],
-57 silly batched        'logol' => [Object],
-57 silly batched        'minimist' => [Object],
-57 silly batched        'ts-node' => [Object],
-57 silly batched        'typescript' => [Object] },
-57 silly batched     localDependencies: Map {},
-57 silly batched     localDependents: Map {} },
-57 silly batched   PackageGraphNode {
-57 silly batched     name: 'isomor-transpiler',
-57 silly batched     externalDependencies:
-57 silly batched      Map {
-57 silly batched        '@types/anymatch' => [Object],
-57 silly batched        '@types/babel__generator' => [Object],
-57 silly batched        '@types/debug' => [Object],
-57 silly batched        '@types/fs-extra' => [Object],
-57 silly batched        '@types/jest' => [Object],
-57 silly batched        '@types/node' => [Object],
-57 silly batched        '@types/rimraf' => [Object],
-57 silly batched        'jest' => [Object],
-57 silly batched        'rimraf' => [Object],
-57 silly batched        'ts-jest' => [Object],
-57 silly batched        'tslint' => [Object],
-57 silly batched        '@babel/generator' => [Object],
-57 silly batched        '@babel/parser' => [Object],
-57 silly batched        '@babel/plugin-syntax-typescript' => [Object],
-57 silly batched        '@types/chokidar' => [Object],
-57 silly batched        'anymatch' => [Object],
-57 silly batched        'chokidar' => [Object],
-57 silly batched        'debug' => [Object],
-57 silly batched        'fs-extra' => [Object],
-57 silly batched        'isomor-core' => [Object],
-57 silly batched        'logol' => [Object],
-57 silly batched        'please-upgrade-node' => [Object],
-57 silly batched        'traverse' => [Object],
-57 silly batched        'ts-node' => [Object],
-57 silly batched        'typescript' => [Object] },
-57 silly batched     localDependencies: Map {},
-57 silly batched     localDependents:
-57 silly batched      Map {
-57 silly batched        'isomor-babel' => [PackageGraphNode],
-57 silly batched        'isomor' => [PackageGraphNode],
-57 silly batched        'isomor-example-react-typeorm' => [PackageGraphNode],
-57 silly batched        'isomor-example-react-validator' => [PackageGraphNode],
-57 silly batched        'isomor-example-react' => [PackageGraphNode] } },
-57 silly batched   PackageGraphNode {
-57 silly batched     name: 'isomor-vue-app',
-57 silly batched     externalDependencies:
-57 silly batched      Map {
-57 silly batched        '@types/chalk' => [Object],
-57 silly batched        '@types/fs-extra' => [Object],
-57 silly batched        '@types/minimist' => [Object],
-57 silly batched        '@types/node' => [Object],
-57 silly batched        '@types/rimraf' => [Object],
-57 silly batched        'rimraf' => [Object],
-57 silly batched        'tslint' => [Object],
-57 silly batched        'chalk' => [Object],
-57 silly batched        'fs-extra' => [Object],
-57 silly batched        'logol' => [Object],
-57 silly batched        'minimist' => [Object],
-57 silly batched        'ts-node' => [Object],
-57 silly batched        'typescript' => [Object] },
-57 silly batched     localDependencies: Map {},
-57 silly batched     localDependents: Map {} } ]
-58 silly batched [ PackageGraphNode {
-58 silly batched     name: 'isomor-babel',
-58 silly batched     externalDependencies:
-58 silly batched      Map {
-58 silly batched        '@babel/core' => [Object],
-58 silly batched        '@babel/preset-typescript' => [Object],
-58 silly batched        '@types/babel__core' => [Object],
-58 silly batched        '@types/rimraf' => [Object],
-58 silly batched        'rimraf' => [Object],
-58 silly batched        'tslint' => [Object],
-58 silly batched        'typescript' => [Object] },
-58 silly batched     localDependencies: Map {},
-58 silly batched     localDependents: Map {} },
-58 silly batched   PackageGraphNode {
-58 silly batched     name: 'isomor',
-58 silly batched     externalDependencies:
-58 silly batched      Map {
-58 silly batched        '@types/axios' => [Object],
-58 silly batched        '@types/rimraf' => [Object],
-58 silly batched        'rimraf' => [Object],
-58 silly batched        'tslint' => [Object],
-58 silly batched        'axios' => [Object],
-58 silly batched        'isomor-server' => [Object],
-58 silly batched        'typescript' => [Object] },
-58 silly batched     localDependencies: Map {},
-58 silly batched     localDependents:
-58 silly batched      Map {
-58 silly batched        'ci-test-react-app' => [PackageGraphNode],
-58 silly batched        'isomor-example-react-typeorm' => [PackageGraphNode],
-58 silly batched        'isomor-example-react-validator' => [PackageGraphNode],
-58 silly batched        'isomor-example-react' => [PackageGraphNode] } } ]
-59 silly batched [ PackageGraphNode {
-59 silly batched     name: 'ci-test-react-app',
-59 silly batched     externalDependencies:
-59 silly batched      Map {
-59 silly batched        '@types/fs-extra' => [Object],
-59 silly batched        '@types/jest-environment-puppeteer' => [Object],
-59 silly batched        'jest-puppeteer' => [Object],
-59 silly batched        'nodemon' => [Object],
-59 silly batched        'puppeteer' => [Object],
-59 silly batched        'run-screen' => [Object],
-59 silly batched        '@types/jest' => [Object],
-59 silly batched        '@types/node' => [Object],
-59 silly batched        '@types/react' => [Object],
-59 silly batched        '@types/react-dom' => [Object],
-59 silly batched        'fs-extra' => [Object],
-59 silly batched        'react' => [Object],
-59 silly batched        'react-async-cache' => [Object],
-59 silly batched        'react-dom' => [Object],
-59 silly batched        'react-scripts' => [Object],
-59 silly batched        'typescript' => [Object] },
-59 silly batched     localDependencies: Map {},
-59 silly batched     localDependents: Map {} },
-59 silly batched   PackageGraphNode {
-59 silly batched     name: 'isomor-example-react-typeorm',
-59 silly batched     externalDependencies:
-59 silly batched      Map {
-59 silly batched        '@types/axios' => [Object],
-59 silly batched        '@types/express' => [Object],
-59 silly batched        '@types/fs-extra' => [Object],
-59 silly batched        '@types/jest' => [Object],
-59 silly batched        '@types/md5' => [Object],
-59 silly batched        '@types/node' => [Object],
-59 silly batched        '@types/react' => [Object],
-59 silly batched        '@types/react-dom' => [Object],
-59 silly batched        'isomor-server' => [Object],
-59 silly batched        'nodemon' => [Object],
-59 silly batched        'rimraf' => [Object],
-59 silly batched        'run-screen' => [Object],
-59 silly batched        'ts-node' => [Object],
-59 silly batched        'fs-extra' => [Object],
-59 silly batched        'md5' => [Object],
-59 silly batched        'react' => [Object],
-59 silly batched        'react-async-cache' => [Object],
-59 silly batched        'react-dom' => [Object],
-59 silly batched        'react-scripts' => [Object],
-59 silly batched        'reflect-metadata' => [Object],
-59 silly batched        'sqlite3' => [Object],
-59 silly batched        'typeorm' => [Object],
-59 silly batched        'typescript' => [Object] },
-59 silly batched     localDependencies: Map {},
-59 silly batched     localDependents: Map {} },
-59 silly batched   PackageGraphNode {
-59 silly batched     name: 'isomor-example-react-validator',
-59 silly batched     externalDependencies:
-59 silly batched      Map {
-59 silly batched        '@types/axios' => [Object],
-59 silly batched        '@types/express' => [Object],
-59 silly batched        '@types/jest' => [Object],
-59 silly batched        '@types/md5' => [Object],
-59 silly batched        '@types/node' => [Object],
-59 silly batched        '@types/react' => [Object],
-59 silly batched        '@types/react-dom' => [Object],
-59 silly batched        'isomor-server' => [Object],
-59 silly batched        'nodemon' => [Object],
-59 silly batched        'rimraf' => [Object],
-59 silly batched        'run-screen' => [Object],
-59 silly batched        'ts-node' => [Object],
-59 silly batched        'class-validator' => [Object],
-59 silly batched        'md5' => [Object],
-59 silly batched        'react' => [Object],
-59 silly batched        'react-async-cache' => [Object],
-59 silly batched        'react-dom' => [Object],
-59 silly batched        'react-scripts' => [Object],
-59 silly batched        'typescript' => [Object] },
-59 silly batched     localDependencies: Map {},
-59 silly batched     localDependents: Map {} },
-59 silly batched   PackageGraphNode {
-59 silly batched     name: 'isomor-example-react',
-59 silly batched     externalDependencies:
-59 silly batched      Map {
-59 silly batched        '@types/axios' => [Object],
-59 silly batched        '@types/express' => [Object],
-59 silly batched        '@types/fs-extra' => [Object],
-59 silly batched        '@types/jest' => [Object],
-59 silly batched        '@types/md5' => [Object],
-59 silly batched        '@types/node' => [Object],
-59 silly batched        '@types/react' => [Object],
-59 silly batched        '@types/react-dom' => [Object],
-59 silly batched        'isomor-server' => [Object],
-59 silly batched        'nodemon' => [Object],
-59 silly batched        'rimraf' => [Object],
-59 silly batched        'run-screen' => [Object],
-59 silly batched        'ts-node' => [Object],
-59 silly batched        'fs-extra' => [Object],
-59 silly batched        'md5' => [Object],
-59 silly batched        'react' => [Object],
-59 silly batched        'react-async-cache' => [Object],
-59 silly batched        'react-dom' => [Object],
-59 silly batched        'react-scripts' => [Object],
-59 silly batched        'typescript' => [Object] },
-59 silly batched     localDependencies: Map {},
-59 silly batched     localDependents: Map {} } ]
-60 info execute Skipping GitHub releases
-61 silly lifecycle No script for "preversion" in "isomor-monorepo", continuing
-62 silly lifecycle No script for "preversion" in "isomor-react-app", continuing
-63 silly lifecycle No script for "preversion" in "isomor-transpiler", continuing
-64 silly lifecycle No script for "preversion" in "isomor-vue-app", continuing
-65 silly lifecycle No script for "version" in "isomor-transpiler", continuing
-66 silly lifecycle No script for "version" in "isomor-react-app", continuing
-67 silly lifecycle No script for "version" in "isomor-vue-app", continuing
-68 silly lifecycle No script for "preversion" in "isomor-babel", continuing
-69 silly lifecycle No script for "preversion" in "isomor", continuing
-70 silly lifecycle No script for "version" in "isomor", continuing
-71 silly lifecycle No script for "version" in "isomor-babel", continuing
-72 silly lifecycle No script for "preversion" in "ci-test-react-app", continuing
-73 silly lifecycle No script for "preversion" in "isomor-example-react-typeorm", continuing
-74 silly lifecycle No script for "preversion" in "isomor-example-react-validator", continuing
-75 silly lifecycle No script for "preversion" in "isomor-example-react", continuing
-76 silly lifecycle No script for "version" in "isomor-example-react-validator", continuing
-77 silly lifecycle No script for "version" in "isomor-example-react", continuing
-78 silly lifecycle No script for "version" in "isomor-example-react-typeorm", continuing
-79 silly lifecycle No script for "version" in "ci-test-react-app", continuing
-80 silly lifecycle No script for "version" in "isomor-monorepo", continuing
-81 silly gitAdd [ '/home/alex/dev/node/pkg/isomor/packages/isomor-transpiler/package.json',
-81 silly gitAdd   '/home/alex/dev/node/pkg/isomor/packages/isomor-react-app/package.json',
-81 silly gitAdd   '/home/alex/dev/node/pkg/isomor/packages/isomor-vue-app/package.json',
-81 silly gitAdd   '/home/alex/dev/node/pkg/isomor/packages/isomor/package.json',
-81 silly gitAdd   '/home/alex/dev/node/pkg/isomor/packages/isomor-babel/package.json',
-81 silly gitAdd   '/home/alex/dev/node/pkg/isomor/packages/example/react-validator/package.json',
-81 silly gitAdd   '/home/alex/dev/node/pkg/isomor/packages/example/react/package.json',
-81 silly gitAdd   '/home/alex/dev/node/pkg/isomor/packages/example/react-typeorm/package.json',
-81 silly gitAdd   '/home/alex/dev/node/pkg/isomor/packages/ci-test/react-app/package.json',
-81 silly gitAdd   '/home/alex/dev/node/pkg/isomor/lerna.json' ]
-82 silly gitCommit v0.9.1
-83 verbose git [ 'commit', '-m', 'v0.9.1' ]
-84 silly gitTag v0.9.1
-85 verbose git [ 'tag', 'v0.9.1', '-m', 'v0.9.1' ]
-86 silly lifecycle No script for "postversion" in "isomor-babel", continuing
-87 silly lifecycle No script for "postversion" in "isomor-react-app", continuing
-88 silly lifecycle No script for "postversion" in "isomor-transpiler", continuing
-89 silly lifecycle No script for "postversion" in "isomor-vue-app", continuing
-90 silly lifecycle No script for "postversion" in "isomor", continuing
-91 silly lifecycle No script for "postversion" in "ci-test-react-app", continuing
-92 silly lifecycle No script for "postversion" in "isomor-example-react-typeorm", continuing
-93 silly lifecycle No script for "postversion" in "isomor-example-react-validator", continuing
-94 silly lifecycle No script for "postversion" in "isomor-example-react", continuing
-95 silly lifecycle No script for "postversion" in "isomor-monorepo", continuing
-96 info git Pushing tags...
-97 silly gitPush origin master
-98 silly batched [ PackageGraphNode {
-98 silly batched     name: 'isomor-react-app',
-98 silly batched     externalDependencies:
-98 silly batched      Map {
-98 silly batched        'chalk' => [Object],
-98 silly batched        'fs-extra' => [Object],
-98 silly batched        'logol' => [Object],
-98 silly batched        'minimist' => [Object],
-98 silly batched        'ts-node' => [Object],
-98 silly batched        'typescript' => [Object] },
-98 silly batched     localDependencies: Map {},
-98 silly batched     localDependents: Map {} },
-98 silly batched   PackageGraphNode {
-98 silly batched     name: 'isomor-transpiler',
-98 silly batched     externalDependencies:
-98 silly batched      Map {
-98 silly batched        '@babel/generator' => [Object],
-98 silly batched        '@babel/parser' => [Object],
-98 silly batched        '@babel/plugin-syntax-typescript' => [Object],
-98 silly batched        '@types/chokidar' => [Object],
-98 silly batched        'anymatch' => [Object],
-98 silly batched        'chokidar' => [Object],
-98 silly batched        'debug' => [Object],
-98 silly batched        'fs-extra' => [Object],
-98 silly batched        'isomor-core' => [Object],
-98 silly batched        'logol' => [Object],
-98 silly batched        'please-upgrade-node' => [Object],
-98 silly batched        'traverse' => [Object],
-98 silly batched        'ts-node' => [Object],
-98 silly batched        'typescript' => [Object] },
-98 silly batched     localDependencies: Map {},
-98 silly batched     localDependents:
-98 silly batched      Map {
-98 silly batched        'isomor-babel' => [PackageGraphNode],
-98 silly batched        'isomor' => [PackageGraphNode] } },
-98 silly batched   PackageGraphNode {
-98 silly batched     name: 'isomor-vue-app',
-98 silly batched     externalDependencies:
-98 silly batched      Map {
-98 silly batched        'chalk' => [Object],
-98 silly batched        'fs-extra' => [Object],
-98 silly batched        'logol' => [Object],
-98 silly batched        'minimist' => [Object],
-98 silly batched        'ts-node' => [Object],
-98 silly batched        'typescript' => [Object] },
-98 silly batched     localDependencies: Map {},
-98 silly batched     localDependents: Map {} } ]
-99 silly batched [ PackageGraphNode {
-99 silly batched     name: 'isomor-babel',
-99 silly batched     externalDependencies: Map { 'typescript' => [Object] },
-99 silly batched     localDependencies: Map {},
-99 silly batched     localDependents: Map {} },
-99 silly batched   PackageGraphNode {
-99 silly batched     name: 'isomor',
-99 silly batched     externalDependencies:
-99 silly batched      Map {
-99 silly batched        'axios' => [Object],
-99 silly batched        'isomor-server' => [Object],
-99 silly batched        'typescript' => [Object] },
-99 silly batched     localDependencies: Map {},
-99 silly batched     localDependents: Map {} } ]
-100 info publish Publishing packages to npm...
-101 info Verifying npm credentials
-102 verbose Retrieving npm user profile
-103 http fetch GET 200 https://registry.npmjs.org/-/npm/v1/user 1847ms
-104 silly npm profile get received {"tfa":false,"name":"apiel","email":"alexandre.piel@gmail.com","email_verified":true,"created":"2016-10-06T13:11:36.503Z","updated":"2018-10-01T15:27:27.089Z","cidr_whitelist":null,"fullname":"Alexandre Piel","twitter":"","github":"apiel"}
-105 silly npm profile get received {"username":"apiel"}
-106 silly verifyNpmPackageAccess
-107 http fetch GET 200 https://registry.npmjs.org/-/org/apiel/package?format=cli 1031ms
-108 warn ENOLICENSE Packages isomor-babel, isomor-react-app, isomor-transpiler, isomor-vue-app, and isomor are missing a license.
-108 warn ENOLICENSE One way to fix this is to add a LICENSE.md file to the root of this repository.
-108 warn ENOLICENSE See https://choosealicense.com for additional guidance.
-109 silly getCurrentSHA
-110 verbose getCurrentSHA 62840b589778baa9eaf6765eb1699f007911456b
-111 silly lifecycle No script for "prepublish" in "isomor-monorepo", continuing
-112 silly lifecycle No script for "prepare" in "isomor-monorepo", continuing
-113 silly lifecycle No script for "prepublishOnly" in "isomor-monorepo", continuing
-114 silly lifecycle No script for "prepack" in "isomor-monorepo", continuing
-115 verbose pack-directory ../isomor-react-app
-116 verbose pack-directory
-117 verbose pack-directory ../isomor-vue-app
-118 silly lifecycle No script for "prepublish" in "isomor-react-app", continuing
-119 silly lifecycle No script for "prepublish" in "isomor-transpiler", continuing
-120 silly lifecycle No script for "prepublish" in "isomor-vue-app", continuing
-121 silly lifecycle No script for "prepare" in "isomor-react-app", continuing
-122 silly lifecycle No script for "prepare" in "isomor-transpiler", continuing
-123 silly lifecycle No script for "prepare" in "isomor-vue-app", continuing
-124 silly lifecycle "prepublishOnly" starting in "isomor-react-app"
-125 info lifecycle isomor-react-app@0.9.1~prepublishOnly: isomor-react-app@0.9.1
-126 silly lifecycle "prepublishOnly" starting in "isomor-transpiler"
-127 info lifecycle isomor-transpiler@0.9.1~prepublishOnly: isomor-transpiler@0.9.1
-128 silly lifecycle "prepublishOnly" starting in "isomor-vue-app"
-129 info lifecycle isomor-vue-app@0.9.1~prepublishOnly: isomor-vue-app@0.9.1
-130 verbose lifecycle isomor-react-app@0.9.1~prepublishOnly: unsafe-perm in lifecycle true
-131 verbose lifecycle isomor-react-app@0.9.1~prepublishOnly: PATH: /home/alex/dev/node/pkg/isomor/node_modules/npm-lifecycle/node-gyp-bin:/home/alex/dev/node/pkg/isomor/packages/isomor-react-app/node_modules/.bin:/home/alex/.nvm/versions/node/v11.10.1/bin:/home/alex/.cargo/bin:/home/alex/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/alex/dev/esp/esp-open-sdk/xtensa-lx106-elf/bin:/home/alex/dev/esp/esp-open-sdk/esptool:/home/alex/dev/esp/esp-open-sdk/xtensa-lx106-elf/bin:/home/alex/dev/esp/esp-open-sdk/esptool:/home/alex/dev/nrf5/gcc-arm-none-eabi-7-2017-q4-major/bin:/home/alex/dev/nrf5/nRF5x-Command-Line-Tools_9_7_2_Linux-x86_64/nrfjprog
-132 verbose lifecycle isomor-react-app@0.9.1~prepublishOnly: CWD: /home/alex/dev/node/pkg/isomor/packages/isomor-react-app
-133 silly lifecycle isomor-react-app@0.9.1~prepublishOnly: Args: [ '-c',
-133 silly lifecycle   'cp ../../Readme.sub.md ./README.md && cp ../example/react/tsconfig.server.json . && cp ../example/react/package.json ./package-copy.json && yarn build' ]
-134 silly lifecycle isomor-react-app@0.9.1~prepublishOnly: Returned: code: 0  signal: null
-135 verbose lifecycle isomor-transpiler@0.9.1~prepublishOnly: unsafe-perm in lifecycle true
-136 verbose lifecycle isomor-transpiler@0.9.1~prepublishOnly: PATH: /home/alex/dev/node/pkg/isomor/node_modules/npm-lifecycle/node-gyp-bin:/home/alex/dev/node/pkg/isomor/packages/isomor-transpiler/node_modules/.bin:/home/alex/.nvm/versions/node/v11.10.1/bin:/home/alex/.cargo/bin:/home/alex/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/alex/dev/esp/esp-open-sdk/xtensa-lx106-elf/bin:/home/alex/dev/esp/esp-open-sdk/esptool:/home/alex/dev/esp/esp-open-sdk/xtensa-lx106-elf/bin:/home/alex/dev/esp/esp-open-sdk/esptool:/home/alex/dev/nrf5/gcc-arm-none-eabi-7-2017-q4-major/bin:/home/alex/dev/nrf5/nRF5x-Command-Line-Tools_9_7_2_Linux-x86_64/nrfjprog
-137 verbose lifecycle isomor-transpiler@0.9.1~prepublishOnly: CWD: /home/alex/dev/node/pkg/isomor/packages/isomor-transpiler
-138 silly lifecycle isomor-transpiler@0.9.1~prepublishOnly: Args: [ '-c', 'cp ../../Readme.sub.md ./README.md && yarn build' ]
-139 silly lifecycle "prepublishOnly" finished in "isomor-react-app"
-140 silly lifecycle No script for "prepack" in "isomor-react-app", continuing
-141 silly lifecycle No script for "postpack" in "isomor-react-app", continuing
-142 verbose packed isomor-react-app packages/isomor-react-app
-143 silly lifecycle isomor-transpiler@0.9.1~prepublishOnly: Returned: code: 0  signal: null
-144 verbose lifecycle isomor-vue-app@0.9.1~prepublishOnly: unsafe-perm in lifecycle true
-145 verbose lifecycle isomor-vue-app@0.9.1~prepublishOnly: PATH: /home/alex/dev/node/pkg/isomor/node_modules/npm-lifecycle/node-gyp-bin:/home/alex/dev/node/pkg/isomor/packages/isomor-vue-app/node_modules/.bin:/home/alex/.nvm/versions/node/v11.10.1/bin:/home/alex/.cargo/bin:/home/alex/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/alex/dev/esp/esp-open-sdk/xtensa-lx106-elf/bin:/home/alex/dev/esp/esp-open-sdk/esptool:/home/alex/dev/esp/esp-open-sdk/xtensa-lx106-elf/bin:/home/alex/dev/esp/esp-open-sdk/esptool:/home/alex/dev/nrf5/gcc-arm-none-eabi-7-2017-q4-major/bin:/home/alex/dev/nrf5/nRF5x-Command-Line-Tools_9_7_2_Linux-x86_64/nrfjprog
-146 verbose lifecycle isomor-vue-app@0.9.1~prepublishOnly: CWD: /home/alex/dev/node/pkg/isomor/packages/isomor-vue-app
-147 silly lifecycle isomor-vue-app@0.9.1~prepublishOnly: Args: [ '-c',
-147 silly lifecycle   'cp ../../Readme.sub.md ./README.md && cp ../example/vue/tsconfig.server.json . && cp ../example/vue/package.json ./package-copy.json && yarn build' ]
-148 silly lifecycle "prepublishOnly" finished in "isomor-transpiler"
-149 silly lifecycle No script for "prepack" in "isomor-transpiler", continuing
-150 silly lifecycle No script for "postpack" in "isomor-transpiler", continuing
-151 verbose packed isomor-transpiler packages/isomor-transpiler
-152 silly lifecycle isomor-vue-app@0.9.1~prepublishOnly: Returned: code: 0  signal: null
-153 silly lifecycle "prepublishOnly" finished in "isomor-vue-app"
-154 silly lifecycle No script for "prepack" in "isomor-vue-app", continuing
-155 silly lifecycle No script for "postpack" in "isomor-vue-app", continuing
-156 verbose packed isomor-vue-app packages/isomor-vue-app
-157 verbose pack-directory ../isomor-babel
-158 verbose pack-directory ../isomor
-159 silly lifecycle No script for "prepublish" in "isomor-babel", continuing
-160 silly lifecycle No script for "prepublish" in "isomor", continuing
-161 silly lifecycle No script for "prepare" in "isomor-babel", continuing
-162 silly lifecycle No script for "prepare" in "isomor", continuing
-163 silly lifecycle "prepublishOnly" starting in "isomor-babel"
-164 info lifecycle isomor-babel@0.9.1~prepublishOnly: isomor-babel@0.9.1
-165 silly lifecycle "prepublishOnly" starting in "isomor"
-166 info lifecycle isomor@0.9.1~prepublishOnly: isomor@0.9.1
-167 verbose lifecycle isomor-babel@0.9.1~prepublishOnly: unsafe-perm in lifecycle true
-168 verbose lifecycle isomor-babel@0.9.1~prepublishOnly: PATH: /home/alex/dev/node/pkg/isomor/node_modules/npm-lifecycle/node-gyp-bin:/home/alex/dev/node/pkg/isomor/packages/isomor-babel/node_modules/.bin:/home/alex/.nvm/versions/node/v11.10.1/bin:/home/alex/.cargo/bin:/home/alex/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/alex/dev/esp/esp-open-sdk/xtensa-lx106-elf/bin:/home/alex/dev/esp/esp-open-sdk/esptool:/home/alex/dev/esp/esp-open-sdk/xtensa-lx106-elf/bin:/home/alex/dev/esp/esp-open-sdk/esptool:/home/alex/dev/nrf5/gcc-arm-none-eabi-7-2017-q4-major/bin:/home/alex/dev/nrf5/nRF5x-Command-Line-Tools_9_7_2_Linux-x86_64/nrfjprog
-169 verbose lifecycle isomor-babel@0.9.1~prepublishOnly: CWD: /home/alex/dev/node/pkg/isomor/packages/isomor-babel
-170 silly lifecycle isomor-babel@0.9.1~prepublishOnly: Args: [ '-c', 'cp ../../Readme.sub.md ./README.md && yarn build' ]
-171 silly lifecycle isomor-babel@0.9.1~prepublishOnly: Returned: code: 0  signal: null
-172 verbose lifecycle isomor@0.9.1~prepublishOnly: unsafe-perm in lifecycle true
-173 verbose lifecycle isomor@0.9.1~prepublishOnly: PATH: /home/alex/dev/node/pkg/isomor/node_modules/npm-lifecycle/node-gyp-bin:/home/alex/dev/node/pkg/isomor/packages/isomor/node_modules/.bin:/home/alex/.nvm/versions/node/v11.10.1/bin:/home/alex/.cargo/bin:/home/alex/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/alex/dev/esp/esp-open-sdk/xtensa-lx106-elf/bin:/home/alex/dev/esp/esp-open-sdk/esptool:/home/alex/dev/esp/esp-open-sdk/xtensa-lx106-elf/bin:/home/alex/dev/esp/esp-open-sdk/esptool:/home/alex/dev/nrf5/gcc-arm-none-eabi-7-2017-q4-major/bin:/home/alex/dev/nrf5/nRF5x-Command-Line-Tools_9_7_2_Linux-x86_64/nrfjprog
-174 verbose lifecycle isomor@0.9.1~prepublishOnly: CWD: /home/alex/dev/node/pkg/isomor/packages/isomor
-175 silly lifecycle isomor@0.9.1~prepublishOnly: Args: [ '-c', 'cp ../../README.md . && yarn build' ]
-176 silly lifecycle "prepublishOnly" finished in "isomor-babel"
-177 silly lifecycle No script for "prepack" in "isomor-babel", continuing
-178 silly lifecycle No script for "postpack" in "isomor-babel", continuing
-179 verbose packed isomor-babel packages/isomor-babel
-180 silly lifecycle isomor@0.9.1~prepublishOnly: Returned: code: 0  signal: null
-181 silly lifecycle "prepublishOnly" finished in "isomor"
-182 silly lifecycle No script for "prepack" in "isomor", continuing
-183 error ZlibError: zlib: unexpected end of file
-183 error     at Unzip.Zlib.(anonymous function) (/home/alex/dev/node/pkg/isomor/node_modules/minizlib/index.js:126:21)
-183 error     at Unzip.write (/home/alex/dev/node/pkg/isomor/node_modules/minizlib/index.js:247:21)
-183 error     at Unzip.flush (/home/alex/dev/node/pkg/isomor/node_modules/minizlib/index.js:206:10)
-183 error     at Unzip.end (/home/alex/dev/node/pkg/isomor/node_modules/minizlib/index.js:213:10)
-183 error     at Object.end (/home/alex/dev/node/pkg/isomor/node_modules/tar/lib/parse.js:416:21)
-183 error     at Yallist.pipes.forEach.p (/home/alex/dev/node/pkg/isomor/node_modules/minipass/index.js:288:18)
-183 error     at Yallist.forEach (/home/alex/dev/node/pkg/isomor/node_modules/yallist/yallist.js:154:8)
-183 error     at ReadStream.emit (/home/alex/dev/node/pkg/isomor/node_modules/minipass/index.js:285:18)
-183 error     at ReadStream.emit (/home/alex/dev/node/pkg/isomor/node_modules/fs-minipass/index.js:153:22)
-183 error     at ReadStream.[maybeEmitEnd] (/home/alex/dev/node/pkg/isomor/node_modules/minipass/index.js:255:12)
-183 error     at ReadStream.end (/home/alex/dev/node/pkg/isomor/node_modules/minipass/index.js:165:27)
-183 error     at ReadStream.[_handleChunk] (/home/alex/dev/node/pkg/isomor/node_modules/fs-minipass/index.js:135:13)
-183 error     at ReadStream.[_onread] (/home/alex/dev/node/pkg/isomor/node_modules/fs-minipass/index.js:108:32)
-183 error     at fs.read (/home/alex/dev/node/pkg/isomor/node_modules/fs-minipass/index.js:100:22)
+3 warn ECYCLE Dependency cycles detected, you should fix these!
+3 warn ECYCLE isomor-server -> isomor -> isomor-server
+3 warn ECYCLE isomor-transpiler -> isomor -> isomor-server -> isomor
+3 warn ECYCLE ci-test-react-app -> isomor -> isomor-server -> isomor
+3 warn ECYCLE isomor-example-vue -> isomor -> isomor-server -> isomor
+3 warn ECYCLE isomor-server -> isomor -> isomor-transpiler -> isomor
+3 warn ECYCLE isomor-transpiler -> isomor -> isomor-transpiler
+3 warn ECYCLE ci-test-react-app -> isomor -> isomor-transpiler -> isomor
+3 warn ECYCLE isomor-example-vue -> isomor -> isomor-transpiler -> isomor
+3 warn ECYCLE isomor -> isomor-server -> isomor
+3 warn ECYCLE isomor-example-ng-nest -> isomor-server -> isomor -> isomor-server
+3 warn ECYCLE isomor-example-react-auth -> isomor-server -> isomor -> isomor-server
+3 warn ECYCLE isomor-example-react-typeorm -> isomor-server -> isomor -> isomor-server
+3 warn ECYCLE isomor-example-react-validator -> isomor-server -> isomor -> isomor-server
+3 warn ECYCLE isomor-example-react -> isomor-server -> isomor -> isomor-server
+3 warn ECYCLE isomor-babel -> isomor-transpiler -> isomor -> isomor-transpiler
+4 silly batched [
+4 silly batched   PackageGraphNode {
+4 silly batched     name: 'isomor-core',
+4 silly batched     externalDependencies: Map {
+4 silly batched       '@types/dotenv' => [Object],
+4 silly batched       '@types/find-up' => [Object],
+4 silly batched       '@types/fs-extra' => [Object],
+4 silly batched       '@types/glob' => [Object],
+4 silly batched       '@types/jest' => [Object],
+4 silly batched       '@types/rimraf' => [Object],
+4 silly batched       'jest' => [Object],
+4 silly batched       'rimraf' => [Object],
+4 silly batched       'ts-jest' => [Object],
+4 silly batched       'tslint' => [Object],
+4 silly batched       'dotenv' => [Object],
+4 silly batched       'find-up' => [Object],
+4 silly batched       'fs-extra' => [Object],
+4 silly batched       'glob' => [Object],
+4 silly batched       'typescript' => [Object]
+4 silly batched     },
+4 silly batched     localDependencies: Map {},
+4 silly batched     localDependents: Map {
+4 silly batched       'isomor-ng-nest' => [PackageGraphNode],
+4 silly batched       'isomor-react-app' => [PackageGraphNode],
+4 silly batched       'isomor-vue-app' => [PackageGraphNode]
+4 silly batched     }
+4 silly batched   },
+4 silly batched   PackageGraphNode {
+4 silly batched     name: 'isomor-json-schema-generator',
+4 silly batched     externalDependencies: Map {
+4 silly batched       '@types/find-up' => [Object],
+4 silly batched       '@types/glob' => [Object],
+4 silly batched       '@types/jest' => [Object],
+4 silly batched       '@types/json-stable-stringify' => [Object],
+4 silly batched       'ajv' => [Object],
+4 silly batched       'chai' => [Object],
+4 silly batched       'jest' => [Object],
+4 silly batched       'jest-junit' => [Object],
+4 silly batched       'source-map-support' => [Object],
+4 silly batched       'ts-jest' => [Object],
+4 silly batched       'ts-node' => [Object],
+4 silly batched       'tslint' => [Object],
+4 silly batched       '@types/node' => [Object],
+4 silly batched       'commander' => [Object],
+4 silly batched       'find-up' => [Object],
+4 silly batched       'glob' => [Object],
+4 silly batched       'json-stable-stringify' => [Object],
+4 silly batched       'typescript' => [Object]
+4 silly batched     },
+4 silly batched     localDependencies: Map {},
+4 silly batched     localDependents: Map {}
+4 silly batched   }
+4 silly batched ]
+5 silly batched [
+5 silly batched   PackageGraphNode {
+5 silly batched     name: 'isomor-ng-nest',
+5 silly batched     externalDependencies: Map {
+5 silly batched       '@types/chalk' => [Object],
+5 silly batched       '@types/fs-extra' => [Object],
+5 silly batched       '@types/minimist' => [Object],
+5 silly batched       '@types/node' => [Object],
+5 silly batched       '@types/rimraf' => [Object],
+5 silly batched       'rimraf' => [Object],
+5 silly batched       'tslint' => [Object],
+5 silly batched       'chalk' => [Object],
+5 silly batched       'fs-extra' => [Object],
+5 silly batched       'logol' => [Object],
+5 silly batched       'minimist' => [Object],
+5 silly batched       'please-upgrade-node' => [Object],
+5 silly batched       'ts-node' => [Object],
+5 silly batched       'typescript' => [Object]
+5 silly batched     },
+5 silly batched     localDependencies: Map {},
+5 silly batched     localDependents: Map {}
+5 silly batched   },
+5 silly batched   PackageGraphNode {
+5 silly batched     name: 'isomor-react-app',
+5 silly batched     externalDependencies: Map {
+5 silly batched       '@types/chalk' => [Object],
+5 silly batched       '@types/fs-extra' => [Object],
+5 silly batched       '@types/minimist' => [Object],
+5 silly batched       '@types/node' => [Object],
+5 silly batched       '@types/rimraf' => [Object],
+5 silly batched       'rimraf' => [Object],
+5 silly batched       'tslint' => [Object],
+5 silly batched       'chalk' => [Object],
+5 silly batched       'fs-extra' => [Object],
+5 silly batched       'logol' => [Object],
+5 silly batched       'minimist' => [Object],
+5 silly batched       'please-upgrade-node' => [Object],
+5 silly batched       'ts-node' => [Object],
+5 silly batched       'typescript' => [Object]
+5 silly batched     },
+5 silly batched     localDependencies: Map {},
+5 silly batched     localDependents: Map {}
+5 silly batched   },
+5 silly batched   PackageGraphNode {
+5 silly batched     name: 'isomor-vue-app',
+5 silly batched     externalDependencies: Map {
+5 silly batched       '@types/chalk' => [Object],
+5 silly batched       '@types/fs-extra' => [Object],
+5 silly batched       '@types/minimist' => [Object],
+5 silly batched       '@types/node' => [Object],
+5 silly batched       '@types/rimraf' => [Object],
+5 silly batched       'rimraf' => [Object],
+5 silly batched       'tslint' => [Object],
+5 silly batched       'chalk' => [Object],
+5 silly batched       'fs-extra' => [Object],
+5 silly batched       'logol' => [Object],
+5 silly batched       'minimist' => [Object],
+5 silly batched       'please-upgrade-node' => [Object],
+5 silly batched       'ts-node' => [Object],
+5 silly batched       'typescript' => [Object]
+5 silly batched     },
+5 silly batched     localDependencies: Map {},
+5 silly batched     localDependents: Map {}
+5 silly batched   }
+5 silly batched ]
+6 silly npmConfig {
+6 silly npmConfig   registry: undefined,
+6 silly npmConfig   npmClient: 'npm',
+6 silly npmConfig   npmClientArgs: [],
+6 silly npmConfig   mutex: undefined
+6 silly npmConfig }
+7 info Bootstrapping 16 packages
+8 verbose lifecycle preinstall
+9 silly lifecycle No script for "preinstall" in "isomor-core", continuing
+10 silly lifecycle No script for "preinstall" in "isomor-json-schema-generator", continuing
+11 silly lifecycle No script for "preinstall" in "isomor-ng-nest", continuing
+12 silly lifecycle No script for "preinstall" in "isomor-react-app", continuing
+13 silly lifecycle No script for "preinstall" in "isomor-vue-app", continuing
+14 silly lifecycle No script for "preinstall" in "isomor-transpiler", continuing
+15 silly lifecycle No script for "preinstall" in "isomor-server", continuing
+16 silly lifecycle No script for "preinstall" in "isomor", continuing
+17 silly lifecycle No script for "preinstall" in "ci-test-react-app", continuing
+18 silly lifecycle No script for "preinstall" in "isomor-example-vue", continuing
+19 silly lifecycle No script for "preinstall" in "isomor-example-ng-nest", continuing
+20 silly lifecycle No script for "preinstall" in "isomor-example-react-auth", continuing
+21 silly lifecycle No script for "preinstall" in "isomor-example-react-typeorm", continuing
+22 silly lifecycle No script for "preinstall" in "isomor-example-react-validator", continuing
+23 silly lifecycle No script for "preinstall" in "isomor-example-react", continuing
+24 silly lifecycle No script for "preinstall" in "isomor-babel", continuing
+25 silly hasDependencyInstalled isomor @types/inquirer
+26 silly hasDependencyInstalled isomor inquirer
+27 silly hasDependencyInstalled isomor-babel @babel/core
+28 silly hasDependencyInstalled isomor-babel @babel/preset-typescript
+29 silly hasDependencyInstalled isomor-babel @types/babel__core
+30 silly hasDependencyInstalled isomor-babel @types/rimraf
+31 silly hasDependencyInstalled isomor-core @types/rimraf
+32 silly hasDependencyInstalled isomor-server @types/rimraf
+33 silly hasDependencyInstalled isomor-transpiler @types/rimraf
+34 silly hasDependencyInstalled isomor-ng-nest @types/rimraf
+35 silly hasDependencyInstalled isomor-react-app @types/rimraf
+36 silly hasDependencyInstalled isomor-vue-app @types/rimraf
+37 silly hasDependencyInstalled isomor-babel rimraf
+38 silly hasDependencyInstalled isomor-example-react-auth rimraf
+39 silly hasDependencyInstalled isomor-example-react-typeorm rimraf
+40 silly hasDependencyInstalled isomor-example-react-validator rimraf
+41 silly hasDependencyInstalled isomor-core rimraf
+42 silly hasDependencyInstalled isomor-server rimraf
+43 silly hasDependencyInstalled isomor-transpiler rimraf
+44 silly hasDependencyInstalled isomor-example-react rimraf
+45 silly hasDependencyInstalled isomor-ng-nest rimraf
+46 silly hasDependencyInstalled isomor-react-app rimraf
+47 silly hasDependencyInstalled isomor-vue-app rimraf
+48 silly hasDependencyInstalled isomor-babel tslint
+49 silly hasDependencyInstalled isomor-core tslint
+50 silly hasDependencyInstalled isomor-server tslint
+51 silly hasDependencyInstalled isomor-transpiler tslint
+52 silly hasDependencyInstalled isomor tslint
+53 silly hasDependencyInstalled isomor-ng-nest tslint
+54 silly hasDependencyInstalled isomor-react-app tslint
+55 silly hasDependencyInstalled isomor-vue-app tslint
+56 silly hasDependencyInstalled isomor-json-schema-generator tslint
+57 silly hasDependencyInstalled isomor-example-ng-nest tslint
+58 silly hasDependencyInstalled isomor-babel typescript
+59 silly hasDependencyInstalled isomor-example-react-auth typescript
+60 silly hasDependencyInstalled isomor-core typescript
+61 silly hasDependencyInstalled isomor-server typescript
+62 silly hasDependencyInstalled isomor-transpiler typescript
+63 silly hasDependencyInstalled isomor typescript
+64 silly hasDependencyInstalled isomor-example-react typescript
+65 silly hasDependencyInstalled isomor-ng-nest typescript
+66 silly hasDependencyInstalled isomor-react-app typescript
+67 silly hasDependencyInstalled isomor-vue-app typescript
+68 silly hasDependencyInstalled isomor-json-schema-generator typescript
+69 silly hasDependencyInstalled ci-test-react-app typescript
+70 silly hasDependencyInstalled isomor-example-ng-nest typescript
+71 silly hasDependencyInstalled isomor-example-react-typeorm typescript
+72 silly hasDependencyInstalled isomor-example-react-validator typescript
+73 silly hasDependencyInstalled isomor-example-vue typescript
+74 silly hasDependencyInstalled isomor-core @types/dotenv
+75 silly hasDependencyInstalled isomor-core @types/find-up
+76 silly hasDependencyInstalled isomor-json-schema-generator @types/find-up
+77 silly hasDependencyInstalled isomor-core @types/fs-extra
+78 silly hasDependencyInstalled isomor-server @types/fs-extra
+79 silly hasDependencyInstalled isomor-transpiler @types/fs-extra
+80 silly hasDependencyInstalled isomor-example-react @types/fs-extra
+81 silly hasDependencyInstalled isomor-ng-nest @types/fs-extra
+82 silly hasDependencyInstalled isomor-react-app @types/fs-extra
+83 silly hasDependencyInstalled isomor-vue-app @types/fs-extra
+84 silly hasDependencyInstalled ci-test-react-app @types/fs-extra
+85 silly hasDependencyInstalled isomor-example-react-typeorm @types/fs-extra
+86 silly hasDependencyInstalled isomor-example-vue @types/fs-extra
+87 silly hasDependencyInstalled isomor-core @types/glob
+88 silly hasDependencyInstalled isomor-json-schema-generator @types/glob
+89 silly hasDependencyInstalled isomor-core @types/jest
+90 silly hasDependencyInstalled isomor-transpiler @types/jest
+91 silly hasDependencyInstalled isomor-json-schema-generator @types/jest
+92 silly hasDependencyInstalled ci-test-react-app @types/jest
+93 silly hasDependencyInstalled isomor-example-react-auth @types/jest
+94 silly hasDependencyInstalled isomor-example-react-typeorm @types/jest
+95 silly hasDependencyInstalled isomor-example-react-validator @types/jest
+96 silly hasDependencyInstalled isomor-example-react @types/jest
+97 silly hasDependencyInstalled isomor-core jest
+98 silly hasDependencyInstalled isomor-transpiler jest
+99 silly hasDependencyInstalled isomor-json-schema-generator jest
+100 silly hasDependencyInstalled isomor-core ts-jest
+101 silly hasDependencyInstalled isomor-transpiler ts-jest
+102 silly hasDependencyInstalled isomor-json-schema-generator ts-jest
+103 silly hasDependencyInstalled isomor-core dotenv
+104 silly hasDependencyInstalled isomor-core find-up
+105 silly hasDependencyInstalled isomor-json-schema-generator find-up
+106 silly hasDependencyInstalled isomor-core fs-extra
+107 silly hasDependencyInstalled isomor-server fs-extra
+108 silly hasDependencyInstalled isomor-transpiler fs-extra
+109 silly hasDependencyInstalled isomor-example-react fs-extra
+110 silly hasDependencyInstalled isomor-ng-nest fs-extra
+111 silly hasDependencyInstalled isomor-react-app fs-extra
+112 silly hasDependencyInstalled isomor-vue-app fs-extra
+113 silly hasDependencyInstalled ci-test-react-app fs-extra
+114 silly hasDependencyInstalled isomor-example-react-typeorm fs-extra
+115 silly hasDependencyInstalled isomor-example-vue fs-extra
+116 silly hasDependencyInstalled isomor-core glob
+117 silly hasDependencyInstalled isomor-json-schema-generator glob
+118 silly hasDependencyInstalled isomor-json-schema-generator @types/json-stable-stringify
+119 silly hasDependencyInstalled isomor-json-schema-generator ajv
+120 silly hasDependencyInstalled isomor-server ajv
+121 silly hasDependencyInstalled isomor-json-schema-generator chai
+122 silly hasDependencyInstalled isomor-json-schema-generator jest-junit
+123 silly hasDependencyInstalled isomor-json-schema-generator source-map-support
+124 silly hasDependencyInstalled isomor-json-schema-generator ts-node
+125 silly hasDependencyInstalled isomor-server ts-node
+126 silly hasDependencyInstalled isomor-transpiler ts-node
+127 silly hasDependencyInstalled isomor ts-node
+128 silly hasDependencyInstalled isomor-example-react ts-node
+129 silly hasDependencyInstalled isomor-ng-nest ts-node
+130 silly hasDependencyInstalled isomor-react-app ts-node
+131 silly hasDependencyInstalled isomor-vue-app ts-node
+132 silly hasDependencyInstalled isomor-example-ng-nest ts-node
+133 silly hasDependencyInstalled isomor-example-react-auth ts-node
+134 silly hasDependencyInstalled isomor-example-react-typeorm ts-node
+135 silly hasDependencyInstalled isomor-example-react-validator ts-node
+136 silly hasDependencyInstalled isomor-json-schema-generator @types/node
+137 silly hasDependencyInstalled isomor-example-ng-nest @types/node
+138 silly hasDependencyInstalled isomor-example-react-typeorm @types/node
+139 silly hasDependencyInstalled isomor-example-react-validator @types/node
+140 silly hasDependencyInstalled isomor-server @types/node
+141 silly hasDependencyInstalled isomor-transpiler @types/node
+142 silly hasDependencyInstalled isomor-ng-nest @types/node
+143 silly hasDependencyInstalled isomor-react-app @types/node
+144 silly hasDependencyInstalled isomor-vue-app @types/node
+145 silly hasDependencyInstalled ci-test-react-app @types/node
+146 silly hasDependencyInstalled isomor-example-react-auth @types/node
+147 silly hasDependencyInstalled isomor-example-react @types/node
+148 silly hasDependencyInstalled isomor-json-schema-generator commander
+149 silly hasDependencyInstalled isomor-json-schema-generator json-stable-stringify
+150 silly hasDependencyInstalled isomor-server @types/ajv
+151 silly hasDependencyInstalled isomor-server @types/body-parser
+152 silly hasDependencyInstalled isomor-server @types/cookie-parser
+153 silly hasDependencyInstalled isomor-server @types/express-serve-static-core
+154 silly hasDependencyInstalled isomor-server @types/swagger-ui-express
+155 silly hasDependencyInstalled isomor-server @types/morgan
+156 silly hasDependencyInstalled isomor-server @types/ws
+157 silly hasDependencyInstalled isomor-server body-parser
+158 silly hasDependencyInstalled isomor-server cookie-parser
+159 silly hasDependencyInstalled isomor-server express
+160 silly hasDependencyInstalled isomor-server logol
+161 silly hasDependencyInstalled isomor-transpiler logol
+162 silly hasDependencyInstalled isomor-ng-nest logol
+163 silly hasDependencyInstalled isomor-react-app logol
+164 silly hasDependencyInstalled isomor-vue-app logol
+165 silly hasDependencyInstalled isomor-server morgan
+166 silly hasDependencyInstalled isomor-server please-upgrade-node
+167 silly hasDependencyInstalled isomor-transpiler please-upgrade-node
+168 silly hasDependencyInstalled isomor-ng-nest please-upgrade-node
+169 silly hasDependencyInstalled isomor-react-app please-upgrade-node
+170 silly hasDependencyInstalled isomor-vue-app please-upgrade-node
+171 silly hasDependencyInstalled isomor-server swagger-ui-express
+172 silly hasDependencyInstalled isomor-server ws
+173 silly hasDependencyInstalled isomor-transpiler @types/anymatch
+174 silly hasDependencyInstalled isomor-transpiler @types/babel__generator
+175 silly hasDependencyInstalled isomor-transpiler @types/debug
+176 silly hasDependencyInstalled isomor-transpiler @babel/generator
+177 silly hasDependencyInstalled isomor-transpiler @babel/parser
+178 silly hasDependencyInstalled isomor-transpiler @babel/plugin-syntax-typescript
+179 silly hasDependencyInstalled isomor-transpiler @types/chokidar
+180 silly hasDependencyInstalled isomor-transpiler anymatch
+181 silly hasDependencyInstalled isomor-transpiler chokidar
+182 silly hasDependencyInstalled isomor-transpiler debug
+183 silly hasDependencyInstalled isomor-transpiler traverse
+184 silly hasDependencyInstalled isomor @types/axios
+185 silly hasDependencyInstalled isomor-example-react-auth @types/axios
+186 silly hasDependencyInstalled isomor-example-react-typeorm @types/axios
+187 silly hasDependencyInstalled isomor-example-react-validator @types/axios
+188 silly hasDependencyInstalled isomor-example-react @types/axios
+189 silly hasDependencyInstalled isomor @types/chalk
+190 silly hasDependencyInstalled isomor-ng-nest @types/chalk
+191 silly hasDependencyInstalled isomor-react-app @types/chalk
+192 silly hasDependencyInstalled isomor-vue-app @types/chalk
+193 silly hasDependencyInstalled isomor axios
+194 silly hasDependencyInstalled isomor chalk
+195 silly hasDependencyInstalled isomor-ng-nest chalk
+196 silly hasDependencyInstalled isomor-react-app chalk
+197 silly hasDependencyInstalled isomor-vue-app chalk
+198 silly hasDependencyInstalled ci-test-react-app @types/jest-environment-puppeteer
+199 silly hasDependencyInstalled ci-test-react-app jest-puppeteer
+200 silly hasDependencyInstalled ci-test-react-app nodemon
+201 silly hasDependencyInstalled isomor-example-react-auth nodemon
+202 silly hasDependencyInstalled isomor-example-ng-nest nodemon
+203 silly hasDependencyInstalled isomor-example-vue nodemon
+204 silly hasDependencyInstalled isomor-example-react-typeorm nodemon
+205 silly hasDependencyInstalled isomor-example-react-validator nodemon
+206 silly hasDependencyInstalled isomor-example-react nodemon
+207 silly hasDependencyInstalled ci-test-react-app puppeteer
+208 silly hasDependencyInstalled ci-test-react-app run-screen
+209 silly hasDependencyInstalled isomor-example-ng-nest run-screen
+210 silly hasDependencyInstalled isomor-example-react-auth run-screen
+211 silly hasDependencyInstalled isomor-example-react-typeorm run-screen
+212 silly hasDependencyInstalled isomor-example-react-validator run-screen
+213 silly hasDependencyInstalled isomor-example-react run-screen
+214 silly hasDependencyInstalled isomor-example-vue run-screen
+215 silly hasDependencyInstalled ci-test-react-app @types/react
+216 silly hasDependencyInstalled isomor-example-react-auth @types/react
+217 silly hasDependencyInstalled isomor-example-react-typeorm @types/react
+218 silly hasDependencyInstalled isomor-example-react-validator @types/react
+219 silly hasDependencyInstalled isomor-example-react @types/react
+220 silly hasDependencyInstalled ci-test-react-app @types/react-dom
+221 silly hasDependencyInstalled isomor-example-react-auth @types/react-dom
+222 silly hasDependencyInstalled isomor-example-react-typeorm @types/react-dom
+223 silly hasDependencyInstalled isomor-example-react-validator @types/react-dom
+224 silly hasDependencyInstalled isomor-example-react @types/react-dom
+225 silly hasDependencyInstalled ci-test-react-app react
+226 silly hasDependencyInstalled isomor-example-react-auth react
+227 silly hasDependencyInstalled isomor-example-react-typeorm react
+228 silly hasDependencyInstalled isomor-example-react-validator react
+229 silly hasDependencyInstalled isomor-example-react react
+230 silly hasDependencyInstalled ci-test-react-app react-async-cache
+231 silly hasDependencyInstalled ci-test-react-app react-dom
+232 silly hasDependencyInstalled isomor-example-react-auth react-dom
+233 silly hasDependencyInstalled isomor-example-react-typeorm react-dom
+234 silly hasDependencyInstalled isomor-example-react-validator react-dom
+235 silly hasDependencyInstalled isomor-example-react react-dom
+236 silly hasDependencyInstalled ci-test-react-app react-scripts
+237 silly hasDependencyInstalled isomor-example-react-auth react-scripts
+238 silly hasDependencyInstalled isomor-example-react-typeorm react-scripts
+239 silly hasDependencyInstalled isomor-example-react-validator react-scripts
+240 silly hasDependencyInstalled isomor-example-react react-scripts
+241 silly hasDependencyInstalled isomor-example-ng-nest @angular-devkit/build-angular
+242 silly hasDependencyInstalled isomor-example-ng-nest @angular/cli
+243 silly hasDependencyInstalled isomor-example-ng-nest @angular/compiler-cli
+244 silly hasDependencyInstalled isomor-example-ng-nest @angular/language-service
+245 silly hasDependencyInstalled isomor-example-ng-nest @types/jasmine
+246 silly hasDependencyInstalled isomor-example-ng-nest @types/jasminewd2
+247 silly hasDependencyInstalled isomor-example-ng-nest codelyzer
+248 silly hasDependencyInstalled isomor-example-ng-nest jasmine-core
+249 silly hasDependencyInstalled isomor-example-ng-nest jasmine-spec-reporter
+250 silly hasDependencyInstalled isomor-example-ng-nest karma
+251 silly hasDependencyInstalled isomor-example-ng-nest karma-chrome-launcher
+252 silly hasDependencyInstalled isomor-example-ng-nest karma-coverage-istanbul-reporter
+253 silly hasDependencyInstalled isomor-example-ng-nest karma-jasmine
+254 silly hasDependencyInstalled isomor-example-ng-nest karma-jasmine-html-reporter
+255 silly hasDependencyInstalled isomor-example-ng-nest protractor
+256 silly hasDependencyInstalled isomor-example-ng-nest @angular/animations
+257 silly hasDependencyInstalled isomor-example-ng-nest @angular/common
+258 silly hasDependencyInstalled isomor-example-ng-nest @angular/compiler
+259 silly hasDependencyInstalled isomor-example-ng-nest @angular/core
+260 silly hasDependencyInstalled isomor-example-ng-nest @angular/forms
+261 silly hasDependencyInstalled isomor-example-ng-nest @angular/platform-browser
+262 silly hasDependencyInstalled isomor-example-ng-nest @angular/platform-browser-dynamic
+263 silly hasDependencyInstalled isomor-example-ng-nest @angular/router
+264 silly hasDependencyInstalled isomor-example-ng-nest @nestjs/common
+265 silly hasDependencyInstalled isomor-example-ng-nest @nestjs/core
+266 silly hasDependencyInstalled isomor-example-ng-nest core-js
+267 silly hasDependencyInstalled isomor-example-vue core-js
+268 silly hasDependencyInstalled isomor-example-ng-nest rxjs
+269 silly hasDependencyInstalled isomor-example-ng-nest tslib
+270 silly hasDependencyInstalled isomor-example-ng-nest zone.js
+271 silly hasDependencyInstalled isomor-example-react-auth @types/express
+272 silly hasDependencyInstalled isomor-example-react-typeorm @types/express
+273 silly hasDependencyInstalled isomor-example-react-validator @types/express
+274 silly hasDependencyInstalled isomor-example-vue @types/express
+275 silly hasDependencyInstalled isomor-example-react-auth @types/express-jwt
+276 silly hasDependencyInstalled isomor-example-react-auth @types/jsonwebtoken
+277 silly hasDependencyInstalled isomor-example-react-auth @types/md5
+278 silly hasDependencyInstalled isomor-example-react-typeorm @types/md5
+279 silly hasDependencyInstalled isomor-example-react-validator @types/md5
+280 silly hasDependencyInstalled isomor-example-react @types/md5
+281 silly hasDependencyInstalled isomor-example-react-auth express-jwt
+282 silly hasDependencyInstalled isomor-example-react-auth jsonwebtoken
+283 silly hasDependencyInstalled isomor-example-react-auth md5
+284 silly hasDependencyInstalled isomor-example-react-typeorm md5
+285 silly hasDependencyInstalled isomor-example-react-validator md5
+286 silly hasDependencyInstalled isomor-example-react md5
+287 silly hasDependencyInstalled isomor-example-react-typeorm reflect-metadata
+288 silly hasDependencyInstalled isomor-example-react-typeorm sqlite3
+289 silly hasDependencyInstalled isomor-example-react-typeorm typeorm
+290 silly hasDependencyInstalled isomor-example-react-validator class-validator
+291 silly hasDependencyInstalled isomor-example-react http-proxy-middleware
+292 silly hasDependencyInstalled isomor-example-vue @vue/cli-plugin-babel
+293 silly hasDependencyInstalled isomor-example-vue @vue/cli-plugin-typescript
+294 silly hasDependencyInstalled isomor-example-vue @vue/cli-service
+295 silly hasDependencyInstalled isomor-example-vue vue-template-compiler
+296 silly hasDependencyInstalled isomor-example-vue vue
+297 silly hasDependencyInstalled isomor-example-vue vue-class-component
+298 silly hasDependencyInstalled isomor-example-vue vue-property-decorator
+299 silly hasDependencyInstalled isomor-ng-nest @types/minimist
+300 silly hasDependencyInstalled isomor-react-app @types/minimist
+301 silly hasDependencyInstalled isomor-vue-app @types/minimist
+302 silly hasDependencyInstalled isomor-ng-nest minimist
+303 silly hasDependencyInstalled isomor-react-app minimist
+304 silly hasDependencyInstalled isomor-vue-app minimist
+305 silly root dependencies {}
+306 silly leaf dependencies {}
+307 info Symlinking packages and binaries
+308 silly resolveSymlink /home/alex/dev/node/pkg/isomor/packages/isomor-babel/node_modules/isomor-transpiler
+309 verbose resolveSymlink [
+309 verbose resolveSymlink   '/home/alex/dev/node/pkg/isomor/packages/isomor-babel/node_modules/isomor-transpiler',
+309 verbose resolveSymlink   '/home/alex/dev/node/pkg/isomor/packages/isomor-transpiler'
+309 verbose resolveSymlink ]
+310 silly createSymlink [
+310 silly createSymlink   '/home/alex/dev/node/pkg/isomor/packages/isomor-transpiler',
+310 silly createSymlink   '/home/alex/dev/node/pkg/isomor/packages/isomor-babel/node_modules/isomor-transpiler',
+310 silly createSymlink   'junction'
+310 silly createSymlink ]
+311 silly createSymbolicLink [
+311 silly createSymbolicLink   '../../isomor-transpiler',
+311 silly createSymbolicLink   '/home/alex/dev/node/pkg/isomor/packages/isomor-babel/node_modules/isomor-transpiler',
+311 silly createSymbolicLink   'junction'
+311 silly createSymbolicLink ]
+312 silly createSymlink [
+312 silly createSymlink   '/home/alex/dev/node/pkg/isomor/packages/isomor-transpiler/dist/index.js',
+312 silly createSymlink   '/home/alex/dev/node/pkg/isomor/packages/isomor-babel/node_modules/.bin/isomor-transpiler',
+312 silly createSymlink   'exec'
+312 silly createSymlink ]
+313 silly createSymbolicLink [
+313 silly createSymbolicLink   '../../../isomor-transpiler/dist/index.js',
+313 silly createSymbolicLink   '/home/alex/dev/node/pkg/isomor/packages/isomor-babel/node_modules/.bin/isomor-transpiler',
+313 silly createSymbolicLink   'file'
+313 silly createSymbolicLink ]
+314 silly actions finished isomor-babel
+315 silly actions finished isomor-core
+316 silly actions finished isomor-json-schema-generator
+317 silly resolveSymlink /home/alex/dev/node/pkg/isomor/packages/isomor-server/node_modules/isomor
+318 verbose resolveSymlink [
+318 verbose resolveSymlink   '/home/alex/dev/node/pkg/isomor/packages/isomor-server/node_modules/isomor',
+318 verbose resolveSymlink   '/home/alex/dev/node/pkg/isomor/packages/isomor'
+318 verbose resolveSymlink ]
+319 silly createSymlink [
+319 silly createSymlink   '/home/alex/dev/node/pkg/isomor/packages/isomor',
+319 silly createSymlink   '/home/alex/dev/node/pkg/isomor/packages/isomor-server/node_modules/isomor',
+319 silly createSymlink   'junction'
+319 silly createSymlink ]
+320 silly createSymbolicLink [
+320 silly createSymbolicLink   '../../isomor',
+320 silly createSymbolicLink   '/home/alex/dev/node/pkg/isomor/packages/isomor-server/node_modules/isomor',
+320 silly createSymbolicLink   'junction'
+320 silly createSymbolicLink ]
+321 silly resolveSymlink /home/alex/dev/node/pkg/isomor/packages/isomor-server/node_modules/isomor-core
+322 verbose resolveSymlink [
+322 verbose resolveSymlink   '/home/alex/dev/node/pkg/isomor/packages/isomor-server/node_modules/isomor-core',
+322 verbose resolveSymlink   '/home/alex/dev/node/pkg/isomor/packages/isomor-core'
+322 verbose resolveSymlink ]
+323 silly createSymlink [
+323 silly createSymlink   '/home/alex/dev/node/pkg/isomor/packages/isomor-core',
+323 silly createSymlink   '/home/alex/dev/node/pkg/isomor/packages/isomor-server/node_modules/isomor-core',
+323 silly createSymlink   'junction'
+323 silly createSymlink ]
+324 silly createSymbolicLink [
+324 silly createSymbolicLink   '../../isomor-core',
+324 silly createSymbolicLink   '/home/alex/dev/node/pkg/isomor/packages/isomor-server/node_modules/isomor-core',
+324 silly createSymbolicLink   'junction'
+324 silly createSymbolicLink ]
+325 silly createSymlink [
+325 silly createSymlink   '/home/alex/dev/node/pkg/isomor/packages/isomor/dist/bin/index.js',
+325 silly createSymlink   '/home/alex/dev/node/pkg/isomor/packages/isomor-server/node_modules/.bin/isomor',
+325 silly createSymlink   'exec'
+325 silly createSymlink ]
+326 silly shShim [
+326 silly shShim   '/home/alex/dev/node/pkg/isomor/packages/isomor/dist/bin/index.js',
+326 silly shShim   '/home/alex/dev/node/pkg/isomor/packages/isomor-server/node_modules/.bin/isomor',
+326 silly shShim   'file'
+326 silly shShim ]
+327 error

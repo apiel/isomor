@@ -12,6 +12,7 @@ export async function getColor(): Promise<string> {
 }
 
 export async function setColor(color: string = 'green'): Promise<string> {
+    console.log('setColor', { color });
     outputFile(FILE_COLOR, color);
     return color;
 }

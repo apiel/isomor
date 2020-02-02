@@ -29,6 +29,7 @@
     "demo": "ISOMOR_NO_VALIDATION=true yarn isomor:build && yarn build && yarn serv:prod",
     "prod": "yarn isomor:build && yarn build && yarn serv:prod",
     "dev": "run-screen 'yarn isomor:build:dev' 'yarn serv:dev' 'yarn start'",
+    "dev:ws": "ISOMOR_WS=.* yarn dev",
     "code": "run-screen 'yarn isomor:build' 'yarn serv:dev' 'yarn start'",
     "start": "react-scripts start",
     "build": "CI=false react-scripts build",

@@ -1,7 +1,7 @@
 import Debug from 'debug';
 
 import { getCodeImport } from './code';
-import { transformNode } from './transformNode';
+import { transformNode, FnOptions } from './transformNode';
 import { isArray } from 'util';
 
 import { Statement, JsonAst } from './ast';
@@ -10,17 +10,13 @@ const debug = Debug('isomor-transpiler:transform');
 
 export default function transform(
     body: Statement[],
-    srcFilePath: string,
-    path: string,
-    wsReg: RegExp | null = null,
-    pkgName: string = 'root',
-    withTypes: boolean = true,
+    fnOptions: FnOptions,
     noServerImport: boolean = false,
     noDecorator: boolean = false,
 ) {
     let newBody = [getCodeImport()];
     body.forEach((node) => {
-        const newNode = transformNode(node, srcFilePath, wsReg, path, pkgName, withTypes, noServerImport, noDecorator);
+        const newNode = transformNode(node, fnOptions, noServerImport, noDecorator);
         if (newNode) {
             if (isArray(newNode)) {
                 newBody = [...newBody, ...newNode];

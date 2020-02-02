@@ -1,14 +1,17 @@
 import { getCodeArrowFunc } from '../code';
 import { VariableDeclaration } from '../ast';
 import { setValidator } from '../validation';
+import { FnOptions } from 'lib/transformNode';
 
 export function transformArrowFunc(
     root: VariableDeclaration,
-    srcFilePath: string,
-    wsReg: RegExp | null,
-    path: string,
-    pkgName: string,
-    withTypes: boolean,
+    {
+        srcFilePath,
+        path,
+        wsReg,
+        pkgName,
+        withTypes,
+    }: FnOptions,
 ) {
     const { declarations } = root;
     const declaration = declarations[0];

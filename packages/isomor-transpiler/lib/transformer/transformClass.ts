@@ -1,14 +1,17 @@
 import { getCodeMethod, getCodeConstructor } from '../code';
 import { ExportNamedDeclaration, ClassDeclaration } from '../ast';
 import { setValidator } from '../validation';
+import { FnOptions } from 'lib/transformNode';
 
 export function transformClass(
     root: ExportNamedDeclaration,
-    srcFilePath: string,
-    wsReg: RegExp | null,
-    path: string,
-    pkgName: string,
-    withTypes: boolean,
+    {
+        srcFilePath,
+        path,
+        wsReg,
+        pkgName,
+        withTypes,
+    }: FnOptions,
     noDecorator: boolean,
 ) {
     if (root.declaration.type === 'ClassDeclaration') {

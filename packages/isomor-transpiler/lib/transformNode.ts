@@ -8,13 +8,17 @@ import { transformFunc } from './transformer/transformFunc';
 import { transformArrowFunc } from './transformer/transformArrowFunc';
 import { transformType } from './transformer/transformType';
 
+export interface FnOptions {
+    srcFilePath: string;
+    wsReg: RegExp | null;
+    path: string;
+    pkgName: string;
+    withTypes: boolean;
+}
+
 export function transformNode(
     node: Statement,
-    srcFilePath: string,
-    wsReg: RegExp | null,
-    path: string,
-    pkgName: string,
-    withTypes: boolean,
+    fnOptions: FnOptions,
     noServerImport: boolean,
     noDecorator: boolean,
 ) {
@@ -26,11 +30,11 @@ export function transformNode(
         } else if (node.declaration.type === 'TSInterfaceDeclaration') {
             return transformInterface(node, noServerImport);
         } else if (node.declaration.type === 'FunctionDeclaration') {
-            return transformFunc(node.declaration, srcFilePath, wsReg, path, pkgName, withTypes);
+            return transformFunc(node.declaration, fnOptions);
         } else if (node.declaration.type === 'VariableDeclaration') {
-            return transformArrowFunc(node.declaration, srcFilePath, wsReg, path, pkgName, withTypes);
+            return transformArrowFunc(node.declaration, fnOptions);
         } else if (node.declaration.type === 'ClassDeclaration') {
-            return transformClass(node, srcFilePath, wsReg, path, pkgName, withTypes, noDecorator);
+            return transformClass(node, fnOptions, noDecorator);
         }
     } else if (node.type === 'ImportDeclaration') {
         return transformImport(node, noServerImport);

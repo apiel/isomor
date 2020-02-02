@@ -39,7 +39,7 @@ const transformClassFromCode = (
 ): string => {
     const { program } = parse(source);
     // console.log('JsonAst', JsonAst(program.body[0]));
-    const body = transformClass(program.body[0] as any, srcFilePath, wsReg, path, pkgName, withTypes, noDecorator);
+    const body = transformClass(program.body[0] as any, { srcFilePath, wsReg, path, pkgName, withTypes }, noDecorator);
     program.body = isArray(body) ? body : [body];
     // console.log('JsonAst2', JsonAst(program.body[0]));
     const { code } = generate(program as any);

@@ -1,7 +1,7 @@
 {
   "name": "isomor-example-react",
   "private": true,
-  "version": "2.0.1",
+  "version": "2.0.2",
   "repository": {
     "type": "git",
     "url": "https://github.com/apiel/isomor"
@@ -29,6 +29,7 @@
     "demo": "ISOMOR_NO_VALIDATION=true yarn isomor:build && yarn build && yarn serv:prod",
     "prod": "yarn isomor:build && yarn build && yarn serv:prod",
     "dev": "run-screen 'yarn isomor:build:dev' 'yarn serv:dev' 'yarn start'",
+    "dev:ws": "ISOMOR_WS=.* yarn dev",
     "code": "run-screen 'yarn isomor:build' 'yarn serv:dev' 'yarn start'",
     "start": "react-scripts start",
     "build": "CI=false react-scripts build",
@@ -39,7 +40,7 @@
   "dependencies": {
     "fs-extra": "^8.1.0",
     "http-proxy-middleware": "^0.20.0",
-    "isomor": "^2.0.1",
+    "isomor": "^2.0.2",
     "md5": "^2.2.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
@@ -54,8 +55,8 @@
     "@types/node": "^13.1.2",
     "@types/react": "16.9.17",
     "@types/react-dom": "16.9.4",
-    "isomor-server": "^2.0.1",
-    "isomor-transpiler": "^2.0.1",
+    "isomor-server": "^2.0.2",
+    "isomor-transpiler": "^2.0.2",
     "nodemon": "^2.0.2",
     "rimraf": "^3.0.0",
     "run-screen": "^0.5.3",

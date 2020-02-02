@@ -83,6 +83,7 @@ Find examples in the folder `packages/examples`, for React, VueJS and as well An
 
   <!-- * [VScode](Docs/VScode.md) -->
   * [Request / Response context](Docs/ReqResCtx.md)
+  * [WebSocket](Docs/WebSocket.md)
   * [Shared class](Docs/Shared-class.md)
   * [TypeORM](Docs/TypeORM.md)
   * [Server](Docs/Server.md)

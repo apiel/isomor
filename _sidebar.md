@@ -13,4 +13,3 @@
     * [TypeORM](Docs/TypeORM.md)
     * [Server](Docs/Server.md)
     * [Config](Docs/Config.md)
-    <!-- * [Babel](Docs/Babel.md) -->

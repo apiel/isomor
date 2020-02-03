@@ -39,7 +39,12 @@ function apiAction(routesIndex, req, ws, data, logger) {
         if (routesIndex[path]) {
             const { validationSchema, fn, isClass } = routesIndex[path];
             try {
-                const push = (payload) => ws.send(JSON.stringify({ action: 'PUSH', id, payload }));
+                const push = (payload) => {
+                    var _a;
+                    const pushMsg = JSON.stringify({ action: 'PUSH', id, payload });
+                    (_a = logger) === null || _a === void 0 ? void 0 : _a.log(`WS PUSH`, pushMsg.substring(0, 30));
+                    ws.send(pushMsg);
+                };
                 const ctx = { req, ws, push };
                 utils_1.validateArgs(validationSchema, args);
                 const result = isClass

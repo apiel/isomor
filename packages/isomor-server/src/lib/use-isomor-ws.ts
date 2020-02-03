@@ -58,7 +58,11 @@ async function apiAction(
     if (routesIndex[path]) {
         const { validationSchema, fn, isClass } = routesIndex[path];
         try {
-            const push = (payload: any) => ws.send(JSON.stringify({ action: 'PUSH', id, payload }));
+            const push = (payload: any) => {
+                const pushMsg = JSON.stringify({ action: 'PUSH', id, payload });
+                logger?.log(`WS PUSH`, pushMsg.substring(0, 30));
+                ws.send(pushMsg);
+            };
             const ctx: WsContext = { req, ws, push };
             validateArgs(validationSchema, args);
             const result = isClass

@@ -1,7 +1,7 @@
 {
   "name": "isomor-example-react-validator",
   "private": true,
-  "version": "2.0.4",
+  "version": "2.0.5",
   "repository": {
     "type": "git",
     "url": "https://github.com/apiel/isomor"
@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "class-validator": "^0.9.1",
-    "isomor": "^2.0.4",
+    "isomor": "^2.0.5",
     "md5": "^2.2.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
@@ -52,8 +52,8 @@
     "@types/node": "^12.0.2",
     "@types/react": "16.8.17",
     "@types/react-dom": "16.8.4",
-    "isomor-server": "^2.0.4",
-    "isomor-transpiler": "^2.0.4",
+    "isomor-server": "^2.0.5",
+    "isomor-transpiler": "^2.0.5",
     "nodemon": "^1.18.10",
     "rimraf": "^2.6.3",
     "run-screen": "^0.5.3",

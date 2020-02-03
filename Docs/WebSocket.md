@@ -3,7 +3,7 @@
 Since the version 2, isomor support WebSocket as transportation protocol. Using WebSocket can improve the latency to load data, but you would loose the caching feature from HTTP. To use the WebSocket with isomor, you need to activate it with the [environment variable](Docs/Config.md) `ISOMOR_WS`. As value, provide a regular expression matching all the function names that need to use the WebSocket protocol:
 
 - to only use WS, then provide the following regex `.*`
-- to use it with all the function starting by `hello`, then provide `hello.*`
+- to use it with all the function starting by `ws`, then provide `ws.*`
 - and so on...
 
 ### Context
@@ -65,11 +65,12 @@ export const Time = () => {
   const [serverTime, setServerTime] = React.useState<string>();
   React.useEffect(() => {
     // subscrib to push request and set the received data in the serverTime
-    const key = subscrib((payload) => setServerTime(payload));
+    const id = subscrib((payload) => setServerTime(payload));
+    // then call pushTime to start the timer
     pushTime();
     return () => {
       // don't forget to unsubscrib when the component unmount
-      unsubscrib(key);
+      unsubscrib(id);
     }
   }, []);
   return (

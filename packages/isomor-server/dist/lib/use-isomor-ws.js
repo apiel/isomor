@@ -42,7 +42,7 @@ function apiAction(routesIndex, req, ws, data, logger) {
                 const push = (payload) => {
                     var _a;
                     const pushMsg = JSON.stringify({ action: 'PUSH', id, payload });
-                    (_a = logger) === null || _a === void 0 ? void 0 : _a.log(`WS PUSH`, pushMsg.substring(0, 30));
+                    (_a = logger) === null || _a === void 0 ? void 0 : _a.log(`WS PUSH`, pushMsg.substring(0, 120), '...');
                     ws.send(pushMsg);
                 };
                 const ctx = { req, ws, push };

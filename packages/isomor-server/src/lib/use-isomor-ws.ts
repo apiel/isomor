@@ -60,7 +60,7 @@ async function apiAction(
         try {
             const push = (payload: any) => {
                 const pushMsg = JSON.stringify({ action: 'PUSH', id, payload });
-                logger?.log(`WS PUSH`, pushMsg.substring(0, 30));
+                logger?.log(`WS PUSH`, pushMsg.substring(0, 120), '...');
                 ws.send(pushMsg);
             };
             const ctx: WsContext = { req, ws, push };

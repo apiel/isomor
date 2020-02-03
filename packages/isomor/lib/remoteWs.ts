@@ -1,4 +1,4 @@
-import { getUrl } from '.';
+import { getUrlPath } from '.';
 
 export type SubscribFn = (payload: any) => void;
 
@@ -9,9 +9,10 @@ let subId = 0;
 const subscribedFunctions: { [key: number]: SubscribFn } = {};
 let wsReady = false;
 
-function openWS() {
+function openWS(baseUrl: string) {
     // ws = new WebSocket(`ws://${location.host}/isomor-ws`);
-    ws = new WebSocket(`ws://127.0.0.1:3005`);
+    // ws = new WebSocket(`ws://127.0.0.1:3005`);
+    ws = new WebSocket(baseUrl);
     ws.onopen = () => {
         // console.log('WS connection established');
         wsReady = true;
@@ -38,9 +39,9 @@ function openWS() {
     };
 }
 
-function waitForWs() {
+function waitForWs(baseUrl: string) {
     if (!ws) {
-        openWS();
+        openWS(baseUrl);
     }
     return new Promise((resolve, reject) => {
         checkWs(resolve);
@@ -55,13 +56,14 @@ function checkWs(resolve: (value?: unknown) => void) {
 }
 
 export async function isomorRemoteWs(
+    baseUrl: string,
     path: string,
     pkgname: string,
     funcName: string,
     args: [],
     classname?: string,
 ): Promise<any> {
-    await waitForWs();
+    await waitForWs(baseUrl);
     const id = reqId++;
     return new Promise((resolve, reject) => {
         reqQueue[id] = { id, resolve, reject };
@@ -69,7 +71,7 @@ export async function isomorRemoteWs(
         ws.send(JSON.stringify({
             action: 'API',
             id,
-            path: getUrl(path, pkgname, funcName, classname),
+            path: getUrlPath(path, pkgname, funcName, classname),
             args,
         }));
     });

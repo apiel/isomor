@@ -6,18 +6,18 @@ var remoteWs_2 = require("./remoteWs");
 exports.subscrib = remoteWs_2.subscrib;
 exports.unsubscrib = remoteWs_2.unsubscrib;
 const urlPrefix = '/isomor';
-function getUrl(path, pkgname, funcName, classname) {
+function getUrlPath(path, pkgname, funcName, classname) {
     const url = classname
         ? `${urlPrefix}/${pkgname}/${path}/${classname}/${funcName}`
         : `${urlPrefix}/${pkgname}/${path}/${funcName}`;
     return url;
 }
-exports.getUrl = getUrl;
-function isomorRemote(protocol, path, pkgname, funcName, args, classname) {
+exports.getUrlPath = getUrlPath;
+function isomorRemote(protocol, baseUrl, path, pkgname, funcName, args, classname) {
     if (protocol === 'ws') {
-        return remoteWs_1.isomorRemoteWs(path, pkgname, funcName, args, classname);
+        return remoteWs_1.isomorRemoteWs(baseUrl, path, pkgname, funcName, args, classname);
     }
-    return remoteHttp_1.isomorRemoteHttp(path, pkgname, funcName, args, classname);
+    return remoteHttp_1.isomorRemoteHttp(baseUrl, path, pkgname, funcName, args, classname);
 }
 exports.isomorRemote = isomorRemote;
 function isomorShare(constructor) {

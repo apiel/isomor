@@ -19,7 +19,11 @@ export interface ServerOptions {
     distServerFolder: string;
 }
 export interface WsOptions {
-    wsReg: RegExp | null;
+    wsReg: RegExp | undefined;
+    wsBaseUrl: string;
 }
-export declare type Options = CommonOptions & TranspilerOptions & ServerOptions & WsOptions;
+export interface HttpOptions {
+    httpBaseUrl: string;
+}
+export declare type Options = CommonOptions & TranspilerOptions & ServerOptions & WsOptions & HttpOptions;
 export declare function getOptions(): Options;

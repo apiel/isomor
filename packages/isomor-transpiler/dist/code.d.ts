@@ -1,10 +1,12 @@
 import { Statement } from './ast';
 interface BodyRemote {
-    wsReg: RegExp | null;
     path: string;
     pkgName: string;
     name: string;
     className?: string;
+    httpBaseUrl: string;
+    wsBaseUrl: string;
+    wsReg?: RegExp;
 }
 export interface CodeFunc {
     withTypes: boolean;

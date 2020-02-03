@@ -9,7 +9,7 @@ export { subscrib, unsubscrib, SubscribFn } from './remoteWs';
 
 const urlPrefix = '/isomor'; // http://127.0.0.1:3000/
 
-export function getUrl(
+export function getUrlPath(
     path: string,
     pkgname: string,
     funcName: string,
@@ -24,6 +24,7 @@ export function getUrl(
 
 export function isomorRemote(
     protocol: string,
+    baseUrl: string,
     path: string,
     pkgname: string,
     funcName: string,
@@ -31,9 +32,9 @@ export function isomorRemote(
     classname?: string,
 ): Promise<any> {
     if (protocol === 'ws') {
-        return isomorRemoteWs(path, pkgname, funcName, args, classname);
+        return isomorRemoteWs(baseUrl, path, pkgname, funcName, args, classname);
     }
-    return isomorRemoteHttp(path, pkgname, funcName, args, classname);
+    return isomorRemoteHttp(baseUrl, path, pkgname, funcName, args, classname);
 }
 
 export type IsomorShare = any;

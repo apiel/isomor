@@ -5,7 +5,7 @@ import {
     getPkgName,
     getFiles,
 } from 'isomor-core';
-import { isIsomorClass, getUrl } from 'isomor';
+import { isIsomorClass, getUrlPath } from 'isomor';
 import { join } from 'path';
 import { isFunction } from 'util';
 import { pathExistsSync, readJSONSync } from 'fs-extra';
@@ -59,7 +59,7 @@ async function getFunctionNames(
 }
 
 function getRoutePath(file: string, pkgName: string, name: string, classname?: string) {
-    return getUrl(getPathForUrl(file), pkgName, name, classname);
+    return getUrlPath(getPathForUrl(file), pkgName, name, classname);
 }
 
 function loadValidation( // might want to switch to async

@@ -1,5 +1,4 @@
-import { getCodeType } from './code';
-import { Statement, JsonAst } from './ast';
+import { Statement } from './ast';
 import { transformClass } from './transformer/transformClass';
 import { transformImport } from './transformer/transformImport';
 import { transformInterface } from './transformer/transformInterface';
@@ -10,10 +9,12 @@ import { transformType } from './transformer/transformType';
 
 export interface FnOptions {
     srcFilePath: string;
-    wsReg: RegExp | null;
     path: string;
     pkgName: string;
     withTypes: boolean;
+    httpBaseUrl: string;
+    wsBaseUrl: string;
+    wsReg?: RegExp;
 }
 
 export function transformNode(

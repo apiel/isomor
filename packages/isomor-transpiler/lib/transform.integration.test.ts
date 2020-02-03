@@ -81,13 +81,13 @@ export interface MyInterface {
   };
 }
 export function getTime1(...args: any) {
-  return isomorRemote("http", "path-to-file", "root", "getTime1", args);
+  return isomorRemote("http", "", "path-to-file", "root", "getTime1", args);
 }
 export function getTime2(...args: any) {
-  return isomorRemote("http", "path-to-file", "root", "getTime2", args);
+  return isomorRemote("http", "", "path-to-file", "root", "getTime2", args);
 }
 export const getTime3 = (...args: any) => {
-  return isomorRemote("http", "path-to-file", "root", "getTime3", args);
+  return isomorRemote("http", "", "path-to-file", "root", "getTime3", args);
 };
 
 @Injectable()
@@ -100,7 +100,7 @@ export class CatsService extends CatsService__deco_export__ {
   }
 
   async findAll(...args: any) {
-    return isomorRemote("http", "path-to-file", "root", "findAll", args, "CatsService");
+    return isomorRemote("http", "", "path-to-file", "root", "findAll", args, "CatsService");
   }
 
 }
@@ -123,6 +123,8 @@ describe('transform', () => {
         wsReg: null,
         pkgName: 'root',
         withTypes: true,
+        httpBaseUrl: '',
+        wsBaseUrl: 'ws://127.0.0.1:3005',
       });
       const { code } = generate(program as any);
       expect(code).toEqual(codeTranspiled);

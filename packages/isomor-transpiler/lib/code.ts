@@ -1,11 +1,13 @@
 import { Statement } from './ast';
 
 interface BodyRemote {
-    wsReg: RegExp | null;
     path: string;
     pkgName: string;
     name: string;
     className?: string;
+    httpBaseUrl: string;
+    wsBaseUrl: string;
+    wsReg?: RegExp;
 }
 
 export interface CodeFunc {
@@ -144,8 +146,11 @@ function getBodyRemote({
     pkgName,
     name,
     className,
+    httpBaseUrl,
+    wsBaseUrl,
 }: BodyRemote) {
     const protocol = wsReg?.test(name) ? 'ws' : 'http';
+    const baseUrl = protocol === 'ws' ? wsBaseUrl : httpBaseUrl;
     return {
         type: 'ReturnStatement',
         argument: {
@@ -158,6 +163,10 @@ function getBodyRemote({
                 {
                     type: 'StringLiteral',
                     value: protocol,
+                },
+                {
+                    type: 'StringLiteral',
+                    value: baseUrl,
                 },
                 {
                     type: 'StringLiteral',

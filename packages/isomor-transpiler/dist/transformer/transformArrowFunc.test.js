@@ -14,6 +14,8 @@ const path = 'path-to-file';
 const withTypes = true;
 const pkgName = 'root';
 const wsReg = null;
+const httpBaseUrl = '';
+const wsBaseUrl = 'ws://127.0.0.1:3005';
 describe('transformFunc()', () => {
     beforeEach(() => {
         jest.clearAllMocks();
@@ -22,9 +24,9 @@ describe('transformFunc()', () => {
         const { program } = ast_1.parse(`export const getTime = (input1: string, input2: number): Promise<string[]> => {
             return readdir('./');
         }`);
-        const node = transformArrowFunc_1.transformArrowFunc(program.body[0].declaration, { srcFilePath, wsReg, path, pkgName, withTypes });
+        const node = transformArrowFunc_1.transformArrowFunc(program.body[0].declaration, { srcFilePath, wsReg, path, pkgName, withTypes, httpBaseUrl, wsBaseUrl });
         expect(node).toEqual('getCodeArrowFuncMock');
-        expect(code_1.getCodeArrowFunc).toHaveBeenCalledWith({ bodyParams: { wsReg, path, pkgName, name: 'getTime' }, withTypes });
+        expect(code_1.getCodeArrowFunc).toHaveBeenCalledWith({ bodyParams: { wsReg, path, pkgName, name: 'getTime', httpBaseUrl, wsBaseUrl }, withTypes });
         expect(validation_1.setValidator).toBeCalledWith(program.body[0].declaration.declarations[0].init, srcFilePath, path, 'getTime');
     });
 });

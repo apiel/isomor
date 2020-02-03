@@ -26,10 +26,15 @@ export interface ServerOptions {
 }
 
 export interface WsOptions {
-    wsReg: RegExp | null; // RegExp matching the function name to use WebSocket instead of Http
+    wsReg: RegExp | undefined; // RegExp matching the function name to use WebSocket instead of Http
+    wsBaseUrl: string;
 }
 
-export type Options = CommonOptions & TranspilerOptions & ServerOptions & WsOptions;
+export interface HttpOptions {
+    httpBaseUrl: string;
+}
+
+export type Options = CommonOptions & TranspilerOptions & ServerOptions & WsOptions & HttpOptions;
 
 let optionsCache: Options;
 
@@ -58,7 +63,10 @@ export function getOptions(): Options {
             staticFolder: process.env.ISOMOR_STATIC_FOLDER || null,
             startupFile: process.env.ISOMOR_STARTUP_FILE || join('startup', 'index.js'),
             // WsOptions
-            wsReg: process.env.ISOMOR_WS ? new RegExp(process.env.ISOMOR_WS) : null,
+            wsReg: process.env.ISOMOR_WS ? new RegExp(process.env.ISOMOR_WS) : undefined,
+            wsBaseUrl: process.env.ISOMOR_WS_BASE_URL || 'ws://127.0.0.1:3005',
+            // httpOptions
+            httpBaseUrl: process.env.ISOMOR_HTTP_BASE_URL || '',
         };
     }
     return optionsCache;

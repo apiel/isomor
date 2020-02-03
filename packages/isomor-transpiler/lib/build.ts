@@ -20,11 +20,11 @@ const anymatch = require('anymatch'); // tslint:disable-line
 export default transform;
 
 function getCode(options: Options, srcFilePath: string, path: string, content: string) {
-    const { withTypes, noServerImport, noDecorator, pkgName, wsReg } = options;
+    const { withTypes, noServerImport, noDecorator, pkgName, wsReg, wsBaseUrl, httpBaseUrl } = options;
     const { program } = parse(content);
     program.body = transform(
         program.body,
-        { srcFilePath, path, wsReg, pkgName, withTypes },
+        { srcFilePath, path, wsReg, pkgName, withTypes, wsBaseUrl, httpBaseUrl },
         noServerImport,
         noDecorator,
     );

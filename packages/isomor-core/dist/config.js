@@ -24,7 +24,9 @@ function getOptions() {
             port: process.env.ISOMOR_PORT ? parseInt(process.env.ISOMOR_PORT, 10) : 3005,
             staticFolder: process.env.ISOMOR_STATIC_FOLDER || null,
             startupFile: process.env.ISOMOR_STARTUP_FILE || path_1.join('startup', 'index.js'),
-            wsReg: process.env.ISOMOR_WS ? new RegExp(process.env.ISOMOR_WS) : null,
+            wsReg: process.env.ISOMOR_WS ? new RegExp(process.env.ISOMOR_WS) : undefined,
+            wsBaseUrl: process.env.ISOMOR_WS_BASE_URL || 'ws://127.0.0.1:3005',
+            httpBaseUrl: process.env.ISOMOR_HTTP_BASE_URL || '',
         };
     }
     return optionsCache;

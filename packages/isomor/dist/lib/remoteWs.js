@@ -16,8 +16,8 @@ const reqQueue = {};
 let subId = 0;
 const subscribedFunctions = {};
 let wsReady = false;
-function openWS() {
-    ws = new WebSocket(`ws://127.0.0.1:3005`);
+function openWS(baseUrl) {
+    ws = new WebSocket(baseUrl);
     ws.onopen = () => {
         wsReady = true;
     };
@@ -41,9 +41,9 @@ function openWS() {
         }
     };
 }
-function waitForWs() {
+function waitForWs(baseUrl) {
     if (!ws) {
-        openWS();
+        openWS(baseUrl);
     }
     return new Promise((resolve, reject) => {
         checkWs(resolve);
@@ -55,9 +55,9 @@ function checkWs(resolve) {
     }
     setTimeout(() => checkWs(resolve), 100);
 }
-function isomorRemoteWs(path, pkgname, funcName, args, classname) {
+function isomorRemoteWs(baseUrl, path, pkgname, funcName, args, classname) {
     return __awaiter(this, void 0, void 0, function* () {
-        yield waitForWs();
+        yield waitForWs(baseUrl);
         const id = reqId++;
         return new Promise((resolve, reject) => {
             reqQueue[id] = { id, resolve, reject };
@@ -65,7 +65,7 @@ function isomorRemoteWs(path, pkgname, funcName, args, classname) {
             ws.send(JSON.stringify({
                 action: 'API',
                 id,
-                path: _1.getUrl(path, pkgname, funcName, classname),
+                path: _1.getUrlPath(path, pkgname, funcName, classname),
                 args,
             }));
         });

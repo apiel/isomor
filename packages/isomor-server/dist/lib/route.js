@@ -42,7 +42,7 @@ function getFunctionNames(serverFolder, distServerFolder) {
     });
 }
 function getRoutePath(file, pkgName, name, classname) {
-    return isomor_1.getUrl(isomor_core_1.getPathForUrl(file), pkgName, name, classname);
+    return isomor_1.getUrlPath(isomor_core_1.getPathForUrl(file), pkgName, name, classname);
 }
 function loadValidation(path, name, jsonSchemaFolder, classname) {
     if (jsonSchemaFolder && jsonSchemaFolder.length) {

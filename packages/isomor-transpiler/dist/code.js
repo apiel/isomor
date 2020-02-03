@@ -108,9 +108,10 @@ function getBody(bodyRemote) {
         ],
     };
 }
-function getBodyRemote({ wsReg, path, pkgName, name, className, }) {
+function getBodyRemote({ wsReg, path, pkgName, name, className, httpBaseUrl, wsBaseUrl, }) {
     var _a;
     const protocol = ((_a = wsReg) === null || _a === void 0 ? void 0 : _a.test(name)) ? 'ws' : 'http';
+    const baseUrl = protocol === 'ws' ? wsBaseUrl : httpBaseUrl;
     return {
         type: 'ReturnStatement',
         argument: {
@@ -123,6 +124,10 @@ function getBodyRemote({ wsReg, path, pkgName, name, className, }) {
                 {
                     type: 'StringLiteral',
                     value: protocol,
+                },
+                {
+                    type: 'StringLiteral',
+                    value: baseUrl,
                 },
                 {
                     type: 'StringLiteral',

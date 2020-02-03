@@ -21,6 +21,8 @@ describe('transform', () => {
         wsReg: null,
         pkgName: 'root',
         withTypes: true,
+        httpBaseUrl: '',
+        wsBaseUrl: 'ws://127.0.0.1:3005',
     };
     describe('transform/transform()', () => {
         it('should add isomor import to body', () => {

@@ -42,6 +42,11 @@ const path = 'path-to-file';
 const withTypes = true;
 const pkgName = 'root';
 const wsReg = null;
+const httpBaseUrl = '';
+const wsBaseUrl = 'ws://127.0.0.1:3005';
+
+const bodyParams = { srcFilePath, wsReg, path, pkgName, withTypes, httpBaseUrl, wsBaseUrl };
+
 describe('transform', () => {
     beforeEach(() => {
         jest.clearAllMocks();
@@ -95,7 +100,7 @@ export function getTime1(): Promise<string[]> {
 }
             `);
             expect(newNode).toEqual('TransformFunc');
-            expect(transformFunc).toHaveBeenCalledWith((node as any).declaration, { srcFilePath, wsReg, path, pkgName, withTypes });
+            expect(transformFunc).toHaveBeenCalledWith((node as any).declaration, bodyParams);
         });
 
         it('should transform async function', () => {
@@ -105,7 +110,7 @@ export async function getTime1(): Promise<string[]> {
 }
             `);
             expect(newNode).toEqual('TransformFunc');
-            expect(transformFunc).toHaveBeenCalledWith((node as any).declaration, { srcFilePath, wsReg, path, pkgName, withTypes });
+            expect(transformFunc).toHaveBeenCalledWith((node as any).declaration, bodyParams);
         });
 
         it('should transform arrow function', () => {
@@ -115,7 +120,7 @@ export const getTime1 = async (hello: string) => {
 };
             `);
             expect(newNode).toEqual('TransformArrowFunc');
-            expect(transformArrowFunc).toHaveBeenCalledWith((node as any).declaration, { srcFilePath, wsReg, path, pkgName, withTypes });
+            expect(transformArrowFunc).toHaveBeenCalledWith((node as any).declaration, bodyParams);
         });
 
         it('should transform class', () => {
@@ -125,7 +130,7 @@ export const getTime1 = async (hello: string) => {
 export class MyClass {
 }          `, noServerImport, noDecorator);
             expect(newNode).toEqual('TransformClass');
-            expect(transformClass).toHaveBeenCalledWith(node, { srcFilePath, wsReg, path, pkgName, withTypes }, noDecorator);
+            expect(transformClass).toHaveBeenCalledWith(node, bodyParams, noDecorator);
         });
     });
 });
@@ -139,7 +144,7 @@ function transformNodeTest(
     const node = program.body[0];
     const newNode = transformNode(
         node,
-        { srcFilePath, wsReg, path, pkgName, withTypes },
+        bodyParams,
         noServerImport,
         noDecorator,
     );

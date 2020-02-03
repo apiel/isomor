@@ -41,3 +41,9 @@ The default configuration should be most of the time the right one for implement
 #### WebSocket
 
 `ISOMOR_WS` RegExp matching the function name to use WebSocket instead of Http, `.*` to use only WebSocket.
+
+`ISOMOR_WS_BASE_URL` base url of the websocket server, default `ws://127.0.0.1:3005`
+
+#### Http
+
+`ISOMOR_HTTP_BASE_URL` base url of the http server, by default an empty string, so it will use the same base url as the browser.

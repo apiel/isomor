@@ -24,19 +24,19 @@
         "find-up": "^4.1.0",
         "fs-extra": "^8.1.0",
         "glob": "^7.1.6",
-        "typescript": "^3.7.4"
+        "typescript": "^3.7.5"
     },
     "devDependencies": {
         "@types/dotenv": "^8.2.0",
         "@types/find-up": "^4.0.0",
         "@types/fs-extra": "^8.0.1",
         "@types/glob": "^7.1.1",
-        "@types/jest": "^24.0.25",
+        "@types/jest": "^25.1.1",
         "@types/rimraf": "^2.0.3",
-        "jest": "^24.9.0",
-        "rimraf": "^3.0.0",
-        "ts-jest": "^24.2.0",
-        "tslint": "^5.20.1"
+        "jest": "^25.1.0",
+        "rimraf": "^3.0.1",
+        "ts-jest": "^25.2.0",
+        "tslint": "^6.0.0"
     },
     "gitHead": "9a8bbcc96908b631b6d3c828054c70538e150963"
 }

@@ -27,9 +27,9 @@
         "lint": "tslint -p tsconfig.json -c tslint.json"
     },
     "dependencies": {
-        "@babel/generator": "^7.7.7",
-        "@babel/parser": "^7.7.7",
-        "@babel/plugin-syntax-typescript": "^7.7.4",
+        "@babel/generator": "^7.8.4",
+        "@babel/parser": "^7.8.4",
+        "@babel/plugin-syntax-typescript": "^7.8.3",
         "@types/chokidar": "^2.1.3",
         "anymatch": "^3.1.1",
         "chokidar": "^3.3.1",
@@ -41,21 +41,21 @@
         "logol": "^0.0.3",
         "please-upgrade-node": "^3.2.0",
         "traverse": "^0.6.6",
-        "ts-node": "^8.5.4",
-        "typescript": "^3.7.4"
+        "ts-node": "^8.6.2",
+        "typescript": "^3.7.5"
     },
     "devDependencies": {
         "@types/anymatch": "^1.3.1",
         "@types/babel__generator": "^7.6.1",
         "@types/debug": "^4.1.5",
         "@types/fs-extra": "^8.0.1",
-        "@types/jest": "^24.0.25",
-        "@types/node": "^13.1.1",
+        "@types/jest": "^25.1.1",
+        "@types/node": "^13.7.0",
         "@types/rimraf": "^2.0.3",
-        "jest": "^24.9.0",
-        "rimraf": "^3.0.0",
-        "ts-jest": "^24.2.0",
-        "tslint": "^5.20.1"
+        "jest": "^25.1.0",
+        "rimraf": "^3.0.1",
+        "ts-jest": "^25.2.0",
+        "tslint": "^6.0.0"
     },
     "gitHead": "9a8bbcc96908b631b6d3c828054c70538e150963"
 }

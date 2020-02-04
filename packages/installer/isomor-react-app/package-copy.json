@@ -1,7 +1,7 @@
 {
   "name": "isomor-example-react",
   "private": true,
-  "version": "2.0.5",
+  "version": "2.0.7",
   "repository": {
     "type": "git",
     "url": "https://github.com/apiel/isomor"
@@ -40,7 +40,7 @@
   "dependencies": {
     "fs-extra": "^8.1.0",
     "http-proxy-middleware": "^0.20.0",
-    "isomor": "^2.0.5",
+    "isomor": "^2.0.7",
     "md5": "^2.2.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
@@ -55,8 +55,8 @@
     "@types/node": "^13.1.2",
     "@types/react": "16.9.17",
     "@types/react-dom": "16.9.4",
-    "isomor-server": "^2.0.5",
-    "isomor-transpiler": "^2.0.5",
+    "isomor-server": "^2.0.7",
+    "isomor-transpiler": "^2.0.7",
     "nodemon": "^2.0.2",
     "rimraf": "^3.0.0",
     "run-screen": "^0.5.3",

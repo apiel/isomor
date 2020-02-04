@@ -12,26 +12,35 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const WebSocket = require("ws");
 const util_1 = require("util");
 const utils_1 = require("./utils");
-function useIsomorWs(routes, server, logger) {
+function useIsomorWs(routes, server, wsTimeout = 60, logger) {
     const routesIndex = getRoutesIndex(routes);
     const wss = new WebSocket.Server({ server });
     wss.on('connection', (ws, req) => {
+        wsRefreshTimeout(ws, wsTimeout);
         ws.on('message', (message) => {
             var _a, _b;
             if (util_1.isString(message)) {
                 const data = JSON.parse(message);
                 if (((_a = data) === null || _a === void 0 ? void 0 : _a.action) === 'API') {
-                    apiAction(routesIndex, req, ws, data, logger);
+                    apiAction(routesIndex, req, ws, wsTimeout, data, logger);
                 }
                 else {
                     (_b = logger) === null || _b === void 0 ? void 0 : _b.warn(`WS unknown message`, message);
                 }
             }
+            wsRefreshTimeout(ws, wsTimeout);
         });
     });
 }
 exports.useIsomorWs = useIsomorWs;
-function apiAction(routesIndex, req, ws, data, logger) {
+let wsTimeoutHandler;
+function wsRefreshTimeout(ws, wsTimeout) {
+    if (wsTimeout) {
+        clearTimeout(wsTimeoutHandler);
+        wsTimeoutHandler = setTimeout(() => ws.close(), wsTimeout * 1000);
+    }
+}
+function apiAction(routesIndex, req, ws, wsTimeout, data, logger) {
     var _a, _b, _c, _d, _e;
     return __awaiter(this, void 0, void 0, function* () {
         const { id, path, args } = data;
@@ -41,6 +50,7 @@ function apiAction(routesIndex, req, ws, data, logger) {
             try {
                 const push = (payload) => {
                     var _a;
+                    wsRefreshTimeout(ws, wsTimeout);
                     const pushMsg = JSON.stringify({ action: 'PUSH', id, payload });
                     (_a = logger) === null || _a === void 0 ? void 0 : _a.log(`WS PUSH`, pushMsg.substring(0, 120), '...');
                     ws.send(pushMsg);

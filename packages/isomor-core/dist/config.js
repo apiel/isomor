@@ -26,6 +26,7 @@ function getOptions() {
             startupFile: process.env.ISOMOR_STARTUP_FILE || path_1.join('startup', 'index.js'),
             wsReg: process.env.ISOMOR_WS ? new RegExp(process.env.ISOMOR_WS) : undefined,
             wsBaseUrl: process.env.ISOMOR_WS_BASE_URL || 'ws://127.0.0.1:3005',
+            wsTimeout: process.env.ISOMOR_WS_TIMEOUT ? parseInt(process.env.ISOMOR_WS_TIMEOUT, 10) : 60,
             httpBaseUrl: process.env.ISOMOR_HTTP_BASE_URL || '',
         };
     }

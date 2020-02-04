@@ -11,5 +11,5 @@ interface Logger {
     log: (...ars: any) => void;
     warn: (...ars: any) => void;
 }
-export declare function useIsomorWs(routes: Route[], server: Server, logger?: Logger): void;
+export declare function useIsomorWs(routes: Route[], server: Server, wsTimeout?: number, logger?: Logger): void;
 export {};

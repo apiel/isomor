@@ -6,6 +6,8 @@ Since the version 2, isomor support WebSocket as transportation protocol. Using 
 - to use it with all the function starting by `ws`, then provide `ws.*`
 - and so on...
 
+> **Note:** websocket get automatically close after 60 seconds of inactivity. You can change this timeout with an [environment variable](Docs/Config.md) `ISOMOR_WS_TIMEOUT`. To deactivate it, set the value to `0`.
+
 ### Context
 
 As for the [HTTP context](Docs/ReqResCtx.md), you can also access the context from the WebSocket containing the incoming request message and the socket instance:

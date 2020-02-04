@@ -25,7 +25,7 @@ import { join } from 'path';
 const API_DOCS = '/api-docs';
 
 async function start() {
-    const { distServerFolder, port, staticFolder,
+    const { distServerFolder, port, staticFolder, wsTimeout,
         serverFolder, startupFile, noDecorator, jsonSchemaFolder } = getOptions();
     info('Starting server.');
     const app = express();
@@ -70,7 +70,7 @@ async function start() {
         info(`Find API documentation at http://127.0.0.1:${port}${API_DOCS}`);
     });
 
-    useIsomorWs(routes, server, logger);
+    useIsomorWs(routes, server, wsTimeout, logger);
 }
 
 start();

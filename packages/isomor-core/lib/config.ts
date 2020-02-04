@@ -28,6 +28,7 @@ export interface ServerOptions {
 export interface WsOptions {
     wsReg: RegExp | undefined; // RegExp matching the function name to use WebSocket instead of Http
     wsBaseUrl: string;
+    wsTimeout: number;
 }
 
 export interface HttpOptions {
@@ -65,6 +66,7 @@ export function getOptions(): Options {
             // WsOptions
             wsReg: process.env.ISOMOR_WS ? new RegExp(process.env.ISOMOR_WS) : undefined,
             wsBaseUrl: process.env.ISOMOR_WS_BASE_URL || 'ws://127.0.0.1:3005',
+            wsTimeout: process.env.ISOMOR_WS_TIMEOUT ? parseInt(process.env.ISOMOR_WS_TIMEOUT, 10) : 60,
             // httpOptions
             httpBaseUrl: process.env.ISOMOR_HTTP_BASE_URL || '',
         };

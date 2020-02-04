@@ -28,28 +28,40 @@ interface RoutesIndex {
 export function useIsomorWs(
     routes: Route[],
     server: Server,
+    wsTimeout: number = 60,
     logger?: Logger,
 ) {
     const routesIndex = getRoutesIndex(routes);
     const wss = new WebSocket.Server({ server });
     wss.on('connection', (ws, req) => {
+        wsRefreshTimeout(ws, wsTimeout);
         ws.on('message', (message) => {
             if (isString(message)) {
                 const data = JSON.parse(message);
                 if (data?.action === 'API') {
-                    apiAction(routesIndex, req, ws, data, logger);
+                    apiAction(routesIndex, req, ws, wsTimeout, data, logger);
                 } else {
                     logger?.warn(`WS unknown message`, message);
                 }
             }
+            wsRefreshTimeout(ws, wsTimeout);
         });
     });
+}
+
+let wsTimeoutHandler: NodeJS.Timeout;
+function wsRefreshTimeout(ws: WebSocket, wsTimeout: number) {
+    if (wsTimeout) {
+        clearTimeout(wsTimeoutHandler);
+        wsTimeoutHandler = setTimeout(() => ws.close(), wsTimeout * 1000);
+    }
 }
 
 async function apiAction(
     routesIndex: RoutesIndex,
     req: IncomingMessage,
     ws: WebSocket,
+    wsTimeout: number,
     data: { id: string, path: string, args: any[] },
     logger?: Logger,
 ) {
@@ -59,6 +71,7 @@ async function apiAction(
         const { validationSchema, fn, isClass } = routesIndex[path];
         try {
             const push = (payload: any) => {
+                wsRefreshTimeout(ws, wsTimeout);
                 const pushMsg = JSON.stringify({ action: 'PUSH', id, payload });
                 logger?.log(`WS PUSH`, pushMsg.substring(0, 120), '...');
                 ws.send(pushMsg);

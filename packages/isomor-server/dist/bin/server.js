@@ -32,7 +32,7 @@ const path_1 = require("path");
 const API_DOCS = '/api-docs';
 function start() {
     return __awaiter(this, void 0, void 0, function* () {
-        const { distServerFolder, port, staticFolder, serverFolder, startupFile, noDecorator, jsonSchemaFolder } = isomor_core_1.getOptions();
+        const { distServerFolder, port, staticFolder, wsTimeout, serverFolder, startupFile, noDecorator, jsonSchemaFolder } = isomor_core_1.getOptions();
         logol_1.info('Starting server.');
         const app = express();
         app.use(bodyParser.json());
@@ -60,7 +60,7 @@ function start() {
             logol_1.success(`Server listening on port ${port}!`);
             logol_1.info(`Find API documentation at http://127.0.0.1:${port}${API_DOCS}`);
         });
-        lib_1.useIsomorWs(routes, server, logger);
+        lib_1.useIsomorWs(routes, server, wsTimeout, logger);
     });
 }
 start();

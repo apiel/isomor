@@ -21,6 +21,7 @@ export interface ServerOptions {
 export interface WsOptions {
     wsReg: RegExp | undefined;
     wsBaseUrl: string;
+    wsTimeout: number;
 }
 export interface HttpOptions {
     httpBaseUrl: string;

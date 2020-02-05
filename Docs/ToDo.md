@@ -8,6 +8,7 @@
     + if client request the server, the server run the callback function, and before to send the response,
       it look in his cache if there was already an identical response sent. If yes, it only send the md5 of
       this response. The client will then be able to load the response from his cache.
+    + as cache msg, we could even skip the JSON format and just return the md5
 
 - use GET method when possible
     + would be great to provide a cache example, with varnish?

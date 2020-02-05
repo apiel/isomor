@@ -3,6 +3,11 @@
 - implement websocket
     https://github.com/websockets/ws/issues/473
     **think about a caching system**
+    + cache only for the current connection (no shared cache)
+    + cache only payload that are over 512? length (configurable from env variable, if 0 cache deactivated)
+    + if client request the server, the server run the callback function, and before to send the response,
+      it look in his cache if there was already an identical response sent. If yes, it only send the md5 of
+      this response. The client will then be able to load the response from his cache.
 
 - use GET method when possible
     + would be great to provide a cache example, with varnish?

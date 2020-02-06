@@ -36,6 +36,8 @@ export function transformNode(
             return transformArrowFunc(node.declaration, fnOptions);
         } else if (node.declaration.type === 'ClassDeclaration') {
             return transformClass(node, fnOptions, noDecorator);
+        } else if (node.declaration.type === 'TSEnumDeclaration') {
+            return node;
         }
     } else if (node.type === 'ImportDeclaration') {
         return transformImport(node, noServerImport);

@@ -24,6 +24,11 @@ export interface MyInterface {
     };
 }
 
+export enum RemoteType {
+  GitHub,
+  GitLab,
+}
+
 export function getTime1(): Promise<string[]> {
     return readdir('./');
 }
@@ -79,6 +84,10 @@ export interface MyInterface {
   bar: {
     child: CpuInfo;
   };
+}
+export enum RemoteType {
+  GitHub,
+  GitLab,
 }
 export function getTime1(...args: any) {
   return isomorRemote("http", "", "path-to-file", "root", "getTime1", args);

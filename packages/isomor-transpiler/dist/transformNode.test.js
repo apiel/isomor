@@ -66,6 +66,13 @@ function shouldNotBeTranspiled() {
             expect(newNode).toEqual('TransformType');
             expect(transformType_1.transformType).toHaveBeenCalledWith(node.declaration);
         });
+        it('should not transform enum', () => {
+            const { node, newNode } = transformNodeTest(`export enum RemoteType {
+                GitHub,
+                GitLab,
+              }`);
+            expect(newNode).toEqual(node);
+        });
         it('should transform interface', () => {
             const noServerImport = true;
             const { newNode, node } = transformNodeTest(`

@@ -27,6 +27,9 @@ function transformNode(node, fnOptions, noServerImport, noDecorator) {
         else if (node.declaration.type === 'ClassDeclaration') {
             return transformClass_1.transformClass(node, fnOptions, noDecorator);
         }
+        else if (node.declaration.type === 'TSEnumDeclaration') {
+            return node;
+        }
     }
     else if (node.type === 'ImportDeclaration') {
         return transformImport_1.transformImport(node, noServerImport);

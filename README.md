@@ -4,6 +4,8 @@
 npx isomor
 ```
 
+[>> **Online documentation** <<](https://apiel.github.io/isomor/)
+
 `isomor` give the possibility to develop a web application in a single project by abstracting the layers between frontend and backend. Instead to implement an API, using REST or graphql, isomor will allow you to call the server functions directly from the user interface, without to think about the communication protocol. Isomor will take care to generate automatically those layers for you.
 
 Since there is no more separation between the backend and the frontend, there is much more consistency and a better overview of the project. It remove lot of overhead and let you focus on implementing features.
@@ -34,8 +36,6 @@ export const Uptime = () => {
 As you can see, when the component mount, the app is calling directly `getServerUptime` located on the server. During build process, isomor transpile `getServerUptime` to a query function that will call the backend through an http request.
 
 This tool has been implemented for TypeScript, since types bring lot of value to this concept. Minimalistic and very generic, this tool can work with any kind of library, you can find some examples with React, Vue and Angular in the repository.
-
-[>> **Online documentation** <<](https://apiel.github.io/isomor/)
 
 ## Getting started
 

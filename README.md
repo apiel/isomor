@@ -10,7 +10,46 @@ npx isomor
 
 Since there is no more separation between the backend and the frontend, there is much more consistency and a better overview of the project. It remove lot of overhead and let you focus on implementing features.
 
-See following example:
+See following example, with a normal client/server architecture, you would do:
+
+*server side*
+```ts
+// api/uptime.js
+export function getServerUptime(req, res) {
+  res.send(`${process.uptime()}`);
+});
+
+// server.js
+import * as express from 'express';
+import { getServerUptime } from './api/uptime'
+
+const app = express();
+
+app.get('/api/uptime', getServerUptime);
+app.listen(3000, () => console.log(`Example app listening on port 3000!`));
+```
+
+*client side*
+```jsx
+// app.jsx
+import React from 'react';
+import axios from 'axios';
+
+async function load(setUptime) {
+  const { data } = await axios.get('http://127.0.0.1:3000/api/uptime');
+  setUptime(data);
+}
+
+export const App = () => {
+    const [uptime, setUptime] = React.useState<string>('loading...');
+    React.useEffect(() => { load(setUptime); }, []);
+    return (
+        <div>Server uptime: {uptime}</div>
+    );
+}
+```
+
+**Now with isomor it would look like this:**
 
 *./src-isomor/server/uptime.ts - function executed on server*
 ```ts

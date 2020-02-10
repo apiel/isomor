@@ -60,16 +60,15 @@ function isomorRemoteWs(baseUrl, path, pkgname, funcName, args, classname) {
         yield waitForWs(baseUrl);
         const id = reqId++;
         return new Promise((resolve, reject) => {
-            var _a, _b;
+            var _a;
             reqQueue[id] = { id, resolve, reject };
-            console.log('should cookie it', (_a = document) === null || _a === void 0 ? void 0 : _a.cookie);
             setTimeout(() => reject('request timeout'), 10000);
             ws.send(JSON.stringify({
                 action: 'API',
                 id,
                 path: _1.getUrlPath(path, pkgname, funcName, classname),
                 args,
-                cookie: (_b = document) === null || _b === void 0 ? void 0 : _b.cookie,
+                cookie: (_a = document) === null || _a === void 0 ? void 0 : _a.cookie,
             }));
         });
     });

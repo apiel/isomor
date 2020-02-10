@@ -1,5 +1,9 @@
 ### ToDo
 
+- cookie
+    instead to always carry the cookie in WS we should make a getCookie and setCookie in the Context
+    for both HTTP and WS
+
 - implement websocket
     https://github.com/websockets/ws/issues/473
     **think about a caching system**

@@ -73,6 +73,7 @@ export async function isomorRemoteWs(
             id,
             path: getUrlPath(path, pkgname, funcName, classname),
             args,
+            cookie: document?.cookie,
         }));
     });
 }

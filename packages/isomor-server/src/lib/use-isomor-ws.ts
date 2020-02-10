@@ -62,14 +62,17 @@ async function apiAction(
     req: IncomingMessage,
     ws: WebSocket,
     wsTimeout: number,
-    data: { id: string, path: string, args: any[] },
+    data: { id: string, path: string, args: any[], cookie?: any },
     logger?: Logger,
 ) {
-    const { id, path, args } = data;
+    const { id, path, args, cookie } = data;
     logger?.log(`WS req ${path}`);
     if (routesIndex[path]) {
         const { validationSchema, fn, isClass } = routesIndex[path];
         try {
+            if (cookie) {
+                req.headers.cookie = cookie;
+            }
             const push = (payload: any) => {
                 wsRefreshTimeout(ws, wsTimeout);
                 const pushMsg = JSON.stringify({ action: 'PUSH', id, payload });

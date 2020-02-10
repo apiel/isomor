@@ -43,11 +43,14 @@ function wsRefreshTimeout(ws, wsTimeout) {
 function apiAction(routesIndex, req, ws, wsTimeout, data, logger) {
     var _a, _b, _c, _d, _e;
     return __awaiter(this, void 0, void 0, function* () {
-        const { id, path, args } = data;
+        const { id, path, args, cookie } = data;
         (_a = logger) === null || _a === void 0 ? void 0 : _a.log(`WS req ${path}`);
         if (routesIndex[path]) {
             const { validationSchema, fn, isClass } = routesIndex[path];
             try {
+                if (cookie) {
+                    req.headers.cookie = cookie;
+                }
                 const push = (payload) => {
                     var _a;
                     wsRefreshTimeout(ws, wsTimeout);

@@ -1,8 +1,11 @@
 ### ToDo
 
 - cookie
-    instead to always carry the cookie in WS we should make a getCookie and setCookie in the Context
+    instead to always carry the cookie in WS we should make a loadCookie and setCookie in the Context
     for both HTTP and WS
+    or
+    when socket start connection, send config to the client, to ask or not to retrieve cookies
+    (those config could be use for many other use case, e.g. cache), we could as well change those config during the connection with setConfig
 
 - implement websocket
     https://github.com/websockets/ws/issues/473

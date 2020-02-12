@@ -1,5 +1,7 @@
 ### ToDo
 
+- ts transpiler give now much more feature, we should switch away from babel and use ts tools https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API
+
 - cookie
     instead to always carry the cookie in WS we should make a loadCookie and setCookie in the Context
     for both HTTP and WS

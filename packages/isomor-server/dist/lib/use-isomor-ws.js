@@ -56,7 +56,9 @@ function apiAction(routesIndex, req, ws, wsTimeout, data, logger) {
                     wsRefreshTimeout(ws, wsTimeout);
                     const pushMsg = JSON.stringify({ action: 'PUSH', id, payload });
                     (_a = logger) === null || _a === void 0 ? void 0 : _a.log(`WS PUSH`, pushMsg.substring(0, 120), '...');
-                    ws.send(pushMsg);
+                    return new Promise((resolve) => {
+                        ws.send(pushMsg, (err) => resolve(!err));
+                    });
                 };
                 const ctx = { req, ws, push };
                 utils_1.validateArgs(validationSchema, args);

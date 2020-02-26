@@ -15,7 +15,13 @@ function getTime() {
         if (this.push) {
             const { push } = this;
             clearInterval(timer);
-            timer = setInterval(() => push({ time: (new Date()).toLocaleString() }), 1000);
+            timer = setInterval(() => __awaiter(this, void 0, void 0, function* () {
+                const sent = yield push({ time: (new Date()).toLocaleString() });
+                if (!sent) {
+                    console.log('Socket was closed, stop to push time to client.');
+                    clearInterval(timer);
+                }
+            }), 1000);
         }
         return { time: (new Date()).toLocaleString() };
     });

@@ -77,7 +77,9 @@ async function apiAction(
                 wsRefreshTimeout(ws, wsTimeout);
                 const pushMsg = JSON.stringify({ action: 'PUSH', id, payload });
                 logger?.log(`WS PUSH`, pushMsg.substring(0, 120), '...');
-                ws.send(pushMsg);
+                return new Promise<boolean>((resolve) => {
+                    ws.send(pushMsg, (err) => resolve(!err));
+                });
             };
             const ctx: WsContext = { req, ws, push };
             validateArgs(validationSchema, args);

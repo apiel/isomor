@@ -9,7 +9,13 @@ export async function getTime(): Promise<ServerTime> {
     if (this.push) {
         const { push } = this;
         clearInterval(timer);
-        timer = setInterval(() => push({ time: (new Date()).toLocaleString() }), 1000);
+        timer = setInterval(async () => {
+            const sent = await push({ time: (new Date()).toLocaleString() });
+            if (!sent) {
+                console.log('Socket was closed, stop to push time to client.');
+                clearInterval(timer);
+            }
+        }, 1000);
     }
     return { time: (new Date()).toLocaleString() };
 }

@@ -5,7 +5,15 @@
  */
 import { isomorRemoteHttp } from './remoteHttp';
 import { isomorRemoteWs } from './remoteWs';
-export { subscribe, unsubscribe, SubscribeFn } from './remoteWs';
+export {
+    subscribe,
+    unsubscribe,
+    SubscribeFn,
+    WsServerAction,
+    WsClientAction,
+    WsConfig,
+    wsDefaultConfig,
+} from './remoteWs';
 
 const urlPrefix = '/isomor'; // http://127.0.0.1:3000/
 

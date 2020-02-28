@@ -1,4 +1,6 @@
 import * as WebSocket from 'ws';
+import { WsClientAction, WsServerAction, WsConfig } from 'isomor';
+
 import { Route } from './route';
 import { Server, IncomingMessage } from 'http';
 import { isString } from 'util';
@@ -8,6 +10,7 @@ export interface WsContext {
     req: IncomingMessage;
     ws: WebSocket;
     push: (payload: any) => Promise<boolean>;
+    setConfig: (config: WsConfig) => Promise<void>;
 }
 
 interface Logger {
@@ -19,12 +22,11 @@ interface RoutesIndex {
     [path: string]: Route;
 }
 
-//   {
-//     "action": "API",
-//     "id": 1234,
-//     "path": "/isomor/isomor-example-react/color-server-color/getColor",
-//     "args": []
-//   }
+let defaultConfig: WsConfig | undefined;
+export function setWsDefaultConfig(config: WsConfig | undefined) {
+    defaultConfig = config;
+}
+
 export function useIsomorWs(
     routes: Route[],
     server: Server,
@@ -35,10 +37,11 @@ export function useIsomorWs(
     const wss = new WebSocket.Server({ server });
     wss.on('connection', (ws, req) => {
         wsRefreshTimeout(ws, wsTimeout);
+        sendDefaultConfig(ws, wsTimeout, logger);
         ws.on('message', (message) => {
             if (isString(message)) {
                 const data = JSON.parse(message);
-                if (data?.action === 'API') {
+                if (data?.action === WsClientAction.API) {
                     apiAction(routesIndex, req, ws, wsTimeout, data, logger);
                 } else {
                     logger?.warn(`WS unknown message`, message);
@@ -73,26 +76,27 @@ async function apiAction(
             if (cookie) {
                 req.headers.cookie = cookie;
             }
-            const push = (payload: any) => {
-                wsRefreshTimeout(ws, wsTimeout);
-                const pushMsg = JSON.stringify({ action: 'PUSH', id, payload });
-                logger?.log(`WS PUSH`, pushMsg.substring(0, 120), '...');
-                return new Promise<boolean>((resolve) => {
-                    ws.send(pushMsg, (err) => resolve(!err));
-                });
+            const send = wsSend(ws, wsTimeout, id, logger);
+            const push = async (payload: any) => {
+                try {
+                    await send(WsServerAction.PUSH, payload);
+                } catch (pushErr) {
+                    return false;
+                }
+                return true;
             };
-            const ctx: WsContext = { req, ws, push };
+            const setConfig = (config: WsConfig) => send(WsServerAction.CONF, config);
+            const ctx: WsContext = { req, ws, push, setConfig };
             validateArgs(validationSchema, args);
             const result = isClass
                 ? await fn(...args, req, ws, push)
                 : await fn.call(ctx, ...args);
-            const msg = JSON.stringify({ action: 'API_RES', id, result });
-            ws.send(msg);
+            await send(WsServerAction.API_RES, result);
             logger?.log(`WS 200 ${path}`);
             // console.log('msg', msg);
         } catch (error) {
-            ws.send(JSON.stringify({ action: 'API_ERR', id, error: error?.message }));
             logger?.log(`WS 500 ${path}`, error);
+            ws.send(JSON.stringify({ action: WsServerAction.API_ERR, id, payload: error?.message }));
         }
     } else {
         logger?.log(`WS 404 ${path}`);
@@ -104,4 +108,35 @@ function getRoutesIndex(routes: Route[]): RoutesIndex {
         acc[route.path] = route;
         return acc;
     }, {});
+}
+
+
+const wsSend = (
+    ws: WebSocket,
+    wsTimeout: number,
+    id?: string,
+    logger?: Logger,
+) => (
+    action: WsServerAction,
+    payload: any,
+): Promise<void> => {
+    wsRefreshTimeout(ws, wsTimeout);
+    const msg = JSON.stringify({ action, id, payload });
+    logger?.log(`WS ${action}`, msg.substring(0, 120), '...');
+    return new Promise((resolve, reject) => {
+        ws.send(msg, (err) => {
+            if (err) reject(err);
+            else resolve();
+        });
+    });
+};
+
+function sendDefaultConfig(
+    ws: WebSocket,
+    wsTimeout: number,
+    logger?: Logger,
+) {
+    if (defaultConfig) {
+        wsSend(ws, wsTimeout, undefined, logger)(WsServerAction.CONF, defaultConfig);
+    }
 }

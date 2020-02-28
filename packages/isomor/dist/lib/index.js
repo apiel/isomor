@@ -5,6 +5,9 @@ const remoteWs_1 = require("./remoteWs");
 var remoteWs_2 = require("./remoteWs");
 exports.subscribe = remoteWs_2.subscribe;
 exports.unsubscribe = remoteWs_2.unsubscribe;
+exports.WsServerAction = remoteWs_2.WsServerAction;
+exports.WsClientAction = remoteWs_2.WsClientAction;
+exports.wsDefaultConfig = remoteWs_2.wsDefaultConfig;
 const urlPrefix = '/isomor';
 function getUrlPath(path, pkgname, funcName, classname) {
     const url = classname

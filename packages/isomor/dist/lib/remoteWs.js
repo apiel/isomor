@@ -10,12 +10,27 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const _1 = require(".");
+var WsServerAction;
+(function (WsServerAction) {
+    WsServerAction["PUSH"] = "PUSH";
+    WsServerAction["CONF"] = "CONF";
+    WsServerAction["API_RES"] = "API_RES";
+    WsServerAction["API_ERR"] = "API_ERR";
+})(WsServerAction = exports.WsServerAction || (exports.WsServerAction = {}));
+var WsClientAction;
+(function (WsClientAction) {
+    WsClientAction["API"] = "API";
+})(WsClientAction = exports.WsClientAction || (exports.WsClientAction = {}));
+exports.wsDefaultConfig = {
+    withCookie: false,
+};
 let ws;
 let reqId = 0;
 const reqQueue = {};
 let subId = 0;
 const subscribedFunctions = {};
 let wsReady = false;
+let wsConfig = exports.wsDefaultConfig;
 function openWS(baseUrl) {
     ws = new WebSocket(baseUrl);
     ws.onopen = () => {
@@ -28,16 +43,20 @@ function openWS(baseUrl) {
     ws.onmessage = (msgEv) => {
         var _a, _b;
         const data = JSON.parse(msgEv.data);
-        if (data.action === 'API_RES') {
-            (_a = reqQueue[data.id]) === null || _a === void 0 ? void 0 : _a.resolve(data.result);
+        if (data.action === WsServerAction.API_RES) {
+            (_a = reqQueue[data.id]) === null || _a === void 0 ? void 0 : _a.resolve(data.payload);
             delete (reqQueue[data.id]);
         }
-        else if (data.action === 'API_ERR') {
-            (_b = reqQueue[data.id]) === null || _b === void 0 ? void 0 : _b.reject(data.error);
+        else if (data.action === WsServerAction.API_ERR) {
+            (_b = reqQueue[data.id]) === null || _b === void 0 ? void 0 : _b.reject(data.payload);
             delete (reqQueue[data.id]);
         }
-        else if (data.action === 'PUSH') {
+        else if (data.action === WsServerAction.PUSH) {
             Object.values(subscribedFunctions).forEach(fn => fn && fn(data.payload));
+        }
+        else if (data.action === WsServerAction.CONF) {
+            console.log('set conf', wsConfig, data.payload);
+            wsConfig = data.payload;
         }
     };
 }
@@ -60,16 +79,11 @@ function isomorRemoteWs(baseUrl, path, pkgname, funcName, args, classname) {
         yield waitForWs(baseUrl);
         const id = reqId++;
         return new Promise((resolve, reject) => {
-            var _a;
+            var _a, _b, _c;
             reqQueue[id] = { id, resolve, reject };
             setTimeout(() => reject('request timeout'), 10000);
-            ws.send(JSON.stringify({
-                action: 'API',
-                id,
-                path: _1.getUrlPath(path, pkgname, funcName, classname),
-                args,
-                cookie: (_a = document) === null || _a === void 0 ? void 0 : _a.cookie,
-            }));
+            console.log('wsConfig?.withCookie', (_a = wsConfig) === null || _a === void 0 ? void 0 : _a.withCookie);
+            ws.send(JSON.stringify(Object.assign({ action: WsClientAction.API, id, path: _1.getUrlPath(path, pkgname, funcName, classname), args }, (((_b = wsConfig) === null || _b === void 0 ? void 0 : _b.withCookie) && { cookie: (_c = document) === null || _c === void 0 ? void 0 : _c.cookie }))));
         });
     });
 }

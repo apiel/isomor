@@ -1,6 +1,25 @@
 import { getUrlPath } from '.';
 
+export enum WsServerAction {
+    PUSH = 'PUSH',
+    CONF = 'CONF',
+    API_RES = 'API_RES',
+    API_ERR = 'API_ERR',
+}
+
+export enum WsClientAction {
+    API = 'API',
+}
+
+export interface WsConfig {
+    withCookie: boolean;
+}
+
 export type SubscribeFn = (payload: any) => void;
+
+export const wsDefaultConfig: WsConfig = {
+    withCookie: false,
+}
 
 let ws: WebSocket;
 let reqId = 0;
@@ -8,6 +27,7 @@ const reqQueue = {};
 let subId = 0;
 const subscribedFunctions: { [key: number]: SubscribeFn } = {};
 let wsReady = false;
+let wsConfig: WsConfig = wsDefaultConfig;
 
 function openWS(baseUrl: string) {
     // ws = new WebSocket(`ws://${location.host}/isomor-ws`);
@@ -27,14 +47,16 @@ function openWS(baseUrl: string) {
     ws.onmessage = (msgEv) => {
         // console.log('WS msg', msgEv);
         const data = JSON.parse(msgEv.data);
-        if (data.action === 'API_RES') {
-            reqQueue[data.id]?.resolve(data.result);
+        if (data.action === WsServerAction.API_RES) {
+            reqQueue[data.id]?.resolve(data.payload);
             delete (reqQueue[data.id]);
-        } else if (data.action === 'API_ERR') {
-            reqQueue[data.id]?.reject(data.error);
+        } else if (data.action === WsServerAction.API_ERR) {
+            reqQueue[data.id]?.reject(data.payload);
             delete (reqQueue[data.id]);
-        } else if (data.action === 'PUSH') {
+        } else if (data.action === WsServerAction.PUSH) {
             Object.values(subscribedFunctions).forEach(fn => fn && fn(data.payload));
+        } else if (data.action === WsServerAction.CONF) {
+            wsConfig = data.payload;
         }
     };
 }
@@ -69,11 +91,11 @@ export async function isomorRemoteWs(
         reqQueue[id] = { id, resolve, reject };
         setTimeout(() => reject('request timeout'), 10000);
         ws.send(JSON.stringify({
-            action: 'API',
+            action: WsClientAction.API,
             id,
             path: getUrlPath(path, pkgname, funcName, classname),
             args,
-            cookie: document?.cookie,
+            ...(wsConfig?.withCookie && { cookie: document?.cookie }),
         }));
     });
 }

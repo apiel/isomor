@@ -29,6 +29,10 @@ const subscribedFunctions: { [key: number]: SubscribeFn } = {};
 let wsReady = false;
 let wsConfig: WsConfig = wsDefaultConfig;
 
+export function setWsConfig(config: WsConfig) {
+    wsConfig = config;
+}
+
 function openWS(baseUrl: string) {
     // ws = new WebSocket(`ws://${location.host}/isomor-ws`);
     // ws = new WebSocket(`ws://127.0.0.1:3005`);
@@ -56,7 +60,7 @@ function openWS(baseUrl: string) {
         } else if (data.action === WsServerAction.PUSH) {
             Object.values(subscribedFunctions).forEach(fn => fn && fn(data.payload));
         } else if (data.action === WsServerAction.CONF) {
-            wsConfig = data.payload;
+            setWsConfig(data.payload);
         }
     };
 }

@@ -2,6 +2,9 @@
 
 - cookie
     + need to update doc
+        setWsDefaultConfig from server
+        setWsConfig from client
+        setWsConfig from context
     when socket start connection, send config to the client, to ask or not to retrieve cookies
     (those config could be use for many other use case, e.g. cache), we could as well change those config during the connection with setConfig
     + seem to dont work on first load...

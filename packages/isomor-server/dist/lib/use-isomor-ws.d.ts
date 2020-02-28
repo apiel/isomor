@@ -7,7 +7,7 @@ export interface WsContext {
     req: IncomingMessage;
     ws: WebSocket;
     push: (payload: any) => Promise<boolean>;
-    setConfig: (config: WsConfig) => Promise<void>;
+    setWsConfig: (config: WsConfig) => Promise<void>;
 }
 interface Logger {
     log: (...ars: any) => void;

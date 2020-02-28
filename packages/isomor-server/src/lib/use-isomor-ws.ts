@@ -10,7 +10,7 @@ export interface WsContext {
     req: IncomingMessage;
     ws: WebSocket;
     push: (payload: any) => Promise<boolean>;
-    setConfig: (config: WsConfig) => Promise<void>;
+    setWsConfig: (config: WsConfig) => Promise<void>;
 }
 
 interface Logger {
@@ -85,8 +85,8 @@ async function apiAction(
                 }
                 return true;
             };
-            const setConfig = (config: WsConfig) => send(WsServerAction.CONF, config);
-            const ctx: WsContext = { req, ws, push, setConfig };
+            const setWsConfig = (config: WsConfig) => send(WsServerAction.CONF, config);
+            const ctx: WsContext = { req, ws, push, setWsConfig };
             validateArgs(validationSchema, args);
             const result = isClass
                 ? await fn(...args, req, ws, push)
@@ -137,6 +137,7 @@ function sendDefaultConfig(
     logger?: Logger,
 ) {
     if (defaultConfig) {
+        logger.log('WS send default config', defaultConfig);
         wsSend(ws, wsTimeout, undefined, logger)(WsServerAction.CONF, defaultConfig);
     }
 }

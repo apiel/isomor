@@ -68,8 +68,8 @@ function apiAction(routesIndex, req, ws, wsTimeout, data, logger) {
                     }
                     return true;
                 });
-                const setConfig = (config) => send(isomor_1.WsServerAction.CONF, config);
-                const ctx = { req, ws, push, setConfig };
+                const setWsConfig = (config) => send(isomor_1.WsServerAction.CONF, config);
+                const ctx = { req, ws, push, setWsConfig };
                 utils_1.validateArgs(validationSchema, args);
                 const result = isClass
                     ? yield fn(...args, req, ws, push)
@@ -109,6 +109,7 @@ const wsSend = (ws, wsTimeout, id, logger) => (action, payload) => {
 };
 function sendDefaultConfig(ws, wsTimeout, logger) {
     if (defaultConfig) {
+        logger.log('WS send default config', defaultConfig);
         wsSend(ws, wsTimeout, undefined, logger)(isomor_1.WsServerAction.CONF, defaultConfig);
     }
 }

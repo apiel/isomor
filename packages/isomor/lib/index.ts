@@ -13,6 +13,7 @@ export {
     WsClientAction,
     WsConfig,
     wsDefaultConfig,
+    setWsConfig,
 } from './remoteWs';
 
 const urlPrefix = '/isomor'; // http://127.0.0.1:3000/

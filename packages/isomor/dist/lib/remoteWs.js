@@ -37,7 +37,7 @@ function openWS(baseUrl) {
             delete (reqQueue[data.id]);
         }
         else if (data.action === 'PUSH') {
-            Object.values(subscribedFunctions).forEach(fn => fn(data.payload));
+            Object.values(subscribedFunctions).forEach(fn => fn && fn(data.payload));
         }
     };
 }
@@ -74,14 +74,14 @@ function isomorRemoteWs(baseUrl, path, pkgname, funcName, args, classname) {
     });
 }
 exports.isomorRemoteWs = isomorRemoteWs;
-function subscrib(fn) {
+function subscribe(fn) {
     const key = subId++;
     subscribedFunctions[key] = fn;
     return key;
 }
-exports.subscrib = subscrib;
-function unsubscrib(key) {
+exports.subscribe = subscribe;
+function unsubscribe(key) {
     delete subscribedFunctions[key];
 }
-exports.unsubscrib = unsubscrib;
+exports.unsubscribe = unsubscribe;
 //# sourceMappingURL=remoteWs.js.map

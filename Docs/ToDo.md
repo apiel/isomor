@@ -1,13 +1,17 @@
 ### ToDo
 
-- ts transpiler give now much more feature, we should switch away from babel and use ts tools https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API
-
 - cookie
     instead to always carry the cookie in WS we should make a loadCookie and setCookie in the Context
     for both HTTP and WS
     or
     when socket start connection, send config to the client, to ask or not to retrieve cookies
     (those config could be use for many other use case, e.g. cache), we could as well change those config during the connection with setConfig
+
+- be able to install typeorm to an exisiting project from cli
+
+- ts transpiler give now much more feature, we should switch away from babel and use ts tools https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API
+    "Keep in mind that this is not yet a stable API" we might wait to get into a stable version of the API
+    before to make any changes.
 
 - implement websocket
     https://github.com/websockets/ws/issues/473

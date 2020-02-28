@@ -1,12 +1,12 @@
 import { getUrlPath } from '.';
 
-export type SubscribFn = (payload: any) => void;
+export type SubscribeFn = (payload: any) => void;
 
 let ws: WebSocket;
 let reqId = 0;
 const reqQueue = {};
 let subId = 0;
-const subscribedFunctions: { [key: number]: SubscribFn } = {};
+const subscribedFunctions: { [key: number]: SubscribeFn } = {};
 let wsReady = false;
 
 function openWS(baseUrl: string) {
@@ -34,7 +34,7 @@ function openWS(baseUrl: string) {
             reqQueue[data.id]?.reject(data.error);
             delete (reqQueue[data.id]);
         } else if (data.action === 'PUSH') {
-            Object.values(subscribedFunctions).forEach(fn => fn(data.payload));
+            Object.values(subscribedFunctions).forEach(fn => fn && fn(data.payload));
         }
     };
 }
@@ -78,13 +78,13 @@ export async function isomorRemoteWs(
     });
 }
 
-export function subscrib(fn: SubscribFn) {
+export function subscribe(fn: SubscribeFn) {
     const key = subId++;
     subscribedFunctions[key] = fn;
 
     return key;
 }
 
-export function unsubscrib(key: number) {
+export function unsubscribe(key: number) {
     delete subscribedFunctions[key];
 }

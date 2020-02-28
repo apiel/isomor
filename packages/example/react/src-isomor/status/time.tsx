@@ -1,5 +1,5 @@
 import React from 'react';
-import { subscrib, unsubscrib } from 'isomor';
+import { subscribe, unsubscribe } from 'isomor';
 
 import { getTime, ServerTime } from './server/getTime';
 
@@ -11,10 +11,10 @@ export const Time = () => {
   React.useEffect(() => {
     load();
     // if websocket protocol used, let subscrib to update automatically the time
-    const key = subscrib(setServerTime);
+    const key = subscribe(setServerTime);
     return () => {
       // don't forget to unsubscrib when the component unmount
-      unsubscrib(key);
+      unsubscribe(key);
     }
   }, []);
   return (

@@ -56,23 +56,23 @@ export async function pushTime(): Promise<void> {
 }
 ```
 
-On the client, you need to subscrib to the pushed messages sent from the server:
+On the client, you need to subscribe to the pushed messages sent from the server:
 
 ```ts
 import React from 'react';
-import { subscrib, unsubscrib } from 'isomor';
+import { subscribe, unsubscribe } from 'isomor';
 import { pushTime } from './server/time';
 
 export const Time = () => {
   const [serverTime, setServerTime] = React.useState<string>();
   React.useEffect(() => {
-    // subscrib to push request and set the received data in the serverTime
-    const id = subscrib((payload) => setServerTime(payload));
+    // subscribe to push request and set the received data in the serverTime
+    const id = subscribe((payload) => setServerTime(payload));
     // then call pushTime to start the timer
     pushTime();
     return () => {
-      // don't forget to unsubscrib when the component unmount
-      unsubscrib(id);
+      // don't forget to unsubscribe when the component unmount
+      unsubscribe(id);
     }
   }, []);
   return (

@@ -3,8 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const remoteHttp_1 = require("./remoteHttp");
 const remoteWs_1 = require("./remoteWs");
 var remoteWs_2 = require("./remoteWs");
-exports.subscrib = remoteWs_2.subscrib;
-exports.unsubscrib = remoteWs_2.unsubscrib;
+exports.subscribe = remoteWs_2.subscribe;
+exports.unsubscribe = remoteWs_2.unsubscribe;
 const urlPrefix = '/isomor';
 function getUrlPath(path, pkgname, funcName, classname) {
     const url = classname

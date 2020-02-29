@@ -59,15 +59,7 @@ function apiAction(routesIndex, req, ws, wsTimeout, data, logger) {
                     req.headers.cookie = cookie;
                 }
                 const send = wsSend(ws, wsTimeout, id, logger);
-                const push = (payload) => __awaiter(this, void 0, void 0, function* () {
-                    try {
-                        yield send(isomor_1.WsServerAction.PUSH, payload);
-                    }
-                    catch (pushErr) {
-                        return false;
-                    }
-                    return true;
-                });
+                const push = (payload) => send(isomor_1.WsServerAction.PUSH, payload);
                 const setWsConfig = (config) => send(isomor_1.WsServerAction.CONF, config);
                 const ctx = { req, ws, push, setWsConfig };
                 utils_1.validateArgs(validationSchema, args);

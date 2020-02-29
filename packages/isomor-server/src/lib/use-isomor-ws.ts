@@ -9,7 +9,7 @@ import { validateArgs } from './utils';
 export interface WsContext {
     req: IncomingMessage;
     ws: WebSocket;
-    push: (payload: any) => Promise<boolean>;
+    push: (payload: any) => Promise<void>;
     setWsConfig: (config: WsConfig) => Promise<void>;
 }
 
@@ -77,14 +77,7 @@ async function apiAction(
                 req.headers.cookie = cookie;
             }
             const send = wsSend(ws, wsTimeout, id, logger);
-            const push = async (payload: any) => {
-                try {
-                    await send(WsServerAction.PUSH, payload);
-                } catch (pushErr) {
-                    return false;
-                }
-                return true;
-            };
+            const push = (payload: any) => send(WsServerAction.PUSH, payload);
             const setWsConfig = (config: WsConfig) => send(WsServerAction.CONF, config);
             const ctx: WsContext = { req, ws, push, setWsConfig };
             validateArgs(validationSchema, args);

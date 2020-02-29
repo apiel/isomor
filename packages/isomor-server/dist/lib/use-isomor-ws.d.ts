@@ -6,7 +6,7 @@ import { Server, IncomingMessage } from 'http';
 export interface WsContext {
     req: IncomingMessage;
     ws: WebSocket;
-    push: (payload: any) => Promise<boolean>;
+    push: (payload: any) => Promise<void>;
     setWsConfig: (config: WsConfig) => Promise<void>;
 }
 interface Logger {

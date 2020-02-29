@@ -16,33 +16,12 @@ As for the [HTTP context](Docs/ReqResCtx.md), you can also access the context fr
 export interface WsContext {
     req: IncomingMessage;
     ws: WebSocket;
-    push: (payload: any) => void;
+    push: (payload: any) => Promise<void>;
+    setWsConfig: (config: WsConfig) => Promise<void>;
 }
 ```
 
 Use this context in the same way you would do for HTTP: [Request / Response context](Docs/ReqResCtx.md)
-
-<!-- ### React
-
-In order to be able to use WebSocket in dev mode, you need to update the proxy settings. First, remove the proxy parameter from `package.json`. Then, install `http-proxy-middleware` using Yarn:
-
-```shell
-yarn add http-proxy-middleware
-```
-
-Finally, create **src-isomor/setupProxy.js** and place the following contents in it:
-
-```js
-const proxy = require('http-proxy-middleware');
-module.exports = function (app) {
-    app.use(
-        '/isomor',
-        proxy({ target: 'http://127.0.0.1:3005', ws:true })
-    );
-};
-```
-
-For more details, [see React documentation](https://create-react-app.dev/docs/proxying-api-requests-in-development/#configuring-the-proxy-manually). -->
 
 ### Push
 
@@ -82,5 +61,47 @@ export const Time = () => {
       )}
     </div>
   );
+}
+```
+
+### Cookies
+
+By default the cookies are not sent over websocket. But you ask to isomor to send them for each query. There is 3 way to do this.
+
+From the server for every connection with `setWsDefaultConfig`. In the startup script `src-isomor/server/startup/index.ts` add the following:
+
+```ts
+import { setWsDefaultConfig } from 'isomor-server';
+
+export default function(app: any) {
+    setWsDefaultConfig({ withCookie: true });
+}
+```
+
+From a server function for a given connection with `setWsConfig` of `WsContext`:
+
+```ts
+export async function someFunction(): Promise<string> {
+    this.setWsConfig({ withCookie: true });
+    return 'something';
+}
+```
+
+Fron the client, within a component:
+
+```ts
+import React from 'react';
+import { setWsConfig } from 'isomor';
+import { setAuth } from './server/auth';
+
+export const Auth = () => {
+    const onLogin = async () => {
+        setWsConfig({ withCookie: true });
+        await setAuth();
+        setWsConfig({ withCookie: false });
+    };
+    return (
+        <a onClick={onLogin} href="#">Click to login</a>
+    );
 }
 ```

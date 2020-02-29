@@ -13,7 +13,7 @@ export async function getTime(): Promise<ServerTime> {
             try {
                 await push({ time: (new Date()).toLocaleString() });
             } catch (error) {
-                console.log('Socket not available, stop to push time to client.', error);
+                console.log('Socket not available, stop to push time to client.', error.message);
                 clearInterval(timer);
             }
         }, 1000);

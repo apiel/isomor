@@ -44,16 +44,16 @@ function openWS(baseUrl) {
         wsReady = false;
         ws = null;
     };
-    ws.onmessage = (msgEv) => {
+    ws.onmessage = msgEv => {
         var _a, _b;
         const data = JSON.parse(msgEv.data);
         if (data.action === WsServerAction.API_RES) {
             (_a = reqQueue[data.id]) === null || _a === void 0 ? void 0 : _a.resolve(data.payload);
-            delete (reqQueue[data.id]);
+            delete reqQueue[data.id];
         }
         else if (data.action === WsServerAction.API_ERR) {
             (_b = reqQueue[data.id]) === null || _b === void 0 ? void 0 : _b.reject(data.payload);
-            delete (reqQueue[data.id]);
+            delete reqQueue[data.id];
         }
         else if (data.action === WsServerAction.PUSH) {
             Object.values(subscribedFunctions).forEach(fn => fn && fn(data.payload));

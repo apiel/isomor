@@ -9,14 +9,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const axios_1 = require("axios");
 const _1 = require(".");
 function isomorRemoteHttp(baseUrl, path, pkgname, funcName, args, classname) {
     return __awaiter(this, void 0, void 0, function* () {
         const url = baseUrl + _1.getUrlPath(path, pkgname, funcName, classname);
-        const { data: { result } } = yield axios_1.default.request(Object.assign({ url }, (args.length
-            ? { method: 'POST', data: { args } }
-            : { method: 'GET' })));
+        const { result } = yield fetch(url, !args.length
+            ? undefined
+            : {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json;charset=UTF-8',
+                },
+                body: JSON.stringify({ args }),
+            }).then(response => response.json());
         return result;
     });
 }

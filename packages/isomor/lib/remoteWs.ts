@@ -19,7 +19,7 @@ export type SubscribeFn = (payload: any) => void;
 
 export const wsDefaultConfig: WsConfig = {
     withCookie: false,
-}
+};
 
 let ws: WebSocket;
 let reqId = 0;
@@ -48,17 +48,19 @@ function openWS(baseUrl: string) {
         // we could try to re-connect?
     };
     // ToDo create a type definition for each action
-    ws.onmessage = (msgEv) => {
+    ws.onmessage = msgEv => {
         // console.log('WS msg', msgEv);
         const data = JSON.parse(msgEv.data);
         if (data.action === WsServerAction.API_RES) {
             reqQueue[data.id]?.resolve(data.payload);
-            delete (reqQueue[data.id]);
+            delete reqQueue[data.id];
         } else if (data.action === WsServerAction.API_ERR) {
             reqQueue[data.id]?.reject(data.payload);
-            delete (reqQueue[data.id]);
+            delete reqQueue[data.id];
         } else if (data.action === WsServerAction.PUSH) {
-            Object.values(subscribedFunctions).forEach(fn => fn && fn(data.payload));
+            Object.values(subscribedFunctions).forEach(
+                fn => fn && fn(data.payload),
+            );
         } else if (data.action === WsServerAction.CONF) {
             setWsConfig(data.payload);
         }
@@ -94,13 +96,15 @@ export async function isomorRemoteWs(
     return new Promise((resolve, reject) => {
         reqQueue[id] = { id, resolve, reject };
         setTimeout(() => reject('request timeout'), 10000);
-        ws.send(JSON.stringify({
-            action: WsClientAction.API,
-            id,
-            path: getUrlPath(path, pkgname, funcName, classname),
-            args,
-            ...(wsConfig?.withCookie && { cookie: document?.cookie }),
-        }));
+        ws.send(
+            JSON.stringify({
+                action: WsClientAction.API,
+                id,
+                path: getUrlPath(path, pkgname, funcName, classname),
+                args,
+                ...(wsConfig?.withCookie && { cookie: document?.cookie }),
+            }),
+        );
     });
 }
 

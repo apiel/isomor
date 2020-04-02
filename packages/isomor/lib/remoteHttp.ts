@@ -1,4 +1,3 @@
-import Axios from 'axios';
 import { getUrlPath } from '.';
 
 export async function isomorRemoteHttp(
@@ -10,11 +9,18 @@ export async function isomorRemoteHttp(
     classname?: string,
 ): Promise<any> {
     const url = baseUrl + getUrlPath(path, pkgname, funcName, classname);
-    const { data: { result } } = await Axios.request({
+    const { result } = await fetch(
         url,
-        ...(args.length
-            ? { method: 'POST', data: { args } }
-            : { method: 'GET' }),
-    });
+        !args.length
+            ? undefined
+            : {
+                  method: 'POST',
+                  headers: {
+                      Accept: 'application/json',
+                      'Content-Type': 'application/json;charset=UTF-8',
+                  },
+                  body: JSON.stringify({ args }),
+              },
+    ).then(response => response.json());
     return result;
 }

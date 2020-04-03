@@ -11,6 +11,7 @@ export interface TranspilerOptions {
     watchMode: boolean;
     noServerImport: boolean;
     noDecorator: boolean;
+    skipCopySrc: boolean;
 }
 export interface ServerOptions {
     port: number;

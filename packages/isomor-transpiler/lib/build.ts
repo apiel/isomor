@@ -19,12 +19,33 @@ const anymatch = require('anymatch'); // tslint:disable-line
 
 export default transform;
 
-function getCode(options: Options, srcFilePath: string, path: string, content: string) {
-    const { withTypes, noServerImport, noDecorator, pkgName, wsReg, wsBaseUrl, httpBaseUrl } = options;
+function getCode(
+    options: Options,
+    srcFilePath: string,
+    path: string,
+    content: string,
+) {
+    const {
+        withTypes,
+        noServerImport,
+        noDecorator,
+        pkgName,
+        wsReg,
+        wsBaseUrl,
+        httpBaseUrl,
+    } = options;
     const { program } = parse(content);
     program.body = transform(
         program.body,
-        { srcFilePath, path, wsReg, pkgName, withTypes, wsBaseUrl, httpBaseUrl },
+        {
+            srcFilePath,
+            path,
+            wsReg,
+            pkgName,
+            withTypes,
+            wsBaseUrl,
+            httpBaseUrl,
+        },
         noServerImport,
         noDecorator,
     );
@@ -41,7 +62,12 @@ async function transpile(options: Options, filePath: string) {
     const buffer = await readFile(srcFilePath);
     debug('isomor-transpiler:transpile:in')(buffer.toString());
 
-    const code = getCode(options, srcFilePath, getPathForUrl(filePath), buffer.toString());
+    const code = getCode(
+        options,
+        srcFilePath,
+        getPathForUrl(filePath),
+        buffer.toString(),
+    );
 
     const appFilePath = join(distAppFolder, filePath);
     info('Save isomor file', appFilePath);
@@ -50,14 +76,18 @@ async function transpile(options: Options, filePath: string) {
 }
 
 async function prepare(options: Options) {
-    const { srcFolder, distAppFolder, serverFolder } = options;
+    const { srcFolder, distAppFolder, serverFolder, skipCopySrc } = options;
 
     info('Prepare folders');
-    await emptyDir(distAppFolder);
-    await copy(srcFolder, distAppFolder);
+    if (!skipCopySrc) {
+        await emptyDir(distAppFolder);
+        await copy(srcFolder, distAppFolder);
+    }
 
     const folders = await getFolders(srcFolder, serverFolder);
-    await Promise.all(folders.map(folder => emptyDir(join(distAppFolder, folder))));
+    await Promise.all(
+        folders.map((folder) => emptyDir(join(distAppFolder, folder))),
+    );
 }
 
 export async function build(options: Options) {
@@ -68,7 +98,7 @@ export async function build(options: Options) {
     const { srcFolder, serverFolder } = options;
     const files = await getFiles(srcFolder, serverFolder);
     info(`Found ${files.length} file(s).`);
-    await Promise.all(files.map(file => transpile(options, file)));
+    await Promise.all(files.map((file) => transpile(options, file)));
 
     watcher(options);
 }
@@ -77,9 +107,7 @@ function getServerSubFolderPattern(serverFolderPattern: string) {
     return join(serverFolderPattern, '**', '*');
 }
 
-export const watcherUpdate = (
-    options: Options,
-) => async (file: string) => {
+export const watcherUpdate = (options: Options) => async (file: string) => {
     const { srcFolder, serverFolder, distAppFolder, watchMode } = options;
     const serverFolderPattern = getFilesPattern(serverFolder);
     const path = join(srcFolder, file);
@@ -124,16 +152,21 @@ function watcher(options: Options) {
             ignored: getServerSubFolderPattern(serverFolderPattern),
             cwd: srcFolder,
             usePolling: process.env.CHOKIDAR_USEPOLLING === 'true',
-        }).on('ready', () => info('Initial scan complete. Ready for changes...'))
-            .on('add', file => {
+        })
+            .on('ready', () =>
+                info('Initial scan complete. Ready for changes...'),
+            )
+            .on('add', (file) => {
                 info(`File ${file} has been added`);
                 // watcherUpdate(file);
                 setTimeout(() => watcherUpdate(options)(file), 100);
-            }).on('change', file => {
+            })
+            .on('change', (file) => {
                 info(`File ${file} has been changed`);
                 // watcherUpdate(file);
                 setTimeout(() => watcherUpdate(options)(file), 100);
-            }).on('unlink', file => {
+            })
+            .on('unlink', (file) => {
                 info(`File ${file} has been removed`, '(do nothing)');
                 const path = join(distAppFolder, file);
                 unlink(path);

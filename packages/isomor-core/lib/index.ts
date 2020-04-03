@@ -25,7 +25,7 @@ export function getJsonSchemaFileName(
 export function getFilesPattern(
     folderToSearch: string,
 ): string {
-    return process.env.FILES_PATTERN || join('**', folderToSearch, '*');
+    return process.env.ISOMOR_FILES_PATTERN || join('**', folderToSearch, '*');
 }
 
 export async function getFiles(

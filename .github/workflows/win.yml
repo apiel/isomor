@@ -14,6 +14,9 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - name: Generate doc
+    - name: Run vue installer
       timeout-minutes: 20
       run: npx isomor-vue-app my-app
+      env:
+        - COLUMNS: 50
+        - LINES: 20

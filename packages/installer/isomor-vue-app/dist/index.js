@@ -64,7 +64,7 @@ function start({ srcFolder, distAppFolder, serverFolder }) {
             fs_extra_1.writeJSONSync(path_1.join(projectDirectory, 'package.json'), pkg);
             logol_1.info('Install packages...');
             fs_extra_1.writeFileSync('cmd', `cd ${projectDirectory} && \
-            yarn add run-screen nodemon isomor-transpiler isomor-server yarn --dev`);
+            yarn add run-screen nodemon isomor-transpiler isomor-server --dev`);
             yield shell('bash', ['cmd']);
             fs_extra_1.unlinkSync('cmd');
             logol_1.info('Create empty server/data.ts');
@@ -87,12 +87,9 @@ function start({ srcFolder, distAppFolder, serverFolder }) {
 }
 function shell(command, args) {
     return new Promise((resolve) => {
-        var _a, _b;
-        let cmd = child_process_1.spawn(command, args, {
-            env: Object.assign({ COLUMNS: process.env.COLUMNS || ((_a = process.stdout.columns) === null || _a === void 0 ? void 0 : _a.toString()), LINES: process.env.LINES || ((_b = process.stdout.rows) === null || _b === void 0 ? void 0 : _b.toString()) }, process.env),
-        });
+        const cmd = child_process_1.spawn(command, args);
         cmd.stdout.on('data', data => {
-            process.stdout.write(data);
+            process.stdout.write(chalk.gray(data.toString()));
         });
         cmd.stderr.on('data', data => {
             const dataStr = data.toString();
@@ -103,20 +100,7 @@ function shell(command, args) {
                 process.stdout.write(chalk.red(data.toString()));
             }
         });
-        process.stdin.setEncoding('ascii');
-        if (process.stdin.setRawMode) {
-            process.stdin.setRawMode(true);
-        }
-        process.stdin.resume();
-        process.stdin.on('data', (key) => {
-            if (key === '\u0003') {
-                process.exit();
-            }
-            if (cmd) {
-                cmd.stdin.write(key);
-            }
-        });
-        cmd.on('close', () => { cmd = null; resolve(); });
+        cmd.on('close', resolve);
     });
 }
 start(isomor_core_1.getOptions());

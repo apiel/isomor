@@ -8,8 +8,6 @@ Run the following command:
 
 ```bash
 npx isomor-vue-app my-app
-# or use env variable MANUAL=true, to manually select the setup settings. Don't forget to select TypeScript
-# MANUAL=true npx isomor-vue-app my-app
 cd my-app
 yarn dev
 ```

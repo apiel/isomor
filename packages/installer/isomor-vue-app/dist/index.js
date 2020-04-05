@@ -26,9 +26,11 @@ const child_process_1 = require("child_process");
 const chalk = require("chalk");
 const minimist = require("minimist");
 const isomor_core_1 = require("isomor-core");
+const process_1 = require("process");
 function start({ srcFolder, distAppFolder, serverFolder }) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
+            const npx = process_1.platform === 'win32' ? 'npx.cmd' : 'npx';
             logol_1.info('Setup create-vue-app with isomor');
             const { _: [projectName] } = minimist(process.argv.slice(2));
             const projectDirectory = path_1.join(process.cwd(), projectName);
@@ -40,10 +42,10 @@ function start({ srcFolder, distAppFolder, serverFolder }) {
             }
             if (process.env.MANUAL === 'true') {
                 logol_1.info('For the moment the installer work only for TypeScript. Please select TypeScript :-)');
-                yield shell('npx', ['@vue/cli', 'create', projectName]);
+                yield shell(npx, ['@vue/cli', 'create', projectName]);
             }
             else {
-                yield shell('npx', ['@vue/cli', 'create', projectName, '-i',
+                yield shell(npx, ['@vue/cli', 'create', projectName, '-i',
                     `{"useConfigFiles":true,"plugins":{"@vue/cli-plugin-babel":{},"@vue/cli-plugin-typescript":{"classComponent":true,"useTsWithBabel":true}}}`]);
             }
             logol_1.info('Copy tsconfig.server.json');
@@ -85,8 +87,9 @@ function start({ srcFolder, distAppFolder, serverFolder }) {
 }
 function shell(command, args) {
     return new Promise((resolve) => {
+        var _a, _b;
         let cmd = child_process_1.spawn(command, args, {
-            env: Object.assign({ COLUMNS: process.env.COLUMNS || process.stdout.columns.toString(), LINES: process.env.LINES || process.stdout.rows.toString() }, process.env),
+            env: Object.assign({ COLUMNS: process.env.COLUMNS || ((_a = process.stdout.columns) === null || _a === void 0 ? void 0 : _a.toString()), LINES: process.env.LINES || ((_b = process.stdout.rows) === null || _b === void 0 ? void 0 : _b.toString()) }, process.env),
         });
         cmd.stdout.on('data', data => {
             process.stdout.write(data);

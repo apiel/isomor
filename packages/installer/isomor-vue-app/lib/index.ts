@@ -131,9 +131,7 @@ async function start({ srcFolder, distAppFolder, serverFolder }: Options) {
 
 function shell(command: string, args?: ReadonlyArray<string>) {
     return new Promise((resolve) => {
-        const cmd = spawn(command, args, {
-            env: process.env,
-        });
+        const cmd = spawn(command, args);
         cmd.stdout.on('data', (data) => {
             process.stdout.write(chalk.gray(data.toString()));
         });

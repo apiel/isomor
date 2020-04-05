@@ -32,7 +32,7 @@ function start({ srcFolder, distAppFolder, serverFolder }) {
         try {
             const npx = process_1.platform === 'win32' ? 'npx.cmd' : 'npx';
             logol_1.info('Setup create-vue-app with isomor');
-            const { _: [projectName] } = minimist(process.argv.slice(2));
+            const { _: [projectName], } = minimist(process.argv.slice(2));
             const projectDirectory = path_1.join(process.cwd(), projectName);
             logol_1.info('Install VueJs in', projectDirectory);
             logol_1.info('Wait a little bit... we are loading Vue');
@@ -40,14 +40,13 @@ function start({ srcFolder, distAppFolder, serverFolder }) {
                 logol_1.warn(`Please provide the project name, e.g: npx isomor-vue-app my-app`);
                 return;
             }
-            if (process.env.MANUAL === 'true') {
-                logol_1.info('For the moment the installer work only for TypeScript. Please select TypeScript :-)');
-                yield shell(npx, ['@vue/cli', 'create', projectName]);
-            }
-            else {
-                yield shell(npx, ['@vue/cli', 'create', projectName, '-i',
-                    `{"useConfigFiles":true,"plugins":{"@vue/cli-plugin-babel":{},"@vue/cli-plugin-typescript":{"classComponent":true,"useTsWithBabel":true}}}`]);
-            }
+            yield shell(npx, [
+                '@vue/cli',
+                'create',
+                projectName,
+                '-i',
+                `{"useConfigFiles":true,"plugins":{"@vue/cli-plugin-babel":{},"@vue/cli-plugin-typescript":{"classComponent":true,"useTsWithBabel":true}}}`,
+            ]);
             logol_1.info('Copy tsconfig.server.json');
             fs_extra_1.copySync(path_1.join(__dirname, '..', 'tsconfig.server.json'), path_1.join(projectDirectory, 'tsconfig.server.json'));
             logol_1.info('Copy vue.config.js');
@@ -72,8 +71,7 @@ function start({ srcFolder, distAppFolder, serverFolder }) {
             logol_1.info('Copy example component');
             fs_extra_1.copySync(path_1.join(__dirname, '..', 'example'), path_1.join(projectDirectory, srcFolder, 'components'));
             logol_1.info('Edit .gitignore');
-            const gitingore = fs_extra_1.readFileSync(path_1.join(projectDirectory, '.gitignore'))
-                + `\n\n/src\n`;
+            const gitingore = fs_extra_1.readFileSync(path_1.join(projectDirectory, '.gitignore')) + `\n\n/src\n`;
             fs_extra_1.writeFileSync(path_1.join(projectDirectory, '.gitignore'), gitingore);
             logol_1.success(`Ready to code :-)`);
             console.log(chalk.bold(chalk.yellow('Important: ')), chalk.blue(`edit you code in ${chalk.bold(srcFolder)}`), `instead of ${distAppFolder}`);
@@ -87,11 +85,13 @@ function start({ srcFolder, distAppFolder, serverFolder }) {
 }
 function shell(command, args) {
     return new Promise((resolve) => {
-        const cmd = child_process_1.spawn(command, args);
-        cmd.stdout.on('data', data => {
+        const cmd = child_process_1.spawn(command, args, {
+            env: process.env,
+        });
+        cmd.stdout.on('data', (data) => {
             process.stdout.write(chalk.gray(data.toString()));
         });
-        cmd.stderr.on('data', data => {
+        cmd.stderr.on('data', (data) => {
             const dataStr = data.toString();
             if (dataStr.indexOf('warning') === 0) {
                 process.stdout.write(chalk.yellow('warming') + dataStr.substring(7));

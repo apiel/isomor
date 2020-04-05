@@ -13,11 +13,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const inquirer_1 = require("inquirer");
 const child_process_1 = require("child_process");
 const chalk = require("chalk");
+const process_1 = require("process");
 const REACT = 'React';
 const NG = 'Angular + Nest';
 const VUE = 'Vue';
 function start() {
     return __awaiter(this, void 0, void 0, function* () {
+        const npx = process_1.platform === 'win32' ? 'npx.cmd' : 'npx';
         const { framework, name } = yield inquirer_1.prompt([
             {
                 type: 'input',
@@ -37,13 +39,13 @@ function start() {
             },
         ]);
         if (framework === REACT) {
-            yield shell('npx', ['isomor-react-app', name]);
+            yield shell(npx, ['isomor-react-app', name]);
         }
         else if (framework === NG) {
-            yield shell('npx', ['isomor-ng-nest', name]);
+            yield shell(npx, ['isomor-ng-nest', name]);
         }
         else if (framework === VUE) {
-            yield shell('npx', ['isomor-vue-app', name]);
+            yield shell(npx, ['isomor-vue-app', name]);
         }
         process.exit();
     });

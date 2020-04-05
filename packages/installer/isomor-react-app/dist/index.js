@@ -26,9 +26,11 @@ const child_process_1 = require("child_process");
 const chalk = require("chalk");
 const minimist = require("minimist");
 const isomor_core_1 = require("isomor-core");
+const process_1 = require("process");
 function start({ srcFolder, distAppFolder, serverFolder }) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
+            const npx = process_1.platform === 'win32' ? 'npx.cmd' : 'npx';
             logol_1.info('Setup create-react-app with isomor');
             let { _: [projectDirectory] } = minimist(process.argv.slice(2));
             projectDirectory = path_1.join(process.cwd(), projectDirectory);
@@ -37,7 +39,7 @@ function start({ srcFolder, distAppFolder, serverFolder }) {
                 logol_1.warn(`Please provide the project directory, e.g: npx isomor-react-app my-app`);
                 return;
             }
-            yield shell('npx', ['create-react-app', projectDirectory, '--typescript']);
+            yield shell(npx, ['create-react-app', projectDirectory, '--typescript']);
             logol_1.info('Copy tsconfig.server.json');
             fs_extra_1.copySync(path_1.join(__dirname, '..', 'tsconfig.server.json'), path_1.join(projectDirectory, 'tsconfig.server.json'));
             logol_1.info(`Copy ${distAppFolder} to ${srcFolder}`);

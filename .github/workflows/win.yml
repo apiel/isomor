@@ -16,7 +16,7 @@ jobs:
     steps:
     - name: Run vue installer
       timeout-minutes: 20
-      run: npx.cmd isomor-vue-app my-app
+      run: npx isomor-vue-app my-app
       env:
         COLUMNS: 50
         LINES: 20

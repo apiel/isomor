@@ -18,5 +18,5 @@ jobs:
       timeout-minutes: 20
       run: npx isomor-vue-app my-app
       env:
-        - COLUMNS: "50"
-        - LINES: "20"
+        COLUMNS: 50
+        LINES: 20

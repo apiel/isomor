@@ -25,6 +25,7 @@ import { spawn } from 'child_process';
 import * as chalk from 'chalk';
 import * as minimist from 'minimist';
 import { getOptions } from 'isomor-core';
+import { platform } from 'process';
 
 interface Options {
     srcFolder: string;
@@ -34,6 +35,8 @@ interface Options {
 
 async function start({ srcFolder, distAppFolder, serverFolder }: Options) {
     try {
+        const npx = platform === 'win32' ? 'npx.cmd' : 'npx';
+
         info('Setup create-vue-app with isomor');
         const { _: [projectName] } = minimist(process.argv.slice(2));
         const projectDirectory = join(process.cwd(), projectName);
@@ -46,9 +49,9 @@ async function start({ srcFolder, distAppFolder, serverFolder }: Options) {
 
         if (process.env.MANUAL === 'true') {
             info('For the moment the installer work only for TypeScript. Please select TypeScript :-)');
-            await shell('npx', ['@vue/cli', 'create', projectName]);
+            await shell(npx, ['@vue/cli', 'create', projectName]);
         } else {
-            await shell('npx', ['@vue/cli', 'create', projectName, '-i',
+            await shell(npx, ['@vue/cli', 'create', projectName, '-i',
             `{"useConfigFiles":true,"plugins":{"@vue/cli-plugin-babel":{},"@vue/cli-plugin-typescript":{"classComponent":true,"useTsWithBabel":true}}}`]); // tslint:disable-line
         }
 

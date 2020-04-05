@@ -113,8 +113,8 @@ function shell(command: string, args?: ReadonlyArray<string>) {
         let cmd = spawn(command, args, {
             env: {
                 // FORCE_COLOR: 'true', // this seem to be problematic
-                COLUMNS: process.env.COLUMNS || process.stdout.columns.toString(),
-                LINES: process.env.LINES || process.stdout.rows.toString(),
+                COLUMNS: process.env.COLUMNS || process.stdout.columns?.toString(),
+                LINES: process.env.LINES || process.stdout.rows?.toString(),
                 ...process.env,
             },
         });

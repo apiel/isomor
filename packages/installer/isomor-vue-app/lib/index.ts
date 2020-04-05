@@ -82,7 +82,7 @@ async function start({ srcFolder, distAppFolder, serverFolder }: Options) {
 
         info('Install packages...');
         writeFileSync('cmd', `cd ${projectDirectory} && \
-            yarn add run-screen nodemon isomor-transpiler isomor-server yarn --dev`);
+            yarn add run-screen nodemon isomor-transpiler isomor-server --dev`);
         await shell('bash', ['cmd']);
         unlinkSync('cmd');
 
@@ -113,16 +113,9 @@ async function start({ srcFolder, distAppFolder, serverFolder }: Options) {
 
 function shell(command: string, args?: ReadonlyArray<string>) {
     return new Promise((resolve) => {
-        let cmd = spawn(command, args, {
-            env: {
-                // FORCE_COLOR: 'true', // this seem to be problematic
-                COLUMNS: process.env.COLUMNS || process.stdout.columns?.toString(),
-                LINES: process.env.LINES || process.stdout.rows?.toString(),
-                ...process.env,
-            },
-        });
+        const cmd = spawn(command, args);
         cmd.stdout.on('data', data => {
-            process.stdout.write(data);
+            process.stdout.write(chalk.gray(data.toString()));
         });
         cmd.stderr.on('data', data => {
             const dataStr = data.toString();
@@ -132,17 +125,7 @@ function shell(command: string, args?: ReadonlyArray<string>) {
                 process.stdout.write(chalk.red(data.toString()));
             }
         });
-
-        process.stdin.setEncoding('ascii');
-        if (process.stdin.setRawMode) {
-            process.stdin.setRawMode(true);
-        }
-        process.stdin.resume();
-        process.stdin.on('data', (key) => {
-            if ((key as any) === '\u0003') { process.exit(); } // we might have to kill child process as well
-            if (cmd) { cmd.stdin.write(key); }
-        });
-        cmd.on('close', () => { cmd = null; resolve(); });
+        cmd.on('close', resolve);
     });
 }
 

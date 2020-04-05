@@ -69,7 +69,7 @@ async function start({ srcFolder, distAppFolder, serverFolder }: Options) {
 
         info('Install packages...');
         writeFileSync('cmd', `cd ${projectDirectory} && \
-            yarn add run-screen nodemon isomor-transpiler isomor-server  yarn --dev`);
+            yarn add run-screen nodemon isomor-transpiler isomor-server --dev`);
         await shell('bash', ['cmd']);
         unlinkSync('cmd');
 

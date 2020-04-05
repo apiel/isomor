@@ -25,6 +25,7 @@ import { spawn } from 'child_process';
 import * as chalk from 'chalk';
 import * as minimist from 'minimist';
 import { getOptions } from 'isomor-core';
+import { platform } from 'process';
 
 interface Options {
     srcFolder: string;
@@ -34,6 +35,8 @@ interface Options {
 
 async function start({ srcFolder, distAppFolder, serverFolder }: Options) {
     try {
+        const npx = platform === 'win32' ? 'npx.cmd' : 'npx';
+
         info('Setup create-react-app with isomor');
         let { _: [projectDirectory] } = minimist(process.argv.slice(2));
         projectDirectory = join(process.cwd(), projectDirectory);
@@ -42,7 +45,7 @@ async function start({ srcFolder, distAppFolder, serverFolder }: Options) {
             warn(`Please provide the project directory, e.g: npx isomor-react-app my-app`);
             return;
         }
-        await shell('npx', ['create-react-app', projectDirectory, '--typescript']);
+        await shell(npx, ['create-react-app', projectDirectory, '--typescript']);
 
         info('Copy tsconfig.server.json');
         copySync(

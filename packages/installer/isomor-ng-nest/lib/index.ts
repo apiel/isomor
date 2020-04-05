@@ -24,6 +24,7 @@ import { spawn } from 'child_process';
 import * as chalk from 'chalk';
 import * as minimist from 'minimist';
 import { getOptions } from 'isomor-core';
+import { platform } from 'process';
 
 interface Options {
     srcFolder: string;
@@ -33,6 +34,8 @@ interface Options {
 
 async function start({ srcFolder, distAppFolder, serverFolder }: Options) {
     try {
+        const npx = platform === 'win32' ? 'npx.cmd' : 'npx';
+
         info('Setup angular and nest with isomor');
         const { _: [projectName] } = minimist(process.argv.slice(2));
         const projectDirectory = join(process.cwd(), projectName);
@@ -41,7 +44,7 @@ async function start({ srcFolder, distAppFolder, serverFolder }: Options) {
             warn(`Please provide the project name, e.g: npx isomor-ng-nest my-app`);
             return;
         }
-        await shell('npx', ['@angular/cli', 'new', projectName, '--defaults=true']);
+        await shell(npx, ['@angular/cli', 'new', projectName, '--defaults=true']);
 
         info('Copy tsconfig.server.json');
         copySync(

@@ -3,12 +3,15 @@
 import { prompt } from 'inquirer';
 import { spawn } from 'child_process';
 import * as chalk from 'chalk';
+import { platform } from 'process';
 
 const REACT = 'React';
 const NG = 'Angular + Nest';
 const VUE = 'Vue';
 
 async function start() {
+    const npx = platform === 'win32' ? 'npx.cmd' : 'npx';
+
     const { framework, name } = await prompt([
         {
             type: 'input',
@@ -28,11 +31,11 @@ async function start() {
         },
     ]);
     if (framework === REACT) {
-        await shell('npx', ['isomor-react-app', name]);
+        await shell(npx, ['isomor-react-app', name]);
     } else if (framework === NG) {
-        await shell('npx', ['isomor-ng-nest', name]);
+        await shell(npx, ['isomor-ng-nest', name]);
     } else if (framework === VUE) {
-        await shell('npx', ['isomor-vue-app', name]);
+        await shell(npx, ['isomor-vue-app', name]);
     }
     process.exit();
 }

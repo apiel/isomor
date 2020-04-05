@@ -1,0 +1,19 @@
+name: test on windows
+
+on:
+  repository_dispatch:
+  push:
+    branches:
+      - master
+  schedule:
+    - cron:  '0 4 * * *'
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - name: Generate doc
+      timeout-minutes: 20
+      run: npx isomor-vue-app my-app

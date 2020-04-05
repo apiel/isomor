@@ -1,6 +1,6 @@
 {
     "name": "isomor",
-    "version": "2.5.2",
+    "version": "2.5.3",
     "author": "Alexandre Piel <alexandre.piel@gmail.com>",
     "license": "MIT",
     "main": "dist/lib/index.js",
@@ -36,7 +36,7 @@
         "chalk": "^3.0.0",
         "inquirer": "^7.0.4",
         "isomor-server": "^2.5.2",
-        "isomor-transpiler": "^2.5.2",
+        "isomor-transpiler": "^2.5.3",
         "typescript": "^3.7.5"
     },
     "devDependencies": {

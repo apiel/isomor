@@ -44,6 +44,8 @@ function start({ srcFolder, distAppFolder, serverFolder }) {
                 '@vue/cli',
                 'create',
                 projectName,
+                '--packageManager',
+                'npm',
                 '-i',
                 `{"useConfigFiles":true,"plugins":{"@vue/cli-plugin-babel":{},"@vue/cli-plugin-typescript":{"classComponent":true,"useTsWithBabel":true}}}`,
             ]);
@@ -63,7 +65,7 @@ function start({ srcFolder, distAppFolder, serverFolder }) {
             fs_extra_1.writeJSONSync(path_1.join(projectDirectory, 'package.json'), pkg);
             logol_1.info('Install packages...');
             fs_extra_1.writeFileSync('cmd', `cd ${projectDirectory} && \
-            yarn add run-screen nodemon isomor-transpiler isomor-server --dev`);
+            npm install run-screen nodemon isomor-transpiler isomor-server --save-dev`);
             yield shell('bash', ['cmd']);
             fs_extra_1.unlinkSync('cmd');
             logol_1.info('Create empty server/data.ts');
@@ -85,9 +87,7 @@ function start({ srcFolder, distAppFolder, serverFolder }) {
 }
 function shell(command, args) {
     return new Promise((resolve) => {
-        const cmd = child_process_1.spawn(command, args, {
-            env: process.env,
-        });
+        const cmd = child_process_1.spawn(command, args);
         cmd.stdout.on('data', (data) => {
             process.stdout.write(chalk.gray(data.toString()));
         });

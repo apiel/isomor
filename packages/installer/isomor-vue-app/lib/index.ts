@@ -56,6 +56,8 @@ async function start({ srcFolder, distAppFolder, serverFolder }: Options) {
             '@vue/cli',
             'create',
             projectName,
+            '--packageManager',
+            'npm',
             '-i',
             `{"useConfigFiles":true,"plugins":{"@vue/cli-plugin-babel":{},"@vue/cli-plugin-typescript":{"classComponent":true,"useTsWithBabel":true}}}`,
         ]); // tslint:disable-line
@@ -93,7 +95,7 @@ async function start({ srcFolder, distAppFolder, serverFolder }: Options) {
         writeFileSync(
             'cmd',
             `cd ${projectDirectory} && \
-            yarn add run-screen nodemon isomor-transpiler isomor-server --dev`,
+            npm install run-screen nodemon isomor-transpiler isomor-server --save-dev`,
         );
         await shell('bash', ['cmd']);
         unlinkSync('cmd');

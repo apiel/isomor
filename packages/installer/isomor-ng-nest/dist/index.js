@@ -32,14 +32,19 @@ function start({ srcFolder, distAppFolder, serverFolder }) {
         try {
             const npx = process_1.platform === 'win32' ? 'npx.cmd' : 'npx';
             logol_1.info('Setup angular and nest with isomor');
-            const { _: [projectName] } = minimist(process.argv.slice(2));
+            const { _: [projectName], } = minimist(process.argv.slice(2));
             const projectDirectory = path_1.join(process.cwd(), projectName);
             logol_1.info('Install angular in', projectDirectory);
             if (!projectDirectory) {
                 logol_1.warn(`Please provide the project name, e.g: npx isomor-ng-nest my-app`);
                 return;
             }
-            yield shell(npx, ['@angular/cli', 'new', projectName, '--defaults=true']);
+            yield shell(npx, [
+                '@angular/cli',
+                'new',
+                projectName,
+                '--defaults=true',
+            ]);
             logol_1.info('Copy tsconfig.server.json');
             fs_extra_1.copySync(path_1.join(__dirname, '..', 'tsconfig.server.json'), path_1.join(projectDirectory, 'tsconfig.server.json'));
             logol_1.info(`Copy ${distAppFolder} to ${srcFolder}`);
@@ -53,16 +58,30 @@ function start({ srcFolder, distAppFolder, serverFolder }) {
             pkg.scripts = Object.assign(Object.assign({}, pkgExample.scripts), pkg.scripts);
             fs_extra_1.writeJSONSync(path_1.join(projectDirectory, 'package.json'), pkg);
             logol_1.info('Install packages...');
-            fs_extra_1.writeFileSync('cmd', `cd ${projectDirectory} && \
-            yarn add isomor @nestjs/common @nestjs/core && \
-            yarn add run-screen nodemon isomor-transpiler isomor-server --dev`);
-            yield shell('bash', ['cmd']);
-            fs_extra_1.unlinkSync('cmd');
+            yield shell('yarn', [
+                'add',
+                'isomor',
+                '@nestjs/common',
+                '@nestjs/core',
+                '--cwd',
+                projectDirectory,
+            ]);
+            yield shell('yarn', [
+                'add',
+                'run-screen',
+                'nodemon',
+                'isomor-transpiler',
+                'isomor-server',
+                '--dev',
+                '--cwd',
+                projectDirectory,
+            ]);
             logol_1.info('Copy example component');
             fs_extra_1.copySync(path_1.join(__dirname, '..', 'example', 'server'), path_1.join(projectDirectory, srcFolder, 'server'));
             fs_extra_1.copySync(path_1.join(__dirname, '..', 'example', 'uptime'), path_1.join(projectDirectory, srcFolder, 'app', 'uptime'));
             let AppModule = fs_extra_1.readFileSync(path_1.join(projectDirectory, srcFolder, 'app', 'app.module.ts')).toString();
-            AppModule = `
+            AppModule =
+                `
 import { ApiService } from '../server/api.service';
 import { UptimeComponent } from './uptime/uptime.component';
 
@@ -76,11 +95,11 @@ import { UptimeComponent } from './uptime/uptime.component';
             logol_1.info('Setup proxy');
             fs_extra_1.copySync(path_1.join(__dirname, '..', 'proxy.conf.json'), path_1.join(projectDirectory, 'proxy.conf.json'));
             const angularJson = fs_extra_1.readJSONSync(path_1.join(projectDirectory, 'angular.json'));
-            angularJson.projects[projectName].architect.serve.options.proxyConfig = 'proxy.conf.json';
+            angularJson.projects[projectName].architect.serve.options.proxyConfig =
+                'proxy.conf.json';
             fs_extra_1.writeJSONSync(path_1.join(projectDirectory, 'angular.json'), angularJson);
             logol_1.info('Edit .gitignore');
-            const gitingore = fs_extra_1.readFileSync(path_1.join(projectDirectory, '.gitignore'))
-                + `\n\n/src\n`;
+            const gitingore = fs_extra_1.readFileSync(path_1.join(projectDirectory, '.gitignore')) + `\n\n/src\n`;
             fs_extra_1.writeFileSync(path_1.join(projectDirectory, '.gitignore'), gitingore);
             logol_1.success(`Ready to code :-)`);
             console.log(chalk.bold(chalk.yellow('Important: ')), chalk.blue(`edit you code in ${chalk.bold(srcFolder)}`), `instead of ${distAppFolder}`);
@@ -94,10 +113,10 @@ import { UptimeComponent } from './uptime/uptime.component';
 function shell(command, args) {
     return new Promise((resolve) => {
         const cmd = child_process_1.spawn(command, args);
-        cmd.stdout.on('data', data => {
+        cmd.stdout.on('data', (data) => {
             process.stdout.write(chalk.gray(data.toString()));
         });
-        cmd.stderr.on('data', data => {
+        cmd.stderr.on('data', (data) => {
             const dataStr = data.toString();
             if (dataStr.indexOf('warning') === 0) {
                 process.stdout.write(chalk.yellow('warming') + dataStr.substring(7));

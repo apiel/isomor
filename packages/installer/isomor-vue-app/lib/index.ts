@@ -92,13 +92,16 @@ async function start({ srcFolder, distAppFolder, serverFolder }: Options) {
         writeJSONSync(join(projectDirectory, 'package.json'), pkg);
 
         info('Install packages...');
-        writeFileSync(
-            'cmd',
-            `cd ${projectDirectory} && \
-            npm install run-screen nodemon isomor-transpiler isomor-server --save-dev`,
-        );
-        await shell('bash', ['cmd']);
-        unlinkSync('cmd');
+        await shell('npm', [
+            'install',
+            '--prefix',
+            projectDirectory,
+            'run-screen',
+            'nodemon',
+            'isomor-transpiler',
+            'isomor-server',
+            '--save-dev',
+        ]);
 
         info('Create empty server/data.ts');
         outputFileSync(

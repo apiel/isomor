@@ -64,10 +64,16 @@ function start({ srcFolder, distAppFolder, serverFolder }) {
             pkg.scripts = Object.assign(Object.assign({}, pkgExample.scripts), pkg.scripts);
             fs_extra_1.writeJSONSync(path_1.join(projectDirectory, 'package.json'), pkg);
             logol_1.info('Install packages...');
-            fs_extra_1.writeFileSync('cmd', `cd ${projectDirectory} && \
-            npm install run-screen nodemon isomor-transpiler isomor-server --save-dev`);
-            yield shell('bash', ['cmd']);
-            fs_extra_1.unlinkSync('cmd');
+            yield shell('npm', [
+                'install',
+                '--prefix',
+                projectDirectory,
+                'run-screen',
+                'nodemon',
+                'isomor-transpiler',
+                'isomor-server',
+                '--save-dev',
+            ]);
             logol_1.info('Create empty server/data.ts');
             fs_extra_1.outputFileSync(path_1.join(projectDirectory, srcFolder, serverFolder, 'data.ts'), ``);
             logol_1.info('Copy example component');

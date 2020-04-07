@@ -31,6 +31,7 @@ function start({ srcFolder, distAppFolder, serverFolder }) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const npx = process_1.platform === 'win32' ? 'npx.cmd' : 'npx';
+            const npm = process_1.platform === 'win32' ? 'npm.cmd' : 'npm';
             logol_1.info('Setup create-vue-app with isomor');
             const { _: [projectName], } = minimist(process.argv.slice(2));
             const projectDirectory = path_1.join(process.cwd(), projectName);
@@ -64,7 +65,7 @@ function start({ srcFolder, distAppFolder, serverFolder }) {
             pkg.scripts = Object.assign(Object.assign({}, pkgExample.scripts), pkg.scripts);
             fs_extra_1.writeJSONSync(path_1.join(projectDirectory, 'package.json'), pkg);
             logol_1.info('Install packages...');
-            yield shell('npm', [
+            yield shell(npm, [
                 'install',
                 '--prefix',
                 projectDirectory,

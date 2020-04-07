@@ -19,7 +19,6 @@ import {
     readFileSync,
     writeFileSync,
     outputFileSync,
-    unlinkSync,
 } from 'fs-extra';
 import { join } from 'path';
 import { spawn } from 'child_process';

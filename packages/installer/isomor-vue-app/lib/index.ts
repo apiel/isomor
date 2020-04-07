@@ -37,6 +37,7 @@ interface Options {
 async function start({ srcFolder, distAppFolder, serverFolder }: Options) {
     try {
         const npx = platform === 'win32' ? 'npx.cmd' : 'npx';
+        const npm = platform === 'win32' ? 'npm.cmd' : 'npm';
 
         info('Setup create-vue-app with isomor');
         const {
@@ -92,7 +93,7 @@ async function start({ srcFolder, distAppFolder, serverFolder }: Options) {
         writeJSONSync(join(projectDirectory, 'package.json'), pkg);
 
         info('Install packages...');
-        await shell('npm', [
+        await shell(npm, [
             'install',
             '--prefix',
             projectDirectory,

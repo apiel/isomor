@@ -29,9 +29,11 @@ export async function getIsomorRoutes(
 ): Promise<Route[]> {
     const pkgName = getPkgName(distServerFolder);
     const fnNames = await getFunctionNames(serverFolder, distServerFolder);
-    const routes = fnNames.map(({ file, isClass, name, fn }) => isClass
-        ? getClassRoutes(file, pkgName, name, jsonSchemaFolder, noDecorator)
-        : [getRoute(file, pkgName, fn, name, jsonSchemaFolder)]);
+    const routes = fnNames.map(({ file, isClass, name, fn }) =>
+        isClass
+            ? getClassRoutes(file, pkgName, name, jsonSchemaFolder, noDecorator)
+            : [getRoute(file, pkgName, fn, name, jsonSchemaFolder)],
+    );
     return routes.flat();
 }
 
@@ -47,18 +49,28 @@ async function getFunctionNames(
 ): Promise<FunctionName[]> {
     const files = await getFiles(distServerFolder, serverFolder);
 
-    return files.map(file => {
-        const functions = getFunctions(distServerFolder, file);
-        return Object.keys(functions)
-            .filter(name => isFunction(functions[name]))
-            .map(name => {
-                const isClass = /^\s*class/.test(functions[name].toString());
-                return { file, isClass, name, fn: functions[name] };
-            }).flat();
-    }).flat();
+    return files
+        .map((file) => {
+            const functions = getFunctions(distServerFolder, file);
+            return Object.keys(functions)
+                .filter((name) => isFunction(functions[name]))
+                .map((name) => {
+                    const isClass = /^\s*class/.test(
+                        functions[name].toString(),
+                    );
+                    return { file, isClass, name, fn: functions[name] };
+                })
+                .flat();
+        })
+        .flat();
 }
 
-function getRoutePath(file: string, pkgName: string, name: string, classname?: string) {
+function getRoutePath(
+    file: string,
+    pkgName: string,
+    name: string,
+    classname?: string,
+) {
     return getUrlPath(getPathForUrl(file), pkgName, name, classname);
 }
 
@@ -86,7 +98,12 @@ export function getRoute(
     classname?: string,
 ): Route {
     const path = getRoutePath(file, pkgName, name, classname);
-    const validationSchema = loadValidation(getPathForUrl(file), name, jsonSchemaFolder, classname);
+    const validationSchema = loadValidation(
+        getPathForUrl(file),
+        name,
+        jsonSchemaFolder,
+        classname,
+    );
     return { path, file, validationSchema, fn, isClass: !!classname };
 }
 
@@ -104,14 +121,25 @@ export function getClassRoutes(
     } else if (getInstance()) {
         const obj = getInstance()(classname);
         return Object.getOwnPropertyNames(Object.getPrototypeOf(obj))
-            .filter(name => isFunction(obj[name]) && name !== 'constructor')
-            .map(name => getRoute(file, pkgName, obj[name].bind(obj), name, jsonSchemaFolder, classname));
+            .filter((name) => isFunction(obj[name]) && name !== 'constructor')
+            .map((name) =>
+                getRoute(
+                    file,
+                    pkgName,
+                    obj[name].bind(obj),
+                    name,
+                    jsonSchemaFolder,
+                    classname,
+                ),
+            );
     }
     return [];
 }
 
 export function getFunctions(distServerFolder: string, file: string) {
     const filepath = getFullPath(join(distServerFolder, file));
+    // use ESM to force ES6 compatibility with nodejs
+    require = require('esm')(module /*, options*/);
     delete require.cache[filepath];
     const functions = require(filepath);
 

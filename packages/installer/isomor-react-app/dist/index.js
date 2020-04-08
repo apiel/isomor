@@ -31,7 +31,6 @@ function start({ srcFolder, distAppFolder, serverFolder }) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const npx = process_1.platform === 'win32' ? 'npx.cmd' : 'npx';
-            const npm = process_1.platform === 'win32' ? 'npm.cmd' : 'npm';
             logol_1.info('Setup create-react-app with isomor');
             let { _: [projectDirectory] } = minimist(process.argv.slice(2));
             projectDirectory = path_1.join(process.cwd(), projectDirectory);
@@ -55,15 +54,15 @@ function start({ srcFolder, distAppFolder, serverFolder }) {
             pkg.scripts = Object.assign(Object.assign({}, pkgExample.scripts), pkg.scripts);
             fs_extra_1.writeJSONSync(path_1.join(projectDirectory, 'package.json'), pkg);
             logol_1.info('Install packages...');
-            yield shell(npm, [
-                'install',
-                '--prefix',
+            yield shell('yarn', [
+                'add',
+                '--cwd',
                 projectDirectory,
                 'run-screen',
                 'nodemon',
                 'isomor-transpiler',
                 'isomor-server',
-                '--save-dev',
+                '--dev',
             ]);
             logol_1.info('Create empty server/data.ts');
             fs_extra_1.outputFileSync(path_1.join(projectDirectory, srcFolder, serverFolder, 'data.ts'), ``);

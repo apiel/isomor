@@ -35,7 +35,6 @@ interface Options {
 async function start({ srcFolder, distAppFolder, serverFolder }: Options) {
     try {
         const npx = platform === 'win32' ? 'npx.cmd' : 'npx';
-        const npm = platform === 'win32' ? 'npm.cmd' : 'npm';
 
         info('Setup create-react-app with isomor');
         let { _: [projectDirectory] } = minimist(process.argv.slice(2));
@@ -68,16 +67,28 @@ async function start({ srcFolder, distAppFolder, serverFolder }: Options) {
         writeJSONSync(join(projectDirectory, 'package.json'), pkg);
 
         info('Install packages...');
-        await shell(npm, [
-            'install',
-            '--prefix',
+        // const npm = platform === 'win32' ? 'npm.cmd' : 'npm';
+        // await shell(npm, [
+        //     'install',
+        //     '--prefix',
+        //     projectDirectory,
+        //     'run-screen',
+        //     'nodemon',
+        //     'isomor-transpiler',
+        //     'isomor-server',
+        //     '--save-dev',
+        // ]);
+        await shell('yarn', [
+            'add',
+            '--cwd',
             projectDirectory,
             'run-screen',
             'nodemon',
             'isomor-transpiler',
             'isomor-server',
-            '--save-dev',
+            '--dev',
         ]);
+
 
         info('Create empty server/data.ts');
         outputFileSync(join(projectDirectory, srcFolder, serverFolder, 'data.ts'), ``);

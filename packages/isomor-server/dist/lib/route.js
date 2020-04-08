@@ -30,15 +30,18 @@ exports.getIsomorRoutes = getIsomorRoutes;
 function getFunctionNames(serverFolder, distServerFolder) {
     return __awaiter(this, void 0, void 0, function* () {
         const files = yield isomor_core_1.getFiles(distServerFolder, serverFolder);
-        return files.map(file => {
+        return files
+            .map((file) => {
             const functions = getFunctions(distServerFolder, file);
             return Object.keys(functions)
-                .filter(name => util_1.isFunction(functions[name]))
-                .map(name => {
+                .filter((name) => util_1.isFunction(functions[name]))
+                .map((name) => {
                 const isClass = /^\s*class/.test(functions[name].toString());
                 return { file, isClass, name, fn: functions[name] };
-            }).flat();
-        }).flat();
+            })
+                .flat();
+        })
+            .flat();
     });
 }
 function getRoutePath(file, pkgName, name, classname) {
@@ -66,14 +69,15 @@ function getClassRoutes(file, pkgName, classname, jsonSchemaFolder, noDecorator)
     else if (startup_1.getInstance()) {
         const obj = startup_1.getInstance()(classname);
         return Object.getOwnPropertyNames(Object.getPrototypeOf(obj))
-            .filter(name => util_1.isFunction(obj[name]) && name !== 'constructor')
-            .map(name => getRoute(file, pkgName, obj[name].bind(obj), name, jsonSchemaFolder, classname));
+            .filter((name) => util_1.isFunction(obj[name]) && name !== 'constructor')
+            .map((name) => getRoute(file, pkgName, obj[name].bind(obj), name, jsonSchemaFolder, classname));
     }
     return [];
 }
 exports.getClassRoutes = getClassRoutes;
 function getFunctions(distServerFolder, file) {
     const filepath = utils_1.getFullPath(path_1.join(distServerFolder, file));
+    require = require('esm')(module);
     delete require.cache[filepath];
     const functions = require(filepath);
     return functions;

@@ -22,7 +22,7 @@ require('please-upgrade-node')(packageJson, {
 const logol_1 = require("logol");
 const fs_extra_1 = require("fs-extra");
 const path_1 = require("path");
-const child_process_1 = require("child_process");
+const spawn = require("cross-spawn");
 const chalk = require("chalk");
 const minimist = require("minimist");
 const isomor_core_1 = require("isomor-core");
@@ -94,7 +94,7 @@ function start({ srcFolder, distAppFolder, serverFolder }) {
 }
 function shell(command, args) {
     return new Promise((resolve) => {
-        const cmd = child_process_1.spawn(command, args);
+        const cmd = spawn(command, args);
         cmd.stdout.on('data', (data) => {
             process.stdout.write(chalk.gray(data.toString()));
         });

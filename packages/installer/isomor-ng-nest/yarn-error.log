@@ -1,22 +1,25 @@
 Arguments: 
-  /home/alex/.nvm/versions/node/v11.10.1/bin/node /usr/local/bin/yarn
+  /home/alex/.nvm/versions/node/v12.14.1/bin/node /usr/local/bin/yarn add @types/cross-spawn --dev
 
 PATH: 
-  /home/alex/.nvm/versions/node/v11.10.1/bin:/home/alex/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/alex/dev/esp/esp-open-sdk/xtensa-lx106-elf/bin:/home/alex/dev/esp/esp-open-sdk/esptool:/home/alex/dev/nrf5/gcc-arm-none-eabi-7-2017-q4-major/bin:/home/alex/dev/nrf5/nRF5x-Command-Line-Tools_9_7_2_Linux-x86_64/nrfjprog:/home/alex/dev/flutter2020/flutter/bin:/home/alex/Android/Sdk/tools/:/home/alex/Android/Sdk/platform-tools/
+  /home/alex/.nvm/versions/node/v12.14.1/bin:/home/alex/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/alex/dev/esp/esp-open-sdk/xtensa-lx106-elf/bin:/home/alex/dev/esp/esp-open-sdk/esptool:/home/alex/dev/nrf5/gcc-arm-none-eabi-7-2017-q4-major/bin:/home/alex/dev/nrf5/nRF5x-Command-Line-Tools_9_7_2_Linux-x86_64/nrfjprog:/home/alex/dev/flutter2020/flutter/bin:/home/alex/Android/Sdk/tools/:/home/alex/Android/Sdk/platform-tools/
 
 Yarn version: 
-  1.2.1
+  1.22.4
 
 Node version: 
-  11.10.1
+  12.14.1
 
 Platform: 
   linux x64
 
+Trace: 
+  Error: ENOENT: no such file or directory, copyfile '/home/alex/.cache/yarn/v6/npm-glob-7.1.6-141f33b81a7c2492e125594307480c46679278a6/node_modules/glob/LICENSE' -> '/home/alex/dev/node/pkg/isomor/packages/installer/isomor-ng-nest/node_modules/isomor-core/node_modules/glob/LICENSE'
+
 npm manifest: 
   {
       "name": "isomor-ng-nest",
-      "version": "1.12.0",
+      "version": "2.6.0",
       "main": "dist/index.js",
       "types": "dist/index.d.ts",
       "author": "Alexandre Piel <alexandre.piel@gmail.com>",
@@ -48,23 +51,23 @@ npm manifest:
       "dependencies": {
           "chalk": "^3.0.0",
           "fs-extra": "^8.1.0",
-          "isomor-core": "^1.12.0",
+          "isomor-core": "^2.5.2",
           "logol": "^0.0.3",
           "minimist": "^1.2.0",
           "please-upgrade-node": "^3.2.0",
-          "ts-node": "^8.5.2",
-          "typescript": "^3.7.2"
+          "ts-node": "^8.5.4",
+          "typescript": "^3.7.4"
       },
       "devDependencies": {
           "@types/chalk": "^2.2.0",
           "@types/fs-extra": "^8.0.1",
           "@types/minimist": "^1.2.0",
-          "@types/node": "^12.12.12",
+          "@types/node": "^13.1.1",
           "@types/rimraf": "^2.0.3",
           "rimraf": "^3.0.0",
           "tslint": "^5.20.1"
       },
-      "gitHead": "8e44701737995ea3b1c6b3000d57533e77d05483"
+      "gitHead": "9a8bbcc96908b631b6d3c828054c70538e150963"
   }
 
 yarn manifest: 
@@ -129,9 +132,9 @@ Lockfile:
     version "12.0.0"
     resolved "https://registry.yarnpkg.com/@types/node/-/node-12.0.0.tgz#d11813b9c0ff8aaca29f04cbc12817f4c7d656e5"
   
-  "@types/node@^12.12.12":
-    version "12.12.12"
-    resolved "https://registry.yarnpkg.com/@types/node/-/node-12.12.12.tgz#529bc3e73dbb35dd9e90b0a1c83606a9d3264bdb"
+  "@types/node@^13.1.1":
+    version "13.1.1"
+    resolved "https://registry.yarnpkg.com/@types/node/-/node-13.1.1.tgz#6d11a8c2d58405b3db9388ab740106cbfa64c3c9"
   
   "@types/rimraf@^2.0.3":
     version "2.0.3"
@@ -313,9 +316,9 @@ Lockfile:
     version "2.0.3"
     resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.3.tgz#633c2c83e3da42a502f52466022480f4208261de"
   
-  isomor-core@^1.11.0:
-    version "1.11.0"
-    resolved "https://registry.yarnpkg.com/isomor-core/-/isomor-core-1.11.0.tgz#383c69ed949aef1acd1d133198586d8eacf01adb"
+  isomor-core@^1.12.0:
+    version "1.12.0"
+    resolved "https://registry.yarnpkg.com/isomor-core/-/isomor-core-1.12.0.tgz#624a6d294b0ac68d21de37c5c15f783c0706a70d"
     dependencies:
       dotenv "^8.2.0"
       find-up "^4.1.0"
@@ -464,9 +467,9 @@ Lockfile:
     dependencies:
       has-flag "^4.0.0"
   
-  ts-node@^8.5.2:
-    version "8.5.2"
-    resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-8.5.2.tgz#434f6c893bafe501a30b32ac94ee36809ba2adce"
+  ts-node@^8.5.4:
+    version "8.5.4"
+    resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-8.5.4.tgz#a152add11fa19c221d0b48962c210cf467262ab2"
     dependencies:
       arg "^4.1.0"
       diff "^4.0.1"
@@ -510,6 +513,10 @@ Lockfile:
     version "3.7.2"
     resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.7.2.tgz#27e489b95fa5909445e9fef5ee48d81697ad18fb"
   
+  typescript@^3.7.4:
+    version "3.7.4"
+    resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.7.4.tgz#1743a5ec5fef6a1fa9f3e4708e33c81c73876c19"
+  
   universalify@^0.1.0:
     version "0.1.2"
     resolved "https://registry.yarnpkg.com/universalify/-/universalify-0.1.2.tgz#b646f69be3942dabcecc9d6639c80dc105efaa66"
@@ -521,6 +528,3 @@ Lockfile:
   yn@^3.0.0:
     version "3.1.0"
     resolved "https://registry.yarnpkg.com/yn/-/yn-3.1.0.tgz#fcbe2db63610361afcc5eb9e0ac91e976d046114"
-
-Trace: 
-  Error: ENOENT: no such file or directory, copyfile '/home/alex/.cache/yarn/v1/npm-glob-7.1.6-141f33b81a7c2492e125594307480c46679278a6/LICENSE' -> '/home/alex/dev/node/pkg/isomor/packages/installer/isomor-ng-nest/node_modules/isomor-core/node_modules/glob/LICENSE'

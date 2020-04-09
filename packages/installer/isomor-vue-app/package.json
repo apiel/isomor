@@ -30,6 +30,7 @@
     },
     "dependencies": {
         "chalk": "^3.0.0",
+        "cross-spawn": "^7.0.2",
         "fs-extra": "^8.1.0",
         "isomor-core": "^2.5.2",
         "logol": "^0.0.3",
@@ -40,6 +41,7 @@
     },
     "devDependencies": {
         "@types/chalk": "^2.2.0",
+        "@types/cross-spawn": "^6.0.1",
         "@types/fs-extra": "^8.0.1",
         "@types/minimist": "^1.2.0",
         "@types/node": "^13.1.1",

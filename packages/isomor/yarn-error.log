@@ -1,11 +1,11 @@
 Arguments: 
-  /home/alex/.nvm/versions/node/v12.14.1/bin/node /usr/local/bin/yarn remove axios
+  /home/alex/.nvm/versions/node/v12.14.1/bin/node /usr/local/bin/yarn add @types/cross-spawn --dev
 
 PATH: 
   /home/alex/.nvm/versions/node/v12.14.1/bin:/home/alex/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/alex/dev/esp/esp-open-sdk/xtensa-lx106-elf/bin:/home/alex/dev/esp/esp-open-sdk/esptool:/home/alex/dev/nrf5/gcc-arm-none-eabi-7-2017-q4-major/bin:/home/alex/dev/nrf5/nRF5x-Command-Line-Tools_9_7_2_Linux-x86_64/nrfjprog:/home/alex/dev/flutter2020/flutter/bin:/home/alex/Android/Sdk/tools/:/home/alex/Android/Sdk/platform-tools/
 
 Yarn version: 
-  1.2.1
+  1.22.4
 
 Node version: 
   12.14.1
@@ -13,10 +13,13 @@ Node version:
 Platform: 
   linux x64
 
+Trace: 
+  Error: ENOENT: no such file or directory, lstat '/home/alex/dev/node/pkg/isomor/packages/isomor/node_modules/isomor-transpiler/node_modules/debug/node_modules'
+
 npm manifest: 
   {
       "name": "isomor",
-      "version": "2.4.0",
+      "version": "2.6.2",
       "author": "Alexandre Piel <alexandre.piel@gmail.com>",
       "license": "MIT",
       "main": "dist/lib/index.js",
@@ -51,12 +54,11 @@ npm manifest:
       "dependencies": {
           "chalk": "^3.0.0",
           "inquirer": "^7.0.4",
-          "isomor-server": "^2.4.0",
-          "isomor-transpiler": "^2.4.0",
+          "isomor-server": "^2.6.2",
+          "isomor-transpiler": "^2.5.5",
           "typescript": "^3.7.5"
       },
       "devDependencies": {
-          "@types/axios": "^0.14.0",
           "@types/chalk": "^2.2.0",
           "@types/inquirer": "^6.5.0",
           "ts-node": "^8.6.2",
@@ -117,12 +119,6 @@ Lockfile:
       esutils "^2.0.2"
       lodash "^4.17.13"
       to-fast-properties "^2.0.0"
-  
-  "@types/axios@^0.14.0":
-    version "0.14.0"
-    resolved "https://registry.yarnpkg.com/@types/axios/-/axios-0.14.0.tgz#ec2300fbe7d7dddd7eb9d3abf87999964cafce46"
-    dependencies:
-      axios "*"
   
   "@types/body-parser@*":
     version "1.17.0"
@@ -296,13 +292,6 @@ Lockfile:
   async-each@^1.0.3:
     version "1.0.3"
     resolved "https://registry.yarnpkg.com/async-each/-/async-each-1.0.3.tgz#b727dbf87d7651602f06f4d4ac387f47d91b0cbf"
-  
-  axios@*:
-    version "0.19.0"
-    resolved "https://registry.yarnpkg.com/axios/-/axios-0.19.0.tgz#8e09bff3d9122e133f7b8101c8fbdd00ed3d2ab8"
-    dependencies:
-      follow-redirects "1.5.10"
-      is-buffer "^2.0.2"
   
   axios@^0.19.2:
     version "0.19.2"
@@ -772,10 +761,6 @@ Lockfile:
     dependencies:
       binary-extensions "^2.0.0"
   
-  is-buffer@^2.0.2:
-    version "2.0.3"
-    resolved "https://registry.yarnpkg.com/is-buffer/-/is-buffer-2.0.3.tgz#4ecf3fcf749cbd1e472689e109ac66261a25e725"
-  
   is-extglob@^2.1.1:
     version "2.1.1"
     resolved "https://registry.yarnpkg.com/is-extglob/-/is-extglob-2.1.1.tgz#a88c02535791f02ed37c76a1b9ea9773c833f8c2"
@@ -819,9 +804,9 @@ Lockfile:
       json-stable-stringify "^1.0.1"
       typescript "~3.5.1"
   
-  isomor-server@^2.1.0:
-    version "2.1.0"
-    resolved "https://registry.yarnpkg.com/isomor-server/-/isomor-server-2.1.0.tgz#06af5d4f154b6962c76b5f73288978c3dd8459a6"
+  isomor-server@^2.4.0:
+    version "2.4.0"
+    resolved "https://registry.yarnpkg.com/isomor-server/-/isomor-server-2.4.0.tgz#ffefaa23db882683f9e63e685d9364240199a822"
     dependencies:
       "@types/fs-extra" "^8.0.1"
       "@types/morgan" "^1.7.37"
@@ -831,7 +816,7 @@ Lockfile:
       cookie-parser "^1.4.4"
       express "^4.17.1"
       fs-extra "^8.1.0"
-      isomor "^2.1.0"
+      isomor "^2.4.0"
       isomor-core "^2.1.0"
       logol "^0.0.3"
       morgan "^1.9.1"
@@ -840,9 +825,9 @@ Lockfile:
       typescript "^3.7.5"
       ws "^7.2.1"
   
-  isomor-transpiler@^2.1.0:
-    version "2.1.0"
-    resolved "https://registry.yarnpkg.com/isomor-transpiler/-/isomor-transpiler-2.1.0.tgz#738541f292bb7deb219fea611b5033f210268d61"
+  isomor-transpiler@^2.4.0:
+    version "2.4.0"
+    resolved "https://registry.yarnpkg.com/isomor-transpiler/-/isomor-transpiler-2.4.0.tgz#be9930fe8cf7bb55dc78cce8c21cedaf0fad0e84"
     dependencies:
       "@babel/generator" "^7.8.4"
       "@babel/parser" "^7.8.4"
@@ -852,7 +837,7 @@ Lockfile:
       chokidar "^3.3.1"
       debug "^4.1.1"
       fs-extra "^8.1.0"
-      isomor "^2.1.0"
+      isomor "^2.4.0"
       isomor-core "^2.1.0"
       isomor-json-schema-generator "^2.0.1"
       logol "^0.0.3"
@@ -861,15 +846,15 @@ Lockfile:
       ts-node "^8.6.2"
       typescript "^3.7.5"
   
-  isomor@^2.1.0:
-    version "2.1.0"
-    resolved "https://registry.yarnpkg.com/isomor/-/isomor-2.1.0.tgz#802a2ec203c203dfeb58bc84802d27b819cf0dcb"
+  isomor@^2.4.0:
+    version "2.4.0"
+    resolved "https://registry.yarnpkg.com/isomor/-/isomor-2.4.0.tgz#59ab3db7b3ff8aafdc89dcfb4a66277c80ebfbff"
     dependencies:
       axios "^0.19.2"
       chalk "^3.0.0"
       inquirer "^7.0.4"
-      isomor-server "^2.1.0"
-      isomor-transpiler "^2.1.0"
+      isomor-server "^2.4.0"
+      isomor-transpiler "^2.4.0"
       typescript "^3.7.5"
   
   js-tokens@^4.0.0:
@@ -1389,6 +1374,3 @@ Lockfile:
   yn@3.1.1:
     version "3.1.1"
     resolved "https://registry.yarnpkg.com/yn/-/yn-3.1.1.tgz#1e87401a09d767c1d5eab26a6e4c185182d2eb50"
-
-Trace: 
-  Error: ENOENT: no such file or directory, lstat '/home/alex/dev/node/pkg/isomor/packages/isomor/node_modules/isomor-transpiler/node_modules/debug/node_modules'

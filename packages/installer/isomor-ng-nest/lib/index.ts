@@ -18,10 +18,9 @@ import {
     writeJSONSync,
     readFileSync,
     writeFileSync,
-    unlinkSync,
 } from 'fs-extra';
 import { join } from 'path';
-import { spawn } from 'child_process';
+import * as spawn from 'cross-spawn';
 import * as chalk from 'chalk';
 import * as minimist from 'minimist';
 import { getOptions } from 'isomor-core';

@@ -76,6 +76,13 @@
   dependencies:
     "@types/node" "*"
 
+"@types/cross-spawn@^6.0.1":
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/@types/cross-spawn/-/cross-spawn-6.0.1.tgz#60fa0c87046347c17d9735e5289e72b804ca9b63"
+  integrity sha512-MtN1pDYdI6D6QFDzy39Q+6c9rl2o/xN7aWGe6oZuzqq5N6+YuwFsWiEAv3dNzvzN9YzU+itpN8lBzFpphQKLAw==
+  dependencies:
+    "@types/node" "*"
+
 "@types/express-serve-static-core@*":
   version "4.16.6"
   resolved "https://registry.yarnpkg.com/@types/express-serve-static-core/-/express-serve-static-core-4.16.6.tgz#66d4b29ece3e2fb6e5aac2232723002426e651bd"
@@ -219,12 +226,6 @@ array-flatten@1.1.1:
 async-each@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/async-each/-/async-each-1.0.3.tgz#b727dbf87d7651602f06f4d4ac387f47d91b0cbf"
-
-axios@^0.19.2:
-  version "0.19.2"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-0.19.2.tgz#3ea36c5d8818d0d5f8a8a97a6d36b86cdc00cb27"
-  dependencies:
-    follow-redirects "1.5.10"
 
 balanced-match@^1.0.0:
   version "1.0.0"
@@ -395,15 +396,18 @@ cookie@0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.4.0.tgz#beb437e7022b3b6d49019d088665303ebe9c14ba"
 
+cross-spawn@^7.0.2:
+  version "7.0.2"
+  resolved "https://registry.yarnpkg.com/cross-spawn/-/cross-spawn-7.0.2.tgz#d0d7dcfa74e89115c7619f4f721a94e1fdb716d6"
+  integrity sha512-PD6G8QG3S4FK/XCGFbEQrDqO2AnMMsy0meR7lerlIOHAAbkuavGU/pOqprrlvfTNjvowivTeBsjebAL0NSoMxw==
+  dependencies:
+    path-key "^3.1.0"
+    shebang-command "^2.0.0"
+    which "^2.0.1"
+
 debug@2.6.9:
   version "2.6.9"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.9.tgz#5d128515df134ff327e90a4c93f4e077a536341f"
-  dependencies:
-    ms "2.0.0"
-
-debug@=3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/debug/-/debug-3.1.0.tgz#5bb5a0672628b64149566ba16819e61518c67261"
   dependencies:
     ms "2.0.0"
 
@@ -448,6 +452,11 @@ escape-html@~1.0.3:
 escape-string-regexp@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
+
+esm@^3.2.25:
+  version "3.2.25"
+  resolved "https://registry.yarnpkg.com/esm/-/esm-3.2.25.tgz#342c18c29d56157688ba5ce31f8431fbb795cc10"
+  integrity sha512-U1suiZ2oDVWv4zPO56S0NcR5QriEahGtdN2OR6FiOG4WJvcjBVFB0qI4+eKoWFH483PKGuLuu6V8Z4T5g63UVA==
 
 esprima@^4.0.0:
   version "4.0.1"
@@ -548,12 +557,6 @@ find-up@^4.1.0:
   dependencies:
     locate-path "^5.0.0"
     path-exists "^4.0.0"
-
-follow-redirects@1.5.10:
-  version "1.5.10"
-  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.5.10.tgz#7b7a9f9aea2fdff36786a94ff643ed07f4ff5e2a"
-  dependencies:
-    debug "=3.1.0"
 
 forwarded@~0.1.2:
   version "0.1.2"
@@ -710,9 +713,15 @@ is-promise@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/is-promise/-/is-promise-2.1.0.tgz#79a2a9ece7f096e80f36d2b2f3bc16c1ff4bf3fa"
 
-isomor-core@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/isomor-core/-/isomor-core-2.1.0.tgz#a97063d993ef110210074deb5b1ceb055e692f2d"
+isexe@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/isexe/-/isexe-2.0.0.tgz#e8fbf374dc556ff8947a10dcb0572d633f2cfa10"
+  integrity sha1-6PvzdNxVb/iUehDcsFctYz8s+hA=
+
+isomor-core@^2.5.2:
+  version "2.5.2"
+  resolved "https://registry.yarnpkg.com/isomor-core/-/isomor-core-2.5.2.tgz#0c30525f3bf1a34e835f916d3b25837c77b48b41"
+  integrity sha512-3VDPASshwJGXsYbQV0/z37cl5lGR/LvcCXcKIZe64ungGyrgYA/2XMLW2gV3by1Vqj8t7768o8REahRKR+v0aw==
   dependencies:
     dotenv "^8.2.0"
     find-up "^4.1.0"
@@ -731,9 +740,10 @@ isomor-json-schema-generator@^2.0.1:
     json-stable-stringify "^1.0.1"
     typescript "~3.5.1"
 
-isomor-server@^2.4.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/isomor-server/-/isomor-server-2.4.0.tgz#ffefaa23db882683f9e63e685d9364240199a822"
+isomor-server@^2.6.2:
+  version "2.6.2"
+  resolved "https://registry.yarnpkg.com/isomor-server/-/isomor-server-2.6.2.tgz#75015c13d07dad4c82931d8a2adea33c5fd6c8ec"
+  integrity sha512-bfkry3ADqb1Yd5rde8Sf58ti9RYUcXbaeVgU14UZOU7PUhzjL1Dwcsy5q73fynbSG6Px8k02tyq8Olk+Is112g==
   dependencies:
     "@types/fs-extra" "^8.0.1"
     "@types/morgan" "^1.7.37"
@@ -741,10 +751,11 @@ isomor-server@^2.4.0:
     ajv "^6.11.0"
     body-parser "^1.18.3"
     cookie-parser "^1.4.4"
+    esm "^3.2.25"
     express "^4.17.1"
     fs-extra "^8.1.0"
-    isomor "^2.4.0"
-    isomor-core "^2.1.0"
+    isomor "^2.6.2"
+    isomor-core "^2.5.2"
     logol "^0.0.3"
     morgan "^1.9.1"
     please-upgrade-node "^3.2.0"
@@ -752,9 +763,10 @@ isomor-server@^2.4.0:
     typescript "^3.7.5"
     ws "^7.2.1"
 
-isomor-transpiler@^2.4.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/isomor-transpiler/-/isomor-transpiler-2.4.0.tgz#be9930fe8cf7bb55dc78cce8c21cedaf0fad0e84"
+isomor-transpiler@^2.5.5:
+  version "2.5.5"
+  resolved "https://registry.yarnpkg.com/isomor-transpiler/-/isomor-transpiler-2.5.5.tgz#ec649e1a96eaddd406277555976d349ce880ddeb"
+  integrity sha512-As5qFtoxuBBUjHnT6v1YOW7tdaHlAE7Y6Yl44SPYfTlCyQLTGJG4P4H9w89xE7ofWyh5b1e4CX9aKo9ttlyEfw==
   dependencies:
     "@babel/generator" "^7.8.4"
     "@babel/parser" "^7.8.4"
@@ -764,8 +776,8 @@ isomor-transpiler@^2.4.0:
     chokidar "^3.3.1"
     debug "^4.1.1"
     fs-extra "^8.1.0"
-    isomor "^2.4.0"
-    isomor-core "^2.1.0"
+    isomor "^2.5.5"
+    isomor-core "^2.5.2"
     isomor-json-schema-generator "^2.0.1"
     logol "^0.0.3"
     please-upgrade-node "^3.2.0"
@@ -773,15 +785,15 @@ isomor-transpiler@^2.4.0:
     ts-node "^8.6.2"
     typescript "^3.7.5"
 
-isomor@^2.4.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/isomor/-/isomor-2.4.0.tgz#59ab3db7b3ff8aafdc89dcfb4a66277c80ebfbff"
+isomor@^2.5.5, isomor@^2.6.2:
+  version "2.6.2"
+  resolved "https://registry.yarnpkg.com/isomor/-/isomor-2.6.2.tgz#ba9803c9337c84131d685ef95856ce3724551c93"
+  integrity sha512-hhm+P4/YGSVdvW5sdDI03GxFm9KwU5DrmrAhusaGRl22271t6WQ4nZ1clg9RJ8OWXSWm9my+HNLjp8AiqN9DGA==
   dependencies:
-    axios "^0.19.2"
     chalk "^3.0.0"
     inquirer "^7.0.4"
-    isomor-server "^2.4.0"
-    isomor-transpiler "^2.4.0"
+    isomor-server "^2.6.2"
+    isomor-transpiler "^2.5.5"
     typescript "^3.7.5"
 
 js-tokens@^4.0.0:
@@ -970,6 +982,11 @@ path-is-absolute@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/path-is-absolute/-/path-is-absolute-1.0.1.tgz#174b9268735534ffbc7ace6bf53a5a9e1b5c5f5f"
 
+path-key@^3.1.0:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/path-key/-/path-key-3.1.1.tgz#581f6ade658cbba65a0d3380de7753295054f375"
+  integrity sha512-ojmeN0qd+y0jszEtoY48r0Peq5dwMEkIlCOu6Q5f41lfkswXuKtYrhgoTpLnyIcHm24Uhqx+5Tqm2InSwLhE6Q==
+
 path-parse@^1.0.6:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/path-parse/-/path-parse-1.0.6.tgz#d62dbb5679405d72c4737ec58600e9ddcf06d24c"
@@ -1109,6 +1126,18 @@ serve-static@1.14.1:
 setprototypeof@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/setprototypeof/-/setprototypeof-1.1.1.tgz#7e95acb24aa92f5885e0abef5ba131330d4ae683"
+
+shebang-command@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/shebang-command/-/shebang-command-2.0.0.tgz#ccd0af4f8835fbdc265b82461aaf0c36663f34ea"
+  integrity sha512-kHxr2zZpYtdmrN1qDjrrX/Z1rR1kG8Dx+gkpK1G4eXmvXswmcE1hTWBWYUzlraYw1/yZp6YuDY77YtvbN0dmDA==
+  dependencies:
+    shebang-regex "^3.0.0"
+
+shebang-regex@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/shebang-regex/-/shebang-regex-3.0.0.tgz#ae16f1644d873ecad843b0307b143362d4c42172"
+  integrity sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==
 
 signal-exit@^3.0.2:
   version "3.0.2"
@@ -1289,6 +1318,13 @@ utils-merge@1.0.1:
 vary@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
+
+which@^2.0.1:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/which/-/which-2.0.2.tgz#7c6a8dd0a636a0327e10b59c9286eee93f3f51b1"
+  integrity sha512-BLI3Tl1TW3Pvl70l3yq3Y64i+awpwXqsGBYWkkqMtnbXgrMD+yj7rhW0kuEDxzJaYXGjEW5ogapKNMEKNMjibA==
+  dependencies:
+    isexe "^2.0.0"
 
 wrappy@1:
   version "1.0.2"

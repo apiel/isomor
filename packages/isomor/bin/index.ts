@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { prompt } from 'inquirer';
-import { spawn } from 'child_process';
+import * as spawn from 'cross-spawn';
 import * as chalk from 'chalk';
 import { platform } from 'process';
 

@@ -30,6 +30,7 @@
     },
     "dependencies": {
         "chalk": "^3.0.0",
+        "cross-spawn": "^7.0.2",
         "fs-extra": "^8.1.0",
         "isomor-core": "^2.5.2",
         "logol": "^0.0.3",
@@ -40,12 +41,14 @@
     },
     "devDependencies": {
         "@types/chalk": "^2.2.0",
+        "@types/cross-spawn": "^6.0.1",
         "@types/fs-extra": "^8.0.1",
         "@types/minimist": "^1.2.0",
         "@types/node": "^13.1.1",
         "@types/rimraf": "^2.0.3",
         "rimraf": "^3.0.0",
-        "tslint": "^5.20.1"
+        "tslint": "^5.20.1",
+        "yarn": "^1.22.4"
     },
     "gitHead": "9a8bbcc96908b631b6d3c828054c70538e150963"
 }

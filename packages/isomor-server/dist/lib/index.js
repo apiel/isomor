@@ -1,5 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var server_1 = require("./server");
+exports.server = server_1.server;
 var apidoc_1 = require("./apidoc");
 exports.getApiDoc = apidoc_1.getApiDoc;
 var startup_1 = require("./startup");

@@ -1,3 +1,4 @@
+export { server } from './server';
 export { getApiDoc } from './apidoc';
 export { startup } from './startup';
 export { getIsomorRoutes, Route } from './route';

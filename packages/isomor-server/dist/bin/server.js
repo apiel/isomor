@@ -1,14 +1,5 @@
 #!/usr/bin/env node
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const pkg = require('../../package.json');
 require('please-upgrade-node')(pkg, {
@@ -19,49 +10,6 @@ require('please-upgrade-node')(pkg, {
     └────────────────────────────────────────────────────────┘
     `,
 });
-const logol_1 = require("logol");
-const logger = require("logol");
-const express = require("express");
-const bodyParser = require("body-parser");
-const cookieParser = require("cookie-parser");
-const swagger_ui_express_1 = require("swagger-ui-express");
-const morgan = require("morgan");
-const isomor_core_1 = require("isomor-core");
 const lib_1 = require("../lib");
-const path_1 = require("path");
-const API_DOCS = '/api-docs';
-function start() {
-    return __awaiter(this, void 0, void 0, function* () {
-        const { distServerFolder, port, staticFolder, wsTimeout, serverFolder, startupFile, noDecorator, jsonSchemaFolder } = isomor_core_1.getOptions();
-        logol_1.info('Starting server.');
-        const app = express();
-        app.use(bodyParser.json());
-        app.use(cookieParser());
-        app.use(morgan('dev', {
-            stream: { write: (str) => logol_1.log(str.trim()) },
-        }));
-        yield lib_1.startup(app, distServerFolder, serverFolder, startupFile, logol_1.info);
-        const routes = yield lib_1.getIsomorRoutes(serverFolder, distServerFolder, jsonSchemaFolder, noDecorator);
-        lib_1.useIsomorHttp(app, routes);
-        logol_1.info(`Created endpoints:`, routes.map(({ path }) => path));
-        app.use(API_DOCS, swagger_ui_express_1.serve, swagger_ui_express_1.setup(lib_1.getApiDoc(routes)));
-        if (staticFolder) {
-            logol_1.info('Add static folder', staticFolder);
-            app.use(express.static(staticFolder));
-            app.get('*', (req, res) => res.sendFile(path_1.join(staticFolder, 'index.html'), {
-                root: process.cwd(),
-            }));
-        }
-        app.use((err, req, res, next) => {
-            logol_1.error(err);
-            res.status(500).send(err.message);
-        });
-        const server = app.listen(port, () => {
-            logol_1.success(`Server listening on port ${port}!`);
-            logol_1.info(`Find API documentation at http://127.0.0.1:${port}${API_DOCS}`);
-        });
-        lib_1.useIsomorWs(routes, server, wsTimeout, logger);
-    });
-}
-start();
+lib_1.server();
 //# sourceMappingURL=server.js.map

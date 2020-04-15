@@ -1,6 +1,6 @@
 {
     "name": "isomor",
-    "version": "2.7.0",
+    "version": "2.7.1",
     "author": "Alexandre Piel <alexandre.piel@gmail.com>",
     "license": "MIT",
     "main": "dist/lib/index.js",
@@ -36,7 +36,7 @@
         "chalk": "^3.0.0",
         "cross-spawn": "^7.0.2",
         "inquirer": "^7.0.4",
-        "isomor-server": "^2.7.0",
+        "isomor-server": "^2.7.1",
         "isomor-transpiler": "^2.7.0",
         "typescript": "^3.7.5"
     },

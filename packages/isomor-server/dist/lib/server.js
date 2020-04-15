@@ -26,7 +26,7 @@ const use_isomor_ws_1 = require("./use-isomor-ws");
 const API_DOCS = '/api-docs';
 function server() {
     return __awaiter(this, void 0, void 0, function* () {
-        const { distServerFolder, port, staticFolder, wsTimeout, serverFolder, startupFile, noDecorator, jsonSchemaFolder } = isomor_core_1.getOptions();
+        const { distServerFolder, port, staticFolder, wsTimeout, serverFolder, startupFile, noDecorator, jsonSchemaFolder, } = isomor_core_1.getOptions();
         logol_1.info('Starting server.');
         const app = express();
         app.use(bodyParser.json());
@@ -55,6 +55,7 @@ function server() {
             logol_1.info(`Find API documentation at http://127.0.0.1:${port}${API_DOCS}`);
         });
         use_isomor_ws_1.useIsomorWs(routes, serv, wsTimeout, logger);
+        return { app, server: serv };
     });
 }
 exports.server = server;

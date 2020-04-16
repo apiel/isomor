@@ -1,5 +1,6 @@
 import * as WebSocket from 'ws';
 import { WsClientAction, WsServerAction, WsConfig } from 'isomor';
+import * as events from 'events';
 
 import { Route } from './route';
 import { Server, IncomingMessage } from 'http';
@@ -22,6 +23,9 @@ interface RoutesIndex {
     [path: string]: Route;
 }
 
+class IsomorWsEvent extends events.EventEmitter {};
+export const isomorWsEvent = new IsomorWsEvent();
+
 let defaultConfig: WsConfig | undefined;
 export function setWsDefaultConfig(config: WsConfig | undefined) {
     defaultConfig = config;
@@ -38,7 +42,9 @@ export function useIsomorWs(
     wss.on('connection', (ws, req) => {
         wsRefreshTimeout(ws, wsTimeout);
         sendDefaultConfig(ws, wsTimeout, logger);
+        isomorWsEvent.emit('connection', ws, req);
         ws.on('message', (message) => {
+            isomorWsEvent.emit('message', ws, message);
             if (isString(message)) {
                 const data = JSON.parse(message);
                 if (data?.action === WsClientAction.API) {

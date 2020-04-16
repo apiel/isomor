@@ -11,8 +11,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const WebSocket = require("ws");
 const isomor_1 = require("isomor");
+const events = require("events");
 const util_1 = require("util");
 const utils_1 = require("./utils");
+class IsomorWsEvent extends events.EventEmitter {
+}
+;
+exports.isomorWsEvent = new IsomorWsEvent();
 let defaultConfig;
 function setWsDefaultConfig(config) {
     defaultConfig = config;
@@ -24,8 +29,10 @@ function useIsomorWs(routes, server, wsTimeout = 60, logger) {
     wss.on('connection', (ws, req) => {
         wsRefreshTimeout(ws, wsTimeout);
         sendDefaultConfig(ws, wsTimeout, logger);
+        exports.isomorWsEvent.emit('connection', ws, req);
         ws.on('message', (message) => {
             var _a, _b;
+            exports.isomorWsEvent.emit('message', ws, message);
             if (util_1.isString(message)) {
                 const data = JSON.parse(message);
                 if (((_a = data) === null || _a === void 0 ? void 0 : _a.action) === isomor_1.WsClientAction.API) {

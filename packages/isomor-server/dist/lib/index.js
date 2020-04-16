@@ -13,4 +13,5 @@ exports.useIsomorHttp = use_isomor_http_1.useIsomorHttp;
 var use_isomor_ws_1 = require("./use-isomor-ws");
 exports.useIsomorWs = use_isomor_ws_1.useIsomorWs;
 exports.setWsDefaultConfig = use_isomor_ws_1.setWsDefaultConfig;
+exports.isomorWsEvent = use_isomor_ws_1.isomorWsEvent;
 //# sourceMappingURL=index.js.map

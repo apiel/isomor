@@ -63,6 +63,7 @@ function openWS(baseUrl) {
         }
     };
 }
+exports.openWS = openWS;
 function waitForWs(baseUrl) {
     if (!ws) {
         openWS(baseUrl);

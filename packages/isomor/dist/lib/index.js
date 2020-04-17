@@ -9,6 +9,7 @@ exports.WsServerAction = remoteWs_2.WsServerAction;
 exports.WsClientAction = remoteWs_2.WsClientAction;
 exports.wsDefaultConfig = remoteWs_2.wsDefaultConfig;
 exports.setWsConfig = remoteWs_2.setWsConfig;
+exports.openWS = remoteWs_2.openWS;
 const urlPrefix = '/isomor';
 function getUrlPath(path, pkgname, funcName, classname) {
     const url = classname

@@ -33,7 +33,7 @@ export function setWsConfig(config: WsConfig) {
     wsConfig = config;
 }
 
-function openWS(baseUrl: string) {
+export function openWS(baseUrl: string) {
     // ws = new WebSocket(`ws://${location.host}/isomor-ws`);
     // ws = new WebSocket(`ws://127.0.0.1:3005`);
     ws = new WebSocket(baseUrl);

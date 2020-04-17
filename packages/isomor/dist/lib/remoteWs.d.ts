@@ -13,6 +13,7 @@ export interface WsConfig {
 export declare type SubscribeFn = (payload: any) => void;
 export declare const wsDefaultConfig: WsConfig;
 export declare function setWsConfig(config: WsConfig): void;
+export declare function openWS(baseUrl: string): void;
 export declare function isomorRemoteWs(baseUrl: string, path: string, pkgname: string, funcName: string, args: [], classname?: string): Promise<any>;
 export declare function subscribe(fn: SubscribeFn): number;
 export declare function unsubscribe(key: number): void;

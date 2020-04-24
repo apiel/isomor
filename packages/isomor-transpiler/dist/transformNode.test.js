@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const ast_1 = require("./ast");
 const transformNode_1 = require("./transformNode");
-const transformClass_1 = require("./transformer/transformClass");
 const transformImport_1 = require("./transformer/transformImport");
 const transformInterface_1 = require("./transformer/transformInterface");
 const transformExport_1 = require("./transformer/transformExport");
@@ -17,9 +16,6 @@ jest.mock('./transformer/transformInterface', () => ({
 }));
 jest.mock('./transformer/transformImport', () => ({
     transformImport: jest.fn().mockReturnValue('TransformImport'),
-}));
-jest.mock('./transformer/transformClass', () => ({
-    transformClass: jest.fn().mockReturnValue('TransformClass'),
 }));
 jest.mock('./transformer/transformFunc', () => ({
     transformFunc: jest.fn().mockReturnValue('TransformFunc'),
@@ -111,15 +107,6 @@ export const getTime1 = async (hello: string) => {
             `);
             expect(newNode).toEqual('TransformArrowFunc');
             expect(transformArrowFunc_1.transformArrowFunc).toHaveBeenCalledWith(node.declaration, bodyParams);
-        });
-        it('should transform class', () => {
-            const noServerImport = false;
-            const noDecorator = true;
-            const { newNode, node } = transformNodeTest(`
-export class MyClass {
-}          `, noServerImport, noDecorator);
-            expect(newNode).toEqual('TransformClass');
-            expect(transformClass_1.transformClass).toHaveBeenCalledWith(node, bodyParams, noDecorator);
         });
     });
 });

@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const transformClass_1 = require("./transformer/transformClass");
 const transformImport_1 = require("./transformer/transformImport");
 const transformInterface_1 = require("./transformer/transformInterface");
 const transformExport_1 = require("./transformer/transformExport");
@@ -23,9 +22,6 @@ function transformNode(node, fnOptions, noServerImport, noDecorator) {
         }
         else if (node.declaration.type === 'VariableDeclaration') {
             return transformArrowFunc_1.transformArrowFunc(node.declaration, fnOptions);
-        }
-        else if (node.declaration.type === 'ClassDeclaration') {
-            return transformClass_1.transformClass(node, fnOptions, noDecorator);
         }
         else if (node.declaration.type === 'TSEnumDeclaration') {
             return node;

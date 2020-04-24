@@ -1,6 +1,6 @@
 import { parse, generate, JsonAst } from './ast';
 
-import { getCodeImport, getCodeFunc, getCodeArrowFunc, getCodeType, getCodeMethod, getCodeConstructor } from './code';
+import { getCodeImport, getCodeFunc, getCodeArrowFunc, getCodeType } from './code';
 
 export const codeTranspiledFunc =
     `export function getTime(...args: any) {
@@ -43,26 +43,6 @@ describe('code', () => {
     const wsBaseUrl = 'ws://127.0.0.1:3005';
 
     const bodyParams = { wsReg, path, pkgName, name, httpBaseUrl, wsBaseUrl };
-
-    describe('code/getCodeMethod()', () => {
-        it('should generate method for isomor', () => {
-            const withTypes = true;
-            const { code } = generate(getCodeMethod({ bodyParams: {...bodyParams, className}, withTypes }) as any);
-            expect(code).toEqual(codeTranspiledClass);
-        });
-    });
-
-    describe('code/getCodeConstructor()', () => {
-        it('should generate constructor for isomor', () => {
-            const withTypes = true;
-            const { code } = generate(getCodeConstructor(withTypes) as any);
-            expect(code).toEqual(
-                `constructor(...args: any) {
-  super();
-}`,
-            );
-        });
-    });
 
     describe('code/getCodeImport()', () => {
         it('should generate inport for isomor', () => {

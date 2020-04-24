@@ -30,22 +30,6 @@ describe('code', () => {
     const httpBaseUrl = '';
     const wsBaseUrl = 'ws://127.0.0.1:3005';
     const bodyParams = { wsReg, path, pkgName, name, httpBaseUrl, wsBaseUrl };
-    describe('code/getCodeMethod()', () => {
-        it('should generate method for isomor', () => {
-            const withTypes = true;
-            const { code } = ast_1.generate(code_1.getCodeMethod({ bodyParams: Object.assign(Object.assign({}, bodyParams), { className }), withTypes }));
-            expect(code).toEqual(exports.codeTranspiledClass);
-        });
-    });
-    describe('code/getCodeConstructor()', () => {
-        it('should generate constructor for isomor', () => {
-            const withTypes = true;
-            const { code } = ast_1.generate(code_1.getCodeConstructor(withTypes));
-            expect(code).toEqual(`constructor(...args: any) {
-  super();
-}`);
-        });
-    });
     describe('code/getCodeImport()', () => {
         it('should generate inport for isomor', () => {
             const { code } = ast_1.generate(code_1.getCodeImport());

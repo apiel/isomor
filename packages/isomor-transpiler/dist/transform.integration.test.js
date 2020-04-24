@@ -40,27 +40,6 @@ export const getTime3 = async (hello: string) => {
 function shouldNotBeTranspiled() {
     console.log('hello');
 }
-
-@Injectable()
-@isomor
-export class CatsService {
-  constructor(
-    @InjectRepository(Photo)
-    private readonly photoRepository: Repository<Photo>,
-  ) {}
-
-  findAll(id: string): Cat[] {
-    return this.cats;
-  }
-}
-
-export class Post implements IsomorShare {
-    @Length(10, 20)
-    title: string;
-
-    @Contains("hello")
-    text: string;
-}
 `;
 const codeTranspiled = `import { isomorRemote } from "isomor";
 import { Injectable } from '@angular/core';
@@ -89,28 +68,7 @@ export function getTime2(...args: any) {
 }
 export const getTime3 = (...args: any) => {
   return isomorRemote("http", "", "path-to-file", "root", "getTime3", args);
-};
-
-@Injectable()
-@isomor
-class CatsService__deco_export__ {}
-
-export class CatsService extends CatsService__deco_export__ {
-  constructor(...args: any) {
-    super();
-  }
-
-  async findAll(...args: any) {
-    return isomorRemote("http", "", "path-to-file", "root", "findAll", args, "CatsService");
-  }
-
-}
-export class Post implements IsomorShare {
-  @Length(10, 20)
-  title: string;
-  @Contains("hello")
-  text: string;
-}`;
+};`;
 describe('transform', () => {
     const srcFilePath = 'src-isomor/path/to/file';
     const path = 'path-to-file';

@@ -153,47 +153,4 @@ function getBodyRemote({ wsReg, path, pkgName, name, className, httpBaseUrl, wsB
         },
     };
 }
-function getCodeMethod({ bodyParams, withTypes, }) {
-    return {
-        type: 'ClassMethod',
-        static: false,
-        key: {
-            type: 'Identifier',
-            name: bodyParams.name,
-        },
-        async: true,
-        params: getParams(withTypes),
-        body: getBody(bodyParams),
-    };
-}
-exports.getCodeMethod = getCodeMethod;
-function getCodeConstructor(withTypes, withSuper = true) {
-    return {
-        type: 'ClassMethod',
-        static: false,
-        key: {
-            type: 'Identifier',
-            name: 'constructor',
-        },
-        async: false,
-        kind: 'constructor',
-        params: getParams(withTypes),
-        body: {
-            type: 'BlockStatement',
-            body: !withSuper ? [] : [
-                {
-                    type: 'ExpressionStatement',
-                    expression: {
-                        type: 'CallExpression',
-                        callee: {
-                            type: 'Super',
-                        },
-                        arguments: [],
-                    },
-                },
-            ],
-        },
-    };
-}
-exports.getCodeConstructor = getCodeConstructor;
 //# sourceMappingURL=code.js.map

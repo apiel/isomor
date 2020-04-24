@@ -1,5 +1,4 @@
 import { Statement } from './ast';
-import { transformClass } from './transformer/transformClass';
 import { transformImport } from './transformer/transformImport';
 import { transformInterface } from './transformer/transformInterface';
 import { transformExport } from './transformer/transformExport';
@@ -34,8 +33,6 @@ export function transformNode(
             return transformFunc(node.declaration, fnOptions);
         } else if (node.declaration.type === 'VariableDeclaration') {
             return transformArrowFunc(node.declaration, fnOptions);
-        } else if (node.declaration.type === 'ClassDeclaration') {
-            return transformClass(node, fnOptions, noDecorator);
         } else if (node.declaration.type === 'TSEnumDeclaration') {
             return node;
         }

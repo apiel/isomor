@@ -38,7 +38,7 @@ export function isomorRemote(
     path: string,
     pkgname: string,
     funcName: string,
-    args: [],
+    args: any[],
     classname?: string,
 ): Promise<any> {
     if (protocol === 'ws') {

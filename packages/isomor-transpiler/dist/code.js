@@ -43,7 +43,7 @@ function getCodeImport() {
     };
 }
 exports.getCodeImport = getCodeImport;
-function getCodeFunc({ bodyParams, withTypes, }) {
+function getCodeFunc({ bodyParams, withTypes }) {
     return {
         type: 'ExportNamedDeclaration',
         declaration: {
@@ -58,7 +58,7 @@ function getCodeFunc({ bodyParams, withTypes, }) {
     };
 }
 exports.getCodeFunc = getCodeFunc;
-function getCodeArrowFunc({ bodyParams, withTypes, }) {
+function getCodeArrowFunc({ bodyParams, withTypes }) {
     return {
         type: 'ExportNamedDeclaration',
         declaration: {
@@ -91,21 +91,56 @@ function getParams(withTypes) {
     ];
 }
 function getTypeAny(withTypes) {
-    return withTypes ? {
-        typeAnnotation: {
-            type: 'TSTypeAnnotation',
+    return withTypes
+        ? {
             typeAnnotation: {
-                type: 'TSAnyKeyword',
+                type: 'TSTypeAnnotation',
+                typeAnnotation: {
+                    type: 'TSAnyKeyword',
+                },
             },
-        },
-    } : {};
+        }
+        : {};
 }
-function getBody(bodyRemote) {
+function getBody(bodyRemote, params) {
+    const yo = params ? [getVarRemote(params)] : [];
     return {
         type: 'BlockStatement',
-        body: [
-            getBodyRemote(bodyRemote),
+        body: [...yo, getBodyRemote(bodyRemote)],
+    };
+}
+exports.getBody = getBody;
+function getVarRemote(params) {
+    return {
+        type: 'VariableDeclaration',
+        declarations: [
+            {
+                type: 'VariableDeclarator',
+                id: {
+                    type: 'Identifier',
+                    name: 'args',
+                    typeAnnotation: {
+                        type: 'TSTypeAnnotation',
+                        typeAnnotation: {
+                            type: 'TSArrayType',
+                            elementType: {
+                                type: 'TSAnyKeyword',
+                            },
+                        },
+                    },
+                },
+                init: {
+                    type: 'ArrayExpression',
+                    elements: params.map((param) => ({
+                        type: 'Identifier',
+                        name: param.type === 'AssignmentPattern'
+                            ? param.left.name
+                            : param.name,
+                    })),
+                },
+            },
         ],
+        kind: 'var',
     };
 }
 function getBodyRemote({ wsReg, path, pkgName, name, className, httpBaseUrl, wsBaseUrl, }) {
@@ -145,10 +180,14 @@ function getBodyRemote({ wsReg, path, pkgName, name, className, httpBaseUrl, wsB
                     type: 'Identifier',
                     name: 'args',
                 },
-                ...(className ? [{
-                        type: 'StringLiteral',
-                        value: className,
-                    }] : []),
+                ...(className
+                    ? [
+                        {
+                            type: 'StringLiteral',
+                            value: className,
+                        },
+                    ]
+                    : []),
             ],
         },
     };

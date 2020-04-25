@@ -5,7 +5,7 @@ export async function isomorRemoteHttp(
     path: string,
     pkgname: string,
     funcName: string,
-    args: [],
+    args: any[],
     classname?: string,
 ): Promise<any> {
     const url = baseUrl + getUrlPath(path, pkgname, funcName, classname);

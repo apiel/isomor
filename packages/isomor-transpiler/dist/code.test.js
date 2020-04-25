@@ -23,7 +23,6 @@ exports.codeTranspiledClass = `async getTime(...args: any) {
 describe('code', () => {
     const path = 'path/to/file';
     const name = 'getTime';
-    const className = 'CatsService';
     const typeName = 'MyType';
     const pkgName = 'root';
     const wsReg = null;

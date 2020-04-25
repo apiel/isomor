@@ -23,9 +23,10 @@ export function transformNode(
     noDecorator: boolean,
 ) {
     if (node.type === 'ExportNamedDeclaration') {
-        if (!node.declaration) {
-            return transformExport(node, noServerImport);
-        } else if (node.declaration.type === 'TSTypeAliasDeclaration') {
+        // if (!node.declaration) {
+        //     return transformExport(node, noServerImport);
+        // } else 
+        if (node.declaration.type === 'TSTypeAliasDeclaration') {
             return transformType(node.declaration);
         } else if (node.declaration.type === 'TSInterfaceDeclaration') {
             return transformInterface(node, noServerImport);

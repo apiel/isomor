@@ -43,6 +43,8 @@ export function JsonAst(node: any) {
 * Test
 */
 
+// console.log('HERE', JsonAst(parse(`const args: any[] = [a, b];`)));
+
 if (process.env.TEST_AST) {
     const result = (node: any) => {
         console.log('node', JsonAst(node)); // tslint:disable-line

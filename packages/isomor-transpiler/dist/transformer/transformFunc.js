@@ -17,10 +17,11 @@ function transformFunc(root, _a) {
     var { srcFilePath, path, withTypes } = _a, bodyParams = __rest(_a, ["srcFilePath", "path", "withTypes"]);
     const { name } = root.id;
     validation_1.setValidator(root, srcFilePath, path, name);
-    return code_1.getCodeFunc({
-        withTypes,
-        bodyParams: Object.assign({ path, name }, bodyParams),
-    });
+    root.body = code_1.getBody(Object.assign({ path, name }, bodyParams), root.params);
+    return {
+        type: 'ExportNamedDeclaration',
+        declaration: root,
+    };
 }
 exports.transformFunc = transformFunc;
 //# sourceMappingURL=transformFunc.js.map

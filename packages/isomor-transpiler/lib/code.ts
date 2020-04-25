@@ -1,4 +1,4 @@
-import { Statement } from './ast';
+import { Statement, JsonAst } from './ast';
 
 interface BodyRemote {
     path: string;
@@ -47,7 +47,7 @@ function getCodeImportSpecifier(name: string) {
 }
 
 export function getCodeImport() {
-    return {
+    return ({
         type: 'ImportDeclaration',
         specifiers: [
             getCodeImportSpecifier('isomorRemote'),
@@ -57,14 +57,11 @@ export function getCodeImport() {
             type: 'StringLiteral',
             value: 'isomor',
         },
-    } as any as Statement; // need to try to remove any
+    } as any) as Statement; // need to try to remove any
 }
 
-export function getCodeFunc({
-    bodyParams,
-    withTypes,
-}: CodeFunc) {
-    return {
+export function getCodeFunc({ bodyParams, withTypes }: CodeFunc) {
+    return ({
         type: 'ExportNamedDeclaration',
         declaration: {
             type: 'FunctionDeclaration',
@@ -75,14 +72,11 @@ export function getCodeFunc({
             params: getParams(withTypes),
             body: getBody(bodyParams),
         },
-    } as any as Statement;
+    } as any) as Statement;
 }
 
-export function getCodeArrowFunc({
-    bodyParams,
-    withTypes,
-}: CodeFunc) {
-    return {
+export function getCodeArrowFunc({ bodyParams, withTypes }: CodeFunc) {
+    return ({
         type: 'ExportNamedDeclaration',
         declaration: {
             type: 'VariableDeclaration',
@@ -102,7 +96,7 @@ export function getCodeArrowFunc({
             ],
             kind: 'const',
         },
-    } as any as Statement;
+    } as any) as Statement;
 }
 
 // arguments => (...args)
@@ -121,22 +115,63 @@ function getParams(withTypes: boolean) {
 
 // type => ': any'
 function getTypeAny(withTypes: boolean) {
-    return withTypes ? {
-        typeAnnotation: {
-            type: 'TSTypeAnnotation',
-            typeAnnotation: {
-                type: 'TSAnyKeyword',
-            },
-        },
-    } : {};
+    return withTypes
+        ? {
+              typeAnnotation: {
+                  type: 'TSTypeAnnotation',
+                  typeAnnotation: {
+                      type: 'TSAnyKeyword',
+                  },
+              },
+          }
+        : {};
 }
 
-function getBody(bodyRemote: BodyRemote) {
+export function getBody(bodyRemote: BodyRemote, params?: any) {
+    const yo = params ? [getVarRemote(params)] : [];
+    // console.log('--->', bodyRemote.name, JsonAst(getVarRemote(params)), JsonAst(params));
+    // const yo = [];
     return {
         type: 'BlockStatement',
-        body: [
-            getBodyRemote(bodyRemote),
+        body: [...yo, getBodyRemote(bodyRemote)],
+    };
+}
+
+function getVarRemote(params: any) {
+    return {
+        type: 'VariableDeclaration',
+        declarations: [
+            {
+                type: 'VariableDeclarator',
+                id: {
+                    type: 'Identifier',
+                    name: 'args',
+                    // here should deactivate if NoType sets
+                    typeAnnotation: {
+                        type: 'TSTypeAnnotation',
+                        typeAnnotation: {
+                            type: 'TSArrayType',
+                            elementType: {
+                                type: 'TSAnyKeyword',
+                            },
+                        },
+                    },
+                },
+                init: {
+                    type: 'ArrayExpression',
+                    // this might be a problem with spread
+                    // maybe better try to remove types
+                    elements: params.map((param: any) => ({
+                        type: 'Identifier',
+                        name:
+                            param.type === 'AssignmentPattern'
+                                ? param.left.name
+                                : param.name,
+                    })),
+                },
+            },
         ],
+        kind: 'var',
     };
 }
 
@@ -184,10 +219,14 @@ function getBodyRemote({
                     type: 'Identifier',
                     name: 'args',
                 },
-                ...(className ? [{
-                    type: 'StringLiteral',
-                    value: className,
-                }] : []),
+                ...(className
+                    ? [
+                          {
+                              type: 'StringLiteral',
+                              value: className,
+                          },
+                      ]
+                    : []),
             ],
         },
     };

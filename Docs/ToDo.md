@@ -1,5 +1,12 @@
 ### ToDo
 
+- generate pkg and focus on api generation instead of react, vue...
+    - if fn not async, make it async
+    - support ExportDefaultDeclaration
+
+- https://github.com/vega/ts-json-schema-generator
+    see if we can use it, instead of custom one
+
 - be able to install typeorm to an exisiting project from cli
 
 - check about how webpack deal with nodejs lib

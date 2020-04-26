@@ -2,6 +2,7 @@ import { ImportDeclaration } from '../ast';
 import { JsonAst, parse } from '../ast';
 
 export function transformImport(root: ImportDeclaration, noServerImport: boolean) {
+    // need to change this, was for class...
     if (root.trailingComments) {
         if (root.trailingComments[0].value.indexOf(' > ') === 0) {
             const code = root.trailingComments[0].value.substring(3);

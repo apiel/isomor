@@ -56,8 +56,6 @@ function prepare(options) {
             yield fs_extra_1.emptyDir(distAppFolder);
             yield fs_extra_1.copy(srcFolder, distAppFolder);
         }
-        const folders = yield isomor_core_1.getFolders(srcFolder, serverFolder);
-        yield Promise.all(folders.map((folder) => fs_extra_1.emptyDir(path_1.join(distAppFolder, folder))));
     });
 }
 function build(options) {

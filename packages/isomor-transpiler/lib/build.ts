@@ -84,10 +84,10 @@ async function prepare(options: Options) {
         await copy(srcFolder, distAppFolder);
     }
 
-    const folders = await getFolders(srcFolder, serverFolder);
-    await Promise.all(
-        folders.map((folder) => emptyDir(join(distAppFolder, folder))),
-    );
+    // const folders = await getFolders(srcFolder, serverFolder);
+    // await Promise.all(
+    //     folders.map((folder) => emptyDir(join(distAppFolder, folder))),
+    // );
 }
 
 export async function build(options: Options) {

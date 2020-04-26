@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const transformImport_1 = require("./transformer/transformImport");
 const transformInterface_1 = require("./transformer/transformInterface");
 const transformFunc_1 = require("./transformer/transformFunc");
 const transformArrowFunc_1 = require("./transformer/transformArrowFunc");
@@ -24,7 +23,7 @@ function transformNode(node, fnOptions, noServerImport, noDecorator) {
         }
     }
     else if (node.type === 'ImportDeclaration') {
-        return transformImport_1.transformImport(node, noServerImport);
+        return node;
     }
 }
 exports.transformNode = transformNode;

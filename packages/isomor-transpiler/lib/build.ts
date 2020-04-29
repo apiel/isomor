@@ -1,15 +1,25 @@
 import { info, warn } from 'logol';
-import { readFile, outputFile, emptyDir, copy, unlink } from 'fs-extra';
+import { gray, yellow, red } from 'chalk';
+import * as spawn from 'cross-spawn';
+import {
+    readFile,
+    outputFile,
+    emptyDir,
+    copy,
+    unlink,
+    outputJson,
+} from 'fs-extra';
 import { join } from 'path';
 import debug from 'debug';
 import {
-    getFiles,
+    // getFiles,
     getFolders,
     getPathForUrl,
     getFilesPattern,
 } from 'isomor-core';
 import { watch } from 'chokidar';
 import { Options } from 'isomor-core';
+import { promises as fs } from 'fs';
 
 import { parse, generate } from './ast';
 import transform from './transform';
@@ -18,6 +28,12 @@ import transform from './transform';
 const anymatch = require('anymatch'); // tslint:disable-line
 
 export default transform;
+
+const tmpPath = '/home/alex/dev/node/pkg/isomor/packages/isomor-transpiler/tmp';
+const srcPath = '/home/alex/dev/node/pkg/isomor/packages/isomor-transpiler/src';
+const modulePath =
+    '/home/alex/dev/node/pkg/isomor/packages/example/react/node_modules';
+const moduleName = 'api';
 
 function getCode(
     options: Options,
@@ -90,15 +106,49 @@ async function prepare(options: Options) {
     // );
 }
 
+// custom getFiles to be part of core
+async function getFiles({ srcFolder }: Options) {
+    const files = await fs.readdir(srcFolder, { withFileTypes: true });
+    return files.filter((f) => f.isFile()).map((f) => f.name);
+}
+
+// ts to js
+async function runTsc({ distAppFolder }: Options) {
+    const tsconfig = {
+        compilerOptions: {
+            target: 'es5',
+            lib: ['esnext'],
+            strict: true,
+            allowJs: true,
+            declaration: true,
+            downlevelIteration: true,
+        },
+    };
+    await outputJson(join(distAppFolder, 'tsconfig.json'), tsconfig);
+    return shell(
+        'tsc',
+        `--outDir ${join(modulePath, moduleName)} -p tsconfig.json`.split(' '),
+        distAppFolder
+    );
+}
+
 export async function build(options: Options) {
-    await prepare(options);
+    // await prepare(options);
 
     info('Start transpiling', options.pkgName);
 
-    const { srcFolder, serverFolder } = options;
-    const files = await getFiles(srcFolder, serverFolder);
+    // const { srcFolder, serverFolder } = options;
+    // const files = await getFiles(srcFolder, serverFolder);
+
+    // for testing let overwrite options
+    options.srcFolder = srcPath;
+    // options.distAppFolder = join(modulePath, moduleName);
+    options.distAppFolder = tmpPath; // for the moment go there till it is done properly
+    const files = await getFiles(options);
     info(`Found ${files.length} file(s).`);
+
     await Promise.all(files.map((file) => transpile(options, file)));
+    await runTsc(options);
 
     watcher(options);
 }
@@ -172,4 +222,36 @@ function watcher(options: Options) {
                 unlink(path);
             });
     }
+}
+
+function shell(
+    command: string,
+    args?: ReadonlyArray<string>,
+    cwd: string = process.cwd(),
+    env?: NodeJS.ProcessEnv,
+) {
+    return new Promise((resolve) => {
+        const cmd = spawn(command, args, {
+            cwd,
+            env: {
+                COLUMNS:
+                    process.env.COLUMNS || process.stdout.columns.toString(),
+                LINES: process.env.LINES || process.stdout.rows.toString(),
+                ...env,
+                ...process.env,
+            },
+        });
+        cmd.stdout.on('data', (data) => {
+            process.stdout.write(gray(data.toString()));
+        });
+        cmd.stderr.on('data', (data) => {
+            const dataStr = data.toString();
+            if (dataStr.indexOf('warning') === 0) {
+                process.stdout.write(yellow('warming') + dataStr.substring(7));
+            } else {
+                process.stdout.write(red(data.toString()));
+            }
+        });
+        cmd.on('close', (code) => (code ? process.exit(code) : resolve()));
+    });
 }

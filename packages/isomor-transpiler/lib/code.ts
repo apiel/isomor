@@ -62,13 +62,9 @@ export function getCodeImport() {
 
 export function getCodeFunc({ bodyParams, withTypes }: CodeFunc) {
     return ({
-        type: 'ExportNamedDeclaration',
+        type: 'ExportDefaultDeclaration',
         declaration: {
             type: 'FunctionDeclaration',
-            id: {
-                type: 'Identifier',
-                name: bodyParams.name,
-            },
             params: getParams(withTypes),
             body: getBody(bodyParams),
         },
@@ -127,13 +123,10 @@ function getTypeAny(withTypes: boolean) {
         : {};
 }
 
-export function getBody(bodyRemote: BodyRemote, params?: any) {
-    const yo = params ? [getVarRemote(params)] : [];
-    // console.log('--->', bodyRemote.name, JsonAst(getVarRemote(params)), JsonAst(params));
-    // const yo = [];
+export function getBody(bodyRemote: BodyRemote) {
     return {
         type: 'BlockStatement',
-        body: [...yo, getBodyRemote(bodyRemote)],
+        body: [getBodyRemote(bodyRemote)],
     };
 }
 
@@ -229,5 +222,26 @@ function getBodyRemote({
                     : []),
             ],
         },
+    };
+}
+
+export function getBodyEmptyReturn() {
+    return {
+        type: 'BlockStatement',
+        body: [
+            {
+                type: 'ReturnStatement',
+                argument: {
+                    type: 'TSAsExpression',
+                    expression: {
+                        type: 'Identifier',
+                        name: 'undefined',
+                    },
+                    typeAnnotation: {
+                        type: 'TSAnyKeyword',
+                    },
+                },
+            },
+        ],
     };
 }

@@ -2,7 +2,7 @@ import { Statement } from './ast';
 import { transformImport } from './transformer/transformImport';
 import { transformInterface } from './transformer/transformInterface';
 import { transformExport } from './transformer/transformExport';
-import { transformFunc } from './transformer/transformFunc';
+import { transformDefaultFunc } from './transformer/transformDefaultFunc';
 import { transformArrowFunc } from './transformer/transformArrowFunc';
 import { transformType } from './transformer/transformType';
 
@@ -11,6 +11,7 @@ export interface FnOptions {
     path: string;
     pkgName: string;
     withTypes: boolean;
+    declaration?: boolean;
     httpBaseUrl: string;
     wsBaseUrl: string;
     wsReg?: RegExp;
@@ -22,18 +23,21 @@ export function transformNode(
     noServerImport: boolean,
     noDecorator: boolean,
 ) {
-    if (node.type === 'ExportNamedDeclaration') {
+    // console.log('node.type', node.type);
+    if (node.type === 'ExportDefaultDeclaration') {
+        if (node.declaration.type === 'FunctionDeclaration') {
+            return transformDefaultFunc(node.declaration, fnOptions);
+        // } else if (node.declaration.type === 'VariableDeclaration') {
+        //     return transformArrowFunc(node.declaration, fnOptions);
+        }
+    } else if (node.type === 'ExportNamedDeclaration') {
         // if (!node.declaration) {
         //     return transformExport(node, noServerImport);
-        // } else 
+        // } else
         if (node.declaration.type === 'TSTypeAliasDeclaration') {
             return transformType(node.declaration);
         } else if (node.declaration.type === 'TSInterfaceDeclaration') {
             return transformInterface(node, noServerImport);
-        } else if (node.declaration.type === 'FunctionDeclaration') {
-            return transformFunc(node.declaration, fnOptions);
-        } else if (node.declaration.type === 'VariableDeclaration') {
-            return transformArrowFunc(node.declaration, fnOptions);
         } else if (node.declaration.type === 'TSEnumDeclaration') {
             return node;
         }

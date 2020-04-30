@@ -31,8 +31,10 @@ export default transform;
 
 const tmpPath = '/home/alex/dev/node/pkg/isomor/packages/isomor-transpiler/tmp';
 const srcPath = '/home/alex/dev/node/pkg/isomor/packages/isomor-transpiler/src';
+// const modulePath =
+//     '/home/alex/dev/node/pkg/isomor/packages/example/react/node_modules';
 const modulePath =
-    '/home/alex/dev/node/pkg/isomor/packages/example/react/node_modules';
+    '/home/alex/dev/node/pkg/isomor/packages/isomor-transpiler/modules';
 const moduleName = 'api';
 
 function getCode(
@@ -40,6 +42,7 @@ function getCode(
     srcFilePath: string,
     path: string,
     content: string,
+    declaration: boolean,
 ) {
     const {
         withTypes,
@@ -61,6 +64,7 @@ function getCode(
             withTypes,
             wsBaseUrl,
             httpBaseUrl,
+            declaration,
         },
         noServerImport,
         noDecorator,
@@ -70,7 +74,7 @@ function getCode(
     return code;
 }
 
-async function transpile(options: Options, filePath: string) {
+async function transpile(options: Options, filePath: string, declaration: boolean) {
     const { distAppFolder, srcFolder } = options;
 
     info('Transpile', filePath);
@@ -83,9 +87,10 @@ async function transpile(options: Options, filePath: string) {
         srcFilePath,
         getPathForUrl(filePath),
         buffer.toString(),
+        declaration,
     );
 
-    const appFilePath = join(distAppFolder, filePath);
+    const appFilePath = join(distAppFolder, declaration ? 'd.ts' : 'src', filePath);
     info('Save isomor file', appFilePath);
     await outputFile(appFilePath, code);
     debug('isomor-transpiler:transpile:out')(code);
@@ -113,22 +118,24 @@ async function getFiles({ srcFolder }: Options) {
 }
 
 // ts to js
-async function runTsc({ distAppFolder }: Options) {
+async function runTsc({ distAppFolder }: Options, declaration: boolean) {
+    info('Run tsc');
     const tsconfig = {
         compilerOptions: {
             target: 'es5',
             lib: ['esnext'],
             strict: true,
             allowJs: true,
-            declaration: true,
+            declaration,
             downlevelIteration: true,
         },
     };
-    await outputJson(join(distAppFolder, 'tsconfig.json'), tsconfig);
+    const dist = join(distAppFolder, declaration ? 'd.ts' : 'src');
+    await outputJson(join(dist, 'tsconfig.json'), tsconfig);
     return shell(
         'tsc',
         `--outDir ${join(modulePath, moduleName)} -p tsconfig.json`.split(' '),
-        distAppFolder
+        dist
     );
 }
 
@@ -147,8 +154,10 @@ export async function build(options: Options) {
     const files = await getFiles(options);
     info(`Found ${files.length} file(s).`);
 
-    await Promise.all(files.map((file) => transpile(options, file)));
-    await runTsc(options);
+    await Promise.all(files.map((file) => transpile(options, file, true)));
+    await runTsc(options, true);
+    await Promise.all(files.map((file) => transpile(options, file, false)));
+    await runTsc(options, false);
 
     watcher(options);
 }
@@ -165,7 +174,8 @@ export const watcherUpdate = (options: Options) => async (file: string) => {
     if (anymatch(getServerSubFolderPattern(serverFolderPattern), path)) {
         info(`Do not copy sub-folder from "./server"`, path);
     } else if (anymatch(serverFolderPattern, path)) {
-        transpile(options, file);
+        // ToDo fix delcaration
+        // transpile(options, file);
     } else {
         info(`Copy ${path} to folder`);
         const dest = join(distAppFolder, file);

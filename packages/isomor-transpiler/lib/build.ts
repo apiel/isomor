@@ -1,6 +1,7 @@
 import { info, warn } from 'logol';
 import { gray, yellow, red } from 'chalk';
 import * as spawn from 'cross-spawn';
+import { transformAsync } from '@babel/core';
 import {
     readFile,
     outputFile,
@@ -9,7 +10,7 @@ import {
     unlink,
     outputJson,
 } from 'fs-extra';
-import { join } from 'path';
+import { join, basename, extname, dirname } from 'path';
 import debug from 'debug';
 import {
     // getFiles,
@@ -74,7 +75,10 @@ function getCode(
     return code;
 }
 
-async function transpile(options: Options, filePath: string, declaration: boolean) {
+async function transpile(
+    options: Options,
+    filePath: string,
+) {
     const { distAppFolder, srcFolder } = options;
 
     info('Transpile', filePath);
@@ -82,17 +86,34 @@ async function transpile(options: Options, filePath: string, declaration: boolea
     const buffer = await readFile(srcFilePath);
     debug('isomor-transpiler:transpile:in')(buffer.toString());
 
-    const code = getCode(
+    const moduleTsFile = join(modulePath, moduleName, filePath);
+    const codeTs = getCode(
         options,
         srcFilePath,
         getPathForUrl(filePath),
         buffer.toString(),
-        declaration,
+        true,
     );
 
-    const appFilePath = join(distAppFolder, declaration ? 'd.ts' : 'src', filePath);
-    info('Save isomor file', appFilePath);
-    await outputFile(appFilePath, code);
+    info('Save isomor TS file', moduleTsFile);
+    await outputFile(moduleTsFile, codeTs);
+    debug('isomor-transpiler:transpile:out')(codeTs);
+
+    const codeJs = getCode(
+        options,
+        srcFilePath,
+        getPathForUrl(filePath),
+        buffer.toString(),
+        false,
+    );
+    const { code } = await transformAsync(codeJs, {
+        filename: filePath,
+        presets: ['@babel/preset-typescript', '@babel/preset-env'],
+    });
+
+    const moduleJsFile = join(dirname(moduleTsFile), basename(moduleTsFile, extname(moduleTsFile)) + '.js');
+    info('Save isomor JS file', moduleJsFile);
+    await outputFile(moduleJsFile, code);
     debug('isomor-transpiler:transpile:out')(code);
 }
 
@@ -135,7 +156,7 @@ async function runTsc({ distAppFolder }: Options, declaration: boolean) {
     return shell(
         'tsc',
         `--outDir ${join(modulePath, moduleName)} -p tsconfig.json`.split(' '),
-        dist
+        dist,
     );
 }
 
@@ -154,10 +175,11 @@ export async function build(options: Options) {
     const files = await getFiles(options);
     info(`Found ${files.length} file(s).`);
 
-    await Promise.all(files.map((file) => transpile(options, file, true)));
-    await runTsc(options, true);
-    await Promise.all(files.map((file) => transpile(options, file, false)));
-    await runTsc(options, false);
+    // --emitDeclarationOnly
+    await Promise.all(files.map((file) => transpile(options, file)));
+    // await runTsc(options, true);
+    // await Promise.all(files.map((file) => transpile(options, file, false)));
+    // await runTsc(options, false);
 
     watcher(options);
 }
@@ -174,8 +196,7 @@ export const watcherUpdate = (options: Options) => async (file: string) => {
     if (anymatch(getServerSubFolderPattern(serverFolderPattern), path)) {
         info(`Do not copy sub-folder from "./server"`, path);
     } else if (anymatch(serverFolderPattern, path)) {
-        // ToDo fix delcaration
-        // transpile(options, file);
+        transpile(options, file);
     } else {
         info(`Copy ${path} to folder`);
         const dest = join(distAppFolder, file);

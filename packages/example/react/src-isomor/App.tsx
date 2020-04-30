@@ -8,7 +8,7 @@ import { Auth } from './auth/auth';
 import { ErrorExample } from './error/ErrorExample';
 import { Time } from './status/time';
 import { Color } from './color/color';
-import { yoyo } from 'yoyo2';
+import { yoyo } from 'yoyo3';
 
 yoyo();
 

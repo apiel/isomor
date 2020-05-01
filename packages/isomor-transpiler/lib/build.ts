@@ -30,14 +30,6 @@ const anymatch = require('anymatch'); // tslint:disable-line
 
 export default transform;
 
-const tmpPath = '/home/alex/dev/node/pkg/isomor/packages/isomor-transpiler/tmp';
-const srcPath = '/home/alex/dev/node/pkg/isomor/packages/isomor-transpiler/src';
-// const modulePath =
-//     '/home/alex/dev/node/pkg/isomor/packages/example/react/node_modules';
-const modulePath =
-    '/home/alex/dev/node/pkg/isomor/packages/isomor-transpiler/modules';
-const moduleName = 'api';
-
 function getCode(
     options: Options,
     srcFilePath: string,
@@ -79,14 +71,14 @@ async function transpile(
     options: Options,
     filePath: string,
 ) {
-    const { distAppFolder, srcFolder } = options;
+    const { distAppFolder, srcFolder, pkgName } = options;
 
     info('Transpile', filePath);
     const srcFilePath = join(srcFolder, filePath);
     const buffer = await readFile(srcFilePath);
     debug('isomor-transpiler:transpile:in')(buffer.toString());
 
-    const moduleTsFile = join(modulePath, moduleName, filePath);
+    const moduleTsFile = join(distAppFolder, pkgName, filePath);
     const codeTs = getCode(
         options,
         srcFilePath,
@@ -139,7 +131,7 @@ async function getFiles({ srcFolder }: Options) {
 }
 
 // ts to js
-async function runTsc({ distAppFolder }: Options, declaration: boolean) {
+async function runTsc({ distAppFolder, pkgName }: Options, declaration: boolean) {
     info('Run tsc');
     const tsconfig = {
         compilerOptions: {
@@ -155,7 +147,7 @@ async function runTsc({ distAppFolder }: Options, declaration: boolean) {
     await outputJson(join(dist, 'tsconfig.json'), tsconfig);
     return shell(
         'tsc',
-        `--outDir ${join(modulePath, moduleName)} -p tsconfig.json`.split(' '),
+        `--outDir ${join(distAppFolder, pkgName)} -p tsconfig.json`.split(' '),
         dist,
     );
 }
@@ -168,10 +160,11 @@ export async function build(options: Options) {
     // const { srcFolder, serverFolder } = options;
     // const files = await getFiles(srcFolder, serverFolder);
 
-    // for testing let overwrite options
-    options.srcFolder = srcPath;
-    // options.distAppFolder = join(modulePath, moduleName);
-    options.distAppFolder = tmpPath; // for the moment go there till it is done properly
+    // options.srcFolder = join(__dirname, '..', 'src');
+    options.srcFolder = '/home/alex/dev/node/pkg/isomor/packages/example/react/api';
+    // options.distAppFolder = join(__dirname, '..', 'modules'); // should we rename it as modulePath / moduleFolder
+    options.distAppFolder = '/home/alex/dev/node/pkg/isomor/packages/example/react/node_modules';
+    options.pkgName = 'api'; // should rename it as moduleName
     const files = await getFiles(options);
     info(`Found ${files.length} file(s).`);
 

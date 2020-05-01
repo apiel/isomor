@@ -1,5 +1,6 @@
 import React from 'react';
-import { getAuth, setAuth } from './server/auth';
+import getAuth from 'api/getAuth';
+import setAuth from 'api/setAuth';
 
 const authStyle = {
     fontSize: 12,

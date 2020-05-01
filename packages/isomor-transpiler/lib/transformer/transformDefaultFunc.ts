@@ -7,6 +7,11 @@ import { setValidator } from '../validation';
 
 // ToDo default params value does not work
 // function(color: string = 'green')
+// or it might work, server side
+
+// when build for declaration there should be all import export
+// when build js be only isomor
+// actually for JS, we could just use a template file, since they all look exactly the same
 
 export function transformDefaultFunc(
     root: FunctionDeclaration,

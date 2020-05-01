@@ -1,5 +1,5 @@
 import React from 'react';
-import { getSomethingWithError } from './server/data';
+import getSomethingWithError from 'api/throw';
 
 const errorStyle = {
   color: 'red',

@@ -1,5 +1,6 @@
 import React from 'react';
-import { getColor, setColor } from 'api/color';
+import getColor from 'api/getColor';
+import setColor from 'api/setColor';
 
 const onClickColor = (
     setStateColor: React.Dispatch<React.SetStateAction<string | undefined>>,

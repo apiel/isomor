@@ -1,12 +1,12 @@
 import React from 'react';
 import { subscribe, unsubscribe } from 'isomor';
 
-import { getTime, ServerTime } from './server/getTime';
+import getUpTime, { ServerUpTime } from 'api/getUpTime';
 
-export const Time = () => {
-    const [serverTime, setServerTime] = React.useState<ServerTime>();
+export const UpTime = () => {
+    const [serverTime, setServerTime] = React.useState<ServerUpTime>();
     const load = async () => {
-        setServerTime(await getTime());
+        setServerTime(await getUpTime());
     };
     React.useEffect(() => {
         load();
@@ -23,7 +23,7 @@ export const Time = () => {
                 <p>Loading...</p>
             ) : (
                 <p>
-                    <b>Server time:</b> {serverTime.time}{' '}
+                    <b>Server uptime:</b> {serverTime.uptime}{' '}
                     <button onClick={load}>reload</button>
                 </p>
             )}

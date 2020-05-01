@@ -5,6 +5,7 @@ const dotenv_1 = require("dotenv");
 let optionsCache;
 const DEFAULT_NAME = 'api';
 function getOptions() {
+    var _a;
     if (!optionsCache) {
         dotenv_1.config({ path: 'isomor.env' });
         const moduleName = process.env.MODULE_NAME || DEFAULT_NAME;
@@ -14,7 +15,7 @@ function getOptions() {
             moduleFolder,
             serverFolder: process.env.ISOMOR_SERVER_FOLDER || path_1.join(moduleFolder, moduleName, 'server'),
             jsonSchemaFolder: process.env.ISOMOR_JSON_SCHEMA_FOLDER || path_1.join(moduleFolder, moduleName, 'json-schema'),
-            extensions: ['.ts', '.js', ...(process.env.ISOMOR_EXTENSIONS && process.env.ISOMOR_EXTENSIONS.split(','))],
+            extensions: ['.ts', '.js', ...(((_a = process.env.ISOMOR_EXTENSIONS) === null || _a === void 0 ? void 0 : _a.split(',')) || [])],
             srcFolder: process.env.ISOMOR_SRC_FOLDER || path_1.join(process.cwd(), DEFAULT_NAME),
             noValidation: process.env.ISOMOR_NO_VALIDATION === 'true',
             watchMode: process.env.ISOMOR_WATCH === 'true',

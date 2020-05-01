@@ -56,7 +56,7 @@ export function getOptions(): Options {
             moduleFolder,
             serverFolder: process.env.ISOMOR_SERVER_FOLDER || join(moduleFolder, moduleName, 'server'),
             jsonSchemaFolder: process.env.ISOMOR_JSON_SCHEMA_FOLDER || join(moduleFolder, moduleName, 'json-schema'),
-            extensions: ['.ts', '.js', ...(process.env.ISOMOR_EXTENSIONS && process.env.ISOMOR_EXTENSIONS.split(','))],
+            extensions: ['.ts', '.js', ...(process.env.ISOMOR_EXTENSIONS?.split(',') || [])],
             // transpiler
             srcFolder: process.env.ISOMOR_SRC_FOLDER || join(process.cwd(), DEFAULT_NAME),
             noValidation: process.env.ISOMOR_NO_VALIDATION === 'true',

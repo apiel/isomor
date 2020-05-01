@@ -1,4 +1,4 @@
-import { info, warn } from 'logol';
+import { info, warn, log } from 'logol';
 import { gray, yellow, red } from 'chalk';
 import * as spawn from 'cross-spawn';
 import { transformAsync } from '@babel/core';
@@ -9,6 +9,7 @@ import {
     copy,
     unlink,
     outputJson,
+    pathExists,
 } from 'fs-extra';
 import { join, basename, extname, dirname } from 'path';
 import debug from 'debug';
@@ -67,10 +68,7 @@ function getCode(
     return code;
 }
 
-async function transpile(
-    options: Options,
-    filePath: string,
-) {
+async function transpile(options: Options, filePath: string) {
     const { distAppFolder, srcFolder, pkgName } = options;
 
     info('Transpile', filePath);
@@ -103,7 +101,10 @@ async function transpile(
         presets: ['@babel/preset-typescript', '@babel/preset-env'],
     });
 
-    const moduleJsFile = join(dirname(moduleTsFile), basename(moduleTsFile, extname(moduleTsFile)) + '.js');
+    const moduleJsFile = join(
+        dirname(moduleTsFile),
+        basename(moduleTsFile, extname(moduleTsFile)) + '.js',
+    );
     info('Save isomor JS file', moduleJsFile);
     await outputFile(moduleJsFile, code);
     debug('isomor-transpiler:transpile:out')(code);
@@ -127,28 +128,36 @@ async function prepare(options: Options) {
 // custom getFiles to be part of core
 async function getFiles({ srcFolder }: Options) {
     const files = await fs.readdir(srcFolder, { withFileTypes: true });
-    return files.filter((f) => f.isFile()).map((f) => f.name);
+    // ToDo get extensions from configs
+    const extensions = ['.ts', '.js'];
+    return files
+        .filter((f) => f.isFile() && extensions.includes(extname(f.name)))
+        .map((f) => f.name);
 }
 
 // ts to js
-async function runTsc({ distAppFolder, pkgName }: Options, declaration: boolean) {
-    info('Run tsc');
-    const tsconfig = {
-        compilerOptions: {
-            target: 'es5',
-            lib: ['esnext'],
-            strict: true,
-            allowJs: true,
-            declaration,
-            downlevelIteration: true,
-        },
-    };
-    const dist = join(distAppFolder, declaration ? 'd.ts' : 'src');
-    await outputJson(join(dist, 'tsconfig.json'), tsconfig);
+async function runTsc({ distAppFolder, srcFolder, pkgName }: Options) {
+    info('Transpile server');
+    const tsConfigFile = join(srcFolder, 'tsconfig.json');
+    if (!(await pathExists(tsConfigFile))) {
+        const tsconfig = {
+            compilerOptions: {
+                types: ['node'],
+                module: 'commonjs',
+                declaration: false,
+                removeComments: true,
+                emitDecoratorMetadata: true,
+                experimentalDecorators: true,
+                target: 'es6',
+                sourceMap: false,
+            },
+        };
+        await outputJson(tsConfigFile, tsconfig);
+    }
     return shell(
         'tsc',
-        `--outDir ${join(distAppFolder, pkgName)} -p tsconfig.json`.split(' '),
-        dist,
+        `--outDir ${join(distAppFolder, pkgName, 'server')} -p tsconfig.json`.split(' '),
+        srcFolder,
     );
 }
 
@@ -161,18 +170,20 @@ export async function build(options: Options) {
     // const files = await getFiles(srcFolder, serverFolder);
 
     // options.srcFolder = join(__dirname, '..', 'src');
-    options.srcFolder = '/home/alex/dev/node/pkg/isomor/packages/example/react/api';
+    options.srcFolder =
+        '/home/alex/dev/node/pkg/isomor/packages/example/react/api';
     // options.distAppFolder = join(__dirname, '..', 'modules'); // should we rename it as modulePath / moduleFolder
-    options.distAppFolder = '/home/alex/dev/node/pkg/isomor/packages/example/react/node_modules';
+    options.distAppFolder =
+        '/home/alex/dev/node/pkg/isomor/packages/example/react/node_modules';
+    // options.distServerFolder =
+    //     '/home/alex/dev/node/pkg/isomor/packages/example/react/dist-server';
     options.pkgName = 'api'; // should rename it as moduleName
     const files = await getFiles(options);
     info(`Found ${files.length} file(s).`);
 
-    // --emitDeclarationOnly
     await Promise.all(files.map((file) => transpile(options, file)));
-    // await runTsc(options, true);
-    // await Promise.all(files.map((file) => transpile(options, file, false)));
-    // await runTsc(options, false);
+    // --emitDeclarationOnly could be used for publishing a package
+    await runTsc(options);
 
     watcher(options);
 }
@@ -254,6 +265,7 @@ function shell(
     cwd: string = process.cwd(),
     env?: NodeJS.ProcessEnv,
 ) {
+    log('Run shell cmd', { cmd: `${command} ${args.join(' ')}`, cwd });
     return new Promise((resolve) => {
         const cmd = spawn(command, args, {
             cwd,

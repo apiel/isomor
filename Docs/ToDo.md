@@ -1,5 +1,8 @@
 ### ToDo
 
+- Server no need reload, just clear cache
+    - in dev mode check last change of file and reload endpoint only
+
 - generate pkg and focus on api generation instead of react, vue...
     - if fn not async, make it async
     - support ExportDefaultDeclaration

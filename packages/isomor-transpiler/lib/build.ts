@@ -1,6 +1,5 @@
-import { info, log } from 'logol';
-import { gray, yellow, red } from 'chalk';
-import * as spawn from 'cross-spawn';
+import { info } from 'logol';
+
 import { transformAsync } from '@babel/core';
 import {
     readFile,
@@ -18,6 +17,7 @@ import { Options } from 'isomor-core';
 import { parse, generate } from './ast';
 import transform from './transform';
 import { FnOptions } from './transformNode';
+import { shell } from './shell';
 
 export default transform;
 
@@ -141,43 +141,11 @@ export async function build(options: Options) {
     info(`Found ${files.length} file(s).`);
 
     await Promise.all(files.map((file) => transpile(options, file)));
-    // --emitDeclarationOnly could be used for publishing a package
+    // run tsc with --emitDeclarationOnly could be used for publishing a package
+    // or instead of using babel
     if (!skipBuildServer) {
         await runTsc(options);
     }
     // ToDo fix watcher since it is much more simple now
     // watcher(options);
-}
-
-function shell(
-    command: string,
-    args?: ReadonlyArray<string>,
-    cwd: string = process.cwd(),
-    env?: NodeJS.ProcessEnv,
-) {
-    log('Run shell cmd', { cmd: `${command} ${args.join(' ')}`, cwd });
-    return new Promise((resolve) => {
-        const cmd = spawn(command, args, {
-            cwd,
-            env: {
-                COLUMNS:
-                    process.env.COLUMNS || process.stdout.columns.toString(),
-                LINES: process.env.LINES || process.stdout.rows.toString(),
-                ...env,
-                ...process.env,
-            },
-        });
-        cmd.stdout.on('data', (data) => {
-            process.stdout.write(gray(data.toString()));
-        });
-        cmd.stderr.on('data', (data) => {
-            const dataStr = data.toString();
-            if (dataStr.indexOf('warning') === 0) {
-                process.stdout.write(yellow('warming') + dataStr.substring(7));
-            } else {
-                process.stdout.write(red(data.toString()));
-            }
-        });
-        cmd.on('close', (code) => (code ? process.exit(code) : resolve()));
-    });
 }

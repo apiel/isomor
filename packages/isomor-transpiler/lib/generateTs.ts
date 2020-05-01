@@ -4,9 +4,9 @@ import { info } from 'logol';
 import debug from 'debug';
 import { outputFile, readFile } from 'fs-extra';
 
-import { parse, generate } from './ast';
-import transform from './transform';
-import { FnOptions } from './transformNode';
+import { parse, generate } from './__deprecated/ast';
+import transform from './__deprecated/transform';
+import { FnOptions } from './__deprecated/transformNode';
 
 // instead to transpile with babel, we could use original TS files
 // previously copied during initialization

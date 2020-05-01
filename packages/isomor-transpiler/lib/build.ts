@@ -3,12 +3,9 @@ import { emptyDir, outputJson, pathExists, copy } from 'fs-extra';
 import { join } from 'path';
 import { Options, getFiles } from 'isomor-core';
 
-import transform from './transform';
 import { shell } from './shell';
 import { generateJs } from './generateJs';
 import { generateTs } from './generateTs';
-
-export default transform;
 
 async function prepare(options: Options) {
     const { jsonSchemaFolder, serverFolder, moduleFolder, srcFolder } = options;

@@ -17,17 +17,21 @@ const isomor_core_1 = require("isomor-core");
 const queueList = [];
 let process;
 function setValidator(paramRoot, srcFilePath, path, name) {
-    const args = paramRoot.params.map((param) => {
+    const args = paramRoot.params
+        .map((param) => {
         if (param.type === 'Identifier') {
             return param.name;
         }
-        else if (param.type === 'AssignmentPattern' && param.left.type === 'Identifier') {
+        else if (param.type === 'AssignmentPattern' &&
+            param.left.type === 'Identifier') {
             return param.left.name;
         }
-        else if (param.type === 'RestElement' && param.argument.type === 'Identifier') {
+        else if (param.type === 'RestElement' &&
+            param.argument.type === 'Identifier') {
             return param.argument.name;
         }
-    }).filter(param => param);
+    })
+        .filter((param) => param);
     if (args.length !== paramRoot.params.length) {
         logol_1.warn('Validatormight not recognize one of your params type. \
             Please report the warning at https://github.com/apiel/isomor/issues', srcFilePath, name);

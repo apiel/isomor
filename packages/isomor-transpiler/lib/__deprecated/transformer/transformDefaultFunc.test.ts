@@ -1,7 +1,7 @@
 import { parse, JsonAst, generate } from '../ast';
 
 import { transformDefaultFunc } from './transformDefaultFunc';
-import { setValidator } from '../validation';
+import { setValidator } from '../../validation';
 
 jest.mock('../validation');
 

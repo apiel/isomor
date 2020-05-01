@@ -13,8 +13,8 @@ const path_1 = require("path");
 const logol_1 = require("logol");
 const debug_1 = require("debug");
 const fs_extra_1 = require("fs-extra");
-const ast_1 = require("./ast");
-const transform_1 = require("./transform");
+const ast_1 = require("./__deprecated/ast");
+const transform_1 = require("./__deprecated/transform");
 function generateTs(options, file) {
     return __awaiter(this, void 0, void 0, function* () {
         const { moduleFolder, srcFolder } = options;

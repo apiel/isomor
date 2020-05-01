@@ -3,7 +3,7 @@ import { basename, extname } from 'path';
 import { FnOptions } from '../transformNode';
 import { getCodeFunc, getBodyEmptyReturn } from '../code';
 import { FunctionDeclaration, Statement, JsonAst } from '../ast';
-import { setValidator } from '../validation';
+import { setValidator } from '../../validation';
 
 // ToDo default params value does not work
 // function(color: string = 'green')

@@ -1,7 +1,7 @@
 import { parse } from '../ast';
 
 import { transformArrowFunc } from './transformArrowFunc';
-import { setValidator } from '../validation';
+import { setValidator } from '../../validation';
 
 jest.mock('../validation');
 

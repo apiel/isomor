@@ -13,10 +13,8 @@ const logol_1 = require("logol");
 const fs_extra_1 = require("fs-extra");
 const path_1 = require("path");
 const isomor_core_1 = require("isomor-core");
-const transform_1 = require("./transform");
 const shell_1 = require("./shell");
 const generateJs_1 = require("./generateJs");
-exports.default = transform_1.default;
 function prepare(options) {
     return __awaiter(this, void 0, void 0, function* () {
         const { jsonSchemaFolder, serverFolder, moduleFolder, srcFolder } = options;

@@ -1,6 +1,6 @@
 import { VariableDeclaration } from '../ast';
-import { setValidator } from '../validation';
-import { FnOptions } from 'lib/transformNode';
+import { setValidator } from '../../validation';
+import { FnOptions } from '../transformNode';
 
 export function transformArrowFunc(
     root: VariableDeclaration,

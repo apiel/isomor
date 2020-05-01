@@ -21,7 +21,7 @@ export async function isomorRemoteHttp(
               },
     ).then(response => response.json());
     if (error) {
-        throw new Error(error);
+        throw error;
     }
     return result;
 }

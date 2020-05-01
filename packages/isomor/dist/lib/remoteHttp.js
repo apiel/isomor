@@ -24,7 +24,7 @@ function isomorRemoteHttp(baseUrl, moduleName, funcName, args) {
                 body: JSON.stringify({ args }),
             }).then(response => response.json());
         if (error) {
-            throw new Error(error);
+            throw error;
         }
         return result;
     });

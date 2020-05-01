@@ -16,7 +16,7 @@ const fs_extra_1 = require("fs-extra");
 const isomor_core_1 = require("isomor-core");
 const queueList = [];
 let process;
-function setValidator(paramRoot, srcFilePath, path, name, className) {
+function setValidator(paramRoot, srcFilePath, path, name) {
     const args = paramRoot.params.map((param) => {
         if (param.type === 'Identifier') {
             return param.name;
@@ -32,7 +32,7 @@ function setValidator(paramRoot, srcFilePath, path, name, className) {
         logol_1.warn('Validatormight not recognize one of your params type. \
             Please report the warning at https://github.com/apiel/isomor/issues', srcFilePath, name);
     }
-    pushToQueue(args, srcFilePath, path, name, className);
+    pushToQueue(args, srcFilePath, path, name);
     return args;
 }
 exports.setValidator = setValidator;
@@ -40,10 +40,10 @@ function validationIsActive() {
     const { jsonSchemaFolder, noValidation } = isomor_core_1.getOptions();
     return !noValidation && jsonSchemaFolder && jsonSchemaFolder.length;
 }
-function pushToQueue(args, srcFilePath, path, name, className) {
+function pushToQueue(args, srcFilePath, path, name) {
     if (args.length && validationIsActive()) {
         logol_1.info(`Queue JSON schema generation for ${name} in ${srcFilePath}`);
-        queueList.push({ args, srcFilePath, path, name, className });
+        queueList.push({ args, srcFilePath, path, name });
         run();
     }
 }
@@ -51,9 +51,8 @@ exports.pushToQueue = pushToQueue;
 function run() {
     if (!process && queueList.length) {
         const { jsonSchemaFolder } = isomor_core_1.getOptions();
-        const { name, srcFilePath, path, args, className } = queueList.pop();
-        const typeName = className ? `${className}.${name}` : name;
-        const command = `isomor-json-schema-generator --path ${srcFilePath} --type ${typeName}`;
+        const { name, srcFilePath, path, args } = queueList.pop();
+        const command = `isomor-json-schema-generator --path ${srcFilePath} --type ${name}`;
         logol_1.info(`Start JSON schema generation for ${name} in ${srcFilePath} (might take few seconds)`);
         process = child_process_1.exec(command, (err, stdout, stderr) => __awaiter(this, void 0, void 0, function* () {
             if (err) {
@@ -63,12 +62,12 @@ function run() {
                 logol_1.warn(stderr);
             }
             if (stdout && stdout.length) {
-                const jsonSchemaFileName = isomor_core_1.getJsonSchemaFileName(path, name, className);
+                const jsonSchemaFileName = isomor_core_1.getJsonSchemaFileName(path, name);
                 const jsonFile = path_1.join(jsonSchemaFolder, jsonSchemaFileName);
                 const data = {
                     args,
                     schema: JSON.parse(stdout),
-                    name: typeName,
+                    name,
                 };
                 yield fs_extra_1.outputJSON(jsonFile, data, { spaces: 4 });
                 logol_1.info(`JSON schema generation finished for ${name} in ${srcFilePath}`);

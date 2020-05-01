@@ -2,11 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const ast_1 = require("./ast");
 const transformNode_1 = require("./transformNode");
-const transformImport_1 = require("./transformer/transformImport");
 const transformInterface_1 = require("./transformer/transformInterface");
-const transformExport_1 = require("./transformer/transformExport");
-const transformFunc_1 = require("./transformer/transformFunc");
-const transformArrowFunc_1 = require("./transformer/transformArrowFunc");
+const transformDefaultFunc_1 = require("./transformer/transformDefaultFunc");
 const transformType_1 = require("./transformer/transformType");
 jest.mock('./transformer/transformExport', () => ({
     transformExport: jest.fn().mockReturnValue('TransformExport'),
@@ -17,8 +14,8 @@ jest.mock('./transformer/transformInterface', () => ({
 jest.mock('./transformer/transformImport', () => ({
     transformImport: jest.fn().mockReturnValue('TransformImport'),
 }));
-jest.mock('./transformer/transformFunc', () => ({
-    transformFunc: jest.fn().mockReturnValue('TransformFunc'),
+jest.mock('./transformer/transformDefaultFunc', () => ({
+    transformDefaultFunc: jest.fn().mockReturnValue('TransformDefaultFunc'),
 }));
 jest.mock('./transformer/transformArrowFunc', () => ({
     transformArrowFunc: jest.fn().mockReturnValue('TransformArrowFunc'),
@@ -27,13 +24,12 @@ jest.mock('./transformer/transformType', () => ({
     transformType: jest.fn().mockReturnValue('TransformType'),
 }));
 const srcFilePath = 'src-isomor/path/to/file';
-const path = 'path-to-file';
-const withTypes = true;
-const pkgName = 'root';
+const moduleName = 'api';
 const wsReg = null;
 const httpBaseUrl = '';
 const wsBaseUrl = 'ws://127.0.0.1:3005';
-const bodyParams = { srcFilePath, wsReg, path, pkgName, withTypes, httpBaseUrl, wsBaseUrl };
+const declaration = true;
+const bodyParams = { srcFilePath, wsReg, moduleName, httpBaseUrl, wsBaseUrl, declaration };
 describe('transform', () => {
     beforeEach(() => {
         jest.clearAllMocks();
@@ -47,15 +43,9 @@ function shouldNotBeTranspiled() {
             `);
             expect(newNode).toBeUndefined();
         });
-        it('should transform export from', () => {
-            const { node, newNode } = transformNodeTest(`export { CpuInfo } from 'os';`);
-            expect(newNode).toEqual('TransformExport');
-            expect(transformExport_1.transformExport).toHaveBeenCalledWith(node, false);
-        });
-        it('should transform import', () => {
+        it('should keep import', () => {
             const { node, newNode } = transformNodeTest(`import { readdir } from 'fs-extra';`);
-            expect(newNode).toEqual('TransformImport');
-            expect(transformImport_1.transformImport).toHaveBeenCalledWith(node, false);
+            expect(newNode).toEqual(node);
         });
         it('should transform type', () => {
             const { node, newNode } = transformNodeTest(`export type MyType = string;`);
@@ -77,43 +67,24 @@ export interface MyInterface {
     bar: {
         child: CpuInfo;
     };
-}          `, noServerImport);
+}          `);
             expect(newNode).toEqual('TransformInterface');
             expect(transformInterface_1.transformInterface).toHaveBeenCalledWith(node, noServerImport);
         });
-        it('should transform function', () => {
+        it('should transform default exported function', () => {
             const { newNode, node } = transformNodeTest(`
-export function getTime1(): Promise<string[]> {
-    return readdir('./');
-}
-            `);
-            expect(newNode).toEqual('TransformFunc');
-            expect(transformFunc_1.transformFunc).toHaveBeenCalledWith(node.declaration, bodyParams);
-        });
-        it('should transform async function', () => {
-            const { newNode, node } = transformNodeTest(`
-export async function getTime1(): Promise<string[]> {
-    return readdir('./');
-}
-            `);
-            expect(newNode).toEqual('TransformFunc');
-            expect(transformFunc_1.transformFunc).toHaveBeenCalledWith(node.declaration, bodyParams);
-        });
-        it('should transform arrow function', () => {
-            const { newNode, node } = transformNodeTest(`
-export const getTime1 = async (hello: string) => {
-    return await readdir('./');
-};
-            `);
-            expect(newNode).toEqual('TransformArrowFunc');
-            expect(transformArrowFunc_1.transformArrowFunc).toHaveBeenCalledWith(node.declaration, bodyParams);
+            export default function(hello: string) {
+                return readdir('./');
+            }`);
+            expect(newNode).toEqual('TransformDefaultFunc');
+            expect(transformDefaultFunc_1.transformDefaultFunc).toHaveBeenCalledWith(node.declaration, bodyParams);
         });
     });
 });
-function transformNodeTest(code, noServerImport = false, noDecorator = false) {
+function transformNodeTest(code) {
     const { program } = ast_1.parse(code);
     const node = program.body[0];
-    const newNode = transformNode_1.transformNode(node, bodyParams, noServerImport, noDecorator);
+    const newNode = transformNode_1.transformNode(node, bodyParams);
     return { node, newNode };
 }
 //# sourceMappingURL=transformNode.test.js.map

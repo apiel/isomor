@@ -1,47 +1,21 @@
 import { Statement } from './ast';
 interface BodyRemote {
-    path: string;
-    pkgName: string;
+    moduleName: string;
     name: string;
-    className?: string;
     httpBaseUrl: string;
     wsBaseUrl: string;
     wsReg?: RegExp;
 }
 export interface CodeFunc {
-    withTypes: boolean;
     bodyParams: BodyRemote;
 }
 export declare function getCodeType(name: string): Statement;
 export declare function getCodeImport(): Statement;
-export declare function getCodeFunc({ bodyParams, withTypes }: CodeFunc): Statement;
-export declare function getCodeArrowFunc({ bodyParams, withTypes }: CodeFunc): Statement;
-export declare function getBody(bodyRemote: BodyRemote, params?: any): {
+export declare function getCodeFunc({ bodyParams }: CodeFunc): Statement;
+export declare function getCodeArrowFunc({ bodyParams }: CodeFunc): Statement;
+export declare function getBody(bodyRemote: BodyRemote): {
     type: string;
-    body: ({
-        type: string;
-        declarations: {
-            type: string;
-            id: {
-                type: string;
-                name: string;
-                typeAnnotation: {
-                    type: string;
-                    typeAnnotation: {
-                        type: string;
-                        elementType: {
-                            type: string;
-                        };
-                    };
-                };
-            };
-            init: {
-                type: string;
-                elements: any;
-            };
-        }[];
-        kind: string;
-    } | {
+    body: {
         type: string;
         argument: {
             type: string;
@@ -59,6 +33,22 @@ export declare function getBody(bodyRemote: BodyRemote, params?: any): {
                 value?: undefined;
             })[];
         };
-    })[];
+    }[];
+};
+export declare function getBodyEmptyReturn(): {
+    type: string;
+    body: {
+        type: string;
+        argument: {
+            type: string;
+            expression: {
+                type: string;
+                name: string;
+            };
+            typeAnnotation: {
+                type: string;
+            };
+        };
+    }[];
 };
 export {};

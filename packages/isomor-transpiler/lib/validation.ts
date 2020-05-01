@@ -13,7 +13,6 @@ interface Queue {
     srcFilePath: string;
     path: string;
     name: string;
-    className: string | undefined;
 }
 
 const queueList: Queue[] = [];
@@ -24,7 +23,6 @@ export function setValidator(
     srcFilePath: string,
     path: string,
     name: string,
-    className?: string,
 ) {
     const args = paramRoot.params.map((param) => {
         if (param.type === 'Identifier') {
@@ -40,7 +38,7 @@ export function setValidator(
             Please report the warning at https://github.com/apiel/isomor/issues', srcFilePath, name);
         // console.log('paramRoot', JsonAst(paramRoot));
     }
-    pushToQueue(args, srcFilePath, path, name, className);
+    pushToQueue(args, srcFilePath, path, name);
     return args;
 }
 
@@ -54,11 +52,10 @@ export function pushToQueue(
     srcFilePath: string,
     path: string,
     name: string,
-    className: string | undefined,
 ) {
     if (args.length && validationIsActive()) {
         info(`Queue JSON schema generation for ${name} in ${srcFilePath}`);
-        queueList.push({ args, srcFilePath, path, name, className });
+        queueList.push({ args, srcFilePath, path, name });
         run();
     }
 }
@@ -66,10 +63,9 @@ export function pushToQueue(
 function run() {
     if (!process && queueList.length) {
         const { jsonSchemaFolder } = getOptions();
-        const { name, srcFilePath, path, args, className } = queueList.pop();
+        const { name, srcFilePath, path, args } = queueList.pop();
         // console.log('args', args, name, srcFilePath);
-        const typeName = className ? `${className}.${name}` : name;
-        const command = `isomor-json-schema-generator --path ${srcFilePath} --type ${typeName}`;
+        const command = `isomor-json-schema-generator --path ${srcFilePath} --type ${name}`;
         info(`Start JSON schema generation for ${name} in ${srcFilePath} (might take few seconds)`);
         // console.log('command', command);
         process = exec(command, async (err, stdout, stderr) => {
@@ -81,12 +77,12 @@ function run() {
             }
             if (stdout && stdout.length) {
                 // console.log(`stdout: ${stdout}`);
-                const jsonSchemaFileName = getJsonSchemaFileName(path, name, className);
+                const jsonSchemaFileName = getJsonSchemaFileName(path, name);
                 const jsonFile = join(jsonSchemaFolder, jsonSchemaFileName);
                 const data: ValidationSchema = {
                     args,
                     schema: JSON.parse(stdout),
-                    name: typeName,
+                    name,
                 };
                 await outputJSON(jsonFile, data, { spaces: 4 });
                 info(`JSON schema generation finished for ${name} in ${srcFilePath}`);

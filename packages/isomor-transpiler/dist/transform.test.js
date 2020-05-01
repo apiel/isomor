@@ -17,10 +17,10 @@ describe('transform', () => {
         srcFilePath: 'src-isomor/path/to/file',
         path: 'path-to-file',
         wsReg: null,
-        pkgName: 'root',
-        withTypes: true,
+        moduleName: 'root',
         httpBaseUrl: '',
         wsBaseUrl: 'ws://127.0.0.1:3005',
+        declaration: true,
     };
     describe('transform/transform()', () => {
         it('should add isomor import to body', () => {

@@ -1,23 +1,21 @@
+export declare type Extensions = [string, ...string[]];
 export interface CommonOptions {
-    pkgName: string;
-    distAppFolder: string;
+    moduleName: string;
+    moduleFolder: string;
     serverFolder: string;
     jsonSchemaFolder: string;
+    extensions: Extensions;
 }
 export interface TranspilerOptions {
     srcFolder: string;
     noValidation: boolean;
-    withTypes: boolean;
     watchMode: boolean;
-    noServerImport: boolean;
-    noDecorator: boolean;
-    skipCopySrc: boolean;
+    skipBuildServer: boolean;
 }
 export interface ServerOptions {
     port: number;
     staticFolder: string | null;
     startupFile: string;
-    distServerFolder: string;
 }
 export interface WsOptions {
     wsReg: RegExp | undefined;

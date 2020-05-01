@@ -19,6 +19,16 @@ const wsReg = null;
 const httpBaseUrl = '';
 const wsBaseUrl = 'ws://127.0.0.1:3005';
 
+const filename = 'my-filename';
+const options = {
+    srcFilePath: `src-isomor/path/to/${filename}.ts`,
+    moduleName: 'api',
+    wsReg: null,
+    httpBaseUrl: '',
+    wsBaseUrl: 'ws://127.0.0.1:3005',
+    declaration: true,
+};
+
 describe('transformFunc()', () => {
     beforeEach(() => {
         jest.clearAllMocks();
@@ -29,7 +39,7 @@ describe('transformFunc()', () => {
         }`);
         const node = transformArrowFunc(
             (program.body[0] as any).declaration,
-            { srcFilePath, wsReg, path, pkgName, withTypes, httpBaseUrl, wsBaseUrl },
+            options,
         );
         // expect(node).toEqual('getCodeArrowFuncMock');
         // expect(getCodeArrowFunc).toHaveBeenCalledWith({ bodyParams: { wsReg, path, pkgName, name: 'getTime', httpBaseUrl, wsBaseUrl }, withTypes });

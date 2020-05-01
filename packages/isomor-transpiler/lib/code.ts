@@ -1,17 +1,14 @@
 import { Statement, JsonAst } from './ast';
 
 interface BodyRemote {
-    path: string;
-    pkgName: string;
+    moduleName: string;
     name: string;
-    className?: string;
     httpBaseUrl: string;
     wsBaseUrl: string;
     wsReg?: RegExp;
 }
 
 export interface CodeFunc {
-    withTypes: boolean;
     bodyParams: BodyRemote;
 }
 
@@ -60,18 +57,18 @@ export function getCodeImport() {
     } as any) as Statement; // need to try to remove any
 }
 
-export function getCodeFunc({ bodyParams, withTypes }: CodeFunc) {
+export function getCodeFunc({ bodyParams }: CodeFunc) {
     return ({
         type: 'ExportDefaultDeclaration',
         declaration: {
             type: 'FunctionDeclaration',
-            params: getParams(withTypes),
+            params: getParams(),
             body: getBody(bodyParams),
         },
     } as any) as Statement;
 }
 
-export function getCodeArrowFunc({ bodyParams, withTypes }: CodeFunc) {
+export function getCodeArrowFunc({ bodyParams }: CodeFunc) {
     return ({
         type: 'ExportNamedDeclaration',
         declaration: {
@@ -85,7 +82,7 @@ export function getCodeArrowFunc({ bodyParams, withTypes }: CodeFunc) {
                     },
                     init: {
                         type: 'ArrowFunctionExpression',
-                        params: getParams(withTypes),
+                        params: getParams(),
                         body: getBody(bodyParams),
                     },
                 },
@@ -96,7 +93,7 @@ export function getCodeArrowFunc({ bodyParams, withTypes }: CodeFunc) {
 }
 
 // arguments => (...args)
-function getParams(withTypes: boolean) {
+function getParams() {
     return [
         {
             type: 'RestElement',
@@ -104,23 +101,20 @@ function getParams(withTypes: boolean) {
                 type: 'Identifier',
                 name: 'args',
             },
-            ...getTypeAny(withTypes),
+            ...getTypeAny(),
         },
     ];
 }
 
-// type => ': any'
-function getTypeAny(withTypes: boolean) {
-    return withTypes
-        ? {
-              typeAnnotation: {
-                  type: 'TSTypeAnnotation',
-                  typeAnnotation: {
-                      type: 'TSAnyKeyword',
-                  },
-              },
-          }
-        : {};
+function getTypeAny() {
+    return {
+        typeAnnotation: {
+            type: 'TSTypeAnnotation',
+            typeAnnotation: {
+                type: 'TSAnyKeyword',
+            },
+        },
+    };
 }
 
 export function getBody(bodyRemote: BodyRemote) {
@@ -130,50 +124,10 @@ export function getBody(bodyRemote: BodyRemote) {
     };
 }
 
-function getVarRemote(params: any) {
-    return {
-        type: 'VariableDeclaration',
-        declarations: [
-            {
-                type: 'VariableDeclarator',
-                id: {
-                    type: 'Identifier',
-                    name: 'args',
-                    // here should deactivate if NoType sets
-                    typeAnnotation: {
-                        type: 'TSTypeAnnotation',
-                        typeAnnotation: {
-                            type: 'TSArrayType',
-                            elementType: {
-                                type: 'TSAnyKeyword',
-                            },
-                        },
-                    },
-                },
-                init: {
-                    type: 'ArrayExpression',
-                    // this might be a problem with spread
-                    // maybe better try to remove types
-                    elements: params.map((param: any) => ({
-                        type: 'Identifier',
-                        name:
-                            param.type === 'AssignmentPattern'
-                                ? param.left.name
-                                : param.name,
-                    })),
-                },
-            },
-        ],
-        kind: 'var',
-    };
-}
-
 function getBodyRemote({
     wsReg,
-    path,
-    pkgName,
+    moduleName,
     name,
-    className,
     httpBaseUrl,
     wsBaseUrl,
 }: BodyRemote) {
@@ -198,11 +152,11 @@ function getBodyRemote({
                 },
                 {
                     type: 'StringLiteral',
-                    value: path,
+                    value: '', // to remove
                 },
                 {
                     type: 'StringLiteral',
-                    value: pkgName,
+                    value: moduleName,
                 },
                 {
                     type: 'StringLiteral',
@@ -212,14 +166,6 @@ function getBodyRemote({
                     type: 'Identifier',
                     name: 'args',
                 },
-                ...(className
-                    ? [
-                          {
-                              type: 'StringLiteral',
-                              value: className,
-                          },
-                      ]
-                    : []),
             ],
         },
     };

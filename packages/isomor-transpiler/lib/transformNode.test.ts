@@ -33,14 +33,13 @@ jest.mock('./transformer/transformType', () => ({
 }));
 
 const srcFilePath = 'src-isomor/path/to/file';
-const path = 'path-to-file';
-const withTypes = true;
-const pkgName = 'root';
+const moduleName = 'api';
 const wsReg = null;
 const httpBaseUrl = '';
 const wsBaseUrl = 'ws://127.0.0.1:3005';
+const declaration = true;
 
-const bodyParams = { srcFilePath, wsReg, path, pkgName, withTypes, httpBaseUrl, wsBaseUrl };
+const bodyParams = { srcFilePath, wsReg, moduleName, httpBaseUrl, wsBaseUrl, declaration };
 
 describe('transform', () => {
     beforeEach(() => {
@@ -90,7 +89,7 @@ export interface MyInterface {
     bar: {
         child: CpuInfo;
     };
-}          `, noServerImport);
+}          `);
             expect(newNode).toEqual('TransformInterface');
             expect(transformInterface).toHaveBeenCalledWith(node, noServerImport);
         });
@@ -120,16 +119,12 @@ export interface MyInterface {
 
 function transformNodeTest(
     code: string,
-    noServerImport = false,
-    noDecorator = false,
 ) {
     const { program } = parse(code);
     const node = program.body[0];
     const newNode = transformNode(
         node,
         bodyParams,
-        noServerImport,
-        noDecorator,
     );
 
     return { node, newNode };

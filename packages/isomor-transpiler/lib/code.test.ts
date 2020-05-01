@@ -36,12 +36,12 @@ describe('code', () => {
     const path = 'path/to/file';
     const name = 'getTime';
     const typeName = 'MyType';
-    const pkgName = 'root';
+    const moduleName = 'root';
     const wsReg = null;
     const httpBaseUrl = '';
     const wsBaseUrl = 'ws://127.0.0.1:3005';
 
-    const bodyParams = { wsReg, path, pkgName, name, httpBaseUrl, wsBaseUrl };
+    const bodyParams = { wsReg, path, moduleName, name, httpBaseUrl, wsBaseUrl };
 
     describe('code/getCodeImport()', () => {
         it('should generate inport for isomor', () => {
@@ -59,49 +59,42 @@ describe('code', () => {
 
     describe('code/getCodeFunc()', () => {
         it('should generate function for isomor', () => {
-            const withTypes = true;
-            const { code } = generate(getCodeFunc({ bodyParams, withTypes }) as any);
+            const { code } = generate(getCodeFunc({ bodyParams }) as any);
             expect(code).toEqual(codeTranspiledFunc);
         });
 
         it('should generate function for isomor without type', () => {
-            const withTypes = false;
-            const { code } = generate(getCodeFunc({ bodyParams, withTypes }) as any);
+            const { code } = generate(getCodeFunc({ bodyParams }) as any);
             expect(code).toEqual(codeTranspiledFuncNoType);
         });
 
         it('should generate function for isomor with websocket', () => {
-            const withTypes = true;
             const websocketReg = new RegExp('.*');
-            const { code } = generate(getCodeFunc({ bodyParams: { ...bodyParams, wsReg: websocketReg }, withTypes }) as any);
+            const { code } = generate(getCodeFunc({ bodyParams: { ...bodyParams, wsReg: websocketReg } }) as any);
             expect(code).toEqual(codeTranspiledFuncForWs);
         });
 
         it('should generate function for isomor with websocket for function name', () => {
-            const withTypes = true;
             const websocketReg = new RegExp('getTime');
-            const { code } = generate(getCodeFunc({ bodyParams: { ...bodyParams, wsReg: websocketReg }, withTypes }) as any);
+            const { code } = generate(getCodeFunc({ bodyParams: { ...bodyParams, wsReg: websocketReg } }) as any);
             expect(code).toEqual(codeTranspiledFuncForWs);
         });
 
         it('should generate function for isomor with http since ws regex doesnt match', () => {
-            const withTypes = true;
             const websocketReg = new RegExp('getTimes');
-            const { code } = generate(getCodeFunc({ bodyParams: { ...bodyParams, wsReg: websocketReg }, withTypes }) as any);
+            const { code } = generate(getCodeFunc({ bodyParams: { ...bodyParams, wsReg: websocketReg } }) as any);
             expect(code).toEqual(codeTranspiledFunc);
         });
     });
 
     describe('code/getCodeArrowFunc()', () => {
         it('should generate function for isomor', () => {
-            const withTypes = true;
-            const { code } = generate(getCodeArrowFunc({ bodyParams, withTypes }) as any);
+            const { code } = generate(getCodeArrowFunc({ bodyParams }) as any);
             expect(code).toEqual(codeTranspiledArrowFunc);
         });
 
         it('should generate function for isomor without type', () => {
-            const withTypes = false;
-            const { code } = generate(getCodeArrowFunc({ bodyParams, withTypes }) as any);
+            const { code } = generate(getCodeArrowFunc({ bodyParams }) as any);
             expect(code).toEqual(codeTranspiledArrowFuncNoType);
         });
     });

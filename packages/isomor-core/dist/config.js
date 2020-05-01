@@ -2,26 +2,23 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const path_1 = require("path");
 const dotenv_1 = require("dotenv");
-const _1 = require(".");
 let optionsCache;
+const DEFAULT_NAME = 'api';
 function getOptions() {
     if (!optionsCache) {
         dotenv_1.config({ path: 'isomor.env' });
-        const srcFolder = process.env.ISOMOR_SRC_FOLDER || './src-isomor';
-        const pkgName = _1.getPkgName(srcFolder);
+        const moduleName = process.env.MODULE_NAME || DEFAULT_NAME;
+        const moduleFolder = process.env.ISOMOR_MODULE_FOLDER || path_1.join(process.cwd(), 'node_modules');
         optionsCache = {
-            pkgName,
-            distAppFolder: process.env.ISOMOR_DIST_APP_FOLDER || './src',
-            serverFolder: process.env.ISOMOR_SERVER_FOLDER || '/server',
-            jsonSchemaFolder: process.env.ISOMOR_JSON_SCHEMA_FOLDER || './json-schema',
-            srcFolder,
+            moduleName,
+            moduleFolder,
+            serverFolder: process.env.ISOMOR_SERVER_FOLDER || path_1.join(moduleFolder, moduleName, 'server'),
+            jsonSchemaFolder: process.env.ISOMOR_JSON_SCHEMA_FOLDER || path_1.join(moduleFolder, moduleName, 'json-schema'),
+            extensions: ['.ts', '.js', ...(process.env.ISOMOR_EXTENSIONS && process.env.ISOMOR_EXTENSIONS.split(','))],
+            srcFolder: process.env.ISOMOR_SRC_FOLDER || path_1.join(process.cwd(), DEFAULT_NAME),
             noValidation: process.env.ISOMOR_NO_VALIDATION === 'true',
-            withTypes: process.env.ISOMOR_NO_TYPES !== 'true',
             watchMode: process.env.ISOMOR_WATCH === 'true',
-            noServerImport: process.env.ISOMOR_NO_SERVER_IMPORT === 'true',
-            noDecorator: process.env.ISOMOR_NO_DECORATOR === 'true',
-            skipCopySrc: process.env.ISOMOR_SKIP_COPY_SRC === 'true',
-            distServerFolder: process.env.ISOMOR_DIST_SERVER_FOLDER || './dist-server',
+            skipBuildServer: process.env.ISOMOR_SKIP_BUILD_SERVER === 'true',
             port: process.env.ISOMOR_PORT
                 ? parseInt(process.env.ISOMOR_PORT, 10)
                 : 3005,

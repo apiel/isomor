@@ -1,4 +1,4 @@
-import { info, warn, log } from 'logol';
+import { info, log } from 'logol';
 import { gray, yellow, red } from 'chalk';
 import * as spawn from 'cross-spawn';
 import { transformAsync } from '@babel/core';
@@ -6,62 +6,42 @@ import {
     readFile,
     outputFile,
     emptyDir,
-    copy,
     unlink,
     outputJson,
     pathExists,
 } from 'fs-extra';
 import { join, basename, extname, dirname } from 'path';
 import debug from 'debug';
-import {
-    // getFiles,
-    getFolders,
-    getPathForUrl,
-    getFilesPattern,
-} from 'isomor-core';
-import { watch } from 'chokidar';
+import { getFiles } from 'isomor-core';
 import { Options } from 'isomor-core';
-import { promises as fs } from 'fs';
 
 import { parse, generate } from './ast';
 import transform from './transform';
-
-// import anymatch from 'anymatch'; // ts issues https://github.com/micromatch/anymatch/issues/29
-const anymatch = require('anymatch'); // tslint:disable-line
+import { FnOptions } from './transformNode';
 
 export default transform;
 
 function getCode(
     options: Options,
     srcFilePath: string,
-    path: string,
     content: string,
     declaration: boolean,
 ) {
-    const {
-        withTypes,
-        noServerImport,
-        noDecorator,
-        pkgName,
+    const { wsReg, wsBaseUrl, httpBaseUrl, moduleName } = options;
+    const { program } = parse(content);
+
+    const fnOptions: FnOptions = {
+        srcFilePath,
         wsReg,
+        moduleName,
         wsBaseUrl,
         httpBaseUrl,
-    } = options;
-    const { program } = parse(content);
+        declaration,
+    };
+
     program.body = transform(
         program.body,
-        {
-            srcFilePath,
-            path,
-            wsReg,
-            pkgName,
-            withTypes,
-            wsBaseUrl,
-            httpBaseUrl,
-            declaration,
-        },
-        noServerImport,
-        noDecorator,
+        fnOptions,
     );
     const { code } = generate(program as any);
 
@@ -69,18 +49,18 @@ function getCode(
 }
 
 async function transpile(options: Options, filePath: string) {
-    const { distAppFolder, srcFolder, pkgName } = options;
+    const { moduleFolder, srcFolder, moduleName } = options;
 
     info('Transpile', filePath);
     const srcFilePath = join(srcFolder, filePath);
     const buffer = await readFile(srcFilePath);
     debug('isomor-transpiler:transpile:in')(buffer.toString());
 
-    const moduleTsFile = join(distAppFolder, pkgName, filePath);
+    // ToDo generate TS file only if TS
+    const moduleTsFile = join(moduleFolder, moduleName, filePath);
     const codeTs = getCode(
         options,
         srcFilePath,
-        getPathForUrl(filePath),
         buffer.toString(),
         true,
     );
@@ -92,7 +72,6 @@ async function transpile(options: Options, filePath: string) {
     const codeJs = getCode(
         options,
         srcFilePath,
-        getPathForUrl(filePath),
         buffer.toString(),
         false,
     );
@@ -111,32 +90,22 @@ async function transpile(options: Options, filePath: string) {
 }
 
 async function prepare(options: Options) {
-    const { srcFolder, distAppFolder, serverFolder, skipCopySrc } = options;
+    const {
+        jsonSchemaFolder,
+        serverFolder,
+        moduleFolder,
+        extensions,
+    } = options;
 
     info('Prepare folders');
-    if (!skipCopySrc) {
-        await emptyDir(distAppFolder);
-        await copy(srcFolder, distAppFolder);
-    }
-
-    // const folders = await getFolders(srcFolder, serverFolder);
-    // await Promise.all(
-    //     folders.map((folder) => emptyDir(join(distAppFolder, folder))),
-    // );
+    await emptyDir(jsonSchemaFolder);
+    await emptyDir(serverFolder);
+    // await emptyDir(moduleFolder); // maybe should only remove ts and js
+    const files = await getFiles(moduleFolder, extensions);
+    await Promise.all(files.map((file) => unlink(join(moduleFolder, file))));
 }
 
-// custom getFiles to be part of core
-async function getFiles({ srcFolder }: Options) {
-    const files = await fs.readdir(srcFolder, { withFileTypes: true });
-    // ToDo get extensions from configs
-    const extensions = ['.ts', '.js'];
-    return files
-        .filter((f) => f.isFile() && extensions.includes(extname(f.name)))
-        .map((f) => f.name);
-}
-
-// ts to js
-async function runTsc({ distAppFolder, srcFolder, pkgName }: Options) {
+async function runTsc({ serverFolder, srcFolder }: Options) {
     info('Transpile server');
     const tsConfigFile = join(srcFolder, 'tsconfig.json');
     if (!(await pathExists(tsConfigFile))) {
@@ -156,110 +125,27 @@ async function runTsc({ distAppFolder, srcFolder, pkgName }: Options) {
     }
     return shell(
         'tsc',
-        `--outDir ${join(distAppFolder, pkgName, 'server')} -p tsconfig.json`.split(' '),
+        `--outDir ${serverFolder} -p tsconfig.json`.split(' '),
         srcFolder,
     );
 }
 
 export async function build(options: Options) {
-    // await prepare(options);
+    await prepare(options);
 
-    info('Start transpiling', options.pkgName);
+    info('Start transpiling', options.moduleName);
 
-    // const { srcFolder, serverFolder } = options;
-    // const files = await getFiles(srcFolder, serverFolder);
-
-    // options.srcFolder = join(__dirname, '..', 'src');
-    options.srcFolder =
-        '/home/alex/dev/node/pkg/isomor/packages/example/react/api';
-    // options.distAppFolder = join(__dirname, '..', 'modules'); // should we rename it as modulePath / moduleFolder
-    options.distAppFolder =
-        '/home/alex/dev/node/pkg/isomor/packages/example/react/node_modules';
-    // options.distServerFolder =
-    //     '/home/alex/dev/node/pkg/isomor/packages/example/react/dist-server';
-    options.pkgName = 'api'; // should rename it as moduleName
-    const files = await getFiles(options);
+    const { srcFolder, extensions, skipBuildServer } = options;
+    const files = await getFiles(srcFolder, extensions);
     info(`Found ${files.length} file(s).`);
 
     await Promise.all(files.map((file) => transpile(options, file)));
     // --emitDeclarationOnly could be used for publishing a package
-
-    // ToDo we should be able to skip this
-    await runTsc(options);
-
+    if (!skipBuildServer) {
+        await runTsc(options);
+    }
     // ToDo fix watcher since it is much more simple now
-    watcher(options);
-}
-
-function getServerSubFolderPattern(serverFolderPattern: string) {
-    return join(serverFolderPattern, '**', '*');
-}
-
-export const watcherUpdate = (options: Options) => async (file: string) => {
-    const { srcFolder, serverFolder, distAppFolder, watchMode } = options;
-    const serverFolderPattern = getFilesPattern(serverFolder);
-    const path = join(srcFolder, file);
-
-    if (anymatch(getServerSubFolderPattern(serverFolderPattern), path)) {
-        info(`Do not copy sub-folder from "./server"`, path);
-    } else if (anymatch(serverFolderPattern, path)) {
-        transpile(options, file);
-    } else {
-        info(`Copy ${path} to folder`);
-        const dest = join(distAppFolder, file);
-        copy(path, dest);
-        // const content = await readFile(path);
-        // await outputFile(dest, content);
-
-        if (watchMode) {
-            // try to fix file that does not get copy correctly
-            setTimeout(() => watcherUpdateSpy(path, dest), 200); // should not be necessary anymore
-        }
-    }
-};
-
-async function watcherUpdateSpy(path: string, dest: string, retry = 0) {
-    const contentA = await readFile(path);
-    const contentB = await readFile(dest);
-    if (contentA.toString() !== contentB.toString()) {
-        warn('We found file diff, copy again', dest);
-        await outputFile(dest, contentA);
-        if (retry < 2) {
-            setTimeout(() => watcherUpdateSpy(path, dest, retry + 1), 200);
-        }
-    }
-}
-
-function watcher(options: Options) {
-    const { srcFolder, serverFolder, watchMode, distAppFolder } = options;
-    if (watchMode) {
-        info('Starting watch mode.');
-        const serverFolderPattern = getFilesPattern(serverFolder);
-        watch('.', {
-            ignoreInitial: true,
-            ignored: getServerSubFolderPattern(serverFolderPattern),
-            cwd: srcFolder,
-            usePolling: process.env.CHOKIDAR_USEPOLLING === 'true',
-        })
-            .on('ready', () =>
-                info('Initial scan complete. Ready for changes...'),
-            )
-            .on('add', (file) => {
-                info(`File ${file} has been added`);
-                // watcherUpdate(file);
-                setTimeout(() => watcherUpdate(options)(file), 100);
-            })
-            .on('change', (file) => {
-                info(`File ${file} has been changed`);
-                // watcherUpdate(file);
-                setTimeout(() => watcherUpdate(options)(file), 100);
-            })
-            .on('unlink', (file) => {
-                info(`File ${file} has been removed`, '(do nothing)');
-                const path = join(distAppFolder, file);
-                unlink(path);
-            });
-    }
+    // watcher(options);
 }
 
 function shell(

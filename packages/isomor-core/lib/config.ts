@@ -1,29 +1,27 @@
 import { join } from 'path';
 import { config } from 'dotenv';
-import { getPkgName } from '.';
+
+export type Extensions = [string, ...string[]];
 
 export interface CommonOptions {
-    pkgName: string;
-    distAppFolder: string;
+    moduleName: string;
+    moduleFolder: string;
     serverFolder: string;
     jsonSchemaFolder: string;
+    extensions: Extensions;
 }
 
 export interface TranspilerOptions {
     srcFolder: string;
     noValidation: boolean;
-    withTypes: boolean;
     watchMode: boolean;
-    noServerImport: boolean;
-    noDecorator: boolean;
-    skipCopySrc: boolean;
+    skipBuildServer: boolean;
 }
 
 export interface ServerOptions {
     port: number;
     staticFolder: string | null;
     startupFile: string;
-    distServerFolder: string;
 }
 
 export interface WsOptions {
@@ -44,30 +42,27 @@ export type Options = CommonOptions &
 
 let optionsCache: Options;
 
+const DEFAULT_NAME = 'api';
+
 export function getOptions(): Options {
     if (!optionsCache) {
         config({ path: 'isomor.env' }); // should we find-up?
 
-        const srcFolder = process.env.ISOMOR_SRC_FOLDER || './src-isomor';
-        const pkgName = getPkgName(srcFolder);
+        const moduleName = process.env.MODULE_NAME || DEFAULT_NAME;
+        const moduleFolder = process.env.ISOMOR_MODULE_FOLDER || join(process.cwd(), 'node_modules');
 
         optionsCache = {
-            pkgName,
-            distAppFolder: process.env.ISOMOR_DIST_APP_FOLDER || './src',
-            serverFolder: process.env.ISOMOR_SERVER_FOLDER || '/server',
-            jsonSchemaFolder:
-                process.env.ISOMOR_JSON_SCHEMA_FOLDER || './json-schema',
+            moduleName,
+            moduleFolder,
+            serverFolder: process.env.ISOMOR_SERVER_FOLDER || join(moduleFolder, moduleName, 'server'),
+            jsonSchemaFolder: process.env.ISOMOR_JSON_SCHEMA_FOLDER || join(moduleFolder, moduleName, 'json-schema'),
+            extensions: ['.ts', '.js', ...(process.env.ISOMOR_EXTENSIONS && process.env.ISOMOR_EXTENSIONS.split(','))],
             // transpiler
-            srcFolder,
+            srcFolder: process.env.ISOMOR_SRC_FOLDER || join(process.cwd(), DEFAULT_NAME),
             noValidation: process.env.ISOMOR_NO_VALIDATION === 'true',
-            withTypes: process.env.ISOMOR_NO_TYPES !== 'true',
             watchMode: process.env.ISOMOR_WATCH === 'true',
-            noServerImport: process.env.ISOMOR_NO_SERVER_IMPORT === 'true',
-            noDecorator: process.env.ISOMOR_NO_DECORATOR === 'true',
-            skipCopySrc: process.env.ISOMOR_SKIP_COPY_SRC === 'true',
+            skipBuildServer: process.env.ISOMOR_SKIP_BUILD_SERVER === 'true',
             // server
-            distServerFolder:
-                process.env.ISOMOR_DIST_SERVER_FOLDER || './dist-server',
             port: process.env.ISOMOR_PORT
                 ? parseInt(process.env.ISOMOR_PORT, 10)
                 : 3005,

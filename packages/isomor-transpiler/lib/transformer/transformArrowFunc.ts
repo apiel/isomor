@@ -6,8 +6,6 @@ export function transformArrowFunc(
     root: VariableDeclaration,
     {
         srcFilePath,
-        path,
-        withTypes,
         ...bodyParams
     }: FnOptions,
 ) {

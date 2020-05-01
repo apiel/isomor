@@ -77,10 +77,9 @@ describe('transform', () => {
             const { program } = ast_1.parse(codeSource);
             program.body = transform_1.default(program.body, {
                 srcFilePath,
-                path,
                 wsReg: null,
-                pkgName: 'root',
-                withTypes: true,
+                moduleName: 'root',
+                declaration: true,
                 httpBaseUrl: '',
                 wsBaseUrl: 'ws://127.0.0.1:3005',
             });

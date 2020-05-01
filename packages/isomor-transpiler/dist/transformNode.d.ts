@@ -1,11 +1,10 @@
 import { Statement } from './ast';
 export interface FnOptions {
     srcFilePath: string;
-    path: string;
-    pkgName: string;
-    withTypes: boolean;
+    moduleName: string;
+    declaration: boolean;
     httpBaseUrl: string;
     wsBaseUrl: string;
     wsReg?: RegExp;
 }
-export declare function transformNode(node: Statement, fnOptions: FnOptions, noServerImport: boolean, noDecorator: boolean): Statement;
+export declare function transformNode(node: Statement, fnOptions: FnOptions): Statement;

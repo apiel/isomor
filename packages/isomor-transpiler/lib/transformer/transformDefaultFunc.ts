@@ -15,7 +15,7 @@ import { setValidator } from '../validation';
 
 export function transformDefaultFunc(
     root: FunctionDeclaration,
-    { srcFilePath, path, withTypes, declaration, ...bodyParams }: FnOptions,
+    { srcFilePath, declaration, ...bodyParams }: FnOptions,
 ) {
     const name = basename(srcFilePath, extname(srcFilePath));
 
@@ -32,7 +32,6 @@ export function transformDefaultFunc(
     // setValidator(root, srcFilePath, path, name);
 
     return getCodeFunc({
-        withTypes,
-        bodyParams: { path, name, ...bodyParams },
+        bodyParams: { name, ...bodyParams },
     });
 }

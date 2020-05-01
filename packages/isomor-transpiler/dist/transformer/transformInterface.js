@@ -1,10 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const traverse = require("traverse");
-function transformInterface(root, noServerImport) {
-    if (!noServerImport) {
-        return root;
-    }
+function transformInterface(root) {
     traverse(root).forEach(function (node) {
         if (node) {
             if ((node.type === 'TSTypeAnnotation' && node.typeAnnotation.type === 'TSTypeReference')

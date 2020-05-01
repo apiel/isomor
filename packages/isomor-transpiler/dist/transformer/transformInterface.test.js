@@ -19,19 +19,16 @@ const codeTranspiledInterface = `export interface MyInterface {
   };
   world: any;
 }`;
-const transformInterfaceFromCode = (source, noServerImport) => {
+const transformInterfaceFromCode = (source) => {
     const { program } = ast_1.parse(source);
-    const body = transformInterface_1.transformInterface(program.body[0], noServerImport);
+    const body = transformInterface_1.transformInterface(program.body[0]);
     program.body = util_1.isArray(body) ? body : [body];
     const { code } = ast_1.generate(program);
     return code;
 };
 describe('transformInterface()', () => {
-    it('should keep interface as it is if noServerImport is false', () => {
-        expect(transformInterfaceFromCode(codeSourceInterface, false)).toBe(codeSourceInterface);
-    });
-    it('should transform props interface to any if noServerImport is true', () => {
-        expect(transformInterfaceFromCode(codeSourceInterface, true)).toBe(codeTranspiledInterface);
+    it('should transform props interface to any', () => {
+        expect(transformInterfaceFromCode(codeSourceInterface)).toBe(codeTranspiledInterface);
     });
 });
 //# sourceMappingURL=transformInterface.test.js.map

@@ -11,12 +11,10 @@ const debug = Debug('isomor-transpiler:transform');
 export default function transform(
     body: Statement[],
     fnOptions: FnOptions,
-    noServerImport: boolean = false,
-    noDecorator: boolean = false,
 ) {
     let newBody = [getCodeImport()];
     body.forEach((node) => {
-        const newNode = transformNode(node, fnOptions, noServerImport, noDecorator);
+        const newNode = transformNode(node, fnOptions);
         if (newNode) {
             if (isArray(newNode)) {
                 newBody = [...newBody, ...newNode];

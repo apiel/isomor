@@ -8,10 +8,8 @@ import { transformType } from './transformer/transformType';
 
 export interface FnOptions {
     srcFilePath: string;
-    path: string;
-    pkgName: string;
-    withTypes: boolean;
-    declaration?: boolean;
+    moduleName: string;
+    declaration: boolean;
     httpBaseUrl: string;
     wsBaseUrl: string;
     wsReg?: RegExp;
@@ -20,8 +18,6 @@ export interface FnOptions {
 export function transformNode(
     node: Statement,
     fnOptions: FnOptions,
-    noServerImport: boolean,
-    noDecorator: boolean,
 ) {
     // console.log('node.type', node.type);
     if (node.type === 'ExportDefaultDeclaration') {
@@ -37,7 +33,7 @@ export function transformNode(
         if (node.declaration.type === 'TSTypeAliasDeclaration') {
             return transformType(node.declaration);
         } else if (node.declaration.type === 'TSInterfaceDeclaration') {
-            return transformInterface(node, noServerImport);
+            return transformInterface(node);
         } else if (node.declaration.type === 'TSEnumDeclaration') {
             return node;
         }

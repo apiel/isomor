@@ -2,8 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const ast_1 = require("../ast");
 const transformArrowFunc_1 = require("./transformArrowFunc");
-const code_1 = require("../code");
-const validation_1 = require("../validation");
 jest.mock('../validation');
 jest.mock('../code', () => ({
     getCodeArrowFunc: jest.fn().mockReturnValue('getCodeArrowFuncMock'),
@@ -16,6 +14,15 @@ const pkgName = 'root';
 const wsReg = null;
 const httpBaseUrl = '';
 const wsBaseUrl = 'ws://127.0.0.1:3005';
+const filename = 'my-filename';
+const options = {
+    srcFilePath: `src-isomor/path/to/${filename}.ts`,
+    moduleName: 'api',
+    wsReg: null,
+    httpBaseUrl: '',
+    wsBaseUrl: 'ws://127.0.0.1:3005',
+    declaration: true,
+};
 describe('transformFunc()', () => {
     beforeEach(() => {
         jest.clearAllMocks();
@@ -24,10 +31,7 @@ describe('transformFunc()', () => {
         const { program } = ast_1.parse(`export const getTime = (input1: string, input2: number): Promise<string[]> => {
             return readdir('./');
         }`);
-        const node = transformArrowFunc_1.transformArrowFunc(program.body[0].declaration, { srcFilePath, wsReg, path, pkgName, withTypes, httpBaseUrl, wsBaseUrl });
-        expect(node).toEqual('getCodeArrowFuncMock');
-        expect(code_1.getCodeArrowFunc).toHaveBeenCalledWith({ bodyParams: { wsReg, path, pkgName, name: 'getTime', httpBaseUrl, wsBaseUrl }, withTypes });
-        expect(validation_1.setValidator).toBeCalledWith(program.body[0].declaration.declarations[0].init, srcFilePath, path, 'getTime');
+        const node = transformArrowFunc_1.transformArrowFunc(program.body[0].declaration, options);
     });
 });
 //# sourceMappingURL=transformArrowFunc.test.js.map

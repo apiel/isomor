@@ -10,12 +10,11 @@ jest.mock('logol');
 const filename = 'my-filename';
 const options = {
     srcFilePath: `src-isomor/path/to/${filename}.ts`,
-    path: `path-to-${filename}`,
-    withTypes: true,
-    pkgName: 'root',
+    moduleName: 'api',
     wsReg: null,
     httpBaseUrl: '',
     wsBaseUrl: 'ws://127.0.0.1:3005',
+    declaration: true,
 };
 
 export const source = `export default function(input1: string, input2: number): Promise<string[]> {

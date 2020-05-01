@@ -43,22 +43,18 @@ function getCodeImport() {
     };
 }
 exports.getCodeImport = getCodeImport;
-function getCodeFunc({ bodyParams, withTypes }) {
+function getCodeFunc({ bodyParams }) {
     return {
-        type: 'ExportNamedDeclaration',
+        type: 'ExportDefaultDeclaration',
         declaration: {
             type: 'FunctionDeclaration',
-            id: {
-                type: 'Identifier',
-                name: bodyParams.name,
-            },
-            params: getParams(withTypes),
+            params: getParams(),
             body: getBody(bodyParams),
         },
     };
 }
 exports.getCodeFunc = getCodeFunc;
-function getCodeArrowFunc({ bodyParams, withTypes }) {
+function getCodeArrowFunc({ bodyParams }) {
     return {
         type: 'ExportNamedDeclaration',
         declaration: {
@@ -72,7 +68,7 @@ function getCodeArrowFunc({ bodyParams, withTypes }) {
                     },
                     init: {
                         type: 'ArrowFunctionExpression',
-                        params: getParams(withTypes),
+                        params: getParams(),
                         body: getBody(bodyParams),
                     },
                 },
@@ -82,68 +78,32 @@ function getCodeArrowFunc({ bodyParams, withTypes }) {
     };
 }
 exports.getCodeArrowFunc = getCodeArrowFunc;
-function getParams(withTypes) {
+function getParams() {
     return [
         Object.assign({ type: 'RestElement', argument: {
                 type: 'Identifier',
                 name: 'args',
-            } }, getTypeAny(withTypes)),
+            } }, getTypeAny()),
     ];
 }
-function getTypeAny(withTypes) {
-    return withTypes
-        ? {
+function getTypeAny() {
+    return {
+        typeAnnotation: {
+            type: 'TSTypeAnnotation',
             typeAnnotation: {
-                type: 'TSTypeAnnotation',
-                typeAnnotation: {
-                    type: 'TSAnyKeyword',
-                },
+                type: 'TSAnyKeyword',
             },
-        }
-        : {};
+        },
+    };
 }
-function getBody(bodyRemote, params) {
-    const yo = params ? [getVarRemote(params)] : [];
+function getBody(bodyRemote) {
     return {
         type: 'BlockStatement',
-        body: [...yo, getBodyRemote(bodyRemote)],
+        body: [getBodyRemote(bodyRemote)],
     };
 }
 exports.getBody = getBody;
-function getVarRemote(params) {
-    return {
-        type: 'VariableDeclaration',
-        declarations: [
-            {
-                type: 'VariableDeclarator',
-                id: {
-                    type: 'Identifier',
-                    name: 'args',
-                    typeAnnotation: {
-                        type: 'TSTypeAnnotation',
-                        typeAnnotation: {
-                            type: 'TSArrayType',
-                            elementType: {
-                                type: 'TSAnyKeyword',
-                            },
-                        },
-                    },
-                },
-                init: {
-                    type: 'ArrayExpression',
-                    elements: params.map((param) => ({
-                        type: 'Identifier',
-                        name: param.type === 'AssignmentPattern'
-                            ? param.left.name
-                            : param.name,
-                    })),
-                },
-            },
-        ],
-        kind: 'var',
-    };
-}
-function getBodyRemote({ wsReg, path, pkgName, name, className, httpBaseUrl, wsBaseUrl, }) {
+function getBodyRemote({ wsReg, moduleName, name, httpBaseUrl, wsBaseUrl, }) {
     var _a;
     const protocol = ((_a = wsReg) === null || _a === void 0 ? void 0 : _a.test(name)) ? 'ws' : 'http';
     const baseUrl = protocol === 'ws' ? wsBaseUrl : httpBaseUrl;
@@ -166,11 +126,11 @@ function getBodyRemote({ wsReg, path, pkgName, name, className, httpBaseUrl, wsB
                 },
                 {
                     type: 'StringLiteral',
-                    value: path,
+                    value: '',
                 },
                 {
                     type: 'StringLiteral',
-                    value: pkgName,
+                    value: moduleName,
                 },
                 {
                     type: 'StringLiteral',
@@ -180,16 +140,29 @@ function getBodyRemote({ wsReg, path, pkgName, name, className, httpBaseUrl, wsB
                     type: 'Identifier',
                     name: 'args',
                 },
-                ...(className
-                    ? [
-                        {
-                            type: 'StringLiteral',
-                            value: className,
-                        },
-                    ]
-                    : []),
             ],
         },
     };
 }
+function getBodyEmptyReturn() {
+    return {
+        type: 'BlockStatement',
+        body: [
+            {
+                type: 'ReturnStatement',
+                argument: {
+                    type: 'TSAsExpression',
+                    expression: {
+                        type: 'Identifier',
+                        name: 'undefined',
+                    },
+                    typeAnnotation: {
+                        type: 'TSAnyKeyword',
+                    },
+                },
+            },
+        ],
+    };
+}
+exports.getBodyEmptyReturn = getBodyEmptyReturn;
 //# sourceMappingURL=code.js.map

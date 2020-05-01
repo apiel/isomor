@@ -86,10 +86,9 @@ describe('transform', () => {
       const { program } = parse(codeSource);
       program.body = transform(program.body, {
         srcFilePath,
-        path,
         wsReg: null,
-        pkgName: 'root',
-        withTypes: true,
+        moduleName: 'root',
+        declaration: true,
         httpBaseUrl: '',
         wsBaseUrl: 'ws://127.0.0.1:3005',
       });

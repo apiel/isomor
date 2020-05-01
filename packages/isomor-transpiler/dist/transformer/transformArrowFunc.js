@@ -11,22 +11,9 @@ var __rest = (this && this.__rest) || function (s, e) {
     return t;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const code_1 = require("../code");
-const validation_1 = require("../validation");
 function transformArrowFunc(root, _a) {
-    var { srcFilePath, path, withTypes } = _a, bodyParams = __rest(_a, ["srcFilePath", "path", "withTypes"]);
-    const { declarations } = root;
-    const declaration = declarations[0];
-    if (declaration.type === 'VariableDeclarator'
-        && declaration.init.type === 'ArrowFunctionExpression'
-        && declaration.id.type === 'Identifier') {
-        const { name } = declaration.id;
-        validation_1.setValidator(declaration.init, srcFilePath, path, name);
-        return code_1.getCodeArrowFunc({
-            withTypes,
-            bodyParams: Object.assign({ path, name }, bodyParams),
-        });
-    }
+    var { srcFilePath } = _a, bodyParams = __rest(_a, ["srcFilePath"]);
+    console.log('TBD.');
 }
 exports.transformArrowFunc = transformArrowFunc;
 //# sourceMappingURL=transformArrowFunc.js.map

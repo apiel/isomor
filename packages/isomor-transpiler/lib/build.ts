@@ -183,8 +183,11 @@ export async function build(options: Options) {
 
     await Promise.all(files.map((file) => transpile(options, file)));
     // --emitDeclarationOnly could be used for publishing a package
+
+    // ToDo we should be able to skip this
     await runTsc(options);
 
+    // ToDo fix watcher since it is much more simple now
     watcher(options);
 }
 

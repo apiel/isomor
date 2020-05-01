@@ -11,7 +11,7 @@ export function useIsomorHttp(
     app: express.Express,
     routes: Route[],
 ) {
-    routes.map(({ path, validationSchema, fn, isClass }) => {
+    routes.map(({ path, validationSchema, fn }) => {
         app.use(path, async (
             req: express.Request,
             res: express.Response,
@@ -21,9 +21,7 @@ export function useIsomorHttp(
                 const ctx: Context = { req, res };
                 const args = (req.body && req.body.args) || [];
                 validateArgs(validationSchema, args);
-                const result = isClass
-                    ? await fn(...args, req, res)
-                    : await fn.call(ctx, ...args);
+                const result = await fn.call(ctx, ...args);
                 return res.send({ result });
             } catch (error) {
                 next(error);

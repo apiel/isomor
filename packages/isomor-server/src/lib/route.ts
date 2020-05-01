@@ -3,12 +3,13 @@ import {
     ValidationSchema,
     getJsonSchemaFileName,
     getPkgName,
-    getFiles,
+    // getFiles,
 } from 'isomor-core';
 import { isIsomorClass, getUrlPath } from 'isomor';
-import { join } from 'path';
+import { join, extname, basename } from 'path';
 import { isFunction } from 'util';
 import { pathExistsSync, readJSONSync } from 'fs-extra';
+import { promises as fs } from 'fs';
 
 import { getInstance } from './startup';
 import { getFullPath } from './utils';
@@ -18,7 +19,6 @@ export interface Route {
     file: string;
     validationSchema: ValidationSchema;
     fn: any;
-    isClass: boolean;
 }
 
 export async function getIsomorRoutes(
@@ -27,19 +27,27 @@ export async function getIsomorRoutes(
     jsonSchemaFolder: string,
     noDecorator: boolean,
 ): Promise<Route[]> {
-    const pkgName = getPkgName(distServerFolder);
+    const pkgName = 'api';
+
+    // const pkgName = getPkgName(distServerFolder);
     const fnNames = await getFunctionNames(serverFolder, distServerFolder);
-    const routes = fnNames.map(({ file, isClass, name, fn }) =>
-        isClass
-            ? getClassRoutes(file, pkgName, name, jsonSchemaFolder, noDecorator)
-            : [getRoute(file, pkgName, fn, name, jsonSchemaFolder)],
-    );
+    const routes = fnNames.map(({ file, name, fn }) => [
+        getRoute(file, pkgName, fn, name, jsonSchemaFolder),
+    ]);
     return routes.flat();
+}
+
+// custom getFiles to be part of core
+// ToDo get extensions from configs
+async function getFiles(folder: string, extensions = ['.js']) {
+    const files = await fs.readdir(folder, { withFileTypes: true });
+    return files
+        .filter((f) => f.isFile() && extensions.includes(extname(f.name)))
+        .map((f) => f.name);
 }
 
 interface FunctionName {
     file: string;
-    isClass: boolean;
     name: string;
     fn: () => any;
 }
@@ -47,22 +55,38 @@ async function getFunctionNames(
     serverFolder: string,
     distServerFolder: string,
 ): Promise<FunctionName[]> {
-    const files = await getFiles(distServerFolder, serverFolder);
+    // const files = await getFiles(distServerFolder, serverFolder);
+    const theFolder = '/home/alex/dev/node/pkg/isomor/packages/example/react/node_modules/api/server';
+    const files = await getFiles(theFolder);
 
-    return files
-        .map((file) => {
-            const functions = getFunctions(distServerFolder, file);
-            return Object.keys(functions)
-                .filter((name) => isFunction(functions[name]))
-                .map((name) => {
-                    const isClass = /^\s*class/.test(
-                        functions[name].toString(),
-                    );
-                    return { file, isClass, name, fn: functions[name] };
-                })
-                .flat();
-        })
-        .flat();
+    return files.map((file) => {
+        const name = basename(file, extname(file));
+
+        const filepath = getFullPath(join(theFolder, file));
+        // use ESM to force ES6 compatibility with nodejs
+        require = require('esm')(module /*, options*/);
+        delete require.cache[filepath];
+        const { default: fn } = require(filepath);
+        // console.log('fn', file, fn);
+        // if no default fn should create a fallback function with error
+
+        return { file, name, fn };
+    });
+
+    // return files
+    //     .map((file) => {
+    //         const functions = getFunctions(distServerFolder, file);
+    //         return Object.keys(functions)
+    //             .filter((name) => isFunction(functions[name]))
+    //             .map((name) => {
+    //                 const isClass = /^\s*class/.test(
+    //                     functions[name].toString(),
+    //                 );
+    //                 return { file, isClass, name, fn: functions[name] };
+    //             })
+    //             .flat();
+    //     })
+    //     .flat();
 }
 
 function getRoutePath(
@@ -104,7 +128,7 @@ export function getRoute(
         jsonSchemaFolder,
         classname,
     );
-    return { path, file, validationSchema, fn, isClass: !!classname };
+    return { path, file, validationSchema, fn };
 }
 
 // should getInstance be async?

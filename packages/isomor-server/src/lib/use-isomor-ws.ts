@@ -77,7 +77,7 @@ async function apiAction(
     const { id, path, args, cookie } = data;
     logger?.log(`WS req ${path}`);
     if (routesIndex[path]) {
-        const { validationSchema, fn, isClass } = routesIndex[path];
+        const { validationSchema, fn } = routesIndex[path];
         try {
             if (cookie) {
                 req.headers.cookie = cookie;
@@ -87,9 +87,7 @@ async function apiAction(
             const setWsConfig = (config: WsConfig) => send(WsServerAction.CONF, config);
             const ctx: WsContext = { req, ws, push, setWsConfig };
             validateArgs(validationSchema, args);
-            const result = isClass
-                ? await fn(...args, req, ws, push)
-                : await fn.call(ctx, ...args);
+            const result = await fn.call(ctx, ...args);
             await send(WsServerAction.API_RES, result);
             logger?.log(`WS 200 ${path}`);
             // console.log('msg', msg);

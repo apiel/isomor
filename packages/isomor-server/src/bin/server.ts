@@ -37,14 +37,8 @@ function watcher() {
         usePolling: process.env.CHOKIDAR_USEPOLLING === 'true',
     })
         .on('ready', () => info('Initial scan complete. Ready for changes...'))
-        .on('add', (file) => {
-            info(`File ${file} has been added`);
-            watcherStartServer();
-        })
-        .on('change', (file) => {
-            info(`File ${file} has been changed`);
-            watcherStartServer();
-        });
+        .on('add', watcherStartServer)
+        .on('change', watcherStartServer);
 }
 
 function watcherStartServer() {
@@ -54,5 +48,5 @@ function watcherStartServer() {
             await new Promise((resolve) => watchedServer.close(resolve));
         }
         watchedServer = (await server()).server;
-    }, 100);
+    }, 50);
 }

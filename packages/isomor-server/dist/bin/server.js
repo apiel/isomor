@@ -40,14 +40,8 @@ function watcher() {
         usePolling: process.env.CHOKIDAR_USEPOLLING === 'true',
     })
         .on('ready', () => logol_1.info('Initial scan complete. Ready for changes...'))
-        .on('add', (file) => {
-        logol_1.info(`File ${file} has been added`);
-        watcherStartServer();
-    })
-        .on('change', (file) => {
-        logol_1.info(`File ${file} has been changed`);
-        watcherStartServer();
-    });
+        .on('add', watcherStartServer)
+        .on('change', watcherStartServer);
 }
 function watcherStartServer() {
     clearTimeout(watcherTimer);
@@ -56,6 +50,6 @@ function watcherStartServer() {
             yield new Promise((resolve) => watchedServer.close(resolve));
         }
         watchedServer = (yield lib_1.server()).server;
-    }), 100);
+    }), 50);
 }
 //# sourceMappingURL=server.js.map

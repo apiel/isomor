@@ -14,7 +14,7 @@ function useIsomorHttp(app, routes) {
     routes.map(({ urlPath, validationSchema, fn }) => {
         app.use(urlPath, (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
-                const ctx = { req, res };
+                const ctx = { type: 'http', req, res };
                 const args = (req.body && req.body.args) || [];
                 utils_1.validateArgs(validationSchema, args);
                 const result = yield fn.call(ctx, ...args);

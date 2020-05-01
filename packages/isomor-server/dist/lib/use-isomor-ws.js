@@ -68,7 +68,7 @@ function apiAction(routesIndex, req, ws, wsTimeout, data, logger) {
                 const send = wsSend(ws, wsTimeout, id, logger);
                 const push = (payload) => send(isomor_1.WsServerAction.PUSH, payload);
                 const setWsConfig = (config) => send(isomor_1.WsServerAction.CONF, config);
-                const ctx = { req, ws, push, setWsConfig };
+                const ctx = { type: 'ws', req, ws, push, setWsConfig };
                 utils_1.validateArgs(validationSchema, args);
                 const result = yield fn.call(ctx, ...args);
                 yield send(isomor_1.WsServerAction.API_RES, result);

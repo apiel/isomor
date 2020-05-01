@@ -1,6 +1,8 @@
 import * as express from 'express';
 import { Route } from './route';
-export interface Context {
+import { BaseContext } from './interface';
+export interface HttpContext extends BaseContext {
+    type: 'http';
     req: express.Request;
     res: express.Response;
 }

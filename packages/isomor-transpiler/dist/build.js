@@ -12,51 +12,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const logol_1 = require("logol");
 const fs_extra_1 = require("fs-extra");
 const path_1 = require("path");
-const debug_1 = require("debug");
 const isomor_core_1 = require("isomor-core");
-const ast_1 = require("./ast");
 const transform_1 = require("./transform");
 const shell_1 = require("./shell");
 const generateJs_1 = require("./generateJs");
 exports.default = transform_1.default;
-function getCode(options, srcFilePath, content, declaration) {
-    const { wsReg, wsBaseUrl, httpBaseUrl, moduleName } = options;
-    const { program } = ast_1.parse(content);
-    const fnOptions = {
-        srcFilePath,
-        wsReg,
-        moduleName,
-        wsBaseUrl,
-        httpBaseUrl,
-        declaration,
-    };
-    program.body = transform_1.default(program.body, fnOptions);
-    const { code } = ast_1.generate(program);
-    return code;
-}
-function transpile(options, file) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const { moduleFolder, srcFolder, moduleName } = options;
-        logol_1.info('Transpile', file);
-        const srcFilePath = path_1.join(srcFolder, file);
-        const buffer = yield fs_extra_1.readFile(srcFilePath);
-        debug_1.default('isomor-transpiler:transpile:in')(buffer.toString());
-        const moduleTsFile = path_1.join(moduleFolder, moduleName, file);
-        const codeTs = getCode(options, srcFilePath, buffer.toString(), true);
-        logol_1.info('Save isomor TS file', moduleTsFile);
-        yield fs_extra_1.outputFile(moduleTsFile, codeTs);
-        debug_1.default('isomor-transpiler:transpile:out')(codeTs);
-        yield generateJs_1.generateJs(options, file);
-    });
-}
 function prepare(options) {
     return __awaiter(this, void 0, void 0, function* () {
-        const { jsonSchemaFolder, serverFolder, moduleFolder, extensions, } = options;
+        const { jsonSchemaFolder, serverFolder, moduleFolder, srcFolder } = options;
         logol_1.info('Prepare folders');
         yield fs_extra_1.emptyDir(jsonSchemaFolder);
         yield fs_extra_1.emptyDir(serverFolder);
-        const files = yield isomor_core_1.getFiles(moduleFolder, extensions);
-        yield Promise.all(files.map((file) => fs_extra_1.unlink(path_1.join(moduleFolder, file))));
+        yield fs_extra_1.emptyDir(moduleFolder);
+        yield fs_extra_1.copy(srcFolder, moduleFolder);
     });
 }
 function runTsc({ serverFolder, srcFolder }) {
@@ -95,4 +63,9 @@ function build(options) {
     });
 }
 exports.build = build;
+function transpile(options, file) {
+    return __awaiter(this, void 0, void 0, function* () {
+        yield generateJs_1.generateJs(options, file);
+    });
+}
 //# sourceMappingURL=build.js.map

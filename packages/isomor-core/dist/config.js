@@ -9,12 +9,12 @@ function getOptions() {
     if (!optionsCache) {
         dotenv_1.config({ path: 'isomor.env' });
         const moduleName = process.env.MODULE_NAME || DEFAULT_NAME;
-        const moduleFolder = process.env.ISOMOR_MODULE_FOLDER || path_1.join(process.cwd(), 'node_modules');
+        const moduleFolder = process.env.ISOMOR_MODULE_FOLDER || path_1.join(process.cwd(), 'node_modules', moduleName);
         optionsCache = {
             moduleName,
             moduleFolder,
-            serverFolder: process.env.ISOMOR_SERVER_FOLDER || path_1.join(moduleFolder, moduleName, 'dist-server'),
-            jsonSchemaFolder: process.env.ISOMOR_JSON_SCHEMA_FOLDER || path_1.join(moduleFolder, moduleName, 'json-schema'),
+            serverFolder: process.env.ISOMOR_SERVER_FOLDER || path_1.join(moduleFolder, 'dist-server'),
+            jsonSchemaFolder: process.env.ISOMOR_JSON_SCHEMA_FOLDER || path_1.join(moduleFolder, 'json-schema'),
             extensions: ['.ts', '.js', ...(((_a = process.env.ISOMOR_EXTENSIONS) === null || _a === void 0 ? void 0 : _a.split(',')) || [])],
             srcFolder: process.env.ISOMOR_SRC_FOLDER || path_1.join(process.cwd(), DEFAULT_NAME),
             noValidation: process.env.ISOMOR_NO_VALIDATION === 'true',

@@ -4,7 +4,9 @@ import { WsConfig } from 'isomor';
 import * as events from 'events';
 import { Server, IncomingMessage } from 'http';
 import { Route } from './route';
-export interface WsContext {
+import { BaseContext } from './interface';
+export interface WsContext extends BaseContext {
+    type: 'ws';
     req: IncomingMessage;
     ws: WebSocket;
     push: (payload: any) => Promise<void>;

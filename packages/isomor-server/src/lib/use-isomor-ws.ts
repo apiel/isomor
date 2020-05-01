@@ -6,8 +6,10 @@ import { isString } from 'util';
 
 import { Route } from './route';
 import { validateArgs } from './utils';
+import { BaseContext } from './interface';
 
-export interface WsContext {
+export interface WsContext extends BaseContext {
+    type: 'ws';
     req: IncomingMessage;
     ws: WebSocket;
     push: (payload: any) => Promise<void>;
@@ -85,7 +87,7 @@ async function apiAction(
             const send = wsSend(ws, wsTimeout, id, logger);
             const push = (payload: any) => send(WsServerAction.PUSH, payload);
             const setWsConfig = (config: WsConfig) => send(WsServerAction.CONF, config);
-            const ctx: WsContext = { req, ws, push, setWsConfig };
+            const ctx: WsContext = { type: 'ws', req, ws, push, setWsConfig };
             validateArgs(validationSchema, args);
             const result = await fn.call(ctx, ...args);
             await send(WsServerAction.API_RES, result);

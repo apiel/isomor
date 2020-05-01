@@ -5,9 +5,9 @@ import debug from 'debug';
 import { outputFile } from 'fs-extra';
 
 export function generateJs(options: Options, file: string) {
-    const { moduleFolder, moduleName } = options;
+    const { moduleFolder } = options;
     const name = basename(file, extname(file));
-    const moduleJsFile = join(moduleFolder, moduleName, `${name}.js`);
+    const moduleJsFile = join(moduleFolder, `${name}.js`);
     const code = getJsCode(options, name);
     info('Save isomor JS file', moduleJsFile);
     debug('isomor-transpiler:transpile:out')(code);

@@ -49,13 +49,13 @@ export function getOptions(): Options {
         config({ path: 'isomor.env' }); // should we find-up?
 
         const moduleName = process.env.MODULE_NAME || DEFAULT_NAME;
-        const moduleFolder = process.env.ISOMOR_MODULE_FOLDER || join(process.cwd(), 'node_modules');
+        const moduleFolder = process.env.ISOMOR_MODULE_FOLDER || join(process.cwd(), 'node_modules', moduleName);
 
         optionsCache = {
             moduleName,
             moduleFolder,
-            serverFolder: process.env.ISOMOR_SERVER_FOLDER || join(moduleFolder, moduleName, 'dist-server'),
-            jsonSchemaFolder: process.env.ISOMOR_JSON_SCHEMA_FOLDER || join(moduleFolder, moduleName, 'json-schema'),
+            serverFolder: process.env.ISOMOR_SERVER_FOLDER || join(moduleFolder, 'dist-server'),
+            jsonSchemaFolder: process.env.ISOMOR_JSON_SCHEMA_FOLDER || join(moduleFolder, 'json-schema'),
             extensions: ['.ts', '.js', ...(process.env.ISOMOR_EXTENSIONS?.split(',') || [])],
             // transpiler
             srcFolder: process.env.ISOMOR_SRC_FOLDER || join(process.cwd(), DEFAULT_NAME),

@@ -1,8 +1,10 @@
 import * as express from 'express';
 import { Route } from './route';
 import { validateArgs } from './utils';
+import { BaseContext } from './interface';
 
-export interface Context {
+export interface HttpContext extends BaseContext {
+    type: 'http';
     req: express.Request;
     res: express.Response;
 }
@@ -18,7 +20,7 @@ export function useIsomorHttp(
             next: express.NextFunction,
         ) => {
             try {
-                const ctx: Context = { req, res };
+                const ctx: HttpContext = { type: 'http', req, res };
                 const args = (req.body && req.body.args) || [];
                 validateArgs(validationSchema, args);
                 const result = await fn.call(ctx, ...args);

@@ -1,111 +1,24 @@
 import { info } from 'logol';
+import { emptyDir, outputJson, pathExists, copy } from 'fs-extra';
+import { join } from 'path';
+import { Options, getFiles } from 'isomor-core';
 
-import { transformAsync } from '@babel/core';
-import {
-    readFile,
-    outputFile,
-    emptyDir,
-    unlink,
-    outputJson,
-    pathExists,
-} from 'fs-extra';
-import { join, basename, extname, dirname } from 'path';
-import debug from 'debug';
-import { getFiles } from 'isomor-core';
-import { Options } from 'isomor-core';
-
-import { parse, generate } from './ast';
 import transform from './transform';
-import { FnOptions } from './transformNode';
 import { shell } from './shell';
 import { generateJs } from './generateJs';
+import { generateTs } from './generateTs';
 
 export default transform;
 
-function getCode(
-    options: Options,
-    srcFilePath: string,
-    content: string,
-    declaration: boolean,
-) {
-    const { wsReg, wsBaseUrl, httpBaseUrl, moduleName } = options;
-    const { program } = parse(content);
-
-    const fnOptions: FnOptions = {
-        srcFilePath,
-        wsReg,
-        moduleName,
-        wsBaseUrl,
-        httpBaseUrl,
-        declaration,
-    };
-
-    program.body = transform(
-        program.body,
-        fnOptions,
-    );
-    const { code } = generate(program as any);
-
-    return code;
-}
-
-async function transpile(options: Options, file: string) {
-    const { moduleFolder, srcFolder, moduleName } = options;
-
-    info('Transpile', file);
-    const srcFilePath = join(srcFolder, file);
-    const buffer = await readFile(srcFilePath);
-    debug('isomor-transpiler:transpile:in')(buffer.toString());
-
-    // ToDo generate TS file only if TS
-    const moduleTsFile = join(moduleFolder, moduleName, file);
-    const codeTs = getCode(
-        options,
-        srcFilePath,
-        buffer.toString(),
-        true,
-    );
-
-    info('Save isomor TS file', moduleTsFile);
-    await outputFile(moduleTsFile, codeTs);
-    debug('isomor-transpiler:transpile:out')(codeTs);
-
-    await generateJs(options, file);
-    // // no need to do this to generate js files
-    // const codeJs = getCode(
-    //     options,
-    //     srcFilePath,
-    //     buffer.toString(),
-    //     false,
-    // );
-    // const { code } = await transformAsync(codeJs, {
-    //     filename: file,
-    //     presets: ['@babel/preset-typescript', '@babel/preset-env'],
-    // });
-
-    // const moduleJsFile = join(
-    //     dirname(moduleTsFile),
-    //     basename(moduleTsFile, extname(moduleTsFile)) + '.js',
-    // );
-    // info('Save isomor JS file', moduleJsFile);
-    // await outputFile(moduleJsFile, code);
-    // debug('isomor-transpiler:transpile:out')(code);
-}
-
 async function prepare(options: Options) {
-    const {
-        jsonSchemaFolder,
-        serverFolder,
-        moduleFolder,
-        extensions,
-    } = options;
+    const { jsonSchemaFolder, serverFolder, moduleFolder, srcFolder } = options;
 
     info('Prepare folders');
     await emptyDir(jsonSchemaFolder);
     await emptyDir(serverFolder);
-    // await emptyDir(moduleFolder); // maybe should only remove ts and js
-    const files = await getFiles(moduleFolder, extensions);
-    await Promise.all(files.map((file) => unlink(join(moduleFolder, file))));
+    await emptyDir(moduleFolder);
+
+    await copy(srcFolder, moduleFolder);
 }
 
 async function runTsc({ serverFolder, srcFolder }: Options) {
@@ -143,11 +56,14 @@ export async function build(options: Options) {
     info(`Found ${files.length} file(s).`);
 
     await Promise.all(files.map((file) => transpile(options, file)));
-    // run tsc with --emitDeclarationOnly could be used for publishing a package
-    // or instead of using babel
     if (!skipBuildServer) {
         await runTsc(options);
     }
     // ToDo fix watcher since it is much more simple now
     // watcher(options);
+}
+
+async function transpile(options: Options, file: string) {
+    // await generateTs(options, file);
+    await generateJs(options, file);
 }

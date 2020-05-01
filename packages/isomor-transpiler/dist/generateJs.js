@@ -5,9 +5,9 @@ const logol_1 = require("logol");
 const debug_1 = require("debug");
 const fs_extra_1 = require("fs-extra");
 function generateJs(options, file) {
-    const { moduleFolder, moduleName } = options;
+    const { moduleFolder } = options;
     const name = path_1.basename(file, path_1.extname(file));
-    const moduleJsFile = path_1.join(moduleFolder, moduleName, `${name}.js`);
+    const moduleJsFile = path_1.join(moduleFolder, `${name}.js`);
     const code = getJsCode(options, name);
     logol_1.info('Save isomor JS file', moduleJsFile);
     debug_1.default('isomor-transpiler:transpile:out')(code);

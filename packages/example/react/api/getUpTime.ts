@@ -1,4 +1,3 @@
-
 export interface ServerUpTime {
     uptime: number,
 }
@@ -6,7 +5,7 @@ export interface ServerUpTime {
 let timer: NodeJS.Timeout;
 export default async function (): Promise<ServerUpTime> {
     // if websocket protocol used, push time automatically
-    if (this.push) {
+    if (this.type === 'ws') {
         const { push } = this;
         clearInterval(timer);
         timer = setInterval(async () => {

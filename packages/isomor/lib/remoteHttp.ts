@@ -7,7 +7,7 @@ export async function isomorRemoteHttp(
     args: any[],
 ): Promise<any> {
     const url = baseUrl + getUrlPath(moduleName, funcName);
-    const { result } = await fetch(
+    const { result, error } = await fetch(
         url,
         !args.length
             ? undefined
@@ -20,5 +20,8 @@ export async function isomorRemoteHttp(
                   body: JSON.stringify({ args }),
               },
     ).then(response => response.json());
+    if (error) {
+        throw new Error(error);
+    }
     return result;
 }

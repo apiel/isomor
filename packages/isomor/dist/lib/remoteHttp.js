@@ -13,7 +13,7 @@ const _1 = require(".");
 function isomorRemoteHttp(baseUrl, moduleName, funcName, args) {
     return __awaiter(this, void 0, void 0, function* () {
         const url = baseUrl + _1.getUrlPath(moduleName, funcName);
-        const { result } = yield fetch(url, !args.length
+        const { result, error } = yield fetch(url, !args.length
             ? undefined
             : {
                 method: 'POST',
@@ -23,6 +23,9 @@ function isomorRemoteHttp(baseUrl, moduleName, funcName, args) {
                 },
                 body: JSON.stringify({ args }),
             }).then(response => response.json());
+        if (error) {
+            throw new Error(error);
+        }
         return result;
     });
 }

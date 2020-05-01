@@ -75,7 +75,7 @@ export async function server(): Promise<{
             next: express.NextFunction,
         ) => {
             error(err);
-            res.status(500).send(err.message);
+            res.status(500).json({ error: err.message });
         },
     );
 

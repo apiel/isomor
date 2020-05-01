@@ -48,7 +48,7 @@ function server() {
         }
         app.use((err, req, res, next) => {
             logol_1.error(err);
-            res.status(500).send(err.message);
+            res.status(500).json({ error: err.message });
         });
         const serv = app.listen(port, () => {
             logol_1.success(`Server listening on port ${port}!`);

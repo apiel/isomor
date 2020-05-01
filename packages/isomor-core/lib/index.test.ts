@@ -38,8 +38,8 @@ describe('index', () => {
 
     describe('getJsonSchemaFileName()', () => {
         it('should return json validation file name', () => {
-            expect(getJsonSchemaFileName('path', 'name'))
-                .toEqual(`path.name.json`);
+            expect(getJsonSchemaFileName('name'))
+                .toEqual(`name.json`);
         });
     });
 

@@ -2,8 +2,8 @@
 import * as WebSocket from 'ws';
 import { WsConfig } from 'isomor';
 import * as events from 'events';
-import { Route } from './route';
 import { Server, IncomingMessage } from 'http';
+import { Route } from './route';
 export interface WsContext {
     req: IncomingMessage;
     ws: WebSocket;

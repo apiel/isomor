@@ -57,10 +57,10 @@ function wsRefreshTimeout(ws, wsTimeout) {
 function apiAction(routesIndex, req, ws, wsTimeout, data, logger) {
     var _a, _b, _c, _d, _e;
     return __awaiter(this, void 0, void 0, function* () {
-        const { id, path, args, cookie } = data;
-        (_a = logger) === null || _a === void 0 ? void 0 : _a.log(`WS req ${path}`);
-        if (routesIndex[path]) {
-            const { validationSchema, fn, isClass } = routesIndex[path];
+        const { id, urlPath, args, cookie } = data;
+        (_a = logger) === null || _a === void 0 ? void 0 : _a.log(`WS req ${urlPath}`);
+        if (routesIndex[urlPath]) {
+            const { validationSchema, fn } = routesIndex[urlPath];
             try {
                 if (cookie) {
                     req.headers.cookie = cookie;
@@ -70,25 +70,23 @@ function apiAction(routesIndex, req, ws, wsTimeout, data, logger) {
                 const setWsConfig = (config) => send(isomor_1.WsServerAction.CONF, config);
                 const ctx = { req, ws, push, setWsConfig };
                 utils_1.validateArgs(validationSchema, args);
-                const result = isClass
-                    ? yield fn(...args, req, ws, push)
-                    : yield fn.call(ctx, ...args);
+                const result = yield fn.call(ctx, ...args);
                 yield send(isomor_1.WsServerAction.API_RES, result);
-                (_b = logger) === null || _b === void 0 ? void 0 : _b.log(`WS 200 ${path}`);
+                (_b = logger) === null || _b === void 0 ? void 0 : _b.log(`WS 200 ${urlPath}`);
             }
             catch (error) {
-                (_c = logger) === null || _c === void 0 ? void 0 : _c.log(`WS 500 ${path}`, error);
+                (_c = logger) === null || _c === void 0 ? void 0 : _c.log(`WS 500 ${urlPath}`, error);
                 ws.send(JSON.stringify({ action: isomor_1.WsServerAction.API_ERR, id, payload: (_d = error) === null || _d === void 0 ? void 0 : _d.message }));
             }
         }
         else {
-            (_e = logger) === null || _e === void 0 ? void 0 : _e.log(`WS 404 ${path}`);
+            (_e = logger) === null || _e === void 0 ? void 0 : _e.log(`WS 404 ${urlPath}`);
         }
     });
 }
 function getRoutesIndex(routes) {
     return routes.reduce((acc, route) => {
-        acc[route.path] = route;
+        acc[route.urlPath] = route;
         return acc;
     }, {});
 }

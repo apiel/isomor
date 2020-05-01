@@ -26,7 +26,7 @@ const use_isomor_ws_1 = require("./use-isomor-ws");
 const API_DOCS = '/api-docs';
 function server() {
     return __awaiter(this, void 0, void 0, function* () {
-        const { distServerFolder, port, staticFolder, wsTimeout, serverFolder, startupFile, noDecorator, jsonSchemaFolder, } = isomor_core_1.getOptions();
+        const { port, moduleName, staticFolder, wsTimeout, serverFolder, startupFile, jsonSchemaFolder, } = isomor_core_1.getOptions();
         logol_1.info('Starting server.');
         const app = express();
         app.use(bodyParser.json());
@@ -34,10 +34,10 @@ function server() {
         app.use(morgan('dev', {
             stream: { write: (str) => logol_1.log(str.trim()) },
         }));
-        yield startup_1.startup(app, distServerFolder, serverFolder, startupFile, logol_1.info);
-        const routes = yield route_1.getIsomorRoutes(serverFolder, distServerFolder, jsonSchemaFolder, noDecorator);
+        yield startup_1.startup(app, serverFolder, startupFile, logol_1.info);
+        const routes = yield route_1.getIsomorRoutes(moduleName, serverFolder, jsonSchemaFolder);
         use_isomor_http_1.useIsomorHttp(app, routes);
-        logol_1.info(`Created endpoints:`, routes.map(({ path }) => path));
+        logol_1.info(`Created endpoints:`, routes.map(({ urlPath }) => urlPath));
         app.use(API_DOCS, swagger_ui_express_1.serve, swagger_ui_express_1.setup(apidoc_1.getApiDoc(routes)));
         if (staticFolder) {
             logol_1.info('Add static folder', staticFolder);

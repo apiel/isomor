@@ -86,7 +86,7 @@ function isomorRemoteWs(baseUrl, moduleName, funcName, args) {
             var _a, _b;
             reqQueue[id] = { id, resolve, reject };
             setTimeout(() => reject('request timeout'), 10000);
-            ws.send(JSON.stringify(Object.assign({ action: WsClientAction.API, id, path: _1.getUrlPath(moduleName, funcName), args }, (((_a = wsConfig) === null || _a === void 0 ? void 0 : _a.withCookie) && { cookie: (_b = document) === null || _b === void 0 ? void 0 : _b.cookie }))));
+            ws.send(JSON.stringify(Object.assign({ action: WsClientAction.API, id, urlPath: _1.getUrlPath(moduleName, funcName), args }, (((_a = wsConfig) === null || _a === void 0 ? void 0 : _a.withCookie) && { cookie: (_b = document) === null || _b === void 0 ? void 0 : _b.cookie }))));
         });
     });
 }

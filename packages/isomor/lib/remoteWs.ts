@@ -98,7 +98,7 @@ export async function isomorRemoteWs(
             JSON.stringify({
                 action: WsClientAction.API,
                 id,
-                path: getUrlPath(moduleName, funcName),
+                urlPath: getUrlPath(moduleName, funcName),
                 args,
                 ...(wsConfig?.withCookie && { cookie: document?.cookie }),
             }),

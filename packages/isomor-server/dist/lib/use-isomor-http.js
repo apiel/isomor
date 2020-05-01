@@ -11,15 +11,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const utils_1 = require("./utils");
 function useIsomorHttp(app, routes) {
-    routes.map(({ path, validationSchema, fn, isClass }) => {
-        app.use(path, (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+    routes.map(({ urlPath, validationSchema, fn }) => {
+        app.use(urlPath, (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
                 const ctx = { req, res };
                 const args = (req.body && req.body.args) || [];
                 utils_1.validateArgs(validationSchema, args);
-                const result = isClass
-                    ? yield fn(...args, req, res)
-                    : yield fn.call(ctx, ...args);
+                const result = yield fn.call(ctx, ...args);
                 return res.send({ result });
             }
             catch (error) {

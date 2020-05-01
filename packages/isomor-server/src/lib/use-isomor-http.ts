@@ -11,8 +11,8 @@ export function useIsomorHttp(
     app: express.Express,
     routes: Route[],
 ) {
-    routes.map(({ path, validationSchema, fn }) => {
-        app.use(path, async (
+    routes.map(({ urlPath, validationSchema, fn }) => {
+        app.use(urlPath, async (
             req: express.Request,
             res: express.Response,
             next: express.NextFunction,

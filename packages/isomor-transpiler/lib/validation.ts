@@ -77,7 +77,7 @@ function run() {
             }
             if (stdout && stdout.length) {
                 // console.log(`stdout: ${stdout}`);
-                const jsonSchemaFileName = getJsonSchemaFileName(path, name);
+                const jsonSchemaFileName = getJsonSchemaFileName(name);
                 const jsonFile = join(jsonSchemaFolder, jsonSchemaFileName);
                 const data: ValidationSchema = {
                     args,

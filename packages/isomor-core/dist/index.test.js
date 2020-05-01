@@ -37,8 +37,8 @@ describe('index', () => {
     }));
     describe('getJsonSchemaFileName()', () => {
         it('should return json validation file name', () => {
-            expect(_1.getJsonSchemaFileName('path', 'name'))
-                .toEqual(`path.name.json`);
+            expect(_1.getJsonSchemaFileName('name'))
+                .toEqual(`name.json`);
         });
     });
     describe('getFiles()', () => {

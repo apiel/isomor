@@ -14,8 +14,8 @@ export interface ValidationSchema {
     name: string;
 }
 
-export function getJsonSchemaFileName(path: string, name: string) {
-    return `${path}.${name}.json`;
+export function getJsonSchemaFileName(name: string) {
+    return `${name}.json`;
 }
 
 export async function getFiles(

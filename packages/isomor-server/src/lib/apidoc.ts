@@ -6,7 +6,7 @@ export function getApiDoc(
     const paths = {};
     let definitions = {};
 
-    endpoints.forEach(({ file, path, validationSchema }) => {
+    endpoints.forEach(({ file, urlPath, validationSchema }) => {
         let $ref: string;
         let $schema: string;
         if (validationSchema && validationSchema.schema) {
@@ -14,9 +14,9 @@ export function getApiDoc(
             $schema = validationSchema.schema.$schema;
             definitions = { ...definitions, ...validationSchema.schema.definitions };
         }
-        paths[path] = {
-            post: { ...getEntrypointDoc(file, path), ...getParametersDoc($ref, $schema) },
-            get: getEntrypointDoc(file, path),
+        paths[urlPath] = {
+            post: { ...getEntrypointDoc(file, urlPath), ...getParametersDoc($ref, $schema) },
+            get: getEntrypointDoc(file, urlPath),
         };
     });
     return {
@@ -61,9 +61,9 @@ const getParametersDoc = (
 
 const getEntrypointDoc = (
     file: string,
-    path: string,
+    urlPath: string,
 ) => ({
-    operationId: `${file}-${path}`,
+    operationId: `${file}-${urlPath}`,
     summary: file,
     tags: [file],
     produces: [

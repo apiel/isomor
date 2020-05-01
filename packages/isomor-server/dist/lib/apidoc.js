@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 function getApiDoc(endpoints) {
     const paths = {};
     let definitions = {};
-    endpoints.forEach(({ file, path, validationSchema }) => {
+    endpoints.forEach(({ file, urlPath, validationSchema }) => {
         let $ref;
         let $schema;
         if (validationSchema && validationSchema.schema) {
@@ -11,9 +11,9 @@ function getApiDoc(endpoints) {
             $schema = validationSchema.schema.$schema;
             definitions = Object.assign(Object.assign({}, definitions), validationSchema.schema.definitions);
         }
-        paths[path] = {
-            post: Object.assign(Object.assign({}, getEntrypointDoc(file, path)), getParametersDoc($ref, $schema)),
-            get: getEntrypointDoc(file, path),
+        paths[urlPath] = {
+            post: Object.assign(Object.assign({}, getEntrypointDoc(file, urlPath)), getParametersDoc($ref, $schema)),
+            get: getEntrypointDoc(file, urlPath),
         };
     });
     return {
@@ -52,8 +52,8 @@ const getParametersDoc = ($ref, $schema) => ({
         },
     ],
 });
-const getEntrypointDoc = (file, path) => ({
-    operationId: `${file}-${path}`,
+const getEntrypointDoc = (file, urlPath) => ({
+    operationId: `${file}-${urlPath}`,
     summary: file,
     tags: [file],
     produces: [

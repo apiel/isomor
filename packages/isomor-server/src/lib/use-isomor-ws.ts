@@ -1,10 +1,10 @@
 import * as WebSocket from 'ws';
 import { WsClientAction, WsServerAction, WsConfig } from 'isomor';
 import * as events from 'events';
-
-import { Route } from './route';
 import { Server, IncomingMessage } from 'http';
 import { isString } from 'util';
+
+import { Route } from './route';
 import { validateArgs } from './utils';
 
 export interface WsContext {
@@ -71,13 +71,13 @@ async function apiAction(
     req: IncomingMessage,
     ws: WebSocket,
     wsTimeout: number,
-    data: { id: string, path: string, args: any[], cookie?: any },
+    data: { id: string, urlPath: string, args: any[], cookie?: any },
     logger?: Logger,
 ) {
-    const { id, path, args, cookie } = data;
-    logger?.log(`WS req ${path}`);
-    if (routesIndex[path]) {
-        const { validationSchema, fn } = routesIndex[path];
+    const { id, urlPath, args, cookie } = data;
+    logger?.log(`WS req ${urlPath}`);
+    if (routesIndex[urlPath]) {
+        const { validationSchema, fn } = routesIndex[urlPath];
         try {
             if (cookie) {
                 req.headers.cookie = cookie;
@@ -89,20 +89,20 @@ async function apiAction(
             validateArgs(validationSchema, args);
             const result = await fn.call(ctx, ...args);
             await send(WsServerAction.API_RES, result);
-            logger?.log(`WS 200 ${path}`);
+            logger?.log(`WS 200 ${urlPath}`);
             // console.log('msg', msg);
         } catch (error) {
-            logger?.log(`WS 500 ${path}`, error);
+            logger?.log(`WS 500 ${urlPath}`, error);
             ws.send(JSON.stringify({ action: WsServerAction.API_ERR, id, payload: error?.message }));
         }
     } else {
-        logger?.log(`WS 404 ${path}`);
+        logger?.log(`WS 404 ${urlPath}`);
     }
 }
 
 function getRoutesIndex(routes: Route[]): RoutesIndex {
     return routes.reduce((acc, route) => {
-        acc[route.path] = route;
+        acc[route.urlPath] = route;
         return acc;
     }, {});
 }

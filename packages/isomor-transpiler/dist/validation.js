@@ -62,7 +62,7 @@ function run() {
                 logol_1.warn(stderr);
             }
             if (stdout && stdout.length) {
-                const jsonSchemaFileName = isomor_core_1.getJsonSchemaFileName(path, name);
+                const jsonSchemaFileName = isomor_core_1.getJsonSchemaFileName(name);
                 const jsonFile = path_1.join(jsonSchemaFolder, jsonSchemaFileName);
                 const data = {
                     args,

@@ -52,7 +52,7 @@ export async function server(): Promise<{
     useIsomorHttp(app, routes);
     info(
         `Created endpoints:`,
-        routes.map(({ path }) => path),
+        routes.map(({ urlPath }) => urlPath),
     );
 
     app.use(API_DOCS, serve, setup(getApiDoc(routes)));

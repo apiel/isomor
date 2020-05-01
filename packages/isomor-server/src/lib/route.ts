@@ -1,18 +1,13 @@
-import {
-    ValidationSchema,
-    getJsonSchemaFileName,
-    getFiles,
-} from 'isomor-core';
-import { isIsomorClass, getUrlPath } from 'isomor';
+import { ValidationSchema, getJsonSchemaFileName, getFiles } from 'isomor-core';
+import { getUrlPath } from 'isomor';
 import { join, extname, basename } from 'path';
 import { isFunction } from 'util';
 import { pathExistsSync, readJSONSync } from 'fs-extra';
 
-import { getInstance } from './startup';
 import { getFullPath } from './utils';
 
 export interface Route {
-    path: string;
+    urlPath: string;
     file: string;
     validationSchema: ValidationSchema;
     fn: any;
@@ -23,21 +18,20 @@ export async function getIsomorRoutes(
     serverFolder: string,
     jsonSchemaFolder: string,
 ): Promise<Route[]> {
-    const fnNames = await getFunctionNames(serverFolder);
-    const routes = fnNames.map(({ file, name, fn }) => [
-        getRoute(file, moduleName, fn, name, jsonSchemaFolder),
-    ]);
-    return routes.flat();
+    const functions = await getFunctions(serverFolder);
+    return functions.map(({ file, name, fn }) => ({
+        fn,
+        file,
+        urlPath: getUrlPath(moduleName, name),
+        validationSchema: loadValidation(jsonSchemaFolder, name),
+    }));
 }
-
 interface FunctionName {
     file: string;
     name: string;
     fn: () => any;
 }
-async function getFunctionNames(
-    serverFolder: string,
-): Promise<FunctionName[]> {
+async function getFunctions(serverFolder: string): Promise<FunctionName[]> {
     const files = await getFiles(serverFolder, ['.js']);
 
     return files.map((file) => {
@@ -48,51 +42,25 @@ async function getFunctionNames(
         require = require('esm')(module /*, options*/);
         delete require.cache[filepath];
         const { default: fn } = require(filepath);
-        // console.log('fn', file, fn);
-        // if no default fn should create a fallback function with error
+
+        if (!isFunction(fn)) {
+            // if no default fn should create a fallback function with error
+            throw new Error(`No default function found in endpoint ${file}.`);
+        }
 
         return { file, name, fn };
     });
 }
 
-function getRoutePath(
-    file: string,
-    pkgName: string,
-    name: string,
-    classname?: string,
-) {
-    return getUrlPath('', pkgName, name, classname);
-}
-
 function loadValidation( // might want to switch to async
-    path: string,
-    name: string,
     jsonSchemaFolder: string,
-    classname?: string,
+    name: string,
 ): ValidationSchema {
-    if (jsonSchemaFolder && jsonSchemaFolder.length) {
-        const jsonSchemaFile = getJsonSchemaFileName(path, name);
+    if (jsonSchemaFolder?.length) {
+        const jsonSchemaFile = getJsonSchemaFileName(name);
         const jsonSchemaPath = join(jsonSchemaFolder, jsonSchemaFile);
         if (pathExistsSync(jsonSchemaPath)) {
             return readJSONSync(jsonSchemaPath);
         }
     }
-}
-
-export function getRoute(
-    file: string,
-    pkgName: string,
-    fn: any,
-    name: string,
-    jsonSchemaFolder: string,
-    classname?: string,
-): Route {
-    const path = getRoutePath(file, pkgName, name, classname);
-    const validationSchema = loadValidation(
-        '',
-        name,
-        jsonSchemaFolder,
-        classname,
-    );
-    return { path, file, validationSchema, fn };
 }

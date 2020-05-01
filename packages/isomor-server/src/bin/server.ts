@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 
 const pkg = require('../../package.json'); // tslint:disable-line
-require('please-upgrade-node')(pkg, {  // tslint:disable-line
+require('please-upgrade-node')(pkg, {
+    // tslint:disable-line
     message: (v: string) => `
     ┌────────────────────────────────────────────────────────┐
     │  isomor-server requires at least version ${v} of Node.   │
@@ -10,6 +11,48 @@ require('please-upgrade-node')(pkg, {  // tslint:disable-line
     `,
 });
 
-import { server } from '../lib';
+import { watch } from 'chokidar';
+import { getOptions } from 'isomor-core';
+import { info } from 'logol';
 
-server();
+import { server } from '../lib';
+import { Server } from 'http';
+
+const { watchMode, serverFolder } = getOptions();
+
+let watchedServer: Server = null;
+let watcherTimer: NodeJS.Timeout;
+
+if (watchMode) {
+    watcher();
+} else {
+    server();
+}
+
+function watcher() {
+    watcherStartServer();
+    watch('.', {
+        ignoreInitial: true,
+        cwd: serverFolder,
+        usePolling: process.env.CHOKIDAR_USEPOLLING === 'true',
+    })
+        .on('ready', () => info('Initial scan complete. Ready for changes...'))
+        .on('add', (file) => {
+            info(`File ${file} has been added`);
+            watcherStartServer();
+        })
+        .on('change', (file) => {
+            info(`File ${file} has been changed`);
+            watcherStartServer();
+        });
+}
+
+function watcherStartServer() {
+    clearTimeout(watcherTimer);
+    watcherTimer = setTimeout(async () => {
+        if (watchedServer) {
+            await new Promise((resolve) => watchedServer.close(resolve));
+        }
+        watchedServer = (await server()).server;
+    }, 100);
+}

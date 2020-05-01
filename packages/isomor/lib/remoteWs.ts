@@ -85,11 +85,9 @@ function checkWs(resolve: (value?: unknown) => void) {
 
 export async function isomorRemoteWs(
     baseUrl: string,
-    path: string,
-    pkgname: string,
+    moduleName: string,
     funcName: string,
     args: any[],
-    classname?: string,
 ): Promise<any> {
     await waitForWs(baseUrl);
     const id = reqId++;
@@ -100,7 +98,7 @@ export async function isomorRemoteWs(
             JSON.stringify({
                 action: WsClientAction.API,
                 id,
-                path: getUrlPath(path, pkgname, funcName, classname),
+                path: getUrlPath(moduleName, funcName),
                 args,
                 ...(wsConfig?.withCookie && { cookie: document?.cookie }),
             }),

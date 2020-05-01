@@ -1,7 +1,3 @@
 export { subscribe, unsubscribe, SubscribeFn, WsServerAction, WsClientAction, WsConfig, wsDefaultConfig, setWsConfig, openWS, } from './remoteWs';
-export declare function getUrlPath(path: string, pkgname: string, funcName: string, classname?: string): string;
-export declare function isomorRemote(protocol: string, baseUrl: string, path: string, pkgname: string, funcName: string, args: any[], classname?: string): Promise<any>;
-export declare type IsomorShare = any;
-export declare function isomorShare(constructor: any): void;
-export declare function isomor(constructor: any): void;
-export declare function isIsomorClass(name: string): boolean;
+export declare function getUrlPath(moduleName: string, funcName: string): string;
+export declare function isomorRemote(protocol: string, baseUrl: string, moduleName: string, funcName: string, args: any[]): Promise<any>;

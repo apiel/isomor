@@ -126,10 +126,6 @@ function getBodyRemote({ wsReg, moduleName, name, httpBaseUrl, wsBaseUrl, }) {
                 },
                 {
                     type: 'StringLiteral',
-                    value: '',
-                },
-                {
-                    type: 'StringLiteral',
                     value: moduleName,
                 },
                 {

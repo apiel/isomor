@@ -22,13 +22,12 @@ export async function server(): Promise<{
     server: Server;
 }> {
     const {
-        distServerFolder,
         port,
+        moduleName,
         staticFolder,
         wsTimeout,
         serverFolder,
         startupFile,
-        noDecorator,
         jsonSchemaFolder,
     } = getOptions();
     info('Starting server.');
@@ -43,13 +42,12 @@ export async function server(): Promise<{
         }),
     );
 
-    await startup(app, distServerFolder, serverFolder, startupFile, info);
+    await startup(app, serverFolder, startupFile, info);
 
     const routes = await getIsomorRoutes(
+        moduleName,
         serverFolder,
-        distServerFolder,
         jsonSchemaFolder,
-        noDecorator,
     );
     useIsomorHttp(app, routes);
     info(

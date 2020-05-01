@@ -152,10 +152,6 @@ function getBodyRemote({
                 },
                 {
                     type: 'StringLiteral',
-                    value: '', // to remove
-                },
-                {
-                    type: 'StringLiteral',
                     value: moduleName,
                 },
                 {

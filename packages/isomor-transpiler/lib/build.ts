@@ -69,6 +69,7 @@ async function transpile(options: Options, filePath: string) {
     await outputFile(moduleTsFile, codeTs);
     debug('isomor-transpiler:transpile:out')(codeTs);
 
+    // no need to do this to generate js files
     const codeJs = getCode(
         options,
         srcFilePath,

@@ -2,13 +2,11 @@ import { getUrlPath } from '.';
 
 export async function isomorRemoteHttp(
     baseUrl: string,
-    path: string,
-    pkgname: string,
+    moduleName: string,
     funcName: string,
     args: any[],
-    classname?: string,
 ): Promise<any> {
-    const url = baseUrl + getUrlPath(path, pkgname, funcName, classname);
+    const url = baseUrl + getUrlPath(moduleName, funcName);
     const { result } = await fetch(
         url,
         !args.length

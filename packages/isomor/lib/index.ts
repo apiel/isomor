@@ -20,45 +20,21 @@ export {
 const urlPrefix = '/isomor'; // http://127.0.0.1:3000/
 
 export function getUrlPath(
-    path: string,
-    pkgname: string,
+    moduleName: string,
     funcName: string,
-    classname?: string,
 ): string {
-    const url = classname
-        ? `${urlPrefix}/${pkgname}/${path}/${classname}/${funcName}`
-        : `${urlPrefix}/${pkgname}/${path}/${funcName}`;
-
-    return url;
+    return `${urlPrefix}/${moduleName}/${funcName}`;
 }
 
 export function isomorRemote(
     protocol: string,
     baseUrl: string,
-    path: string,
-    pkgname: string,
+    moduleName: string,
     funcName: string,
     args: any[],
-    classname?: string,
 ): Promise<any> {
     if (protocol === 'ws') {
-        return isomorRemoteWs(baseUrl, path, pkgname, funcName, args, classname);
+        return isomorRemoteWs(baseUrl, moduleName, funcName, args);
     }
-    return isomorRemoteHttp(baseUrl, path, pkgname, funcName, args, classname);
-}
-
-export type IsomorShare = any;
-
-// @isomorShare
-export function isomorShare(constructor: any) {
-    //
-}
-
-// @isomor
-const isomorDecorators: string[] = [];
-export function isomor(constructor: any) {
-    isomorDecorators.push(constructor.name);
-}
-export function isIsomorClass(name: string) {
-    return isomorDecorators.includes(name);
+    return isomorRemoteHttp(baseUrl, moduleName, funcName, args);
 }

@@ -78,7 +78,7 @@ function checkWs(resolve) {
     }
     setTimeout(() => checkWs(resolve), 100);
 }
-function isomorRemoteWs(baseUrl, path, pkgname, funcName, args, classname) {
+function isomorRemoteWs(baseUrl, moduleName, funcName, args) {
     return __awaiter(this, void 0, void 0, function* () {
         yield waitForWs(baseUrl);
         const id = reqId++;
@@ -86,7 +86,7 @@ function isomorRemoteWs(baseUrl, path, pkgname, funcName, args, classname) {
             var _a, _b;
             reqQueue[id] = { id, resolve, reject };
             setTimeout(() => reject('request timeout'), 10000);
-            ws.send(JSON.stringify(Object.assign({ action: WsClientAction.API, id, path: _1.getUrlPath(path, pkgname, funcName, classname), args }, (((_a = wsConfig) === null || _a === void 0 ? void 0 : _a.withCookie) && { cookie: (_b = document) === null || _b === void 0 ? void 0 : _b.cookie }))));
+            ws.send(JSON.stringify(Object.assign({ action: WsClientAction.API, id, path: _1.getUrlPath(moduleName, funcName), args }, (((_a = wsConfig) === null || _a === void 0 ? void 0 : _a.withCookie) && { cookie: (_b = document) === null || _b === void 0 ? void 0 : _b.cookie }))));
         });
     });
 }

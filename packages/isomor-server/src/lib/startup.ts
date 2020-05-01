@@ -9,12 +9,11 @@ let startupImport: any;
 export const getInstance = () => startupImport && startupImport.getInstance;
 
 export async function loadStartupImport(
-    distServerFolder: string,
     serverFolder: string,
     startupFile: string,
     info?: (...args: any) => void,
 ) {
-    const path = join(distServerFolder, serverFolder, startupFile);
+    const path = join(serverFolder, startupFile);
     if (await promisify(exists)(path)) {
         const filepath = getFullPath(path);
         startupImport = require(filepath);
@@ -26,13 +25,12 @@ export async function loadStartupImport(
 
 export async function startup(
     app: express.Express,
-    distServerFolder: string,
     serverFolder: string,
     startupFile: string,
     info?: (...args: any) => void,
 ): Promise<void> {
-    await loadStartupImport(distServerFolder, serverFolder, startupFile, info);
-    if (startupImport && startupImport.default) {
+    await loadStartupImport(serverFolder, startupFile, info);
+    if (startupImport?.default) {
         startupImport.default(app);
         if (info) {
             info('Startup script executed.');

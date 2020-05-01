@@ -11,30 +11,15 @@ exports.wsDefaultConfig = remoteWs_2.wsDefaultConfig;
 exports.setWsConfig = remoteWs_2.setWsConfig;
 exports.openWS = remoteWs_2.openWS;
 const urlPrefix = '/isomor';
-function getUrlPath(path, pkgname, funcName, classname) {
-    const url = classname
-        ? `${urlPrefix}/${pkgname}/${path}/${classname}/${funcName}`
-        : `${urlPrefix}/${pkgname}/${path}/${funcName}`;
-    return url;
+function getUrlPath(moduleName, funcName) {
+    return `${urlPrefix}/${moduleName}/${funcName}`;
 }
 exports.getUrlPath = getUrlPath;
-function isomorRemote(protocol, baseUrl, path, pkgname, funcName, args, classname) {
+function isomorRemote(protocol, baseUrl, moduleName, funcName, args) {
     if (protocol === 'ws') {
-        return remoteWs_1.isomorRemoteWs(baseUrl, path, pkgname, funcName, args, classname);
+        return remoteWs_1.isomorRemoteWs(baseUrl, moduleName, funcName, args);
     }
-    return remoteHttp_1.isomorRemoteHttp(baseUrl, path, pkgname, funcName, args, classname);
+    return remoteHttp_1.isomorRemoteHttp(baseUrl, moduleName, funcName, args);
 }
 exports.isomorRemote = isomorRemote;
-function isomorShare(constructor) {
-}
-exports.isomorShare = isomorShare;
-const isomorDecorators = [];
-function isomor(constructor) {
-    isomorDecorators.push(constructor.name);
-}
-exports.isomor = isomor;
-function isIsomorClass(name) {
-    return isomorDecorators.includes(name);
-}
-exports.isIsomorClass = isIsomorClass;
 //# sourceMappingURL=index.js.map

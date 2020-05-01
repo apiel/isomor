@@ -10,9 +10,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const _1 = require(".");
-function isomorRemoteHttp(baseUrl, path, pkgname, funcName, args, classname) {
+function isomorRemoteHttp(baseUrl, moduleName, funcName, args) {
     return __awaiter(this, void 0, void 0, function* () {
-        const url = baseUrl + _1.getUrlPath(path, pkgname, funcName, classname);
+        const url = baseUrl + _1.getUrlPath(moduleName, funcName);
         const { result } = yield fetch(url, !args.length
             ? undefined
             : {

@@ -1,5 +1,7 @@
 ### ToDo
 
+- /!\ Put in NOTE how to setup tsconfig noImplicitThis
+
 - Server no need reload, just clear cache
     - in dev mode check last change of file and reload endpoint only
 

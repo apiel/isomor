@@ -18,6 +18,7 @@ import { parse, generate } from './ast';
 import transform from './transform';
 import { FnOptions } from './transformNode';
 import { shell } from './shell';
+import { generateJs } from './generateJs';
 
 export default transform;
 
@@ -48,16 +49,16 @@ function getCode(
     return code;
 }
 
-async function transpile(options: Options, filePath: string) {
+async function transpile(options: Options, file: string) {
     const { moduleFolder, srcFolder, moduleName } = options;
 
-    info('Transpile', filePath);
-    const srcFilePath = join(srcFolder, filePath);
+    info('Transpile', file);
+    const srcFilePath = join(srcFolder, file);
     const buffer = await readFile(srcFilePath);
     debug('isomor-transpiler:transpile:in')(buffer.toString());
 
     // ToDo generate TS file only if TS
-    const moduleTsFile = join(moduleFolder, moduleName, filePath);
+    const moduleTsFile = join(moduleFolder, moduleName, file);
     const codeTs = getCode(
         options,
         srcFilePath,
@@ -69,25 +70,26 @@ async function transpile(options: Options, filePath: string) {
     await outputFile(moduleTsFile, codeTs);
     debug('isomor-transpiler:transpile:out')(codeTs);
 
-    // no need to do this to generate js files
-    const codeJs = getCode(
-        options,
-        srcFilePath,
-        buffer.toString(),
-        false,
-    );
-    const { code } = await transformAsync(codeJs, {
-        filename: filePath,
-        presets: ['@babel/preset-typescript', '@babel/preset-env'],
-    });
+    await generateJs(options, file);
+    // // no need to do this to generate js files
+    // const codeJs = getCode(
+    //     options,
+    //     srcFilePath,
+    //     buffer.toString(),
+    //     false,
+    // );
+    // const { code } = await transformAsync(codeJs, {
+    //     filename: file,
+    //     presets: ['@babel/preset-typescript', '@babel/preset-env'],
+    // });
 
-    const moduleJsFile = join(
-        dirname(moduleTsFile),
-        basename(moduleTsFile, extname(moduleTsFile)) + '.js',
-    );
-    info('Save isomor JS file', moduleJsFile);
-    await outputFile(moduleJsFile, code);
-    debug('isomor-transpiler:transpile:out')(code);
+    // const moduleJsFile = join(
+    //     dirname(moduleTsFile),
+    //     basename(moduleTsFile, extname(moduleTsFile)) + '.js',
+    // );
+    // info('Save isomor JS file', moduleJsFile);
+    // await outputFile(moduleJsFile, code);
+    // debug('isomor-transpiler:transpile:out')(code);
 }
 
 async function prepare(options: Options) {

@@ -54,7 +54,7 @@ export function getOptions(): Options {
         optionsCache = {
             moduleName,
             moduleFolder,
-            serverFolder: process.env.ISOMOR_SERVER_FOLDER || join(moduleFolder, moduleName, 'server'),
+            serverFolder: process.env.ISOMOR_SERVER_FOLDER || join(moduleFolder, moduleName, 'dist-server'),
             jsonSchemaFolder: process.env.ISOMOR_JSON_SCHEMA_FOLDER || join(moduleFolder, moduleName, 'json-schema'),
             extensions: ['.ts', '.js', ...(process.env.ISOMOR_EXTENSIONS?.split(',') || [])],
             // transpiler

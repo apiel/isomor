@@ -10,15 +10,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const logol_1 = require("logol");
-const chalk_1 = require("chalk");
-const spawn = require("cross-spawn");
-const core_1 = require("@babel/core");
 const fs_extra_1 = require("fs-extra");
 const path_1 = require("path");
 const debug_1 = require("debug");
 const isomor_core_1 = require("isomor-core");
 const ast_1 = require("./ast");
 const transform_1 = require("./transform");
+const shell_1 = require("./shell");
+const generateJs_1 = require("./generateJs");
 exports.default = transform_1.default;
 function getCode(options, srcFilePath, content, declaration) {
     const { wsReg, wsBaseUrl, httpBaseUrl, moduleName } = options;
@@ -35,27 +34,19 @@ function getCode(options, srcFilePath, content, declaration) {
     const { code } = ast_1.generate(program);
     return code;
 }
-function transpile(options, filePath) {
+function transpile(options, file) {
     return __awaiter(this, void 0, void 0, function* () {
         const { moduleFolder, srcFolder, moduleName } = options;
-        logol_1.info('Transpile', filePath);
-        const srcFilePath = path_1.join(srcFolder, filePath);
+        logol_1.info('Transpile', file);
+        const srcFilePath = path_1.join(srcFolder, file);
         const buffer = yield fs_extra_1.readFile(srcFilePath);
         debug_1.default('isomor-transpiler:transpile:in')(buffer.toString());
-        const moduleTsFile = path_1.join(moduleFolder, moduleName, filePath);
+        const moduleTsFile = path_1.join(moduleFolder, moduleName, file);
         const codeTs = getCode(options, srcFilePath, buffer.toString(), true);
         logol_1.info('Save isomor TS file', moduleTsFile);
         yield fs_extra_1.outputFile(moduleTsFile, codeTs);
         debug_1.default('isomor-transpiler:transpile:out')(codeTs);
-        const codeJs = getCode(options, srcFilePath, buffer.toString(), false);
-        const { code } = yield core_1.transformAsync(codeJs, {
-            filename: filePath,
-            presets: ['@babel/preset-typescript', '@babel/preset-env'],
-        });
-        const moduleJsFile = path_1.join(path_1.dirname(moduleTsFile), path_1.basename(moduleTsFile, path_1.extname(moduleTsFile)) + '.js');
-        logol_1.info('Save isomor JS file', moduleJsFile);
-        yield fs_extra_1.outputFile(moduleJsFile, code);
-        debug_1.default('isomor-transpiler:transpile:out')(code);
+        yield generateJs_1.generateJs(options, file);
     });
 }
 function prepare(options) {
@@ -87,7 +78,7 @@ function runTsc({ serverFolder, srcFolder }) {
             };
             yield fs_extra_1.outputJson(tsConfigFile, tsconfig);
         }
-        return shell('tsc', `--outDir ${serverFolder} -p tsconfig.json`.split(' '), srcFolder);
+        return shell_1.shell('tsc', `--outDir ${serverFolder} -p tsconfig.json`.split(' '), srcFolder);
     });
 }
 function build(options) {
@@ -104,26 +95,4 @@ function build(options) {
     });
 }
 exports.build = build;
-function shell(command, args, cwd = process.cwd(), env) {
-    logol_1.log('Run shell cmd', { cmd: `${command} ${args.join(' ')}`, cwd });
-    return new Promise((resolve) => {
-        const cmd = spawn(command, args, {
-            cwd,
-            env: Object.assign(Object.assign({ COLUMNS: process.env.COLUMNS || process.stdout.columns.toString(), LINES: process.env.LINES || process.stdout.rows.toString() }, env), process.env),
-        });
-        cmd.stdout.on('data', (data) => {
-            process.stdout.write(chalk_1.gray(data.toString()));
-        });
-        cmd.stderr.on('data', (data) => {
-            const dataStr = data.toString();
-            if (dataStr.indexOf('warning') === 0) {
-                process.stdout.write(chalk_1.yellow('warming') + dataStr.substring(7));
-            }
-            else {
-                process.stdout.write(chalk_1.red(data.toString()));
-            }
-        });
-        cmd.on('close', (code) => (code ? process.exit(code) : resolve()));
-    });
-}
 //# sourceMappingURL=build.js.map

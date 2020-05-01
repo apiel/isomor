@@ -13,7 +13,7 @@ function getOptions() {
         optionsCache = {
             moduleName,
             moduleFolder,
-            serverFolder: process.env.ISOMOR_SERVER_FOLDER || path_1.join(moduleFolder, moduleName, 'server'),
+            serverFolder: process.env.ISOMOR_SERVER_FOLDER || path_1.join(moduleFolder, moduleName, 'dist-server'),
             jsonSchemaFolder: process.env.ISOMOR_JSON_SCHEMA_FOLDER || path_1.join(moduleFolder, moduleName, 'json-schema'),
             extensions: ['.ts', '.js', ...(((_a = process.env.ISOMOR_EXTENSIONS) === null || _a === void 0 ? void 0 : _a.split(',')) || [])],
             srcFolder: process.env.ISOMOR_SRC_FOLDER || path_1.join(process.cwd(), DEFAULT_NAME),

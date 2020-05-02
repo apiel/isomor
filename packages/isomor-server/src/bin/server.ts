@@ -18,25 +18,28 @@ import { info } from 'logol';
 import { server } from '../lib';
 import { Server } from 'http';
 
-const { watchMode, serverFolder } = getOptions();
+const options = getOptions();
+if (process.argv.includes('--watch')) {
+    options.watchMode = true;
+}
 
 let watchedServer: Server = null;
 let watcherTimer: NodeJS.Timeout;
 
-if (watchMode) {
+if (options.watchMode) {
     watcher();
 } else {
-    server();
+    server(options);
 }
 
 function watcher() {
     watcherStartServer();
     watch('.', {
         ignoreInitial: true,
-        cwd: serverFolder,
+        cwd: options.serverFolder,
         usePolling: process.env.CHOKIDAR_USEPOLLING === 'true',
     })
-        .on('ready', () => info('Initial scan complete. Ready for changes...'))
+        .on('ready', () => info('Watching for changes...'))
         .on('add', watcherStartServer)
         .on('change', watcherStartServer);
 }
@@ -47,6 +50,6 @@ function watcherStartServer() {
         if (watchedServer) {
             await new Promise((resolve) => watchedServer.close(resolve));
         }
-        watchedServer = (await server()).server;
+        watchedServer = (await server(options)).server;
     }, 50);
 }

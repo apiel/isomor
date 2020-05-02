@@ -23,23 +23,26 @@ const chokidar_1 = require("chokidar");
 const isomor_core_1 = require("isomor-core");
 const logol_1 = require("logol");
 const lib_1 = require("../lib");
-const { watchMode, serverFolder } = isomor_core_1.getOptions();
+const options = isomor_core_1.getOptions();
+if (process.argv.includes('--watch')) {
+    options.watchMode = true;
+}
 let watchedServer = null;
 let watcherTimer;
-if (watchMode) {
+if (options.watchMode) {
     watcher();
 }
 else {
-    lib_1.server();
+    lib_1.server(options);
 }
 function watcher() {
     watcherStartServer();
     chokidar_1.watch('.', {
         ignoreInitial: true,
-        cwd: serverFolder,
+        cwd: options.serverFolder,
         usePolling: process.env.CHOKIDAR_USEPOLLING === 'true',
     })
-        .on('ready', () => logol_1.info('Initial scan complete. Ready for changes...'))
+        .on('ready', () => logol_1.info('Watching for changes...'))
         .on('add', watcherStartServer)
         .on('change', watcherStartServer);
 }
@@ -49,7 +52,7 @@ function watcherStartServer() {
         if (watchedServer) {
             yield new Promise((resolve) => watchedServer.close(resolve));
         }
-        watchedServer = (yield lib_1.server()).server;
+        watchedServer = (yield lib_1.server(options)).server;
     }), 50);
 }
 //# sourceMappingURL=server.js.map

@@ -17,11 +17,8 @@ import { useIsomorWs } from './use-isomor-ws';
 
 const API_DOCS = '/api-docs';
 
-export async function server(): Promise<{
-    app: express.Express;
-    server: Server;
-}> {
-    const {
+export async function server(
+    {
         port,
         moduleName,
         staticFolder,
@@ -29,7 +26,11 @@ export async function server(): Promise<{
         serverFolder,
         startupFile,
         jsonSchemaFolder,
-    } = getOptions();
+    } = getOptions(),
+): Promise<{
+    app: express.Express;
+    server: Server;
+}> {
     info('Starting server.');
     const app = express();
 

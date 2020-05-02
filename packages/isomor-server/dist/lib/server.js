@@ -24,9 +24,8 @@ const use_isomor_http_1 = require("./use-isomor-http");
 const apidoc_1 = require("./apidoc");
 const use_isomor_ws_1 = require("./use-isomor-ws");
 const API_DOCS = '/api-docs';
-function server() {
+function server({ port, moduleName, staticFolder, wsTimeout, serverFolder, startupFile, jsonSchemaFolder, } = isomor_core_1.getOptions()) {
     return __awaiter(this, void 0, void 0, function* () {
-        const { port, moduleName, staticFolder, wsTimeout, serverFolder, startupFile, jsonSchemaFolder, } = isomor_core_1.getOptions();
         logol_1.info('Starting server.');
         const app = express();
         app.use(bodyParser.json());

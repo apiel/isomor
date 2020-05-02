@@ -4,7 +4,7 @@ const path_1 = require("path");
 const logol_1 = require("logol");
 const debug_1 = require("debug");
 const fs_extra_1 = require("fs-extra");
-function generateJs(options, file) {
+function generateClientJs(options, file) {
     const { moduleFolder } = options;
     const name = path_1.basename(file, path_1.extname(file));
     const moduleJsFile = path_1.join(moduleFolder, `${name}.js`);
@@ -13,7 +13,7 @@ function generateJs(options, file) {
     debug_1.default('isomor-transpiler:transpile:out')(code);
     return fs_extra_1.outputFile(moduleJsFile, code);
 }
-exports.generateJs = generateJs;
+exports.generateClientJs = generateClientJs;
 function getJsCode({ wsReg, wsBaseUrl, httpBaseUrl, moduleName }, name) {
     var _a;
     const protocol = ((_a = wsReg) === null || _a === void 0 ? void 0 : _a.test(name)) ? 'ws' : 'http';
@@ -35,4 +35,4 @@ function getJsCode({ wsReg, wsBaseUrl, httpBaseUrl, moduleName }, name) {
       return (0, _isomor.isomorRemote)("${protocol}", "${baseUrl}", "${moduleName}", "${name}", args);
 }`;
 }
-//# sourceMappingURL=generateJs.js.map
+//# sourceMappingURL=generateClientJs.js.map

@@ -4,7 +4,7 @@ import { info } from 'logol';
 import debug from 'debug';
 import { outputFile } from 'fs-extra';
 
-export function generateJs(options: Options, file: string) {
+export function generateClientJs(options: Options, file: string) {
     const { moduleFolder } = options;
     const name = basename(file, extname(file));
     const moduleJsFile = join(moduleFolder, `${name}.js`);

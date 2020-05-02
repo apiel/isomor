@@ -11,10 +11,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const logol_1 = require("logol");
 const fs_extra_1 = require("fs-extra");
-const path_1 = require("path");
 const isomor_core_1 = require("isomor-core");
-const shell_1 = require("./shell");
-const generateJs_1 = require("./generateJs");
+const generateClientJs_1 = require("./generateClientJs");
+const generateServer_1 = require("./generateServer");
 function prepare(options) {
     return __awaiter(this, void 0, void 0, function* () {
         const { jsonSchemaFolder, serverFolder, moduleFolder, srcFolder } = options;
@@ -25,28 +24,6 @@ function prepare(options) {
         yield fs_extra_1.copy(srcFolder, moduleFolder);
     });
 }
-function runTsc({ serverFolder, srcFolder }) {
-    return __awaiter(this, void 0, void 0, function* () {
-        logol_1.info('Transpile server');
-        const tsConfigFile = path_1.join(srcFolder, 'tsconfig.json');
-        if (!(yield fs_extra_1.pathExists(tsConfigFile))) {
-            const tsconfig = {
-                compilerOptions: {
-                    types: ['node'],
-                    module: 'commonjs',
-                    declaration: false,
-                    removeComments: true,
-                    emitDecoratorMetadata: true,
-                    experimentalDecorators: true,
-                    target: 'es6',
-                    sourceMap: false,
-                },
-            };
-            yield fs_extra_1.outputJson(tsConfigFile, tsconfig);
-        }
-        return shell_1.shell('tsc', `--outDir ${serverFolder} -p tsconfig.json`.split(' '), srcFolder);
-    });
-}
 function build(options) {
     return __awaiter(this, void 0, void 0, function* () {
         yield prepare(options);
@@ -54,16 +31,11 @@ function build(options) {
         const { srcFolder, extensions, skipBuildServer } = options;
         const files = yield isomor_core_1.getFiles(srcFolder, extensions);
         logol_1.info(`Found ${files.length} file(s).`);
-        yield Promise.all(files.map((file) => transpile(options, file)));
+        yield Promise.all(files.map((file) => generateClientJs_1.generateClientJs(options, file)));
         if (!skipBuildServer) {
-            yield runTsc(options);
+            yield generateServer_1.generateServer(options);
         }
     });
 }
 exports.build = build;
-function transpile(options, file) {
-    return __awaiter(this, void 0, void 0, function* () {
-        yield generateJs_1.generateJs(options, file);
-    });
-}
 //# sourceMappingURL=build.js.map

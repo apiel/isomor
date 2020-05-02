@@ -56,3 +56,19 @@ function getCode(
 
     return code;
 }
+
+
+// {
+//     "compilerOptions": {
+//         "types": ["node"],
+//         "module": "commonjs",
+//         // "declaration": false,
+//         "declaration": true,
+//         "emitDeclarationOnly": true,
+//         "removeComments": true,
+//         "emitDecoratorMetadata": true,
+//         "experimentalDecorators": true,
+//         "target": "es6",
+//         "sourceMap": false
+//     }
+// }

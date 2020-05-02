@@ -5,6 +5,8 @@
 - update validator
 - /!\ Put in DOC how to setup tsconfig noImplicitThis
 - update DOC
+- add a shared folder between frontend and backend
+- in dev mode we could use babel to transpile server instead of tsc, since it much faster
 
 - Server no need reload, just clear cache
     - in dev mode check last change of file and reload endpoint only

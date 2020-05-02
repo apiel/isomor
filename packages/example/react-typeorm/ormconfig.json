@@ -4,9 +4,9 @@
    "synchronize": true,
    "logging": false,
    "entities": [
-      "dist-server/server/entity/**/*.js"
+      "node_modules/api/dist-server/entity/**/*.js"
    ],
    "cli": {
-      "entitiesDir": "src/entity"
+      "entitiesDir": "api/entity"
    }
 }

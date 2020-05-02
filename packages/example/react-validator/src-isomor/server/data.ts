@@ -1,6 +1,7 @@
 import { Length, IsEmail, validate } from 'class-validator';
 import { IsomorShare } from 'isomor';
 
+// instead of this IsomorShare, we should just have a common folder
 export class Input implements IsomorShare {
     @Length(2, 20)
     name!: string;

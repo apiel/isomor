@@ -3,6 +3,6 @@ import { getConnection } from 'typeorm';
 
 export { User } from './entity/User';
 
-export async function getList(): Promise<User[]> {
+export default async function(): Promise<User[]> {
     return getConnection().manager.find(User);
 }

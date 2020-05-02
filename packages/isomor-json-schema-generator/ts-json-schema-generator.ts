@@ -6,7 +6,7 @@ import { BaseError } from "./src/Error/BaseError";
 import { formatError } from "./src/Utils/formatError";
 
 const args = commander
-    .option("-p, --path <path>", "File path")
+    .requiredOption("-p, --path <path>", "File path")
     .option("-f, --tsconfig <path>", "Tsconfig path")
     .option("-t, --type <name>", "Type name")
     .option(

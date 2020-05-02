@@ -19,7 +19,6 @@ type RootParams = any; // FunctionDeclaration | ArrowFunctionExpression;
 interface Queue {
     args: string[];
     srcFilePath: string;
-    path: string;
     name: string;
 }
 
@@ -29,7 +28,6 @@ let process: ChildProcess;
 export function setValidator(
     paramRoot: RootParams,
     srcFilePath: string,
-    path: string,
     name: string,
 ) {
     const args = paramRoot.params
@@ -58,24 +56,23 @@ export function setValidator(
         );
         // console.log('paramRoot', JsonAst(paramRoot));
     }
-    pushToQueue(args, srcFilePath, path, name);
+    pushToQueue(args, srcFilePath, name);
     return args;
 }
 
 function validationIsActive() {
     const { jsonSchemaFolder, noValidation } = getOptions();
-    return !noValidation && jsonSchemaFolder && jsonSchemaFolder.length;
+    return !noValidation && jsonSchemaFolder?.length;
 }
 
 export function pushToQueue(
     args: string[],
     srcFilePath: string,
-    path: string,
     name: string,
 ) {
     if (args.length && validationIsActive()) {
         info(`Queue JSON schema generation for ${name} in ${srcFilePath}`);
-        queueList.push({ args, srcFilePath, path, name });
+        queueList.push({ args, srcFilePath, name });
         run();
     }
 }
@@ -83,9 +80,9 @@ export function pushToQueue(
 function run() {
     if (!process && queueList.length) {
         const { jsonSchemaFolder } = getOptions();
-        const { name, srcFilePath, path, args } = queueList.pop();
+        const { name, srcFilePath, args } = queueList.pop();
         // console.log('args', args, name, srcFilePath);
-        const command = `isomor-json-schema-generator --path ${srcFilePath} --type ${name}`;
+        const command = `isomor-json-schema-generator --path ${srcFilePath} --type ${name}`; // now type should be default?
         info(
             `Start JSON schema generation for ${name} in ${srcFilePath} (might take few seconds)`,
         );

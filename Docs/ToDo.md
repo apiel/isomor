@@ -1,6 +1,7 @@
 ### ToDo
 
 - update validator
+- cleanup deps
 - update DOC
 - add a shared folder between frontend and backend -> example/react-validator
 - in config give a way to skip ts?

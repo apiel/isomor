@@ -2,8 +2,8 @@ import { info } from 'logol';
 import { emptyDir } from 'fs-extra';
 import { Options, getFiles } from 'isomor-core';
 
-import { generateClientJs } from './generateClientJs';
-import { generateClientTs } from './generateClientTs';
+import { generateClientJs, clientWatchForJs } from './generateClientJs';
+import { generateClientTs, clientWatchForTs } from './generateClientTs';
 import { generateServer } from './generateServer';
 
 async function prepare(options: Options) {
@@ -22,11 +22,16 @@ export async function build(options: Options) {
 
     info('Start transpiling', options.moduleName);
 
-    const { srcFolder, extensions } = options;
-    const files = await getFiles(srcFolder, extensions);
-    info(`Found ${files.length} file(s).`);
+    const { watchMode } = options;
 
-    await generateServer(options);
-    await Promise.all(files.map((file) => generateClientJs(options, file)));
-    await generateClientTs(options);
+    // For the following code, order matter, depending on watch mode or not
+    if (watchMode) {
+        clientWatchForTs(options);
+        clientWatchForJs(options);
+        await generateServer(options);
+    } else {
+        await generateServer(options);
+        await generateClientJs(options);
+        await generateClientTs(options);
+    }
 }

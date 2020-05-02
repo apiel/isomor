@@ -8,13 +8,13 @@ import {
     getOptions,
 } from 'isomor-core';
 
-import {
-    JsonAst,
-    FunctionDeclaration,
-    ArrowFunctionExpression,
-} from './__deprecated/ast';
+// import {
+//     JsonAst,
+//     FunctionDeclaration,
+//     ArrowFunctionExpression,
+// } from './__deprecated/ast';
 
-type RootParams = FunctionDeclaration | ArrowFunctionExpression;
+type RootParams = any; // FunctionDeclaration | ArrowFunctionExpression;
 
 interface Queue {
     args: string[];

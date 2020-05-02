@@ -11,13 +11,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const logol_1 = require("logol");
 const fs_extra_1 = require("fs-extra");
-const isomor_core_1 = require("isomor-core");
 const generateClientJs_1 = require("./generateClientJs");
 const generateClientTs_1 = require("./generateClientTs");
 const generateServer_1 = require("./generateServer");
 function prepare(options) {
     return __awaiter(this, void 0, void 0, function* () {
-        const { jsonSchemaFolder, serverFolder, moduleFolder, srcFolder } = options;
+        const { jsonSchemaFolder, serverFolder, moduleFolder } = options;
         logol_1.info('Prepare folders');
         yield fs_extra_1.emptyDir(jsonSchemaFolder);
         yield fs_extra_1.emptyDir(serverFolder);
@@ -28,12 +27,17 @@ function build(options) {
     return __awaiter(this, void 0, void 0, function* () {
         yield prepare(options);
         logol_1.info('Start transpiling', options.moduleName);
-        const { srcFolder, extensions } = options;
-        const files = yield isomor_core_1.getFiles(srcFolder, extensions);
-        logol_1.info(`Found ${files.length} file(s).`);
-        yield generateServer_1.generateServer(options);
-        yield Promise.all(files.map((file) => generateClientJs_1.generateClientJs(options, file)));
-        yield generateClientTs_1.generateClientTs(options);
+        const { watchMode } = options;
+        if (watchMode) {
+            generateClientTs_1.clientWatchForTs(options);
+            generateClientJs_1.clientWatchForJs(options);
+            yield generateServer_1.generateServer(options);
+        }
+        else {
+            yield generateServer_1.generateServer(options);
+            yield generateClientJs_1.generateClientJs(options);
+            yield generateClientTs_1.generateClientTs(options);
+        }
     });
 }
 exports.build = build;

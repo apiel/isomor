@@ -9,21 +9,16 @@ import { watch } from 'chokidar';
 const globAsync = promisify(glob);
 
 export async function generateClientTs(options: Options) {
-    const { serverFolder, watchMode } = options;
-    if (watchMode) {
-        watchForDTsFiles(options);
-    } else {
-        const dtsFiles = await globAsync('**/*.d.ts', { cwd: serverFolder });
-        info(`Copy d.ts files to module`, dtsFiles);
-        await Promise.all(
-            dtsFiles.map(copyDTs(options)),
-        );
-    }
+    const { serverFolder } = options;
+
+    const dtsFiles = await globAsync('**/*.d.ts', { cwd: serverFolder });
+    info(`Copy d.ts files to module`, dtsFiles);
+    await Promise.all(dtsFiles.map(copyDTs(options)));
 }
 
-function watchForDTsFiles(options: Options) {
+export function clientWatchForTs(options: Options) {
     const { serverFolder } = options;
-    // watch('**/*.d.ts', { // glob seem to have issues with chokidar
+    // watch('**/*.d.ts', { // glob seem to have issues with chokidar https://github.com/paulmillr/chokidar/issues/872
     watch('.', {
         cwd: serverFolder,
         usePolling: process.env.CHOKIDAR_USEPOLLING === 'true',

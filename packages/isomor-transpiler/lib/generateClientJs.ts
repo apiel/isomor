@@ -1,18 +1,42 @@
-import { Options } from 'isomor-core';
+import { Options, getFiles } from 'isomor-core';
 import { join, basename, extname } from 'path';
 import { info } from 'logol';
 import debug from 'debug';
 import { outputFile } from 'fs-extra';
+import { watch } from 'chokidar';
 
-export function generateClientJs(options: Options, file: string) {
-    const { moduleFolder } = options;
-    const name = basename(file, extname(file));
-    const moduleJsFile = join(moduleFolder, `${name}.js`);
-    const code = getJsCode(options, name);
-    info('Save isomor JS file', moduleJsFile);
-    debug('isomor-transpiler:transpile:out')(code);
-    return outputFile(moduleJsFile, code);
+export async function generateClientJs(options: Options) {
+    const { srcFolder, extensions } = options;
+    const files = await getFiles(srcFolder, extensions);
+    info(`Transpile TS files to JS.`, files);
+    await Promise.all(files.map(transpileFileToJs(options)));
 }
+
+export function clientWatchForJs(options: Options) {
+    const { srcFolder } = options;
+    watch('*.ts', {
+        cwd: srcFolder,
+        usePolling: process.env.CHOKIDAR_USEPOLLING === 'true',
+    })
+        .on('ready', () => info('Watch for TS files to convert to JS...'))
+        .on('add', transpileFileToJs(options, info))
+        .on('change', transpileFileToJs(options, info));
+}
+
+const transpileFileToJs = (
+    options: Options,
+    log = (...args: any[]) => void 0,
+) => (file: string) => {
+    if (!file.endsWith('.d.ts') && file.endsWith('.ts')) {
+        const { moduleFolder } = options;
+        const name = basename(file, extname(file));
+        const moduleJsFile = join(moduleFolder, `${name}.js`);
+        const code = getJsCode(options, name);
+        log('Save JS file', moduleJsFile);
+        debug('isomor-transpiler:transpile:out')(code);
+        return outputFile(moduleJsFile, code);
+    }
+};
 
 function getJsCode(
     { wsReg, wsBaseUrl, httpBaseUrl, moduleName }: Options,

@@ -18,20 +18,15 @@ const chokidar_1 = require("chokidar");
 const globAsync = util_1.promisify(glob);
 function generateClientTs(options) {
     return __awaiter(this, void 0, void 0, function* () {
-        const { serverFolder, moduleFolder, watchMode } = options;
-        if (watchMode) {
-            watchForDTsFiles(options);
-        }
-        else {
-            const dtsFiles = yield globAsync('**/*.d.ts', { cwd: serverFolder });
-            logol_1.info(`Copy d.ts files to module`, dtsFiles);
-            yield Promise.all(dtsFiles.map(copyDTs(options)));
-        }
+        const { serverFolder } = options;
+        const dtsFiles = yield globAsync('**/*.d.ts', { cwd: serverFolder });
+        logol_1.info(`Copy d.ts files to module`, dtsFiles);
+        yield Promise.all(dtsFiles.map(copyDTs(options)));
     });
 }
 exports.generateClientTs = generateClientTs;
-function watchForDTsFiles(options) {
-    const { serverFolder, moduleFolder, watchMode } = options;
+function clientWatchForTs(options) {
+    const { serverFolder } = options;
     chokidar_1.watch('.', {
         cwd: serverFolder,
         usePolling: process.env.CHOKIDAR_USEPOLLING === 'true',
@@ -40,6 +35,7 @@ function watchForDTsFiles(options) {
         .on('add', copyDTs(options, logol_1.info))
         .on('change', copyDTs(options, logol_1.info));
 }
+exports.clientWatchForTs = clientWatchForTs;
 const copyDTs = ({ serverFolder, moduleFolder }, log = (...args) => void 0) => (file) => {
     if (file.endsWith('.d.ts')) {
         log(`Copy ${file} to module.`);

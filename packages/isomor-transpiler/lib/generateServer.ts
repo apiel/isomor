@@ -5,34 +5,7 @@ import { Options } from 'isomor-core';
 
 import { shell } from './shell';
 
-// dev mode we should use babel
-
-export async function generateServer(options: Options) {
-    await generateServerWithTsc(options);
-    // await generateServerWithBabel(options);
-}
-
-export async function generateServerWithBabel({
-    serverFolder,
-    srcFolder,
-}: Options) {
-    info('Transpile server with babel');
-    const balelFile = '.babelrc.json';
-    const babelPath = join(srcFolder, balelFile);
-    if (!(await pathExists(babelPath))) {
-        const babelConfig = {
-            presets: ['@babel/preset-typescript', '@babel/preset-env'],
-        };
-        await outputJson(babelPath, babelConfig);
-    }
-    // console.log('yyo', `${srcFolder} --outDir ${serverFolder} --extensions ".ts" --config-file ${babelPath}`);
-    return shell(
-        'babel',
-        `${srcFolder} --outDir ${serverFolder} --extensions ".ts" --config-file ${babelPath}`.split(' '),
-    );
-}
-
-export async function generateServerWithTsc({
+export async function generateServer({
     serverFolder,
     srcFolder,
     watchMode,

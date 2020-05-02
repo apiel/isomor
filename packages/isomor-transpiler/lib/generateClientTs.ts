@@ -9,7 +9,7 @@ import { watch } from 'chokidar';
 const globAsync = promisify(glob);
 
 export async function generateClientTs(options: Options) {
-    const { serverFolder, moduleFolder, watchMode } = options;
+    const { serverFolder, watchMode } = options;
     if (watchMode) {
         watchForDTsFiles(options);
     } else {

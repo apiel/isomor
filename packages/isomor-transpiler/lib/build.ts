@@ -1,5 +1,5 @@
 import { info } from 'logol';
-import { emptyDir, copy } from 'fs-extra';
+import { emptyDir } from 'fs-extra';
 import { Options, getFiles } from 'isomor-core';
 
 import { generateClientJs } from './generateClientJs';
@@ -7,14 +7,14 @@ import { generateClientTs } from './generateClientTs';
 import { generateServer } from './generateServer';
 
 async function prepare(options: Options) {
-    const { jsonSchemaFolder, serverFolder, moduleFolder, srcFolder } = options;
+    const { jsonSchemaFolder, serverFolder, moduleFolder } = options;
 
     info('Prepare folders');
     await emptyDir(jsonSchemaFolder);
     await emptyDir(serverFolder);
     await emptyDir(moduleFolder);
 
-    // await copy(srcFolder, moduleFolder);
+    // If api folder contain a package.json we might want to copy it
 }
 
 export async function build(options: Options) {
@@ -29,7 +29,4 @@ export async function build(options: Options) {
     await generateServer(options);
     await Promise.all(files.map((file) => generateClientJs(options, file)));
     await generateClientTs(options);
-
-    // ToDo fix watcher since it is much more simple now
-    // watcher(options);
 }

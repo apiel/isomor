@@ -15,7 +15,7 @@ const path_1 = require("path");
 const shell_1 = require("./shell");
 function generateServer(options) {
     return __awaiter(this, void 0, void 0, function* () {
-        yield generateServerWithBabel(options);
+        yield generateServerWithTsc(options);
     });
 }
 exports.generateServer = generateServer;
@@ -30,12 +30,11 @@ function generateServerWithBabel({ serverFolder, srcFolder, }) {
             };
             yield fs_extra_1.outputJson(babelPath, babelConfig);
         }
-        console.log('yyo', `${srcFolder} --outDir ${serverFolder} --extensions ".ts" --config-file ${babelPath}`);
         return shell_1.shell('babel', `${srcFolder} --outDir ${serverFolder} --extensions ".ts" --config-file ${babelPath}`.split(' '));
     });
 }
 exports.generateServerWithBabel = generateServerWithBabel;
-function generateServerWithTsc({ serverFolder, srcFolder, }) {
+function generateServerWithTsc({ serverFolder, srcFolder, watchMode, }) {
     return __awaiter(this, void 0, void 0, function* () {
         logol_1.info('Transpile server with tsc');
         const tsConfigFile = 'tsconfig.json';
@@ -45,7 +44,7 @@ function generateServerWithTsc({ serverFolder, srcFolder, }) {
                 compilerOptions: {
                     types: ['node'],
                     module: 'commonjs',
-                    declaration: false,
+                    declaration: true,
                     removeComments: true,
                     emitDecoratorMetadata: true,
                     experimentalDecorators: true,
@@ -55,7 +54,10 @@ function generateServerWithTsc({ serverFolder, srcFolder, }) {
             };
             yield fs_extra_1.outputJson(tsConfigPath, tsconfig);
         }
-        return shell_1.shell('tsc', `--outDir ${serverFolder} -p ${tsConfigFile}`.split(' '), srcFolder);
+        const cmd = shell_1.shell('tsc', `--outDir ${serverFolder} -p ${tsConfigFile}${watchMode ? ' --watch' : ''}`.split(' '), srcFolder);
+        if (!watchMode) {
+            yield cmd;
+        }
     });
 }
 exports.generateServerWithTsc = generateServerWithTsc;

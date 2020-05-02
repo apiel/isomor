@@ -8,8 +8,8 @@ import { shell } from './shell';
 // dev mode we should use babel
 
 export async function generateServer(options: Options) {
-    // await generateServerWithTsc(options);
-    await generateServerWithBabel(options);
+    await generateServerWithTsc(options);
+    // await generateServerWithBabel(options);
 }
 
 export async function generateServerWithBabel({
@@ -35,6 +35,7 @@ export async function generateServerWithBabel({
 export async function generateServerWithTsc({
     serverFolder,
     srcFolder,
+    watchMode,
 }: Options) {
     info('Transpile server with tsc');
     const tsConfigFile = 'tsconfig.json';
@@ -44,7 +45,7 @@ export async function generateServerWithTsc({
             compilerOptions: {
                 types: ['node'],
                 module: 'commonjs',
-                declaration: false,
+                declaration: true,
                 removeComments: true,
                 emitDecoratorMetadata: true,
                 experimentalDecorators: true,
@@ -54,9 +55,13 @@ export async function generateServerWithTsc({
         };
         await outputJson(tsConfigPath, tsconfig);
     }
-    return shell(
+    const cmd = shell(
         'tsc',
-        `--outDir ${serverFolder} -p ${tsConfigFile}`.split(' '),
+        `--outDir ${serverFolder} -p ${tsConfigFile}${watchMode ? ' --watch' : ''}`.split(' '),
         srcFolder,
     );
+    // if not in watchMode wait for script to finish before to exit
+    if (!watchMode) {
+        await cmd;
+    }
 }

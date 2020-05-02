@@ -14,7 +14,7 @@ async function prepare(options: Options) {
     await emptyDir(serverFolder);
     await emptyDir(moduleFolder);
 
-    await copy(srcFolder, moduleFolder);
+    // await copy(srcFolder, moduleFolder);
 }
 
 export async function build(options: Options) {
@@ -22,18 +22,13 @@ export async function build(options: Options) {
 
     info('Start transpiling', options.moduleName);
 
-    const { srcFolder, extensions, skipBuildServer } = options;
+    const { srcFolder, extensions } = options;
     const files = await getFiles(srcFolder, extensions);
     info(`Found ${files.length} file(s).`);
 
+    await generateServer(options);
     await Promise.all(files.map((file) => generateClientJs(options, file)));
-    if (!skipBuildServer) {
-        await generateServer(options);
-    }
-
-    // skip for the moment, we might prefer to use declation from build server
-    // available only if server use tsc instead of babel
-    // await generateClientTs(options);
+    await generateClientTs(options);
 
     // ToDo fix watcher since it is much more simple now
     // watcher(options);

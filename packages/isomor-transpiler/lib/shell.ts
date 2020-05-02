@@ -1,4 +1,4 @@
-import { gray, yellow, red } from 'chalk';
+import { error, log } from 'logol';
 import * as spawn from 'cross-spawn';
 import debug from 'debug';
 
@@ -21,15 +21,13 @@ export function shell(
             },
         });
         cmd.stdout.on('data', (data) => {
-            process.stdout.write(gray(data.toString()));
+            // skip \u001bc -> clear screen
+            if (data.toString() !== '\u001bc') {
+                process.stdout.write(data.toString());
+            }
         });
         cmd.stderr.on('data', (data) => {
-            const dataStr = data.toString();
-            if (dataStr.indexOf('warning') === 0) {
-                process.stdout.write(yellow('warming') + dataStr.substring(7));
-            } else {
-                process.stdout.write(red(data.toString()));
-            }
+            process.stderr.write(data.toString());
         });
         cmd.on('close', (code) => (code ? process.exit(code) : resolve()));
     });

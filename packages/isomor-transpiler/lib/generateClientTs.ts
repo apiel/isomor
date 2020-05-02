@@ -1,71 +1,44 @@
 import { Options } from 'isomor-core';
 import { join } from 'path';
 import { info } from 'logol';
-import { outputJson, pathExists } from 'fs-extra';
+import { copy } from 'fs-extra';
 import * as glob from 'glob';
 import { promisify } from 'util';
-
-import { shell } from './shell';
+import { watch } from 'chokidar';
 
 const globAsync = promisify(glob);
 
 export async function generateClientTs(options: Options) {
-    const { srcFolder } = options;
-    // here we have to skip d.ts
-    const tsFiles = await globAsync('**/*.ts', { cwd: srcFolder });
-    // console.log('tsFiles', tsFiles);
-
-    if (tsFiles.length) {
-        await generateDeclarationWithTsc(options);
-
-        // After generating the d.ts file, we can remove all the ts file from the package
-        // await Promise.all(tsFiles.map(file => unlink(join(moduleFolder, file))));
+    const { serverFolder, moduleFolder, watchMode } = options;
+    if (watchMode) {
+        watchForDTsFiles(options);
+    } else {
+        const dtsFiles = await globAsync('**/*.d.ts', { cwd: serverFolder });
+        info(`Copy d.ts files to module`, dtsFiles);
+        await Promise.all(
+            dtsFiles.map(copyDTs(options)),
+        );
     }
 }
 
-// instead to run this tsc twice, we could just use declaration from previously generated server
-async function generateDeclarationWithTsc({
-    moduleFolder,
-    srcFolder,
-}: Options) {
-    info('Generate client d.ts file with tsc');
-    const tsConfigFile = 'tsconfig.d.json';
-    const tsConfigPath = join(srcFolder, tsConfigFile);
-    if (!(await pathExists(tsConfigPath))) {
-        // should use a common ts config
-        const tsconfig = {
-            compilerOptions: {
-                types: ['node'],
-                module: 'commonjs',
-                declaration: true,
-                // removeComments: true,
-                // emitDecoratorMetadata: true,
-                experimentalDecorators: true,
-                emitDeclarationOnly: true,
-                target: 'es6',
-                // sourceMap: false,
-            },
-        };
-        await outputJson(tsConfigPath, tsconfig);
-    }
-    return shell(
-        'tsc',
-        `--outDir ${moduleFolder} -p ${tsConfigFile}`.split(' '),
-        srcFolder,
-    );
+function watchForDTsFiles(options: Options) {
+    const { serverFolder } = options;
+    // watch('**/*.d.ts', { // glob seem to have issues with chokidar
+    watch('.', {
+        cwd: serverFolder,
+        usePolling: process.env.CHOKIDAR_USEPOLLING === 'true',
+    })
+        .on('ready', () => info('Watch for d.ts files...'))
+        .on('add', copyDTs(options, info))
+        .on('change', copyDTs(options, info));
 }
 
-// {
-//     "compilerOptions": {
-//         "types": ["node"],
-//         "module": "commonjs",
-//         // "declaration": false,
-//         "declaration": true,
-//         "emitDeclarationOnly": true,
-//         "removeComments": true,
-//         "emitDecoratorMetadata": true,
-//         "experimentalDecorators": true,
-//         "target": "es6",
-//         "sourceMap": false
-//     }
-// }
+const copyDTs = (
+    { serverFolder, moduleFolder }: Options,
+    log = (...args: any[]) => void 0,
+) => (file: string) => {
+    if (file.endsWith('.d.ts')) {
+        log(`Copy ${file} to module.`);
+        return copy(join(serverFolder, file), join(moduleFolder, file));
+    }
+};

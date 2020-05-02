@@ -6,3 +6,4 @@ export { User } from './entity/User';
 export default async function(): Promise<User[]> {
     return getConnection().manager.find(User);
 }
+

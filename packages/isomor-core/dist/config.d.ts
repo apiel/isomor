@@ -10,7 +10,6 @@ export interface TranspilerOptions {
     srcFolder: string;
     noValidation: boolean;
     watchMode: boolean;
-    skipBuildServer: boolean;
 }
 export interface ServerOptions {
     port: number;

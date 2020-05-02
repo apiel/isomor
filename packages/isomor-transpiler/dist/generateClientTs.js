@@ -14,37 +14,36 @@ const logol_1 = require("logol");
 const fs_extra_1 = require("fs-extra");
 const glob = require("glob");
 const util_1 = require("util");
-const shell_1 = require("./shell");
+const chokidar_1 = require("chokidar");
 const globAsync = util_1.promisify(glob);
 function generateClientTs(options) {
     return __awaiter(this, void 0, void 0, function* () {
-        const { srcFolder } = options;
-        const tsFiles = yield globAsync('**/*.ts', { cwd: srcFolder });
-        if (tsFiles.length) {
-            yield generateDeclarationWithTsc(options);
+        const { serverFolder, moduleFolder, watchMode } = options;
+        if (watchMode) {
+            watchForDTsFiles(options);
+        }
+        else {
+            const dtsFiles = yield globAsync('**/*.d.ts', { cwd: serverFolder });
+            logol_1.info(`Copy d.ts files to module`, dtsFiles);
+            yield Promise.all(dtsFiles.map(copyDTs(options)));
         }
     });
 }
 exports.generateClientTs = generateClientTs;
-function generateDeclarationWithTsc({ moduleFolder, srcFolder, }) {
-    return __awaiter(this, void 0, void 0, function* () {
-        logol_1.info('Generate client d.ts file with tsc');
-        const tsConfigFile = 'tsconfig.d.json';
-        const tsConfigPath = path_1.join(srcFolder, tsConfigFile);
-        if (!(yield fs_extra_1.pathExists(tsConfigPath))) {
-            const tsconfig = {
-                compilerOptions: {
-                    types: ['node'],
-                    module: 'commonjs',
-                    declaration: true,
-                    experimentalDecorators: true,
-                    emitDeclarationOnly: true,
-                    target: 'es6',
-                },
-            };
-            yield fs_extra_1.outputJson(tsConfigPath, tsconfig);
-        }
-        return shell_1.shell('tsc', `--outDir ${moduleFolder} -p ${tsConfigFile}`.split(' '), srcFolder);
-    });
+function watchForDTsFiles(options) {
+    const { serverFolder, moduleFolder, watchMode } = options;
+    chokidar_1.watch('.', {
+        cwd: serverFolder,
+        usePolling: process.env.CHOKIDAR_USEPOLLING === 'true',
+    })
+        .on('ready', () => logol_1.info('Watch for d.ts files...'))
+        .on('add', copyDTs(options, logol_1.info))
+        .on('change', copyDTs(options, logol_1.info));
 }
+const copyDTs = ({ serverFolder, moduleFolder }, log = (...args) => void 0) => (file) => {
+    if (file.endsWith('.d.ts')) {
+        log(`Copy ${file} to module.`);
+        return fs_extra_1.copy(path_1.join(serverFolder, file), path_1.join(moduleFolder, file));
+    }
+};
 //# sourceMappingURL=generateClientTs.js.map

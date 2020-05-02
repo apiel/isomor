@@ -15,7 +15,6 @@ export interface TranspilerOptions {
     srcFolder: string;
     noValidation: boolean;
     watchMode: boolean;
-    skipBuildServer: boolean;
 }
 
 export interface ServerOptions {
@@ -61,7 +60,6 @@ export function getOptions(): Options {
             srcFolder: process.env.ISOMOR_SRC_FOLDER || join(process.cwd(), DEFAULT_NAME),
             noValidation: process.env.ISOMOR_NO_VALIDATION === 'true',
             watchMode: process.env.ISOMOR_WATCH === 'true',
-            skipBuildServer: process.env.ISOMOR_SKIP_BUILD_SERVER === 'true',
             // server
             port: process.env.ISOMOR_PORT
                 ? parseInt(process.env.ISOMOR_PORT, 10)

@@ -12,5 +12,9 @@ require('please-upgrade-node')(pkg, {
     └─────────────────────────────────────────────────────────┘
     `,
 });
-build_1.build(isomor_core_1.getOptions());
+const options = isomor_core_1.getOptions();
+if (process.argv.includes('--watch')) {
+    options.watchMode = true;
+}
+build_1.build(options);
 //# sourceMappingURL=index.js.map

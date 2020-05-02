@@ -13,6 +13,7 @@ const logol_1 = require("logol");
 const fs_extra_1 = require("fs-extra");
 const isomor_core_1 = require("isomor-core");
 const generateClientJs_1 = require("./generateClientJs");
+const generateClientTs_1 = require("./generateClientTs");
 const generateServer_1 = require("./generateServer");
 function prepare(options) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -21,20 +22,18 @@ function prepare(options) {
         yield fs_extra_1.emptyDir(jsonSchemaFolder);
         yield fs_extra_1.emptyDir(serverFolder);
         yield fs_extra_1.emptyDir(moduleFolder);
-        yield fs_extra_1.copy(srcFolder, moduleFolder);
     });
 }
 function build(options) {
     return __awaiter(this, void 0, void 0, function* () {
         yield prepare(options);
         logol_1.info('Start transpiling', options.moduleName);
-        const { srcFolder, extensions, skipBuildServer } = options;
+        const { srcFolder, extensions } = options;
         const files = yield isomor_core_1.getFiles(srcFolder, extensions);
         logol_1.info(`Found ${files.length} file(s).`);
+        yield generateServer_1.generateServer(options);
         yield Promise.all(files.map((file) => generateClientJs_1.generateClientJs(options, file)));
-        if (!skipBuildServer) {
-            yield generateServer_1.generateServer(options);
-        }
+        yield generateClientTs_1.generateClientTs(options);
     });
 }
 exports.build = build;

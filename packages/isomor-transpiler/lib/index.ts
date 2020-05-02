@@ -13,4 +13,8 @@ require('please-upgrade-node')(pkg, {  // tslint:disable-line
     `,
 });
 
-build(getOptions());
+const options = getOptions();
+if (process.argv.includes('--watch')) {
+    options.watchMode = true;
+}
+build(options);

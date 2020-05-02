@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const chalk_1 = require("chalk");
 const spawn = require("cross-spawn");
 const debug_1 = require("debug");
 function shell(command, args, cwd = process.cwd(), env) {
@@ -11,16 +10,12 @@ function shell(command, args, cwd = process.cwd(), env) {
             env: Object.assign(Object.assign({ COLUMNS: process.env.COLUMNS || process.stdout.columns.toString(), LINES: process.env.LINES || process.stdout.rows.toString() }, env), process.env),
         });
         cmd.stdout.on('data', (data) => {
-            process.stdout.write(chalk_1.gray(data.toString()));
+            if (data.toString() !== '\u001bc') {
+                process.stdout.write(data.toString());
+            }
         });
         cmd.stderr.on('data', (data) => {
-            const dataStr = data.toString();
-            if (dataStr.indexOf('warning') === 0) {
-                process.stdout.write(chalk_1.yellow('warming') + dataStr.substring(7));
-            }
-            else {
-                process.stdout.write(chalk_1.red(data.toString()));
-            }
+            process.stderr.write(data.toString());
         });
         cmd.on('close', (code) => (code ? process.exit(code) : resolve()));
     });

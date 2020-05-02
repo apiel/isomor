@@ -19,7 +19,6 @@ function getOptions() {
             srcFolder: process.env.ISOMOR_SRC_FOLDER || path_1.join(process.cwd(), DEFAULT_NAME),
             noValidation: process.env.ISOMOR_NO_VALIDATION === 'true',
             watchMode: process.env.ISOMOR_WATCH === 'true',
-            skipBuildServer: process.env.ISOMOR_SKIP_BUILD_SERVER === 'true',
             port: process.env.ISOMOR_PORT
                 ? parseInt(process.env.ISOMOR_PORT, 10)
                 : 3005,

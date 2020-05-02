@@ -8,6 +8,7 @@
 - add a shared folder between frontend and backend
 - in dev mode we could use babel to transpile server instead of tsc, since it much faster
 - d.ts file get converted to d.js, might be a pb, but in general should not be in api folder
+- in config give a way to skip ts
 
 - Server no need reload, just clear cache
     - in dev mode check last change of file and reload endpoint only

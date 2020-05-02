@@ -1,14 +1,9 @@
 ### ToDo
 
-- first test typeORM project
-- fix transpiler watcher
 - update validator
-- /!\ Put in DOC how to setup tsconfig noImplicitThis
 - update DOC
-- add a shared folder between frontend and backend
-- in dev mode we could use babel to transpile server instead of tsc, since it much faster
-- d.ts file get converted to d.js, might be a pb, but in general should not be in api folder
-- in config give a way to skip ts
+- add a shared folder between frontend and backend -> example/react-validator
+- in config give a way to skip ts?
 
 - Server no need reload, just clear cache
     - in dev mode check last change of file and reload endpoint only

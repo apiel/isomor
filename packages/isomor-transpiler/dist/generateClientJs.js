@@ -26,7 +26,7 @@ function generateClientJs(options) {
 exports.generateClientJs = generateClientJs;
 function clientWatchForJs(options) {
     const { srcFolder } = options;
-    chokidar_1.watch('*.ts', {
+    chokidar_1.watch('*.ts|*.js', {
         cwd: srcFolder,
         usePolling: process.env.CHOKIDAR_USEPOLLING === 'true',
     })

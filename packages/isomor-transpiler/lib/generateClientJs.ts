@@ -14,11 +14,11 @@ export async function generateClientJs(options: Options) {
 
 export function clientWatchForJs(options: Options) {
     const { srcFolder } = options;
-    watch('*.ts', {
+    watch('*.ts|*.js', {
         cwd: srcFolder,
         usePolling: process.env.CHOKIDAR_USEPOLLING === 'true',
     })
-        .on('ready', () => info('Watch for TS files to convert to JS...'))
+        .on('ready', () => info('Watch for files to generate to JS client...'))
         .on('add', transpileFileToJs(options, info))
         .on('change', transpileFileToJs(options, info));
 }

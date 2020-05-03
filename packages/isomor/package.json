@@ -3,9 +3,8 @@
     "version": "2.7.3",
     "author": "Alexandre Piel <alexandre.piel@gmail.com>",
     "license": "MIT",
-    "main": "dist/lib/index.js",
-    "types": "dist/lib/index.d.ts",
-    "bin": "dist/bin/index.js",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
     "description": "Isomor unify the frontend and the backend by generating automatically the API",
     "homepage": "https://apiel.github.io/isomor/",
     "repository": {
@@ -18,34 +17,20 @@
     "keywords": [
         "isomorphic",
         "typescript",
-        "react",
-        "vue",
-        "angular",
-        "ng",
-        "nest",
         "server"
     ],
     "scripts": {
         "prepublishOnly": "cp ../../README.md . && yarn build",
-        "start": "ts-node bin/index.ts",
         "prebuild": "rm -rf dist/",
-        "build": "tsc -p tsconfig.json && chmod +x dist/bin/index.js",
-        "lint": "tslint -p tsconfig.json -c tslint.json"
+        "build": "tsc -p tsconfig.json"
     },
     "dependencies": {
-        "chalk": "^3.0.0",
-        "cross-spawn": "^7.0.2",
-        "inquirer": "^7.0.4",
         "isomor-server": "^2.7.3",
         "isomor-transpiler": "^2.7.3",
         "typescript": "^3.7.5"
     },
     "devDependencies": {
-        "@types/chalk": "^2.2.0",
-        "@types/cross-spawn": "^6.0.1",
-        "@types/inquirer": "^6.5.0",
-        "ts-node": "^8.6.2",
-        "tslint": "^6.0.0"
+        "ts-node": "^8.6.2"
     },
     "gitHead": "9a8bbcc96908b631b6d3c828054c70538e150963"
 }

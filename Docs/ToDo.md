@@ -4,8 +4,7 @@
 - update DOC
     - inform that sub folder should not be called "server"
     - scripts
-- in config give a way to skip ts?
-- cleanup isomor installer
+    - explain how to install
 - json schema generator, multiple file / watch
 - implement e2e test
 

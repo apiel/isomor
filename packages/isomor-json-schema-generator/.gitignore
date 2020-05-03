@@ -1,4 +1,8 @@
-coverage/
-dist/
+
 node_modules/
-test.ts
+dist-app/
+dist-server/
+src
+json-schema
+tmp
+modules

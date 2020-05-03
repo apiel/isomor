@@ -1,13 +1,3 @@
-.editorconfig
-.idea/
-.travis.yml
-.vscode/
-coverage/
-factory/
-index.ts
-node_modules/
+*.test.*
 src/
-test/
-ts-json-schema-generator.ts
-tsconfig.json
-tslint.json
+src-isomor/

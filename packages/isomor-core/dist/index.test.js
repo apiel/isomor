@@ -35,12 +35,6 @@ describe('index', () => {
     beforeEach(() => __awaiter(void 0, void 0, void 0, function* () {
         yield destroyTests();
     }));
-    describe('getJsonSchemaFileName()', () => {
-        it('should return json validation file name', () => {
-            expect(_1.getJsonSchemaFileName('name'))
-                .toEqual(`name.json`);
-        });
-    });
     describe('getFiles()', () => {
         it('should return an empty array if files does not exist', () => __awaiter(void 0, void 0, void 0, function* () {
             const files = yield _1.getFiles(rootFolder, ['.js', '.ts']);

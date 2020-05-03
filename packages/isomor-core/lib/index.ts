@@ -8,16 +8,6 @@ const readdir = promisify(fs.readdir);
 
 export { getOptions, Options } from './config';
 
-export interface ValidationSchema {
-    args: string[];
-    schema: any;
-    name: string;
-}
-
-export function getJsonSchemaFileName(name: string) {
-    return `${name}.json`;
-}
-
 export async function getFiles(
     folder: string,
     extensions: Extensions,

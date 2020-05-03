@@ -5,7 +5,7 @@ import * as bodyParser from 'body-parser';
 import * as cookieParser from 'cookie-parser';
 import { setup, serve } from 'swagger-ui-express';
 import * as morgan from 'morgan';
-import { getOptions } from 'isomor-core';
+import { getOptions, Options } from 'isomor-core';
 import { join } from 'path';
 import { Server } from 'http';
 
@@ -18,15 +18,7 @@ import { useIsomorWs } from './use-isomor-ws';
 const API_DOCS = '/api-docs';
 
 export async function server(
-    {
-        port,
-        moduleName,
-        staticFolder,
-        wsTimeout,
-        serverFolder,
-        startupFile,
-        jsonSchemaFolder,
-    } = getOptions(),
+    options = getOptions(),
 ): Promise<{
     app: express.Express;
     server: Server;
@@ -43,13 +35,11 @@ export async function server(
         }),
     );
 
-    await startup(app, serverFolder, startupFile, info);
+    const { port, staticFolder, wsTimeout } = options;
 
-    const routes = await getIsomorRoutes(
-        moduleName,
-        serverFolder,
-        jsonSchemaFolder,
-    );
+    await startup(app, options, info);
+
+    const routes = await getIsomorRoutes(options);
     useIsomorHttp(app, routes);
     info(
         `Created endpoints:`,

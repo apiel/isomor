@@ -5,6 +5,7 @@
 - update DOC
 - add a shared folder between frontend and backend -> example/react-validator
 - in config give a way to skip ts?
+- cleanup isomor installer
 - json schema generator, multiple file / watch
 
 - Server no need reload, just clear cache

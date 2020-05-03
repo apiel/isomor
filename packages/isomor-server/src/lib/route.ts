@@ -1,30 +1,29 @@
-import { ValidationSchema, getJsonSchemaFileName, getFiles } from 'isomor-core';
+import { getFiles, Options } from 'isomor-core';
 import { getUrlPath } from 'isomor';
 import { join, extname, basename } from 'path';
 import { isFunction } from 'util';
-import { pathExistsSync, readJSONSync } from 'fs-extra';
+import { pathExists, readJSON } from 'fs-extra';
 
 import { getFullPath } from './utils';
 
 export interface Route {
     urlPath: string;
     file: string;
-    validationSchema: ValidationSchema;
+    validationSchema: any; // could be JSONSchema7 from 'json-schema'
     fn: any;
 }
 
-export async function getIsomorRoutes(
-    moduleName: string,
-    serverFolder: string,
-    jsonSchemaFolder: string,
-): Promise<Route[]> {
+export async function getIsomorRoutes(options: Options): Promise<Route[]> {
+    const { serverFolder, moduleName } = options;
     const functions = await getFunctions(serverFolder);
-    return functions.map(({ file, name, fn }) => ({
-        fn,
-        file,
-        urlPath: getUrlPath(moduleName, name),
-        validationSchema: loadValidation(jsonSchemaFolder, name),
-    }));
+    return Promise.all(
+        functions.map(async ({ file, name, fn }) => ({
+            fn,
+            file,
+            urlPath: getUrlPath(moduleName, name),
+            validationSchema: await loadValidation(options, name),
+        })),
+    );
 }
 interface FunctionName {
     file: string;
@@ -52,15 +51,15 @@ async function getFunctions(serverFolder: string): Promise<FunctionName[]> {
     });
 }
 
-function loadValidation( // might want to switch to async
-    jsonSchemaFolder: string,
+async function loadValidation(
+    { noValidation, serverFolder }: Options,
     name: string,
-): ValidationSchema {
-    if (jsonSchemaFolder?.length) {
-        const jsonSchemaFile = getJsonSchemaFileName(name);
-        const jsonSchemaPath = join(jsonSchemaFolder, jsonSchemaFile);
-        if (pathExistsSync(jsonSchemaPath)) {
-            return readJSONSync(jsonSchemaPath);
+): Promise<any> {
+    // might want to switch to async
+    if (!noValidation) {
+        const jsonSchemaPath = join(serverFolder, `${name}.ts.json`);
+        if (await pathExists(jsonSchemaPath)) {
+            return readJSON(jsonSchemaPath);
         }
     }
 }

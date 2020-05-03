@@ -16,10 +16,6 @@ const fs_extra_1 = require("fs-extra");
 const readdir = util_1.promisify(fs.readdir);
 var config_1 = require("./config");
 exports.getOptions = config_1.getOptions;
-function getJsonSchemaFileName(name) {
-    return `${name}.json`;
-}
-exports.getJsonSchemaFileName = getJsonSchemaFileName;
 function getFiles(folder, extensions) {
     return __awaiter(this, void 0, void 0, function* () {
         if (!(yield fs_extra_1.pathExists(folder))) {

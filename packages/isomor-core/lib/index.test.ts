@@ -1,4 +1,4 @@
-import { getFiles, getJsonSchemaFileName } from '.';
+import { getFiles } from '.';
 import { outputFile, remove } from 'fs-extra';
 import { join } from 'path';
 
@@ -34,13 +34,6 @@ describe('index', () => {
 
     beforeEach(async () => {
         await destroyTests();
-    });
-
-    describe('getJsonSchemaFileName()', () => {
-        it('should return json validation file name', () => {
-            expect(getJsonSchemaFileName('name'))
-                .toEqual(`name.json`);
-        });
     });
 
     describe('getFiles()', () => {

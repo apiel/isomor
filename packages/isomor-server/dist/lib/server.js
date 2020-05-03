@@ -24,7 +24,7 @@ const use_isomor_http_1 = require("./use-isomor-http");
 const apidoc_1 = require("./apidoc");
 const use_isomor_ws_1 = require("./use-isomor-ws");
 const API_DOCS = '/api-docs';
-function server({ port, moduleName, staticFolder, wsTimeout, serverFolder, startupFile, jsonSchemaFolder, } = isomor_core_1.getOptions()) {
+function server(options = isomor_core_1.getOptions()) {
     return __awaiter(this, void 0, void 0, function* () {
         logol_1.info('Starting server.');
         const app = express();
@@ -33,8 +33,9 @@ function server({ port, moduleName, staticFolder, wsTimeout, serverFolder, start
         app.use(morgan('dev', {
             stream: { write: (str) => logol_1.log(str.trim()) },
         }));
-        yield startup_1.startup(app, serverFolder, startupFile, logol_1.info);
-        const routes = yield route_1.getIsomorRoutes(moduleName, serverFolder, jsonSchemaFolder);
+        const { port, staticFolder, wsTimeout } = options;
+        yield startup_1.startup(app, options, logol_1.info);
+        const routes = yield route_1.getIsomorRoutes(options);
         use_isomor_http_1.useIsomorHttp(app, routes);
         logol_1.info(`Created endpoints:`, routes.map(({ urlPath }) => urlPath));
         app.use(API_DOCS, swagger_ui_express_1.serve, swagger_ui_express_1.setup(apidoc_1.getApiDoc(routes)));

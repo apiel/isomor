@@ -3,14 +3,14 @@ import { join } from 'path';
 import { promisify } from 'util';
 import { exists } from 'fs';
 import { getFullPath } from './utils';
+import { Options } from 'isomor-core';
 
 let startupImport: any;
 
 export const getInstance = () => startupImport && startupImport.getInstance;
 
 export async function loadStartupImport(
-    serverFolder: string,
-    startupFile: string,
+    { serverFolder, startupFile }: Options,
     info?: (...args: any) => void,
 ) {
     const path = join(serverFolder, startupFile);
@@ -25,11 +25,10 @@ export async function loadStartupImport(
 
 export async function startup(
     app: express.Express,
-    serverFolder: string,
-    startupFile: string,
+    options: Options,
     info?: (...args: any) => void,
 ): Promise<void> {
-    await loadStartupImport(serverFolder, startupFile, info);
+    await loadStartupImport(options, info);
     if (startupImport?.default) {
         startupImport.default(app);
         if (info) {

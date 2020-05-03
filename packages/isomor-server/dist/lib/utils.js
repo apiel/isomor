@@ -5,8 +5,7 @@ const Ajv = require("ajv");
 function validateArgs(validationSchema, args) {
     if (validationSchema) {
         const ajv = new Ajv();
-        ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-06.json'));
-        const valid = ajv.validate(validationSchema.schema, args);
+        const valid = ajv.validate(validationSchema, args);
         if (!valid) {
             throw (new Error(`Invalid argument format: ${ajv.errorsText()}.`));
         }

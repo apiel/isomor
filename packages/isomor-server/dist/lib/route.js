@@ -15,15 +15,18 @@ const path_1 = require("path");
 const util_1 = require("util");
 const fs_extra_1 = require("fs-extra");
 const utils_1 = require("./utils");
-function getIsomorRoutes(moduleName, serverFolder, jsonSchemaFolder) {
+function getIsomorRoutes(options) {
     return __awaiter(this, void 0, void 0, function* () {
+        const { serverFolder, moduleName } = options;
         const functions = yield getFunctions(serverFolder);
-        return functions.map(({ file, name, fn }) => ({
-            fn,
-            file,
-            urlPath: isomor_1.getUrlPath(moduleName, name),
-            validationSchema: loadValidation(jsonSchemaFolder, name),
-        }));
+        return Promise.all(functions.map(({ file, name, fn }) => __awaiter(this, void 0, void 0, function* () {
+            return ({
+                fn,
+                file,
+                urlPath: isomor_1.getUrlPath(moduleName, name),
+                validationSchema: yield loadValidation(options, name),
+            });
+        })));
     });
 }
 exports.getIsomorRoutes = getIsomorRoutes;
@@ -43,14 +46,14 @@ function getFunctions(serverFolder) {
         });
     });
 }
-function loadValidation(jsonSchemaFolder, name) {
-    var _a;
-    if ((_a = jsonSchemaFolder) === null || _a === void 0 ? void 0 : _a.length) {
-        const jsonSchemaFile = isomor_core_1.getJsonSchemaFileName(name);
-        const jsonSchemaPath = path_1.join(jsonSchemaFolder, jsonSchemaFile);
-        if (fs_extra_1.pathExistsSync(jsonSchemaPath)) {
-            return fs_extra_1.readJSONSync(jsonSchemaPath);
+function loadValidation({ noValidation, serverFolder }, name) {
+    return __awaiter(this, void 0, void 0, function* () {
+        if (!noValidation) {
+            const jsonSchemaPath = path_1.join(serverFolder, `${name}.ts.json`);
+            if (yield fs_extra_1.pathExists(jsonSchemaPath)) {
+                return fs_extra_1.readJSON(jsonSchemaPath);
+            }
         }
-    }
+    });
 }
 //# sourceMappingURL=route.js.map

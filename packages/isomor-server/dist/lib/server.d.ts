@@ -1,7 +1,8 @@
 /// <reference types="node" />
 import * as express from 'express';
+import { Options } from 'isomor-core';
 import { Server } from 'http';
-export declare function server({ port, moduleName, staticFolder, wsTimeout, serverFolder, startupFile, jsonSchemaFolder, }?: import("isomor-core").Options): Promise<{
+export declare function server(options?: Options): Promise<{
     app: express.Express;
     server: Server;
 }>;

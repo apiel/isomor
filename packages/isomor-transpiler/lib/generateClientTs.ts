@@ -5,6 +5,7 @@ import { copy } from 'fs-extra';
 import * as glob from 'glob';
 import { promisify } from 'util';
 import { watch } from 'chokidar';
+import { updateDTsFile } from './event';
 
 const globAsync = promisify(glob);
 
@@ -33,6 +34,7 @@ const copyDTs = (
     log = (...args: any[]) => void 0,
 ) => (file: string) => {
     if (file.endsWith('.d.ts')) {
+        updateDTsFile(join(serverFolder, file));
         log(`Copy ${file} to module.`);
         return copy(join(serverFolder, file), join(moduleFolder, file));
     }

@@ -14,11 +14,11 @@ const fs_extra_1 = require("fs-extra");
 const generateClientJs_1 = require("./generateClientJs");
 const generateClientTs_1 = require("./generateClientTs");
 const generateServer_1 = require("./generateServer");
+const validation_1 = require("./validation");
 function prepare(options) {
     return __awaiter(this, void 0, void 0, function* () {
-        const { jsonSchemaFolder, serverFolder, moduleFolder } = options;
+        const { serverFolder, moduleFolder } = options;
         logol_1.info('Prepare folders');
-        yield fs_extra_1.emptyDir(jsonSchemaFolder);
         yield fs_extra_1.emptyDir(serverFolder);
         yield fs_extra_1.emptyDir(moduleFolder);
     });
@@ -28,6 +28,7 @@ function build(options) {
         yield prepare(options);
         logol_1.info('Start transpiling', options.moduleName);
         const { watchMode } = options;
+        validation_1.watchForValidation();
         if (watchMode) {
             generateClientTs_1.clientWatchForTs(options);
             generateClientJs_1.clientWatchForJs(options);

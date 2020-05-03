@@ -7,7 +7,6 @@ export interface CommonOptions {
     moduleName: string;
     moduleFolder: string;
     serverFolder: string;
-    jsonSchemaFolder: string;
     extensions: Extensions;
 }
 
@@ -54,7 +53,6 @@ export function getOptions(): Options {
             moduleName,
             moduleFolder,
             serverFolder: process.env.ISOMOR_SERVER_FOLDER || join(moduleFolder, 'dist-server'),
-            jsonSchemaFolder: process.env.ISOMOR_JSON_SCHEMA_FOLDER || join(moduleFolder, 'json-schema'),
             extensions: ['.ts', '.js', ...(process.env.ISOMOR_EXTENSIONS?.split(',') || [])],
             // transpiler
             srcFolder: process.env.ISOMOR_SRC_FOLDER || join(process.cwd(), DEFAULT_NAME),

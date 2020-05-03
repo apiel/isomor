@@ -5,12 +5,12 @@ import { Options, getFiles } from 'isomor-core';
 import { generateClientJs, clientWatchForJs } from './generateClientJs';
 import { generateClientTs, clientWatchForTs } from './generateClientTs';
 import { generateServer } from './generateServer';
+import { watchForValidation } from './validation';
 
 async function prepare(options: Options) {
-    const { jsonSchemaFolder, serverFolder, moduleFolder } = options;
+    const { serverFolder, moduleFolder } = options;
 
     info('Prepare folders');
-    await emptyDir(jsonSchemaFolder);
     await emptyDir(serverFolder);
     await emptyDir(moduleFolder);
 
@@ -25,6 +25,7 @@ export async function build(options: Options) {
     const { watchMode } = options;
 
     // For the following code, order matter, depending on watch mode or not
+    watchForValidation();
     if (watchMode) {
         clientWatchForTs(options);
         clientWatchForJs(options);

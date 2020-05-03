@@ -3,7 +3,6 @@ export interface CommonOptions {
     moduleName: string;
     moduleFolder: string;
     serverFolder: string;
-    jsonSchemaFolder: string;
     extensions: Extensions;
 }
 export interface TranspilerOptions {

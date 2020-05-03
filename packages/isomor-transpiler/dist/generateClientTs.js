@@ -15,6 +15,7 @@ const fs_extra_1 = require("fs-extra");
 const glob = require("glob");
 const util_1 = require("util");
 const chokidar_1 = require("chokidar");
+const event_1 = require("./event");
 const globAsync = util_1.promisify(glob);
 function generateClientTs(options) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -38,6 +39,7 @@ function clientWatchForTs(options) {
 exports.clientWatchForTs = clientWatchForTs;
 const copyDTs = ({ serverFolder, moduleFolder }, log = (...args) => void 0) => (file) => {
     if (file.endsWith('.d.ts')) {
+        event_1.updateDTsFile(path_1.join(serverFolder, file));
         log(`Copy ${file} to module.`);
         return fs_extra_1.copy(path_1.join(serverFolder, file), path_1.join(moduleFolder, file));
     }

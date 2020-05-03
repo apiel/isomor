@@ -18,6 +18,7 @@
         "build": "tsc -p tsconfig.json && chmod +x dist/index.js"
     },
     "dependencies": {
+        "isomor-core": "^2.5.2",
         "ts-json-schema-generator": "^0.67.1",
         "ts-node": "^8.6.2",
         "typescript": "^3.7.5"

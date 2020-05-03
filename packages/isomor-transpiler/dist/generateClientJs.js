@@ -15,6 +15,7 @@ const logol_1 = require("logol");
 const debug_1 = require("debug");
 const fs_extra_1 = require("fs-extra");
 const chokidar_1 = require("chokidar");
+const event_1 = require("./event");
 function generateClientJs(options) {
     return __awaiter(this, void 0, void 0, function* () {
         const { srcFolder, extensions } = options;
@@ -30,14 +31,15 @@ function clientWatchForJs(options) {
         cwd: srcFolder,
         usePolling: process.env.CHOKIDAR_USEPOLLING === 'true',
     })
-        .on('ready', () => logol_1.info('Watch for TS files to convert to JS...'))
+        .on('ready', () => logol_1.info('Watch for files to generate to JS client...'))
         .on('add', transpileFileToJs(options, logol_1.info))
         .on('change', transpileFileToJs(options, logol_1.info));
 }
 exports.clientWatchForJs = clientWatchForJs;
 const transpileFileToJs = (options, log = (...args) => void 0) => (file) => {
     if (!file.endsWith('.d.ts') && file.endsWith('.ts')) {
-        const { moduleFolder } = options;
+        const { moduleFolder, srcFolder } = options;
+        event_1.updateTsFileInSrc(path_1.join(srcFolder, file));
         const name = path_1.basename(file, path_1.extname(file));
         const moduleJsFile = path_1.join(moduleFolder, `${name}.js`);
         const code = getJsCode(options, name);

@@ -1,9 +1,9 @@
 ### ToDo
 
-- update validator
+- add a shared folder between frontend and backend -> example/react-validator
 - cleanup deps
 - update DOC
-- add a shared folder between frontend and backend -> example/react-validator
+    - inform that sub folder should not be called server
 - in config give a way to skip ts?
 - cleanup isomor installer
 - json schema generator, multiple file / watch

@@ -35,6 +35,7 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
+    "class-validator": "^0.12.2",
     "fs-extra": "^8.1.0",
     "http-proxy-middleware": "^0.20.0",
     "isomor": "^2.5.2",

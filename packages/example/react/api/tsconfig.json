@@ -1,1 +1,1 @@
-{"compilerOptions":{"types":["node"],"module":"commonjs","declaration":false,"removeComments":true,"emitDecoratorMetadata":true,"experimentalDecorators":true,"target":"es6","sourceMap":false}}
+{"compilerOptions":{"types":["node"],"module":"commonjs","declaration":true,"removeComments":true,"emitDecoratorMetadata":true,"experimentalDecorators":true,"target":"es6","sourceMap":false}}

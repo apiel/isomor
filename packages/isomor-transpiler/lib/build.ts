@@ -1,6 +1,6 @@
 import { info } from 'logol';
 import { emptyDir } from 'fs-extra';
-import { Options, getFiles } from 'isomor-core';
+import { Options } from 'isomor-core';
 
 import { generateClientJs, clientWatchForJs } from './generateClientJs';
 import { generateClientTs, clientWatchForTs } from './generateClientTs';

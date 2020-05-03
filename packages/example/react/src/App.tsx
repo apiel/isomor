@@ -5,6 +5,7 @@ import { Auth } from './Auth';
 import { ErrorExample } from './ErrorExample';
 import { UpTime } from './Uptime';
 import { Color } from './Color';
+import { Form } from './Form';
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
             <UpTime />
             <Color />
             <ErrorExample />
+            <Form />
           </div>
       </div>
   );

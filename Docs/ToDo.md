@@ -1,12 +1,13 @@
 ### ToDo
 
-- add a shared folder between frontend and backend -> example/react-validator
 - cleanup deps
 - update DOC
-    - inform that sub folder should not be called server
+    - inform that sub folder should not be called "server"
+    - scripts
 - in config give a way to skip ts?
 - cleanup isomor installer
 - json schema generator, multiple file / watch
+- implement e2e test
 
 - Server no need reload, just clear cache
     - in dev mode check last change of file and reload endpoint only

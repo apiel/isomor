@@ -20,14 +20,11 @@
     "not op_mini all"
   ],
   "scripts": {
-    "run-in-docker": "docker build . -t isomor-example-react && docker rmi isomor-example-react",
     "isomor:build": "isomor-transpiler",
-    "isomor:build:dev": "ISOMOR_WATCH=true isomor-transpiler",
     "isomor:serv": "isomor-server",
-    "isomor:serv:dev": "ISOMOR_WATCH=true isomor-server",
-    "isomor:serv:prod": "ISOMOR_STATIC_FOLDER=./build yarn serv",
+    "isomor:serv:prod": "ISOMOR_STATIC_FOLDER=./build yarn isomor:serv",
     "prod": "yarn isomor:build && yarn build && yarn isomor:serv:prod",
-    "dev": "run-screen 'yarn isomor:build:dev' 'yarn isomor:serv:dev' 'yarn start'",
+    "dev": "run-screen 'yarn isomor:build --watch' 'yarn isomor:serv --watch' 'yarn start'",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "build:stat": "yarn build --stats && npx webpack-bundle-analyzer build/bundle-stats.json -m static -r build/bundle-stats.html -O",

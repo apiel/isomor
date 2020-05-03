@@ -3,11 +3,12 @@
 import { Config } from 'ts-json-schema-generator';
 import { createGenerator } from './generator';
 
-// console.log('process.argv', process.argv);
+if (process.argv.length < 3) {
+    process.stdout.write('Please provide path to the ts file.\n');
+} else {
+    const config = {
+        path: process.argv[2],
+    } as Config;
 
-const config = {
-    path: '../example/react-typeorm/api/getList.ts',
-} as Config;
-
-const schema = createGenerator(config).createSchema('default');
-console.log('schema', schema);
+    createGenerator(config).createSchema('default', process.argv[3]);
+}

@@ -1,20 +1,14 @@
 #!/usr/bin/env node
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const isomor_core_1 = require("isomor-core");
-const build_1 = require("./build");
-const pkg = require('../package.json');
-require('please-upgrade-node')(pkg, {
-    message: (v) => `
-    ┌─────────────────────────────────────────────────────────┐
-    │ isomor-transpiler requires at least version ${v} of Node. │
-    │                     Please upgrade.                     │
-    └─────────────────────────────────────────────────────────┘
-    `,
-});
-const options = isomor_core_1.getOptions();
-if (process.argv.includes('--watch')) {
-    options.watchMode = true;
+const generator_1 = require("./generator");
+if (process.argv.length < 3) {
+    process.stdout.write('Please provide path to the ts file.\n');
 }
-build_1.build(options);
+else {
+    const config = {
+        path: process.argv[2],
+    };
+    generator_1.createGenerator(config).createSchema('default', process.argv[3]);
+}
 //# sourceMappingURL=index.js.map

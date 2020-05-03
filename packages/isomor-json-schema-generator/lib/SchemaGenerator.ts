@@ -1,4 +1,5 @@
 import * as ts from 'typescript';
+import { writeFileSync } from 'fs';
 import { NoRootTypeError } from 'ts-json-schema-generator/dist/src/Error/NoRootTypeError';
 import {
     Context,
@@ -14,7 +15,6 @@ import {
     localSymbolAtNode,
     symbolAtNode,
 } from 'ts-json-schema-generator/dist/src/Utils/symbolAtNode';
-import { notUndefined } from 'ts-json-schema-generator/dist/src/Utils/notUndefined';
 import { removeUnreachable } from 'ts-json-schema-generator/dist/src/Utils/removeUnreachable';
 
 export class SchemaGenerator {
@@ -24,25 +24,21 @@ export class SchemaGenerator {
         private readonly typeFormatter: TypeFormatter,
     ) {}
 
-    public createSchema(fullName: string): Schema {
-        const rootNodes = this.getRootNodes(fullName);
-        return this.createSchemaFromNodes(rootNodes);
+    public createSchema(fullName: string, destination?: string): Schema {
+        const { node, rootSourceFile } = this.getRootNode(fullName);
+        const schema = this.createSchemaFromNodes(node);
+
+        const file = destination || `${rootSourceFile.fileName}.json`;
+        writeFileSync(file, JSON.stringify(schema, null, 4));
+
+        return schema;
     }
 
-    private createSchemaFromNodes(rootNodes: ts.Node[]): Schema {
-        const rootTypes = rootNodes
-            .map((rootNode) => {
-                return this.nodeParser.createType(rootNode, new Context());
-            })
-            .filter(notUndefined);
-        const rootTypeDefinition =
-            rootTypes.length === 1
-                ? this.getRootTypeDefinition(rootTypes[0])
-                : undefined;
+    private createSchemaFromNodes(rootNode: ts.Node): Schema {
+        const rootType = this.nodeParser.createType(rootNode, new Context());
+        const rootTypeDefinition = this.getRootTypeDefinition(rootType);
         const definitions: StringMap<Definition> = {};
-        rootTypes.forEach((rootType) =>
-            this.appendRootChildDefinitions(rootType, definitions),
-        );
+        this.appendRootChildDefinitions(rootType, definitions);
 
         const reachableDefinitions = removeUnreachable(
             rootTypeDefinition,
@@ -56,7 +52,7 @@ export class SchemaGenerator {
         };
     }
 
-    private getRootNodes(fullName: string) {
+    private getRootNode(fullName: string) {
         const rootFileNames = this.program.getRootFileNames();
         const rootSourceFiles = this.program
             .getSourceFiles()
@@ -78,7 +74,7 @@ export class SchemaGenerator {
                     node.kind === ts.SyntaxKind.FunctionDeclaration ||
                     node.kind === ts.SyntaxKind.ArrowFunction
                 ) {
-                    return [node];
+                    return { node, rootSourceFile };
                 }
             }
         }

@@ -1,5 +1,6 @@
 * [Introduction](/?id=isomor)
-* [Example](/?id=example)
+* [How does it work](/?id=how-does-it-work)
+* [Getting started](/?id=getting-started)
 * [Why Isomor](Docs/Why.md)
 * Advanced guides
     * [Server](Docs/Server.md)

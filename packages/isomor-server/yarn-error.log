@@ -1,5 +1,5 @@
 Arguments: 
-  /home/alex/.nvm/versions/node/v12.14.1/bin/node /usr/local/bin/yarn add chokidar
+  /home/alex/.nvm/versions/node/v12.14.1/bin/node /usr/local/bin/yarn remove tslint @types/fs-extra @types/morgan @types/ws
 
 PATH: 
   /home/alex/.nvm/versions/node/v12.14.1/bin:/home/alex/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/alex/dev/esp/esp-open-sdk/xtensa-lx106-elf/bin:/home/alex/dev/esp/esp-open-sdk/esptool:/home/alex/dev/nrf5/gcc-arm-none-eabi-7-2017-q4-major/bin:/home/alex/dev/nrf5/nRF5x-Command-Line-Tools_9_7_2_Linux-x86_64/nrfjprog:/home/alex/dev/flutter2020/flutter/bin:/home/alex/Android/Sdk/tools/:/home/alex/Android/Sdk/platform-tools/
@@ -14,7 +14,7 @@ Platform:
   linux x64
 
 Trace: 
-  Error: ENOENT: no such file or directory, copyfile '/home/alex/.cache/yarn/v6/npm-glob-7.1.6-141f33b81a7c2492e125594307480c46679278a6/node_modules/glob/LICENSE' -> '/home/alex/dev/node/pkg/isomor/packages/isomor-server/node_modules/isomor-core/node_modules/glob/LICENSE'
+  Error: ENOENT: no such file or directory, copyfile '/home/alex/.cache/yarn/v6/npm-glob-7.1.6-141f33b81a7c2492e125594307480c46679278a6/node_modules/glob/README.md' -> '/home/alex/dev/node/pkg/isomor/packages/isomor-server/node_modules/isomor-core/node_modules/glob/README.md'
 
 npm manifest: 
   {
@@ -37,13 +37,9 @@ npm manifest:
           "start-example": "ISOMOR_DIST_SERVER_FOLDER=../example/react/dist-server yarn start",
           "start": "ts-node src/bin/server.ts",
           "prebuild": "rm -rf dist/",
-          "build": "tsc -p tsconfig.json && chmod +x dist/bin/server.js",
-          "lint": "tslint -p tsconfig.json -c tslint.json"
+          "build": "tsc -p tsconfig.json && chmod +x dist/bin/server.js"
       },
       "dependencies": {
-          "@types/fs-extra": "^8.0.1",
-          "@types/morgan": "^1.7.37",
-          "@types/ws": "^7.2.1",
           "ajv": "^6.11.0",
           "body-parser": "^1.18.3",
           "cookie-parser": "^1.4.4",
@@ -68,8 +64,7 @@ npm manifest:
           "@types/rimraf": "^2.0.3",
           "@types/swagger-ui-express": "^4.1.1",
           "rimraf": "^3.0.1",
-          "ts-node": "^8.6.2",
-          "tslint": "^6.0.0"
+          "ts-node": "^8.6.2"
       },
       "gitHead": "9a8bbcc96908b631b6d3c828054c70538e150963"
   }

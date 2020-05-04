@@ -18,13 +18,9 @@
         "start-example": "ISOMOR_DIST_SERVER_FOLDER=../example/react/dist-server yarn start",
         "start": "ts-node src/bin/server.ts",
         "prebuild": "rm -rf dist/",
-        "build": "tsc -p tsconfig.json && chmod +x dist/bin/server.js",
-        "lint": "tslint -p tsconfig.json -c tslint.json"
+        "build": "tsc -p tsconfig.json && chmod +x dist/bin/server.js"
     },
     "dependencies": {
-        "@types/fs-extra": "^8.0.1",
-        "@types/morgan": "^1.7.37",
-        "@types/ws": "^7.2.1",
         "ajv": "^6.11.0",
         "body-parser": "^1.18.3",
         "cookie-parser": "^1.4.4",
@@ -45,12 +41,14 @@
         "@types/body-parser": "^1.17.1",
         "@types/cookie-parser": "^1.4.2",
         "@types/express-serve-static-core": "^4.17.2",
+        "@types/fs-extra": "^8.1.0",
+        "@types/morgan": "^1.9.0",
         "@types/node": "^13.7.0",
         "@types/rimraf": "^2.0.3",
         "@types/swagger-ui-express": "^4.1.1",
+        "@types/ws": "^7.2.4",
         "rimraf": "^3.0.1",
-        "ts-node": "^8.6.2",
-        "tslint": "^6.0.0"
+        "ts-node": "^8.6.2"
     },
     "gitHead": "9a8bbcc96908b631b6d3c828054c70538e150963"
 }

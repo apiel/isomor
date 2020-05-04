@@ -7,6 +7,7 @@
     - explain how to install
 - json schema generator, multiple file / watch
 - implement e2e test
+    - especially CI with windows
 
 - Server no need reload, just clear cache
     - in dev mode check last change of file and reload endpoint only

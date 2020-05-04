@@ -16,8 +16,7 @@
         "test": "jest",
         "prepublishOnly": "cp ../../Readme.sub.md ./README.md && yarn build",
         "prebuild": "rm -rf dist/",
-        "build": "tsc -p tsconfig.json",
-        "lint": "tslint -p tsconfig.json -c tslint.json"
+        "build": "tsc -p tsconfig.json"
     },
     "dependencies": {
         "dotenv": "^8.2.0",
@@ -26,15 +25,12 @@
     },
     "devDependencies": {
         "@types/dotenv": "^8.2.0",
-        "@types/find-up": "^4.0.0",
         "@types/fs-extra": "^8.1.0",
-        "@types/glob": "^7.1.1",
         "@types/jest": "^25.2.1",
         "@types/rimraf": "^3.0.0",
         "jest": "^25.5.3",
         "rimraf": "^3.0.2",
-        "ts-jest": "^25.4.0",
-        "tslint": "^6.1.2"
+        "ts-jest": "^25.4.0"
     },
     "gitHead": "9a8bbcc96908b631b6d3c828054c70538e150963"
 }

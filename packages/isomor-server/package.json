@@ -1,6 +1,6 @@
 {
     "name": "isomor-server",
-    "version": "2.7.3",
+    "version": "3.0.0",
     "main": "dist/lib/index.js",
     "types": "dist/lib/index.d.ts",
     "author": "Alexandre Piel <alexandre.piel@gmail.com>",
@@ -27,8 +27,8 @@
         "esm": "^3.2.25",
         "express": "^4.17.1",
         "fs-extra": "^9.0.0",
-        "isomor": "^2.7.3",
-        "isomor-core": "^2.5.2",
+        "isomor": "^3.0.0",
+        "isomor-core": "^3.0.0",
         "logol": "^0.0.3",
         "morgan": "^1.10.0",
         "please-upgrade-node": "^3.2.0",

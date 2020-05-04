@@ -1,7 +1,7 @@
 {
   "name": "isomor-example-react-typeorm",
   "private": true,
-  "version": "2.5.2",
+  "version": "3.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/apiel/isomor"
@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "fs-extra": "^8.0.1",
-    "isomor": "^2.5.2",
+    "isomor": "^3.0.0",
     "md5": "^2.2.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
@@ -52,9 +52,9 @@
     "@types/node": "^12.0.2",
     "@types/react": "16.8.17",
     "@types/react-dom": "16.8.4",
-    "isomor-json-schema-generator": "^2.0.1",
-    "isomor-server": "^2.5.2",
-    "isomor-transpiler": "^2.5.2",
+    "isomor-json-schema-generator": "^3.0.0",
+    "isomor-server": "^3.0.0",
+    "isomor-transpiler": "^3.0.0",
     "nodemon": "^1.18.10",
     "rimraf": "^2.6.3",
     "run-screen": "^0.5.3",

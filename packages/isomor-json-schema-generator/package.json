@@ -1,6 +1,6 @@
 {
     "name": "isomor-json-schema-generator",
-    "version": "2.7.3",
+    "version": "3.0.0",
     "author": "Alexandre Piel <alexandre.piel@gmail.com>",
     "license": "MIT",
     "bin": "dist/index.js",
@@ -18,7 +18,7 @@
         "build": "tsc -p tsconfig.json && chmod +x dist/index.js"
     },
     "dependencies": {
-        "isomor-core": "^2.5.2",
+        "isomor-core": "^3.0.0",
         "ts-json-schema-generator": "^0.67.1",
         "ts-node": "^8.10.1",
         "typescript": "^3.7.5"

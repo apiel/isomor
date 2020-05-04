@@ -1,28 +1,20 @@
 name: test on windows
 
 on:
-  repository_dispatch:
-  push:
-    branches:
-      - master
-  schedule:
-    - cron:  '0 4 * * *'
+    repository_dispatch:
+    push:
+        branches:
+            - master
+    schedule:
+        - cron: '0 4 * * *'
 
 jobs:
-  build:
+    build:
+        runs-on: windows-latest
 
-    runs-on: windows-latest
-
-    steps:
-    - name: Run vue installer
-      timeout-minutes: 20
-      run: npx isomor-vue-app my-vue-app
-      env:
-        COLUMNS: 50
-        LINES: 20
-    - name: Run react installer
-      timeout-minutes: 20
-      run: npx isomor-react-app my-react-app
-      env:
-        COLUMNS: 50
-        LINES: 20
+        steps:
+            - name: Install isomor
+              timeout-minutes: 20
+              run: cd test && yarn add isomor @types/node
+            - name: Run transpiler
+              run: cd test && npx isomor-transpiler

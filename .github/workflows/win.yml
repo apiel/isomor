@@ -10,10 +10,11 @@ on:
 
 jobs:
     build:
-        # runs-on: windows-latest
-        runs-on: ubuntu-latest
+        runs-on: windows-latest
+        # runs-on: ubuntu-latest
 
         steps:
+            - uses: actions/checkout@v1
             - name: LS
               timeout-minutes: 20
               run: ls

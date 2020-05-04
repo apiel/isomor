@@ -13,8 +13,9 @@ jobs:
         runs-on: windows-latest
 
         steps:
-            - name: Install isomor
+            - name: Test isomor
               timeout-minutes: 20
-              run: cd test && yarn add isomor @types/node
-            - name: Run transpiler
-              run: cd test && npx isomor-transpiler
+              run: |
+                  cd test
+                  yarn add isomor @types/node
+                  npx isomor-transpiler

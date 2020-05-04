@@ -14,8 +14,7 @@ jobs:
 
         steps:
             - name: ls
-              timeout-minutes: 20
-              run: ls -l
+              run: ls ./test
             - name: Test isomor
               timeout-minutes: 20
               working-directory: ./test

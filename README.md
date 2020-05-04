@@ -153,6 +153,8 @@ Find some example in the github repo: [https://github.com/apiel/isomor/tree/mast
 
 Those 2 examples has been build with React but since an api module is created those could be easily used as well with Vuejs, Angular or...
 
+> **Note:** if you are using this library with react-create-app you might need to setup a server proxy in package.json `"proxy": "http://127.0.0.1:3005",`
+
 ## Advanced guides
 
 -   [Server](Docs/Server.md)

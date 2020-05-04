@@ -31,15 +31,14 @@ function useIsomorWs(routes, server, wsTimeout = 60, logger) {
         sendDefaultConfig(ws, wsTimeout, logger);
         exports.isomorWsEvent.emit('connection', ws, req);
         ws.on('message', (message) => {
-            var _a, _b;
             exports.isomorWsEvent.emit('message', ws, message);
             if (util_1.isString(message)) {
                 const data = JSON.parse(message);
-                if (((_a = data) === null || _a === void 0 ? void 0 : _a.action) === isomor_1.WsClientAction.API) {
+                if ((data === null || data === void 0 ? void 0 : data.action) === isomor_1.WsClientAction.API) {
                     apiAction(routesIndex, req, ws, wsTimeout, data, logger);
                 }
                 else {
-                    (_b = logger) === null || _b === void 0 ? void 0 : _b.warn(`WS unknown message`, message);
+                    logger === null || logger === void 0 ? void 0 : logger.warn(`WS unknown message`, message);
                 }
             }
             wsRefreshTimeout(ws, wsTimeout);
@@ -55,10 +54,9 @@ function wsRefreshTimeout(ws, wsTimeout) {
     }
 }
 function apiAction(routesIndex, req, ws, wsTimeout, data, logger) {
-    var _a, _b, _c, _d, _e;
     return __awaiter(this, void 0, void 0, function* () {
         const { id, urlPath, args, cookie } = data;
-        (_a = logger) === null || _a === void 0 ? void 0 : _a.log(`WS req ${urlPath}`);
+        logger === null || logger === void 0 ? void 0 : logger.log(`WS req ${urlPath}`);
         if (routesIndex[urlPath]) {
             const { validationSchema, fn } = routesIndex[urlPath];
             try {
@@ -72,15 +70,15 @@ function apiAction(routesIndex, req, ws, wsTimeout, data, logger) {
                 utils_1.validateArgs(validationSchema, args);
                 const result = yield fn.call(ctx, ...args);
                 yield send(isomor_1.WsServerAction.API_RES, result);
-                (_b = logger) === null || _b === void 0 ? void 0 : _b.log(`WS 200 ${urlPath}`);
+                logger === null || logger === void 0 ? void 0 : logger.log(`WS 200 ${urlPath}`);
             }
             catch (error) {
-                (_c = logger) === null || _c === void 0 ? void 0 : _c.log(`WS 500 ${urlPath}`, error);
-                ws.send(JSON.stringify({ action: isomor_1.WsServerAction.API_ERR, id, payload: (_d = error) === null || _d === void 0 ? void 0 : _d.message }));
+                logger === null || logger === void 0 ? void 0 : logger.log(`WS 500 ${urlPath}`, error);
+                ws.send(JSON.stringify({ action: isomor_1.WsServerAction.API_ERR, id, payload: error === null || error === void 0 ? void 0 : error.message }));
             }
         }
         else {
-            (_e = logger) === null || _e === void 0 ? void 0 : _e.log(`WS 404 ${urlPath}`);
+            logger === null || logger === void 0 ? void 0 : logger.log(`WS 404 ${urlPath}`);
         }
     });
 }
@@ -91,10 +89,9 @@ function getRoutesIndex(routes) {
     }, {});
 }
 const wsSend = (ws, wsTimeout, id, logger) => (action, payload) => {
-    var _a;
     wsRefreshTimeout(ws, wsTimeout);
     const msg = JSON.stringify({ action, id, payload });
-    (_a = logger) === null || _a === void 0 ? void 0 : _a.log(`WS ${action}`, msg.substring(0, 120), '...');
+    logger === null || logger === void 0 ? void 0 : logger.log(`WS ${action}`, msg.substring(0, 120), '...');
     return new Promise((resolve, reject) => {
         ws.send(msg, (err) => {
             if (err)

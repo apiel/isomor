@@ -49,8 +49,7 @@ const transpileFileToJs = (options, log = (...args) => void 0) => (file) => {
     }
 };
 function getJsCode({ wsReg, wsBaseUrl, httpBaseUrl, moduleName }, name) {
-    var _a;
-    const protocol = ((_a = wsReg) === null || _a === void 0 ? void 0 : _a.test(name)) ? 'ws' : 'http';
+    const protocol = (wsReg === null || wsReg === void 0 ? void 0 : wsReg.test(name)) ? 'ws' : 'http';
     const baseUrl = protocol === 'ws' ? wsBaseUrl : httpBaseUrl;
     return `"use strict";
 

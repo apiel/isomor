@@ -29,10 +29,9 @@ function loadStartupImport({ serverFolder, startupFile }, info) {
 }
 exports.loadStartupImport = loadStartupImport;
 function startup(app, options, info) {
-    var _a;
     return __awaiter(this, void 0, void 0, function* () {
         yield loadStartupImport(options, info);
-        if ((_a = startupImport) === null || _a === void 0 ? void 0 : _a.default) {
+        if (startupImport === null || startupImport === void 0 ? void 0 : startupImport.default) {
             startupImport.default(app);
             if (info) {
                 info('Startup script executed.');

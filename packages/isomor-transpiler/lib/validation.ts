@@ -1,7 +1,6 @@
 import { exec, ChildProcess } from 'child_process';
 import { info, error } from 'logol';
 import { join } from 'path';
-import { remove } from 'fs-extra';
 import { getOptions } from 'isomor-core';
 import { eventEmitter, Action } from './event';
 

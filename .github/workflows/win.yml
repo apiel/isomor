@@ -13,6 +13,9 @@ jobs:
         runs-on: windows-latest
 
         steps:
+            - name: ls
+              timeout-minutes: 20
+              run: ls
             - name: Test isomor
               timeout-minutes: 20
               working-directory: ./test

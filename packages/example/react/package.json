@@ -21,8 +21,7 @@
   "scripts": {
     "isomor:build": "isomor-transpiler",
     "isomor:serv": "isomor-server",
-    "isomor:serv:prod": "ISOMOR_STATIC_FOLDER=./build yarn isomor:serv",
-    "prod": "yarn isomor:build && yarn build && yarn isomor:serv:prod",
+    "prod": "yarn isomor:build && yarn build && ISOMOR_STATIC_FOLDER=./build yarn isomor:serv",
     "dev": "run-screen 'yarn isomor:build --watch' 'yarn isomor:serv --watch' 'yarn start'",
     "dev:ws": "ISOMOR_WS=.* yarn dev",
     "start": "react-scripts start",

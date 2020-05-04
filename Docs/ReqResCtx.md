@@ -1,52 +1,36 @@
 ## Request / Response context
 
-On the server side, it might be necessary to access the request or response object of Express. For example, to use the cookies for authentication or to update the headers of the response. Fortunately, isomor bound the request and response to the server function and make them accessible using `this.req` and `this.res`.
+On the server, it might be necessary to access the request or response object of Express. For example, to use the cookies for authentication or to update the headers of the response. Fortunately, isomor bound the request and response to the server function and make them accessible using `this.req` and `this.res`.
 
 ```ts
-export async function getAuth(): Promise<string> {
+export default async function getAuth(): Promise<string> {
     return this.req.cookies.username;
 }
+```
 
-export async function setAuth(): Promise<string> {
+```ts
+export default async function setAuth(): Promise<string> {
     const username = `user-${Math.floor(Math.random()*1000)}`;
     this.res.cookie('username', username);
     return username;
 }
 ```
 
-and with using `Context` interface:
+and with using `HttpContext` interface:
 
 ```ts
-import { Context } from 'isomor-server';
+import { HttpContext } from 'isomor-server';
 
 export async function getAuth(): Promise<string> {
-    const { req }: Context = this;
+    const { req }: HttpContext = this;
     return req.cookies.username;
 }
 
 export async function setAuth(): Promise<string> {
     const username = `user-${Math.floor(Math.random()*1000)}`;
 
-    const { res }: Context = this;
+    const { res }: HttpContext = this;
     res.cookie('username', username);
     return username;
 }
 ```
-
-Find an example of authentication using JWT [here](https://github.com/apiel/isomor/tree/master/packages/example/react-auth).
-
-### Class
-
-To access the `req` and `res` inside a method of a class, it is not possible to use `this.req` and `this.res` else multiple methods would share the same context. But you can still access the context from the method parameters:
-
-```ts
-@Injectable()
-@isomor
-export class ApiService {
-  async showBaseUrl(req?: Context.req, res?: Context.res) {
-    return req.baseUrl;
-  }
-}
-```
-
-In method, isomor pass `req` and `res` as last parameter of the function.

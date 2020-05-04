@@ -1,10 +1,10 @@
 ### ToDo
 
-- cleanup deps
 - update DOC
     - inform that sub folder should not be called "server"
     - scripts
     - explain how to install
+- fix WS
 - json schema generator, multiple file / watch
 - implement e2e test
     - especially CI with windows

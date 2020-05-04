@@ -1,6 +1,8 @@
 ### Shared class
 
-In some case, it might be necessary to share common code between backend and frontend. A good example is user input validation. For such use-case, you can use `class` with `IsomorShare` interface implementations. The transpiler will then keep the code as it is, and not transform it.
+**deprecated need to update doc** but find example there https://github.com/apiel/isomor/blob/master/packages/example/react/src/Form.tsx
+
+In some case, it might be necessary to share common code between backend and frontend. A good example is user input validation. ~~For such use-case, you can use `class` with `IsomorShare` interface implementations. The transpiler will then keep the code as it is, and not transform it.~~
 
 ```ts
 import { IsomorShare } from 'isomor';

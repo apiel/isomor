@@ -27,10 +27,10 @@
     "dependencies": {
         "isomor-server": "^2.7.3",
         "isomor-transpiler": "^2.7.3",
-        "typescript": "^3.7.5"
+        "typescript": "^3.8.3"
     },
     "devDependencies": {
-        "ts-node": "^8.6.2"
+        "ts-node": "^8.10.1"
     },
     "gitHead": "9a8bbcc96908b631b6d3c828054c70538e150963"
 }

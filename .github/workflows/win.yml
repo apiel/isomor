@@ -15,7 +15,7 @@ jobs:
         steps:
             - name: Test isomor
               timeout-minutes: 20
+              working-directory: ./test
               run: |
-                  cd test
                   yarn add isomor @types/node
                   npx isomor-transpiler

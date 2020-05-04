@@ -14,18 +14,18 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
+            - name: LS
+              timeout-minutes: 20
+              run: ls
+
+            - name: LS
+              timeout-minutes: 20
+              working-directory: ./test
+              run: ls
+
             - name: Test isomor
               timeout-minutes: 20
               working-directory: ./test
               run: |
                   yarn add isomor @types/node
                   npx isomor-transpiler
-
-            - name: LS
-              timeout-minutes: 20
-              working-directory: ./test
-              run: ls
-
-            - name: LS
-              timeout-minutes: 20
-              run: ls

@@ -10,12 +10,22 @@ on:
 
 jobs:
     build:
-        runs-on: windows-latest
+        # runs-on: windows-latest
+        runs-on: ubuntu-latest
 
         steps:
             - name: Test isomor
               timeout-minutes: 20
-              working-directory: test
+              working-directory: ./test
               run: |
                   yarn add isomor @types/node
                   npx isomor-transpiler
+
+            - name: LS
+              timeout-minutes: 20
+              working-directory: ./test
+              run: ls
+
+            - name: LS
+              timeout-minutes: 20
+              run: ls

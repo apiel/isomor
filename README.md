@@ -155,6 +155,9 @@ Those 2 examples has been build with React but since an api module is created th
 
 > **Note:** if you are using this library with react-create-app you might need to setup a server proxy in package.json `"proxy": "http://127.0.0.1:3005",`
 
+> **Note:** the `api` folder should not contain sub folder called `server`.
+
+
 ## Advanced guides
 
 -   [Server](Docs/Server.md)

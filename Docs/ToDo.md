@@ -26,3 +26,5 @@
     + would be great to provide a cache example, with varnish?
 
 - video
+
+- generate client in other languages? python, kotlin, dart, ...

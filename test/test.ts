@@ -1,13 +1,10 @@
-// import { exec, ChildProcess } from 'child_process';
+const { exec } = require('child_process');
 
-
-// process = exec(command, async (err) => {
-//     if (err) {
-//         error(err);
-//     }
-//     info(`JSON schema generation finished`, destination);
-//     process = null;
-//     run();
-// });
+process = exec('npx.run ismor-server', (err, output) => {
+    if (err) {
+        process.stderr.write(err);
+    }
+    process.stdout.write(output);
+});
 
 const getValue = require('api/getValue');

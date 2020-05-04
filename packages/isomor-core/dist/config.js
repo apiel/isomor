@@ -8,7 +8,7 @@ function getOptions() {
     var _a;
     if (!optionsCache) {
         dotenv_1.config({ path: 'isomor.env' });
-        const moduleName = process.env.MODULE_NAME || DEFAULT_NAME;
+        const moduleName = process.env.ISOMOR_MODULE_NAME || DEFAULT_NAME;
         const moduleFolder = process.env.ISOMOR_MODULE_FOLDER || path_1.join(process.cwd(), 'node_modules', moduleName);
         optionsCache = {
             moduleName,

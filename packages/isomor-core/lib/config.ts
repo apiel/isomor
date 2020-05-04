@@ -46,7 +46,7 @@ export function getOptions(): Options {
     if (!optionsCache) {
         config({ path: 'isomor.env' }); // should we find-up?
 
-        const moduleName = process.env.MODULE_NAME || DEFAULT_NAME;
+        const moduleName = process.env.ISOMOR_MODULE_NAME || DEFAULT_NAME;
         const moduleFolder = process.env.ISOMOR_MODULE_FOLDER || join(process.cwd(), 'node_modules', moduleName);
 
         optionsCache = {

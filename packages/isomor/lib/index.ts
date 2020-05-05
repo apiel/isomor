@@ -3,7 +3,7 @@
  * even if it's just for types, some library like angular
  * dont like it!
  */
-import { isomorRemoteHttp } from './remoteHttp';
+import { isomorRemoteHttp, setHttpClient } from './remoteHttp';
 import { isomorRemoteWs } from './remoteWs';
 export {
     subscribe,
@@ -18,12 +18,22 @@ export {
 } from './remoteWs';
 
 const urlPrefix = '/isomor'; // http://127.0.0.1:3000/
+let httpBaseUrl: string;
+let wsBaseUrl: string;
 
 export function getUrlPath(
     moduleName: string,
     funcName: string,
 ): string {
     return `${urlPrefix}/${moduleName}/${funcName}`;
+}
+
+export function setHttpBaseUrl(baseUrl?: string) {
+    httpBaseUrl = baseUrl;
+}
+
+export function setWsBaseUrl(baseUrl?: string) {
+    wsBaseUrl = baseUrl;
 }
 
 export function isomorRemote(
@@ -34,7 +44,7 @@ export function isomorRemote(
     args: any[],
 ): Promise<any> {
     if (protocol === 'ws') {
-        return isomorRemoteWs(baseUrl, moduleName, funcName, args);
+        return isomorRemoteWs(wsBaseUrl || baseUrl, moduleName, funcName, args);
     }
-    return isomorRemoteHttp(baseUrl, moduleName, funcName, args);
+    return isomorRemoteHttp(httpBaseUrl || baseUrl, moduleName, funcName, args);
 }

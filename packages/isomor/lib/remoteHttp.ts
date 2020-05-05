@@ -1,5 +1,21 @@
 import { getUrlPath } from '.';
 
+
+interface HttpOptions {
+    body?: BodyInit | null;
+    headers?: HeadersInit;
+    method?: string;
+}
+type HttpClient = (url: string, options?: HttpOptions) => Promise<Response>;
+let httpClient: HttpClient;
+export function setHttpClient(client: HttpClient = fetch) {
+    httpClient = client;
+}
+
+function getHttpClient() {
+    return httpClient || fetch;
+}
+
 export async function isomorRemoteHttp(
     baseUrl: string,
     moduleName: string,
@@ -7,7 +23,7 @@ export async function isomorRemoteHttp(
     args: any[],
 ): Promise<any> {
     const url = baseUrl + getUrlPath(moduleName, funcName);
-    const { result, error } = await fetch(
+    const { result, error } = await getHttpClient()(
         url,
         !args.length
             ? undefined

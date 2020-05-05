@@ -1,0 +1,12 @@
+{
+  "scripts": {
+    "isomor:build": "isomor-transpiler",
+    "isomor:serv": "isomor-server",
+    "test": "node test.js"
+  },
+  "dependencies": {
+    "@types/node": "^13.13.4",
+    "cross-spawn": "^7.0.2",
+    "isomor": "^3.0.0"
+  }
+}

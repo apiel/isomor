@@ -25,7 +25,6 @@ jobs:
                 COLUMNS: 80
                 LINES: 40
               run: |
-                  yarn add isomor @types/node cross-spawn
-                  npx isomor-transpiler
-                  ls
-                  node ./test.js
+                  yarn
+                  yarn isomor:build
+                  yarn test

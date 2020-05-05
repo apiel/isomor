@@ -10,12 +10,14 @@ export function shell(
 ) {
     debug('isomor-transpiler:shell')(`${command} ${args.join(' ')}`);
     return new Promise((resolve) => {
+        const COLUMNS =
+            process.env.COLUMNS || process.stdout.columns?.toString();
+        const LINES = process.env.LINES || process.stdout.rows?.toString();
         const cmd = spawn(command, args, {
             cwd,
             env: {
-                COLUMNS:
-                    process.env.COLUMNS || process.stdout.columns.toString(),
-                LINES: process.env.LINES || process.stdout.rows.toString(),
+                ...(COLUMNS && { COLUMNS }),
+                ...(LINES && { LINES }),
                 ...env,
                 ...process.env,
             },

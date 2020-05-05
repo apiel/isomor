@@ -19,6 +19,8 @@ jobs:
             - name: Test isomor
               timeout-minutes: 20
               working-directory: ./test
+              env:
+                ISOMOR_HTTP_BASE_URL: http://127.0.0.1:3005
               run: |
-                  yarn add isomor @types/node
+                  yarn add isomor @types/node cross-spawn
                   npx isomor-transpiler

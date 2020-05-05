@@ -1,5 +1,9 @@
 ### ToDo
 
+- Set base url in isomor lib
+- Be able to use something else than fetch
+- Try js
+- explain story about server and port... 3005 proxy / absolute path and relative path
 - implement e2e test
     - especially CI with windows
 

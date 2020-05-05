@@ -1,4 +1,5 @@
-name: test on windows
+# name: test on windows
+name: test on ubuntu
 
 on:
     repository_dispatch:
@@ -26,4 +27,5 @@ jobs:
               run: |
                   yarn add isomor @types/node cross-spawn
                   npx isomor-transpiler
-                  node test.js
+                  ls
+                  nodejs test.js

@@ -7,6 +7,7 @@
   "dependencies": {
     "@types/node": "^13.13.4",
     "cross-spawn": "^7.0.2",
-    "isomor": "^3.0.0"
+    "isomor": "^3.0.0",
+    "node-fetch": "^2.6.0"
   }
 }

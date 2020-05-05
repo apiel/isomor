@@ -23,6 +23,7 @@ function generateServer({ serverFolder, srcFolder, watchMode, }) {
                 compilerOptions: {
                     types: ['node'],
                     module: 'commonjs',
+                    allowJs: true,
                     declaration: true,
                     removeComments: true,
                     emitDecoratorMetadata: true,

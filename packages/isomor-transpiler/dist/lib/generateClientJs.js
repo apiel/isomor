@@ -37,9 +37,15 @@ function clientWatchForJs(options) {
 }
 exports.clientWatchForJs = clientWatchForJs;
 const transpileFileToJs = (options, log = (...args) => void 0) => (file) => {
-    if (!file.endsWith('.d.ts') && file.endsWith('.ts')) {
+    if ((!file.endsWith('.d.ts') && file.endsWith('.ts')) ||
+        file.endsWith('.js')) {
         const { moduleFolder, srcFolder } = options;
-        event_1.updateTsFileInSrc(path_1.join(srcFolder, file));
+        if (file.endsWith('.ts')) {
+            event_1.updateTsFileInSrc(path_1.join(srcFolder, file));
+        }
+        else {
+            event_1.updateJsFileInSrc(path_1.join(srcFolder, file));
+        }
         const name = path_1.basename(file, path_1.extname(file));
         const moduleJsFile = path_1.join(moduleFolder, `${name}.js`);
         const code = getJsCode(options, name);

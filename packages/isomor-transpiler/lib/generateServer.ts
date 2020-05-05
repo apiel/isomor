@@ -18,6 +18,7 @@ export async function generateServer({
             compilerOptions: {
                 types: ['node'],
                 module: 'commonjs',
+                allowJs: true,
                 declaration: true,
                 removeComments: true,
                 emitDecoratorMetadata: true,
@@ -30,7 +31,9 @@ export async function generateServer({
     }
     const cmd = shell(
         'tsc',
-        `--outDir ${serverFolder} -p ${tsConfigFile}${watchMode ? ' --watch' : ''}`.split(' '),
+        `--outDir ${serverFolder} -p ${tsConfigFile}${
+            watchMode ? ' --watch' : ''
+        }`.split(' '),
         srcFolder,
     );
     // if not in watchMode wait for script to finish before to exit

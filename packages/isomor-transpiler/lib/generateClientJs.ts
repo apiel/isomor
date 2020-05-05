@@ -4,7 +4,7 @@ import { info } from 'logol';
 import debug from 'debug';
 import { outputFile } from 'fs-extra';
 import { watch } from 'chokidar';
-import { updateTsFileInSrc } from './event';
+import { updateTsFileInSrc, updateJsFileInSrc } from './event';
 
 export async function generateClientJs(options: Options) {
     const { srcFolder, extensions } = options;
@@ -28,9 +28,16 @@ const transpileFileToJs = (
     options: Options,
     log = (...args: any[]) => void 0,
 ) => (file: string) => {
-    if (!file.endsWith('.d.ts') && file.endsWith('.ts')) {
+    if (
+        (!file.endsWith('.d.ts') && file.endsWith('.ts')) ||
+        file.endsWith('.js')
+    ) {
         const { moduleFolder, srcFolder } = options;
-        updateTsFileInSrc(join(srcFolder, file));
+        if (file.endsWith('.ts')) {
+            updateTsFileInSrc(join(srcFolder, file));
+        } else {
+            updateJsFileInSrc(join(srcFolder, file));
+        }
         const name = basename(file, extname(file));
         const moduleJsFile = join(moduleFolder, `${name}.js`);
         const code = getJsCode(options, name);

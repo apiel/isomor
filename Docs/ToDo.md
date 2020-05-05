@@ -1,7 +1,5 @@
 ### ToDo
 
-- explain story about server and port... 3005 proxy / absolute path and relative path
-
 - prepare module to be published?
 
 - e2e test with wip, right now e2e test are against publish module. Would be good to test before publish. To do this, we would need to link the transpiler and server yarn link https://classic.yarnpkg.com/en/docs/cli/link/

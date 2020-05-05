@@ -1,6 +1,6 @@
 {
     "name": "isomor",
-    "version": "3.0.2",
+    "version": "3.0.3",
     "author": "Alexandre Piel <alexandre.piel@gmail.com>",
     "license": "MIT",
     "main": "dist/index.js",
@@ -25,8 +25,8 @@
         "build": "tsc -p tsconfig.json"
     },
     "dependencies": {
-        "isomor-server": "^3.0.2",
-        "isomor-transpiler": "^3.0.2",
+        "isomor-server": "^3.0.3",
+        "isomor-transpiler": "^3.0.3",
         "typescript": "^3.8.3"
     },
     "devDependencies": {

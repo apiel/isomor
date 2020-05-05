@@ -1,6 +1,5 @@
 ### ToDo
 
-- fix validation
 - Try js
 - explain story about server and port... 3005 proxy / absolute path and relative path
 

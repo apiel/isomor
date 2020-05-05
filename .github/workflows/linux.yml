@@ -28,4 +28,4 @@ jobs:
                   yarn add isomor @types/node cross-spawn
                   npx isomor-transpiler
                   ls
-                  nodejs test.js
+                  node ./test.js

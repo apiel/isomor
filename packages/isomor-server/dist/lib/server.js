@@ -42,9 +42,7 @@ function server(options = isomor_core_1.getOptions()) {
         if (staticFolder) {
             logol_1.info('Add static folder', staticFolder);
             app.use(express.static(staticFolder));
-            app.get('*', (req, res) => res.sendFile(path_1.join(staticFolder, 'index.html'), {
-                root: process.cwd(),
-            }));
+            app.get('*', (req, res) => res.sendFile(path_1.join(staticFolder, 'index.html')));
         }
         app.use((err, req, res, next) => {
             logol_1.error(err);

@@ -2,6 +2,7 @@
   "name": "isomor-example-react",
   "private": true,
   "version": "3.0.2",
+  "proxy": "http://127.0.0.1:3005",
   "repository": {
     "type": "git",
     "url": "https://github.com/apiel/isomor"

@@ -52,9 +52,7 @@ export async function server(
         info('Add static folder', staticFolder);
         app.use(express.static(staticFolder));
         app.get('*', (req, res) =>
-            res.sendFile(join(staticFolder, 'index.html'), {
-                root: process.cwd(),
-            }),
+            res.sendFile(join(staticFolder, 'index.html')),
         );
     }
 

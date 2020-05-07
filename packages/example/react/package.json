@@ -1,7 +1,7 @@
 {
   "name": "isomor-example-react",
   "private": true,
-  "version": "3.0.2",
+  "version": "3.0.4",
   "proxy": "http://127.0.0.1:3005",
   "repository": {
     "type": "git",
@@ -35,7 +35,7 @@
     "class-validator": "^0.12.2",
     "fs-extra": "^9.0.0",
     "http-proxy-middleware": "^1.0.3",
-    "isomor": "^3.0.2",
+    "isomor": "^3.0.4",
     "md5": "^2.2.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -51,8 +51,8 @@
     "@types/node": "^13.13.4",
     "@types/react": "16.9.34",
     "@types/react-dom": "16.9.7",
-    "isomor-server": "^3.0.2",
-    "isomor-transpiler": "^3.0.2",
+    "isomor-server": "^3.0.4",
+    "isomor-transpiler": "^3.0.4",
     "nodemon": "^2.0.3",
     "rimraf": "^3.0.2",
     "run-screen": "^0.5.3",
